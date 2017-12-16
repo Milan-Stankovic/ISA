@@ -1,0 +1,21 @@
+{
+  "name": "isa",
+  "homepage": "https://github.com/Milan-Stankovic/ISA",
+  "authors": [
+    "nina milan tanja"
+  ],
+  "description": "",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "angular/bootstrap/ui-router#^1.0.11"
+  }
+}
