@@ -22,7 +22,14 @@ public class PozoristeBioskop {
 	public PozoristeBioskop(){
 		
 	}
-	
+	public PozoristeBioskop(String naziv, String adresa, String opis, double ocena) {
+		super();
+		this.naziv = naziv;
+		this.adresa = adresa;
+		this.opis = opis;
+		this.ocena = ocena;
+		
+	}
 	public UUID getId() {
 		return id;
 	}
