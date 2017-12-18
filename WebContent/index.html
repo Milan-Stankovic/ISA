@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="app">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script src="angular.js"></script>
+<script src="mainScript.js"></script>   
+<link rel="stylesheet" type="text/css" media="screen" href="screen.css" />
+<title>ISA</title>
+</head>
+<body background="images/back.jpg">
+
+	<div class="header" ng-controller="headerCtrl">
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <span>&nbsp;</span>
+        <h5>Dobrodošli! <br> Izaberite kategoriju:</h5>
+		<span>&nbsp;</span>
+    
+        
+        <table class="centerTable" >
+            <tr colspan="2" >
+                <td class="hover11 column" ng-click="showBioskopi()">
+                    <div class="container">
+                        <img src="images/bioskop.jpg" /> 
+                        <div class="centerText"><h6>BIOSKOPI</h6></div>
+                    </div>
+                </td>
+                <td class="hover11 column" ng-click="showPozorista()">
+                    <div class="container" >
+                        <img src="images/pozoriste2.jpg" /> 
+                        <div class="centerText"><h6>POZORIŠTA</h6></div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+	
+</body>
+</html>

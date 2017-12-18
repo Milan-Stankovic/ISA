@@ -1,0 +1,88 @@
+.hover11 img {
+	opacity: 1;
+	-webkit-transition: .3s ease-in-out;
+	transition: .3s ease-in-out;
+    cursor: pointer;
+    
+}
+.hover11:hover img {
+	
+     -webkit-filter: blur(3px); /* Safari 6.0 - 9.0 */
+    filter: blur(3px);
+    cursor: pointer;
+}
+
+.container {
+    position: relative;
+}
+.centerText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    cursor: pointer;
+}
+
+html
+{
+	margin: 0;
+	padding: 0;
+	color: #000000;
+	background-color: #000000  ;
+	font: normal 16px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
+    background: url(images/back.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+}
+
+/* Links */
+
+.centerTable{
+	float: center;
+	text-align: center;
+	margin-left:auto; 
+    margin-right:auto;
+}
+
+h5 { 
+    padding: 10px 0 2px; 
+    text-align: center;
+    font: normal 30px "Calibri";
+    color: white;
+}
+
+h6 { 
+    padding: 10px 0 2px; 
+    text-align: center;
+    font: bold 50px "Calibri";
+    color: white;
+    border:3px; 
+    border-style:solid; 
+    border-color: white;
+    background-color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.4);
+    
+    
+    padding: 1em;
+}
+
+body
+{
+	margin: 0;
+	float: center;
+	width: 100%; 
+   
+}
+
+.header
+{
+	float: left; 
+	width: 100%; 
+	clear: both;
+	text-align: right;
+	 
+}
+
