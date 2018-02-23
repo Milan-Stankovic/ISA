@@ -15,6 +15,7 @@ import com.isa.ISA.model.PozoristeBioskop;
 @Path("getData/")
 public class getData {
 
+
 	@Path("Bioskopi")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
