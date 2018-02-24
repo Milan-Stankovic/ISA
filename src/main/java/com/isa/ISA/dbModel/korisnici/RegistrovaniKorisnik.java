@@ -2,6 +2,7 @@ package com.isa.ISA.dbModel.korisnici;
 
 
 
+import com.isa.ISA.dbModel.Ponuda;
 import com.isa.ISA.dbModel.Rekvizit;
 import com.isa.ISA.dbModel.Rezervacija;
 
@@ -11,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 @Entity
-@Table(name = "registrovaniKor")
+@Table(name = "registrovani")
 public class RegistrovaniKorisnik extends Korisnik {
 
     @OneToMany
@@ -28,7 +29,18 @@ public class RegistrovaniKorisnik extends Korisnik {
     @OneToMany
     private List<Rezervacija> rezervacije;
 
+    @OneToMany
+    private List<Ponuda> ponude;
+
     public RegistrovaniKorisnik(){}
+
+    public List<Ponuda> getPonude() {
+        return ponude;
+    }
+
+    public void setPonude(List<Ponuda> ponude) {
+        this.ponude = ponude;
+    }
 
     public List<Prijatelj> getPrijatelji() {
         return prijatelji;

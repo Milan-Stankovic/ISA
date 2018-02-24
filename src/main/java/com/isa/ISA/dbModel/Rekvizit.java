@@ -13,6 +13,9 @@ public class Rekvizit {
     @GeneratedValue
     private long id;
 
+    //@Lob
+    //private byte[] slika; Ovo je valjda za slike ali nisam siguran...
+
     @ManyToOne
     private Korisnik postavio;
 

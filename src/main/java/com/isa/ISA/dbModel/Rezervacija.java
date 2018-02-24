@@ -19,14 +19,32 @@ public class Rezervacija {
     private List<Poziv> urezervaciji;
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+  //  @JoinColumn(nullable = false) Da bi omogucio one promotivne karte
     private RegistrovaniKorisnik rezervisao;
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Projekcija projekcija;
 
+    private int popust; // Da bi se omogucili dodatni popusti i one promo karte
+
     public Rezervacija(){}
+
+    public Projekcija getProjekcija() {
+        return projekcija;
+    }
+
+    public void setProjekcija(Projekcija projekcija) {
+        this.projekcija = projekcija;
+    }
+
+    public int getPopust() {
+        return popust;
+    }
+
+    public void setPopust(int popust) {
+        this.popust = popust;
+    }
 
     public long getId() {
         return id;

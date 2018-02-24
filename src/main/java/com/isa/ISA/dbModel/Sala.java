@@ -1,8 +1,7 @@
 package com.isa.ISA.dbModel;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Sala {
@@ -17,7 +16,32 @@ public class Sala {
      */
     private int brSedista;
 
-    public Sala(){};
+    /**
+     * Lista svih sedisat u sali
+     */
+    @OneToMany
+    private List<Sediste> sedista;
+
+    @ManyToOne
+    private PozoristeBioskop ustanova;
+
+    public Sala(){}
+
+    public PozoristeBioskop getUstanova() {
+        return ustanova;
+    }
+
+    public void setUstanova(PozoristeBioskop ustanova) {
+        this.ustanova = ustanova;
+    }
+
+    public List<Sediste> getSedista() {
+        return sedista;
+    }
+
+    public void setSedista(List<Sediste> sedista) {
+        this.sedista = sedista;
+    }
 
     public long getId() {
         return id;
