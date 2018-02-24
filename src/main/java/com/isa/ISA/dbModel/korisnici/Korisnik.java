@@ -3,8 +3,8 @@ package com.isa.ISA.dbModel.korisnici;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "korisnici")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Table(name = "korisnici")
 public abstract class Korisnik {
 
     @Id

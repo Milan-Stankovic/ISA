@@ -5,7 +5,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.List;
 @Entity
-@Table(name = "korisnici")
+@Table(name = "registrovaniKor")
 public class RegistrovaniKorisnik extends Korisnik {
 
     @OneToMany
