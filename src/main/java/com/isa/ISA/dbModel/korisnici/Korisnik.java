@@ -1,5 +1,7 @@
 package com.isa.ISA.dbModel.korisnici;
 
+import com.isa.ISA.dbModel.enums.StatusNaloga;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,7 +19,9 @@ public abstract class Korisnik {
     @Column(nullable = false)
     protected String password;
 
-    protected boolean aktiviran;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    protected StatusNaloga status;
 
     protected String ime;
 
@@ -54,12 +58,12 @@ public abstract class Korisnik {
         this.password = password;
     }
 
-    public boolean isAktiviran() {
-        return aktiviran;
+    public StatusNaloga getStatus() {
+        return status;
     }
 
-    public void setAktiviran(boolean aktiviran) {
-        this.aktiviran = aktiviran;
+    public void setStatus(StatusNaloga status) {
+        this.status = status;
     }
 
     public String getIme() {

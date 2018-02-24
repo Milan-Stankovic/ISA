@@ -5,6 +5,8 @@ import com.isa.ISA.dbModel.enums.TipSedista;
 
 import javax.persistence.*;
 
+//GOTOVO
+
 @Entity
 public class Sediste {
 

@@ -6,6 +6,8 @@ import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import javax.persistence.*;
 import java.util.List;
 
+//GOTOVO
+
 @Entity
 public class Rezervacija {
 

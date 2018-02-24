@@ -12,8 +12,6 @@ public class Admin extends Korisnik {
     @Enumerated(EnumType.STRING)
     private TipAdmina tip;
 
-    private boolean zavrsenaRegistracija = false;
-
     public Admin(){ super(); }
 
     public TipAdmina getTip() {
@@ -24,11 +22,4 @@ public class Admin extends Korisnik {
         this.tip = tip;
     }
 
-    public boolean isZavrsenaRegistracija() {
-        return zavrsenaRegistracija;
-    }
-
-    public void setZavrsenaRegistracija(boolean zavrsenaRegistracija) {
-        this.zavrsenaRegistracija = zavrsenaRegistracija;
-    }
 }
