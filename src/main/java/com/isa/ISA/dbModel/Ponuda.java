@@ -25,7 +25,7 @@ public class Ponuda {
     @ManyToOne
     private Rekvizit rekvizit;
 
-    private boolean prihvaceno;
+    private Boolean prihvaceno;
 
     public Ponuda(){}
 
@@ -61,11 +61,11 @@ public class Ponuda {
         this.rekvizit = rekvizit;
     }
 
-    public boolean isPrihvaceno() {
+    public Boolean isPrihvaceno() {
         return prihvaceno;
     }
 
-    public void setPrihvaceno(boolean prihvaceno) {
+    public void setPrihvaceno(Boolean prihvaceno) {
         this.prihvaceno = prihvaceno;
     }
 }

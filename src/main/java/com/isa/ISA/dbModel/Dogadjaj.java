@@ -30,10 +30,30 @@ public class Dogadjaj {
 
     private String reziser;
 
+    private float prosecnaOcena;
+
+    private int donosiBodova;
+
     @ManyToMany
     private List<Glumac> glumci; // Ne dozvoljava cist String iz nekog razloga
 
     public Dogadjaj(){}
+
+    public int getDonosiBodova() {
+        return donosiBodova;
+    }
+
+    public void setDonosiBodova(int donosiBodova) {
+        this.donosiBodova = donosiBodova;
+    }
+
+    public float getProsecnaOcena() {
+        return prosecnaOcena;
+    }
+
+    public void setProsecnaOcena(float prosecnaOcena) {
+        this.prosecnaOcena = prosecnaOcena;
+    }
 
     public long getId() {
         return id;

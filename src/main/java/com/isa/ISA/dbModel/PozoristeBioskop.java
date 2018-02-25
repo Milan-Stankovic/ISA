@@ -19,6 +19,8 @@ public class PozoristeBioskop {
 
     private String adressa;
 
+    private String urlMape;
+
     private int bronzeTreshold;
 
     private int silverTreshold;
@@ -43,7 +45,25 @@ public class PozoristeBioskop {
     @ManyToMany
     private List<Admin> admini;
 
+    private float prosecnaOcena;
+
     public PozoristeBioskop(){}
+
+    public String getUrlMape() {
+        return urlMape;
+    }
+
+    public void setUrlMape(String urlMape) {
+        this.urlMape = urlMape;
+    }
+
+    public float getProsecnaOcena() {
+        return prosecnaOcena;
+    }
+
+    public void setProsecnaOcena(float prosecnaOcena) {
+        this.prosecnaOcena = prosecnaOcena;
+    }
 
     public long getId() {
         return id;

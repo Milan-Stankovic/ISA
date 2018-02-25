@@ -18,8 +18,6 @@ public class Sediste {
 
     private int broj;
 
-    private double doplata;
-
     @Enumerated(EnumType.STRING)
     private TipSedista tipSedista;
 
@@ -47,14 +45,6 @@ public class Sediste {
 
     public void setBroj(int broj) {
         this.broj = broj;
-    }
-
-    public double getDoplata() {
-        return doplata;
-    }
-
-    public void setDoplata(double doplata) {
-        this.doplata = doplata;
     }
 
     public TipSedista getTipSedista() {
