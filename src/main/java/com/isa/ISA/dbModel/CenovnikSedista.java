@@ -14,8 +14,10 @@ public class CenovnikSedista {
     @Enumerated(EnumType.STRING)
     private TipSedista tip;
 
+    @ManyToOne
     private PozoristeBioskop ustanova;
 
+    @ManyToOne
     private Sala sala;
 
     private int doplata;
