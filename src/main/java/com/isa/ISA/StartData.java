@@ -21,7 +21,7 @@ public class StartData {
     private AdminService adminService;
 
     @PostConstruct
-    public void initIt() throws Exception {
+    public void initIt(){
 
         RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
         rk.setUserName("kor");
