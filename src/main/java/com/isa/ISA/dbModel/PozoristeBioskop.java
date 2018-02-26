@@ -47,7 +47,17 @@ public class PozoristeBioskop {
 
     private float prosecnaOcena;
 
+    private int brojOcena; // Postaviti na 0 na pocetku
+
     public PozoristeBioskop(){}
+
+    public int getBrojOcena() {
+        return brojOcena;
+    }
+
+    public void setBrojOcena(int brojOcena) {
+        this.brojOcena = brojOcena;
+    }
 
     public String getUrlMape() {
         return urlMape;

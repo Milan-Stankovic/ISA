@@ -32,12 +32,22 @@ public class Dogadjaj {
 
     private float prosecnaOcena;
 
+    private int brojOcena; //Postaviti na nula kada se kreira
+
     private int donosiBodova;
 
     @ManyToMany
     private List<Glumac> glumci; // Ne dozvoljava cist String iz nekog razloga
 
     public Dogadjaj(){}
+
+    public int getBrojOcena() {
+        return brojOcena;
+    }
+
+    public void setBrojOcena(int brojOcena) {
+        this.brojOcena = brojOcena;
+    }
 
     public int getDonosiBodova() {
         return donosiBodova;
