@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <script src="angular.js"></script>
+    <script src="mainScript.js"></script>
+    <title>Prijava</title>
+</head>
+<body>
+<div ng-controller="headerCtrl">
+    <form>
+        <table>
+            <tr>
+                <td>Korisničko ime:</td>
+                <td><input type="text" id="username" name="username" ng-model="username"></td>
+            </tr>
+
+            <tr>
+                <td>Lozinka:</td>
+                <td><input type="password" id="pass" name="pass" ng-model="pass"></td>
+            </tr>
+
+            <tr>
+                <td><button ng-click="indexFunc()">Nazad</button></td>
+                <td><button ng-click="prijavaFunc(username, pass)">Prijava</button></td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+</body>
+</html>

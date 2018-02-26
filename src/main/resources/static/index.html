@@ -1,31 +1,32 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html ng-app="app">
 <head>
-    <title>Title</title>
-    <link href="assets/components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+    <title>Dobrodošli</title>
     <link href="assets/css/style.css" rel="stylesheet">
+    <script src="angular.js"></script>
+    <script src="mainScript.js"></script>
+    <!--<link href="assets/components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
+    <!--<script src="assets/components/angular/angular.js"></script>-->
+    <!--<script src="assets/components/angular-ui-router/release/angular-ui-router.js"></script>-->
+    <!--<scrpit src="mainScrpit.js"></scrpit>-->
+    <!--<script src="app.module.js"></script>-->
+    <!--<script src="app.route.js"></script>-->
+    <!--<script src="app/components/home/home.controller.js"></script>-->
+
 </head>
 <body>
 
-    <div>
+    <div ng-controller="headerCtrl">
        <!-- <ui-view></ui-view>-->
+        <button>Pozorista</button>
+        <button>Bioskopi</button>
+        <button ng-click="loginFunc()">Login</button>
+        <button>Registracija</button>
     </div>
 
-    <script src="assets/components/jquery/dist/jquery.js"></script>
-    <script src="assets/components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="assets/components/angular/angular.js"></script>
-    <script src="assets/components/angular-ui-router/release/angular-ui-router.js"></script>
-
-    <script src="app.module.js"></script>
-    <script src="app.route.js"></script>
-
-    <script src="app/components/home/home.controller.js"></script>
 
 
-    <button>Pozorista</button>
-    <button>Bioskopi</button>
-    <button>Login</button>
-    <button>Registracija</button>
+
 
 
 </body>

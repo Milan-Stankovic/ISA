@@ -22,10 +22,14 @@ public class AdminService {
         adminRepo.findAll().forEach(allAdmins::add);
         System.out.println(allAdmins.size());
         return allAdmins;
-
     }
 
     public void addAdmin(Admin k){
         adminRepo.save(k);
     }
+
+    public Admin getAdmin(String username){
+        return adminRepo.findByUserName(username);
+    }
+
 }

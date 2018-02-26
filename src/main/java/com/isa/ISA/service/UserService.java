@@ -27,6 +27,11 @@ public class UserService {
 
     }
 
+    public RegistrovaniKorisnik getUser(String username){
+        return usersRepo.findByUserName(username);
+    }
+
+
     public void addUser(RegistrovaniKorisnik k){
         usersRepo.save(k);
     }
