@@ -16,12 +16,12 @@ public class AdminController {
     @Autowired
     private AdminService adminService;
 
-    @RequestMapping("/admins")
+    @RequestMapping("/api/admins")
     public List<Admin> getAllAdmins(){
         return adminService.getAllAdmins();
     }
 
-    @RequestMapping(method = RequestMethod.POST,value = "/admins")
+    @RequestMapping(method = RequestMethod.POST,value = "/api/admins")
     public void addUser(@RequestBody Admin k){
         adminService.addAdmin(k);
     }

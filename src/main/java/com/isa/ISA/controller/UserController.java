@@ -17,12 +17,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/users")
+    @RequestMapping("/api/users")
     public List<RegistrovaniKorisnik> getAllUsers(){
         return userService.getAllUsers();
     }
 
-    @RequestMapping(method = RequestMethod.POST,value = "/users")
+    @RequestMapping(method = RequestMethod.POST,value = "/api/users")
     public void addUser(@RequestBody RegistrovaniKorisnik k){
         userService.addUser(k);
     }
