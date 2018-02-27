@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.dbModel.korisnici.Korisnik;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
@@ -43,5 +44,27 @@ public class LoginController {
             return k;
         else
             return null;
+    }
+    @RequestMapping(method = RequestMethod.POST, value = "/api/fblogin/username={username}&pass={password}&ime={ime}&prez={prez}")
+    public Korisnik fblogin(@PathVariable String username, @PathVariable String password, @PathVariable String ime, @PathVariable String prez){
+        Korisnik k;
+        RegistrovaniKorisnik reg = userService.getUser(username);
+        Admin adm = adminService.getAdmin(username);
+
+        if(reg==null && adm==null){
+            RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
+            rk.setUserName(username);
+            rk.setPassword(password);
+            rk.setEmail(username);
+            rk.setIme(ime);
+            rk.setPassword(prez);
+            rk.setStatus(StatusNaloga.AKTIVAN);
+            System.out.println("opa" + rk.getUserName());
+            userService.addUser(rk);
+            return rk;
+        }
+        else k = (reg != null) ? reg: adm;
+        return k;
+
     }
 }

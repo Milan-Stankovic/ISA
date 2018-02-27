@@ -20,8 +20,9 @@
        <!-- <ui-view></ui-view>-->
         <button>Pozorista</button>
         <button>Bioskopi</button>
-        <button ng-click="loginFunc()">Login</button>
-        <button>Registracija</button>
+        <button ng-click="loginFunc()" ng-hide="loggedIn">Prijava</button>
+        <button ng-hide="loggedIn">Registracija</button>
+        <button ng-click="fbLogoutUser()" ng-show="loggedIn">Odjava</button>
     </div>
 
 

@@ -7,6 +7,12 @@
     <title>Prijava</title>
 </head>
 <body>
+
+
+<script>
+
+</script>
+
 <div ng-controller="headerCtrl">
     <form>
         <table>
@@ -24,8 +30,13 @@
                 <td><button ng-click="indexFunc()">Nazad</button></td>
                 <td><button ng-click="prijavaFunc(username, pass)">Prijava</button></td>
             </tr>
+
         </table>
     </form>
+
+    <div id="fb-root"></div>
+
+    <div class="fb-login-button" onlogin="window.location='http://localhost:8096/index.html'" data-width="100" data-max-rows="2" data-size="medium" data-button-type="continue_with" data-show-faces="true" data-auto-logout-link="false" data-use-continue-as="false"></div>
 </div>
 
 </body>
