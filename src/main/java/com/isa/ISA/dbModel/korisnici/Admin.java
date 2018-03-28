@@ -2,6 +2,7 @@ package com.isa.ISA.dbModel.korisnici;
 
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.enums.TipAdmina;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.List;
