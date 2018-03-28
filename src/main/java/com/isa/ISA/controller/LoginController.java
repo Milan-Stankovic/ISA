@@ -29,8 +29,8 @@ public class LoginController {
     public void redirect(HttpServletResponse response) throws IOException{
         response.sendRedirect("http://localhost:8096/login.html");
     }
-
-    @RequestMapping(method = RequestMethod.POST, value = "/api/login/username={username}&pass={password}")
+    // Mozes li ubaciti dodatnu proveru ako je admin da li je promenio password ?
+    @RequestMapping(method = RequestMethod.POST, value = "/api/login/username={username}&pass={password}") //NIKAKO !!! :D Ne mozes dozvoliti da se username i password salju kao cist String u linku :D
     public Korisnik login(@PathVariable String username, @PathVariable String password){
         Korisnik k;
         RegistrovaniKorisnik reg = userService.getUser(username);
