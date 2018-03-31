@@ -1,12 +1,8 @@
 package com.isa.ISA.service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import com.isa.ISA.dbModel.enums.StatusNaloga;
-import com.isa.ISA.dbModel.korisnici.Admin;
-import com.isa.ISA.dbModel.korisnici.Korisnik;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

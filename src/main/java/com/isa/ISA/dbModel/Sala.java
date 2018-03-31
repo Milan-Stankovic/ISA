@@ -22,6 +22,8 @@ public class Sala {
     @OneToMany
     private List<Sediste> sedista;
 
+    private String ime;
+
     @ManyToOne
     private PozoristeBioskop ustanova;
 
@@ -66,4 +68,8 @@ public class Sala {
     public void setBrSedista(int brSedista) {
         this.brSedista = brSedista;
     }
+
+    public String getIme() { return ime; }
+
+    public void setIme(String ime) { this.ime = ime; }
 }

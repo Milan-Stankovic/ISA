@@ -1,5 +1,6 @@
 package com.isa.ISA.dbModel.korisnici;
 
+import com.isa.ISA.dbModel.Karta;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.Sediste;
 import com.isa.ISA.dbModel.enums.Status;
@@ -16,7 +17,7 @@ public class Poziv {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private Status status; // U slucaju da odbije poziv, iz tabele karti se karta
 
     @ManyToOne
     private RegistrovaniKorisnik osoba;
@@ -31,8 +32,7 @@ public class Poziv {
     private Rezervacija rezervacija;
 
     @ManyToOne
-
-    private Sediste sediste;
+    private Karta karta;
 
     public Poziv(){}
 
@@ -44,20 +44,22 @@ public class Poziv {
         this.rezervacija = rezervacija;
     }
 
-    public Sediste getSediste() {
-        return sediste;
-    }
-
-    public void setSediste(Sediste sediste) {
-        this.sediste = sediste;
-    }
 
     public long getId() {
         return id;
     }
 
+    public Karta getKarta() {
+        return karta;
+    }
+
+    public void setKarta(Karta karta) {
+        this.karta = karta;
+    }
+
     public void setId(long id) {
         this.id = id;
+
     }
 
     public Status getStatus() {

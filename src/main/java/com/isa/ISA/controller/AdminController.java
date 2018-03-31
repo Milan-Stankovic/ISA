@@ -29,13 +29,12 @@ public class AdminController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value ="/admin/{id}")
-    public void updateAdmin(@RequestBody Admin a, @PathVariable Long id){
-        adminService.updateAdmin(a);
-    }
+    public void updateAdmin(@RequestBody Admin a, @PathVariable Long id){ adminService.updateAdmin(a); }
+
+    @RequestMapping(method = RequestMethod.PUT, value ="/admin/{id}/password")
+    public void updateAdminPassword(@RequestBody Admin a, @PathVariable Long id){ adminService.updatePassword(a); }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/admin/{id}")
-    public void deleteAdmin(@RequestBody Admin a, @PathVariable Long id){
-        adminService.deleteAdmin(a);
-    }
+    public void deleteAdmin(@RequestBody Admin a, @PathVariable Long id){ adminService.deleteAdmin(a); }
 
 }

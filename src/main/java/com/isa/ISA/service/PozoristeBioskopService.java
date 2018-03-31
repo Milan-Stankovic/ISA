@@ -62,5 +62,12 @@ public class PozoristeBioskopService {
         pbRepository.save(pb);
     }
 
+    public List<PozoristeBioskop> getPozoristeBioskop(String naziv){
+        List<PozoristeBioskop> foundPB = new ArrayList<>();
+        pbRepository.findByNaziv(naziv).forEach(foundPB::add);
+        return foundPB;
+
+    }
+
 
 }

@@ -8,5 +8,4 @@ import java.util.List;
 public interface DogadjajRepository extends CrudRepository<Dogadjaj,Long> {
     List<Dogadjaj> findByNaziv(String naziv);
 
-
 }

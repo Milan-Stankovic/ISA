@@ -29,6 +29,7 @@ public class Projekcija {
     private List<Rezervacija> rezervacije;
 
     @Column(nullable = false)
+
     private Date vreme;
 
     @Column(nullable = false)
