@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "admini")
 public class Admin extends Korisnik {
 
     @Column(nullable = false)

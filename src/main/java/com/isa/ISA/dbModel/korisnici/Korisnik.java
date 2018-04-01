@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-@Table(name = "korisnici")
 public abstract class Korisnik {
 
     @Id
