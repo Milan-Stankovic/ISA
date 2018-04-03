@@ -1,5 +1,7 @@
 package com.isa.ISA.dbModel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -25,6 +27,7 @@ public class Sala {
     private String ime;
 
     @ManyToOne
+    @JsonBackReference
     private PozoristeBioskop ustanova;
 
     public Sala(){}

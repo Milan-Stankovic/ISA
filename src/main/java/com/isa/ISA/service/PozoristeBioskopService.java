@@ -40,9 +40,9 @@ public class PozoristeBioskopService {
 
     public List<PozoristeBioskop> getAllPozoriste(){
         List<PozoristeBioskop> allP = new ArrayList<>();
-        pbRepository.findByTip(TipUstanove.POZORISTE).addAll(allP);
+        return   pbRepository.findByTip(TipUstanove.POZORISTE);
         //  System.out.println(allPB.size());
-        return allP;
+
     }
 
     public List<PozoristeBioskop> getAllBioskop(){

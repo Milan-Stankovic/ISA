@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class AdminController {
 
     @RequestMapping("/api/admins")
     public List<Admin> getAllAdmins(){
+
+        System.out.println("UPADOOOOH");
+
         return adminService.getAllAdmins();
     }
 
