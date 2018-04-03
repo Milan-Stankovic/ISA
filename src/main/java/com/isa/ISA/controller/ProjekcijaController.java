@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+<<<<<<< HEAD
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
@@ -86,5 +87,8 @@ public class ProjekcijaController {
         ps.deleteProjekcija(id2);
 
     }
+
+
+
 
 }

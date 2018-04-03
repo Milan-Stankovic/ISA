@@ -1,5 +1,6 @@
 package com.isa.ISA.repository;
 
+
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
@@ -20,5 +21,12 @@ public interface ProjekcijaRepository extends CrudRepository<Projekcija, Long> {
     List<Projekcija> findByVremeBetween(Date pocetak, Date kraj);
     List<Projekcija> findByVremeAfter(Date kraj);
     List<Projekcija> findByVremeBefore(Date pocetak);
+
+
+
+
+
+
+
 
 }

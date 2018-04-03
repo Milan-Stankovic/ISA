@@ -10,5 +10,8 @@ import java.util.List;
 public interface PozoristeBioskopRepository extends CrudRepository<PozoristeBioskop, Long> {
 
     List<PozoristeBioskop> findByTip(TipUstanove tip); // Mozda ce trebati rename ovako @Column(unique = true, name = "tip")
-    List<PozoristeBioskop> findByNaziv(String s);
+
+
+
+
 }

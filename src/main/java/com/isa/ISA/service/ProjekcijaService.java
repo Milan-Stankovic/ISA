@@ -1,5 +1,6 @@
 package com.isa.ISA.service;
 
+<<<<<<< HEAD
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
@@ -93,5 +94,8 @@ public class ProjekcijaService {
         pr.findBySalaAndVremeBetween(s, d, b).forEach(allP::add);
         return allP;
     }
+
+
+
 
 }
