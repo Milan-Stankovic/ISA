@@ -32,18 +32,14 @@ public class AdminController {
         return adminService.getAdmin(id);
     }
 
-
-
-
-
-
-
-
-
-
-
+    @RequestMapping(method = RequestMethod.PUT,value="/admin/{id}")
     public void updateAdmin(@RequestBody Admin a, @PathVariable Long id){
         adminService.updateAdmin(a);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT,value="/admin/{id}/pass")
+    public void updateAdminPassword(@RequestBody Admin a, @PathVariable Long id){
+        adminService.updatePassword(a);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/admin/{id}")

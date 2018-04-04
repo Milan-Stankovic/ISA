@@ -40,16 +40,10 @@ public class PozoristeBioskopService {
 
     public List<PozoristeBioskop> getAllPozoriste(){
         List<PozoristeBioskop> allP = new ArrayList<>();
-<<<<<<< HEAD
-        return   pbRepository.findByTip(TipUstanove.POZORISTE);
-        //  System.out.println(allPB.size());
 
-=======
-        pbRepository.findByTip(TipUstanove.POZORISTE).addAll(allP);
-        //  System.out.println(allPB.size());
-        return allP;
->>>>>>> 41f836e809e58017fb215de2bb4d3e438cb1b333
-    }
+        return   pbRepository.findByTip(TipUstanove.POZORISTE);
+
+}
 
     public List<PozoristeBioskop> getAllBioskop(){
         List<PozoristeBioskop> allB = new ArrayList<>();
@@ -68,7 +62,7 @@ public class PozoristeBioskopService {
         pbRepository.save(pb);
     }
 
-<<<<<<< HEAD
+
     public List<PozoristeBioskop> getPozoristeBioskop(String naziv){
         List<PozoristeBioskop> foundPB = new ArrayList<>();
         pbRepository.findByNaziv(naziv).forEach(foundPB::add);
@@ -76,7 +70,5 @@ public class PozoristeBioskopService {
 
     }
 
-=======
->>>>>>> 41f836e809e58017fb215de2bb4d3e438cb1b333
 
 }
