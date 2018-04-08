@@ -1,32 +1,49 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="app">
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Dobrodošli</title>
-    <link href="assets/css/style.css" rel="stylesheet">
-    <script src="angular.js"></script>
-    <script src="mainScript.js"></script>
-    <!--<link href="assets/components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">-->
-    <!--<script src="assets/components/angular/angular.js"></script>-->
-    <!--<script src="assets/components/angular-ui-router/release/angular-ui-router.js"></script>-->
-    <!--<scrpit src="mainScrpit.js"></scrpit>-->
-    <!--<script src="app.module.js"></script>-->
-    <!--<script src="app.route.js"></script>-->
-    <!--<script src="app/components/home/home.controller.js"></script>-->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <title>Cinema Theater Website</title>
+    <link rel="icon" href="assets/images/logo1.png">
 
 </head>
-<body>
+<body ng-app="app">
 
-    <div ng-controller="headerCtrl">
-       <!-- <ui-view></ui-view>-->
+	<script src="angular.js"></script>
+    <!-- <div ng-controller="headerCtrl">
+       <ui-view></ui-view>
         <button>Pozorista</button>
         <button>Bioskopi</button>
         <button ng-click="loginFunc()" ng-hide="loggedIn">Prijava</button>
         <button ng-hide="loggedIn">Registracija</button>
         <button ng-click="fbLogoutUser()" ng-show="loggedIn">Odjava</button>
-    </div>
+    </div> -->
+	<div>
+	
+	
+	
+	
+		<ui-view>
+		
+		</ui-view>	
+		
+		
+		
+		
+	</div>
+
+   <!--  <script src="mainScript.js"></script> -->
+    
+    <script src="app.module.js"></script>
+    <script src="app.route.js"></script>
+    <script src="jquery.js"></script>
+    <script src="angular-ui-router.js"></script>
+    <script src="ng-resource.js"></script>   
 
 
-
+    <script src="app/components/core/core.controller.js"></script>
+    <script src="app/components/home/home.controller.js"></script>
+    <script src="app/components/fanZone/fanZone.controller.js"></script>
+    
 
 
 

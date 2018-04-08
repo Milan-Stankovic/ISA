@@ -5,9 +5,13 @@
 		.module('app')
 		.controller('homeController', homeController);
 
-    function homeController() {
+    homeController.$inject = ['$location', '$scope', '$rootScope'];
+    function homeController($location, $scope, $rootScope) {
         var hc = this;
-        hc.home = "Home";
+        init = function (){
+        	
+        };
+        init();
     }
 
 
