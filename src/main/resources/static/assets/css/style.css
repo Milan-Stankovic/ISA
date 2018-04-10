@@ -138,10 +138,10 @@ p a:hover {
 #body.home div:first-child div:first-child h2 a {
 	color:#fff;
 	font-family:oswaldregular;
-	font-size:18px;
+	font-size:22px;
 	font-style:normal;
 	font-weight:400;
-	line-height:18px;
+	line-height:22px;
 	margin:0;
 	text-decoration:none;
 	text-transform:uppercase;
@@ -259,9 +259,10 @@ p a:hover {
 	width:478px;
 }
 #body.home div div h3 a {
+    margin-left: 150px;
 	color:#FFF;
 	font-family:oswaldregular;
-	font-size:18px;
+	font-size:14px;
 	font-style:normal;
 	font-weight:400;
 	line-height:18px;
@@ -1084,7 +1085,7 @@ p a:hover {
 	width:237px;
 }
 #body.home div:first-child div:first-child a:first-child, #body.home div div ul li div h4, #body.movies ul li a:first-child, #body.blog div div:first-child ul li:first-child, #body.blog div div ul li h5, #body.blog-single div div:first-child ul li:first-child, #body.blog-single div div ul li h5 {
-	margin:0;
+    margin-left: 150px;
 }
 #body.home div:first-child div:first-child a img:hover, #body.home div:first-child ul li a img:hover, #body.home div div ul li a img:hover, #body.rentals ul li a img:hover, #body.blog ul:first-child li a:first-child img:hover {
 	filter:alpha(opacity=90);/* Needed for IE8 and old versions */
@@ -1107,7 +1108,7 @@ p a:hover {
  #body.home div div:first-child h3 a:first-child {
 	color:#fff;
 	font-family:oswaldregular;
-	font-size:18px;
+	font-size:14px;
 	font-style:normal;
 	font-weight:400;
 	line-height:18px;
@@ -1466,4 +1467,27 @@ p a:hover {
 .pocetna div ul li:last-child {
     text-align: right;
     color : white;
+}
+
+.rating {
+    text-align: left;
+    color : white;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}
+.rating > span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+}
+.rating > span:hover:before,
+.rating > span:hover ~ span:before {
+    content: "\2605";
+    position: absolute;
+}
+
+.white{
+    color:white;
+   margin-left: 20px;
+    margin-bottom: 10px;
 }

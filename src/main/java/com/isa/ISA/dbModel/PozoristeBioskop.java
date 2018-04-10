@@ -3,6 +3,7 @@ package com.isa.ISA.dbModel;
 
 import com.isa.ISA.dbModel.enums.TipUstanove;
 import com.isa.ISA.dbModel.korisnici.Admin;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.util.List;
@@ -17,8 +18,9 @@ public class PozoristeBioskop {
 
     private String opis;
 
-    private String adressa;
+    private String adresa;
 
+    @Length(max=2084)
     private String urlMape;
 
     private int bronzeTreshold;
@@ -99,12 +101,12 @@ public class PozoristeBioskop {
         this.opis = opis;
     }
 
-    public String getAdressa() {
-        return adressa;
+    public String getAdresa() {
+        return adresa;
     }
 
-    public void setAdressa(String adressa) {
-        this.adressa = adressa;
+    public void setAdresa(String adresa) {
+        this.adresa = adresa;
     }
 
     public int getBronzeTreshold() {
