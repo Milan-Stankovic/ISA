@@ -53,14 +53,29 @@ public class StartData {
         rk.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + rk.getUserName());
         userService.addUser(rk);
+        
+        RegistrovaniKorisnik rk2 = new RegistrovaniKorisnik();
+        rk2.setUserName("a");
+        rk2.setPassword("a");
+        rk2.setEmail("a@gmail.com");
+        rk2.setStatus(StatusNaloga.AKTIVAN);
+        rk2.setBrojTelefona("4444");
+        rk2.setGrad("a");
+        rk2.setIme("a");
+        rk2.setPrezime("a");
+        System.out.println("Kreiran korisnik: " + rk2.getUserName());
+        userService.addUser(rk2);
 
         Admin a = new Admin();
         a.setUserName("admin");
         a.setPassword("admin");
         a.setTip(TipAdmina.SYS);
         a.setEmail("admin");
+        a.setIme("a");
+        a.setPrezime("a");
+        a.setGrad("a");
         a.setStatus(StatusNaloga.AKTIVAN);
-        System.out.println("Kreiran korisnik: " + a.getUserName());
+        System.out.println("Kreiran korisnik: " + a.getIme());
         adminService.addAdmin(a);
         
         Admin a2 = new Admin();

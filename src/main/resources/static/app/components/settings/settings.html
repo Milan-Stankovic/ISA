@@ -1,0 +1,52 @@
+<div>
+    <form>
+        <table>
+            <tr>
+                <td style="color:white; width:150px">First Name:</td>
+                <td><input type="text" id="fname" name="fname" ng-model="fname"></td>
+            </tr>
+            
+            <tr>
+                <td style="color:white; width:150px">Last Name:</td>
+                <td><input type="text" id="lname" name="lname" ng-model="lname"></td>
+            </tr>
+            
+            <tr>
+                <td style="color:white; width:150px">Email:</td>
+                <td><input type="text" id="email" name="email" ng-model="email"></td>
+            </tr>
+
+			<tr>
+                <td style="color:white; width:150px">City:</td>
+                <td><input type="text" id="city" name="city" ng-model="city"></td>
+            </tr>
+            
+            <tr>
+                <td style="color:white; width:150px">Phone Number:</td>
+                <td><input type="text" id="phone" name="phone" ng-model="phone"></td>
+            </tr>
+            <br>
+            <tr>
+                <td style="color:white; width:150px">Change Password:</td>
+                <td><input type="password" id="pass" name="pass" ng-model="pass"></td>
+            </tr>
+
+			<tr>
+                <td style="color:white; width:150px">Confirm Password:</td>
+                <td><input type="password" id="pass2" name="pass2" ng-model="pass2"></td>
+            </tr>
+            
+            <tr>
+            	<td></td>
+                <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
+               <button ng-click="saveFunc(fname, lname, email, city, phone, pass, pass2)">Save</button></td>
+            </tr>
+            
+
+        </table>
+    </form>
+<!-- 
+    <div id="fb-root"></div>
+
+    <div class="fb-login-button" onlogin="window.location='http://localhost:8096/index.html'" data-width="100" data-max-rows="2" data-size="medium" data-button-type="continue_with" data-show-faces="true" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+</div>

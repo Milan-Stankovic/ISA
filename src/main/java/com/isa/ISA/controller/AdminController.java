@@ -2,6 +2,7 @@ package com.isa.ISA.controller;
 
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.isa.ISA.dbModel.korisnici.Admin;
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,13 @@ public class AdminController {
     public void addUser(@RequestBody Admin k){
         adminService.addAdmin(k);
     }
-
+    
+    @RequestMapping(method = RequestMethod.GET,value = "/api/admin/{username}")
+    public Admin getAdmin(@PathVariable String username){
+        return adminService.getAdmin(username);
+        
+    }
+    
     @RequestMapping("/admin/{id}")
     public Admin getAdmin(@PathVariable Long id){
         return adminService.getAdmin(id);
