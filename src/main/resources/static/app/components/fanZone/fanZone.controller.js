@@ -5,12 +5,12 @@
 		.module('app')
 		.controller('fanZoneController', fanZoneController);
 
-    fanZoneController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window'];
-    function fanZoneController($location, $scope, $rootScope, $cookies, $window) {
+    fanZoneController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window', '$http'];
+    function fanZoneController($location, $scope, $rootScope, $cookies, $window, $http) {
     	var fzc = this;
     	
         var init = function (){
-        	$scope.items = [
+        	/*$scope.items = [
         	  {"id" : 1,
         	    "naziv" : "naziv",
         	    "opis": "opis opis opis opis",
@@ -33,13 +33,63 @@
     					 "adresa": "adresa bioskopa broj5"},
     		 "cena": 423.5}
                 		
-            ];
+            ];*/
+        	
+        	$http({
+                method: 'GET',
+                url: 'http://localhost:8096/rekviziti/zvanicni'
+              }).then(function successCallback(response) {
+                   var items = response.data;
+                   if (items!=null && items!=undefined){
+                	   $scope.items = items;
+                	   for(var i=0; i<$scope.items.length; i++){
+                		   $scope.items[i].push({"showDone": false, "showSthWentWrong": false});
+                	   }
+                   }else{
+                	   $scope.items = [];
+                   }
+                }
+              );
 
         };
         init();
-        
-        $scope.logout = function(){
+       
+        fzc.rezervisi = function(id){
+        	$http({
+                method: 'POST',
+                url: 'http://localhost:8096/rekviziti/'+id+'/rezervisi/'+userID
+              }).then(function successCallback(response) {
+	            	 result = response.data;
+	         		 if(result==""){
+	         			 fzc.showDone(id);
+	         		 }
+	         		 else
+	         			 fzc.showSthWentWrong(id);	         			 
+                }
+              );
+
         }
+
+        fzc.showDone = function(id) {
+        	  for(var i=0; i<$scope.items.length; i++){
+        		  if($scope.items[i].id==id){
+        		      $scope.items[i].showDone = true;
+        		      $timeout(function() {
+        		    	  $scope.items[i].showDone = false;
+        		      }, 3000);        			  
+        		  }
+        	  }
+		 };
+		 fzc.showSthWentWrong = function(id) {
+       	  for(var i=0; i<$scope.items.length; i++){
+       		  if($scope.items[i].id==id){
+       		      $scope.items[i].showSthWentWrong = true;
+       		      $timeout(function() {
+       		    	  $scope.items[i].showSthWentWrong = false;
+       		      }, 3000);        			  
+       		  }
+       	  }
+		 };
     }
 
 })();

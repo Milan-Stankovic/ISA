@@ -24,7 +24,15 @@
 							<tr>
 								<td><h4>Deadline:</h4></td>
 								<td>7 days</td>
-							</tr>							
+							</tr>		
+							<tr ng-show="{{item.showDone}}">
+								<td><h4>Booking done successfully!</h4></td>
+								<td></td>
+							</tr>			
+							<tr ng-show="{{item.showSthWentWrong}}">
+								<td><h4>Something went wrong</h4></td>
+								<td></td>
+							</tr>				
 					</table>
 				</div>
 			</td>
