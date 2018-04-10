@@ -33,13 +33,21 @@
                 //var rrr = JSON.parse($cookies.get('userName'));
                
      			if(user!=null && user!=undefined){
-     				if(user.status=="NERESEN"){
-                		alert("Lozinka mora biti promenjena. Neuspesno logovanje.")
+     				
+     				if(user.status=="NERESEN" && user.hasOwnProperty('tip')){
+                		alert("Login failed. Password must be changed before first login.")
+                		
+                		$cookies.remove('user');
+              
+                		return;
+                	}else if(user.status=="NERESEN" && !user.hasOwnProperty('tip')){
+                		alert("Before login you must confirm your registration via email.")
                 		
                 		$cookies.remove('user');
               
                 		return;
                 	}
+                		
      	
 	     			$cookies.put("user", user.userName, {
 	     			   path: 'core'
