@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.korisnici.Admin;
-import com.isa.ISA.dbModel.korisnici.Korisnik;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.service.AdminService;
+import com.isa.ISA.service.EmailService;
 import com.isa.ISA.service.UserService;
 
 @RestController
@@ -49,7 +49,7 @@ public class RegisterController {
 	        rk.setPrezime(kor.getPrezime());
 	        System.out.println("Kreiran korisnik: " + rk.getUserName());
 	        userService.addUser(rk);
-	        
+	        EmailService es = new EmailService(rk.getEmail());
 	        System.out.println(userService.getUser(rk.getUserName()).getUserName());
 
 	        System.out.println("Account with username " + rk.getUserName() + "has been created");
