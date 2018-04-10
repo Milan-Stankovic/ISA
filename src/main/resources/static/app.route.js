@@ -14,13 +14,19 @@
 			 controller: 'coreController',
 			 controllerAs: 'cc'
 		 })
-		.state('home', {
+		.state('core.home', {
 			url: 'home',
 			templateUrl: 'app/components/home/home.html',
 			controller: 'homeController',
 			controllerAs: 'hc'
 		})
-		.state('fanZone', {
+		.state('core.login', {
+			url: 'home',
+			templateUrl: 'app/components/login/login.html',
+			controller: 'loginController',
+			controllerAs: 'lc'
+		})
+		.state('core.fanZone', {
 			url: 'fanZone',
 			templateUrl: 'app/components/fanZone/fanZone.html',
 			controller: 'fanZoneController',
