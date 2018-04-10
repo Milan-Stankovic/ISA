@@ -1,0 +1,34 @@
+<div id="body" class="rentals">
+	<h2>ITEMS</h2>
+	<table class="fanZona">
+		<tr ng-repeat="item in items">
+			<td><a href="#"><img src={{item.slika}} alt=""></a></td>
+			<td>
+				<div>
+					<table>
+							<tr>
+								<td><h3>{{item.naziv}}</h3></td>
+								<td class="floatRight"><button ng-click="fzc.rezervisi(item.id)">book item</button></td>
+							</tr>
+							<tr>
+								<td colspan='2'><h3>{{item.opis}}</h3></td>
+							</tr>
+							<tr>
+								<td><h4>Picking up at:</h4></td>
+								<td><span>{{item.preuzeti.naziv}}</br>{{item.preuzeti.adresa}}</span></td>
+							</tr>
+							<tr>
+								<td><h4>Price:</h4></td>
+								<td>{{item.cena}}€</td>
+							</tr>
+							<tr>
+								<td><h4>Deadline:</h4></td>
+								<td>7 days</td>
+							</tr>							
+					</table>
+				</div>
+			</td>
+		</tr>		
+	</table>
+</div>
+	
