@@ -29,7 +29,7 @@
               data: data
             }).then(function successCallback(response) {
                 var user = response.data;
-                alert("ulogovan: " + user.userName)
+                
                 //var rrr = JSON.parse($cookies.get('userName'));
                
      			if(user!=null && user!=undefined){
@@ -37,25 +37,25 @@
                 		alert("Lozinka mora biti promenjena. Neuspesno logovanje.")
                 		
                 		$cookies.remove('user');
-                		$scope.loggedIn = false;
+              
                 		return;
                 	}
-     				$scope.loggedIn = true;
+     	
 	     			$cookies.put("user", user.userName, {
 	     			   path: 'core'
 	     			});
 	     			alert("Uspesno logovanje: " + $cookies.get('user'))
-	     			$location.path("home");
+	            	$window.location.href = 'http://localhost:8096/';
      			}
                 
                 else{
-                    $scope.loggedIn = false;
+   
                     alert("Greška u prijavi, null user")
                 }
 
                 }, function errorCallback(response) {
                  alert("greska u prijavaFunc")
-                $scope.loggedIn = false;
+
                 });
 
         }
