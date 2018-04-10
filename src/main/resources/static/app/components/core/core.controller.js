@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('coreController', coreController);
 
-    coreController.$inject = ['$location', '$scope', '$rootScope'];
-    function coreController($location, $scope, $rootScope) {
+    coreController.$inject = ['$location', '$scope', '$rootScope', '$cookies'];
+    function coreController($location, $scope, $rootScope,$cookies) {
     	var cc = this;
         var init = function (){
         };
