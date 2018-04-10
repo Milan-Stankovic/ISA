@@ -8,8 +8,8 @@
       $urlRouterProvider.otherwise("/home");
 
       $stateProvider
-		 .state('/', {
-			 url: 'core',
+		 .state('core', {
+			 url: '/',
 			 templateUrl: 'app/components/core/core.html',
 			 controller: 'coreController',
 			 controllerAs: 'cc'
