@@ -43,6 +43,12 @@
 			templateUrl: 'app/components/fanZone/fanZone.html',
 			controller: 'fanZoneController',
 			controllerAs: 'fzc'
+		})
+		.state('core.addEditItem', {
+			url: 'addEditItem',
+			templateUrl: 'app/components/addEditItem/addEditItem.html',
+			controller: 'addEditItemController',
+			controllerAs: 'aeic'
 		});
      /* $locationProvider.html5Mode({
     	  enabled: true,

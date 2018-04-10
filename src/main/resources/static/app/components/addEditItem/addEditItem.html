@@ -1,0 +1,83 @@
+<div id="body" class="rentals">
+<table width="100%">
+	<tr>
+		<td width="50%">
+			<div id="body" class="rentals">
+				<h2>ADDING OFFICIAL ITEM</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th width='20%'>Title:</th>
+						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+					</tr>
+					<tr>
+						<th>Description:</th>
+						<td><textarea ng-model="item.opis" rows='4' columns='20'></textarea></td>
+					</tr>
+					<tr>
+						<th>Seller:</th>
+						<td><select data-ng-options="s for s in seller_options" data-ng-model="item.preuzeti"></select></td>
+					</tr>
+					<tr>
+						<th>Price:</th>
+						<td><input type='text' ng-model="item.cena"/></td>
+					</tr>
+					<tr>
+						<th>Photo:</th>
+						<td><input type="file" demo-file-model="item.slika" accept=".jpg, .png"/></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="aeic.add()">Add Item</button></td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		
+		<td width="50%">	
+			<div id="body" class="rentals">
+				<h2>EDITING OFFICIAL ITEM</h2>
+				<table class="fanZona" width='100%'>
+					<tr>
+						<th>Choose Item:</th>
+						<td><select data-ng-options="i for i in item_options" data-ng-model="itemToEdit"></select></td>
+					</tr>
+					<tr>
+						<th width='20%'>Title:</th>
+						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+					</tr>
+					<tr>
+						<th>Description:</th>
+						<td><textarea ng-model="item.opis" rows='4' columns='20'></textarea></td>
+					</tr>
+					<tr>
+						<th>Seller:</th>
+						<td><select data-ng-options="s for s in seller_options" data-ng-model="item.preuzeti"></select></td>
+					</tr>
+					<tr>
+						<th>Price:</th>
+						<td><input type='text' ng-model="item.cena"/></td>
+					</tr>
+					<tr>
+						<th>Photo:</th>
+						<td><input type="file" demo-file-model="item.slika" accept=".jpg, .png"/></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="aeic.edit()">Edit Item</button></td>
+					</tr>
+				</table>
+			</div>	
+		
+		</td>
+	</tr>
+</table>
+	
