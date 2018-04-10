@@ -62,6 +62,15 @@ public class StartData {
         a.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + a.getUserName());
         adminService.addAdmin(a);
+        
+        Admin a2 = new Admin();
+        a2.setUserName("admin2");
+        a2.setPassword("default");
+        a2.setTip(TipAdmina.SYS);
+        a2.setEmail("admin2");
+        a2.setStatus(StatusNaloga.AKTIVAN);
+        System.out.println("Kreiran korisnik: " + a2.getUserName());
+        adminService.addAdmin(a2);
 
         PozoristeBioskop p1 = new PozoristeBioskop();
         p1.setBrojOcena(0);

@@ -20,6 +20,12 @@
 			controller: 'homeController',
 			controllerAs: 'hc'
 		})
+		.state('core.adminLogin', {
+			url: 'adminLogin',
+			templateUrl: 'app/components/adminLogin/adminLogin.html',
+			controller: 'adminLoginController',
+			controllerAs: 'alc'
+		})
 		.state('core.register', {
 			url: 'register',
 			templateUrl: 'app/components/register/register.html',

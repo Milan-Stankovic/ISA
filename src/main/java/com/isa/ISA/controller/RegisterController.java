@@ -29,6 +29,16 @@ public class RegisterController {
 	 public RegisterController() {
 	    }
 	 
+	 @RequestMapping(method = RequestMethod.POST, value = "/api/register/admin") 
+	    public void register(@RequestBody Admin admin){
+		 Admin a = adminService.getAdmin(admin.getUserName());
+		 System.out.println("Status pre "+a.getStatus());
+		 a.setPassword(admin.getPassword());
+		 adminService.addAdmin(a);
+		 a = adminService.getAdmin(a.getUserName());
+		 System.out.println("Status posle "+a.getStatus());
+	 }
+	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register") 
 	    public String register(@RequestBody RegistrovaniKorisnik kor){
 
