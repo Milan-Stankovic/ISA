@@ -3,7 +3,7 @@ package com.isa.ISA.dbModel.korisnici;
 
 
 import com.isa.ISA.dbModel.Ponuda;
-import com.isa.ISA.dbModel.Rekvizit;
+import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.Rezervacija;
 
 import javax.persistence.Entity;
@@ -23,7 +23,7 @@ public class RegistrovaniKorisnik extends Korisnik {
     private List<Poziv> pozivi;
 
     @OneToMany
-    private List<Rekvizit> rekviziti;
+    private List<PolovanRekvizit> rekviziti;
 
     @OneToMany
     private List<Rezervacija> rezervacije;
@@ -65,11 +65,11 @@ public class RegistrovaniKorisnik extends Korisnik {
         this.pozivi = pozivi;
     }
 
-    public List<Rekvizit> getRekviziti() {
+    public List<PolovanRekvizit> getRekviziti() {
         return rekviziti;
     }
 
-    public void setRekviziti(List<Rekvizit> rekviziti) {
+    public void setRekviziti(List<PolovanRekvizit> rekviziti) {
         this.rekviziti = rekviziti;
     }
 

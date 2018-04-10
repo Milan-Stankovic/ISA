@@ -23,7 +23,7 @@ public class Ponuda {
     private double suma;
 
     @ManyToOne
-    private Rekvizit rekvizit;
+    private PolovanRekvizit rekvizit;
 
     private Boolean prihvaceno;
 
@@ -53,11 +53,11 @@ public class Ponuda {
         this.suma = suma;
     }
 
-    public Rekvizit getRekvizit() {
+    public PolovanRekvizit getRekvizit() {
         return rekvizit;
     }
 
-    public void setRekvizit(Rekvizit rekvizit) {
+    public void setRekvizit(PolovanRekvizit rekvizit) {
         this.rekvizit = rekvizit;
     }
 
