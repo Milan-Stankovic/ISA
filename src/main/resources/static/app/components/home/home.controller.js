@@ -9,8 +9,8 @@
     function homeController($location, $scope, $rootScope) {
         var hc = this;
         hc.home = "Home";
-        init = function (){
-        	$location.path("/login");
+        var init = function (){
+        	//$location.path("/login");
         };
         init();
     }

@@ -32,10 +32,10 @@
 			controller: 'fanZoneController',
 			controllerAs: 'fzc'
 		});
-      $locationProvider.html5Mode({
+     /* $locationProvider.html5Mode({
     	  enabled: true,
     	  requireBase: false
-    	});
+    	});*/
     }]);
 
 
