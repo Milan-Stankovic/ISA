@@ -3,11 +3,11 @@
 
     angular
 		.module('app')
-		.controller('loginController', loginController);
+		.controller('adminLoginController', adminLoginController);
 
-    loginController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies'];
-    function loginController($location, $scope, $rootScope, $http, $window, $cookies) {
-        var lc = this;
+    adminLoginController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies'];
+    function adminLoginController($location, $scope, $rootScope, $http, $window, $cookies) {
+        var alc = this;
         var user;
         var init = function (){
         	
@@ -18,51 +18,30 @@
         	$location.path("home");
         }
         
-        $scope.prijavaFunc = function(username, pass){
+        $scope.prijavaFunc = function(username, pass, pass2){
+        	if(pass!=pass2){
+        		alert("Passwords don't match.")
+        		return
+        	}
+        	if(pass=="default"){
+        		alert("You must change initial password to continue.")
+        		return;
+        	}
         	var data = {
         			"userName": username,
         			"password": pass
         	}
             $http({
               method: 'POST',
-              url: 'http://localhost:8096/api/login/',
+              url: 'http://localhost:8096/api/register/admin',
               data: data
             }).then(function successCallback(response) {
-                var user = response.data;
-               
-                if(user===null || user===undefined || user===""){
-                	alert("Login error. Please check your credentials.")
-                	return;
-                }
+            		alert("New password updated. Please login with new credentials.")
+            		$window.location.href = 'http://localhost:8096/#!/login';
                 
-               
-                else{
-     				
-     				if(user.status=="NERESEN" && user.hasOwnProperty('tip')){
-                		alert("Login failed. Password must be changed before first login.")
-                		
-                		$cookies.remove('user');
-                		$window.location.href = 'http://localhost:8096/#!/adminLogin';
-                		return;
-                		
-                	}else if(user.status=="NERESEN" && !user.hasOwnProperty('tip')){
-                		alert("Before login you must confirm your registration via email.")
-                		
-                		$cookies.remove('user');
-              
-                		return;
-                	}
-                		
-     	
-	     			$cookies.put("user", user.userName, {
-	     			   path: 'core'
-	     			});
-	     			console.log("Uspesno logovanje: " + $cookies.get('user'))
-	            	$window.location.href = 'http://localhost:8096/';
-                }
-                
+
                 }, function errorCallback(response) {
-                 alert("greska u prijavaFunc")
+                 alert("greska u adminLoginFunc")
 
                 });
 
