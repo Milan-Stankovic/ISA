@@ -19,7 +19,7 @@
 
         };
         init();
-        alert("logged: " + $scope.logged + " user: " + userCookie)
+        console.log("logged: " + $scope.logged + " user: " + userCookie);
         
         $scope.logout = function(){
         	$cookies.remove('user');

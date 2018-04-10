@@ -29,10 +29,14 @@
               data: data
             }).then(function successCallback(response) {
                 var user = response.data;
-                
-                //var rrr = JSON.parse($cookies.get('userName'));
                
-     			if(user!=null && user!=undefined){
+                if(user===null || user===undefined || user===""){
+                	alert("Login error. Please check your credentials.")
+                	return;
+                }
+                
+               
+                else{
      				
      				if(user.status=="NERESEN" && user.hasOwnProperty('tip')){
                 		alert("Login failed. Password must be changed before first login.")
@@ -53,15 +57,10 @@
 	     			$cookies.put("user", user.userName, {
 	     			   path: 'core'
 	     			});
-	     			alert("Uspesno logovanje: " + $cookies.get('user'))
+	     			console.log("Uspesno logovanje: " + $cookies.get('user'))
 	            	$window.location.href = 'http://localhost:8096/';
-     			}
-                
-                else{
-   
-                    alert("Greška u prijavi, null user")
                 }
-
+                
                 }, function errorCallback(response) {
                  alert("greska u prijavaFunc")
 
