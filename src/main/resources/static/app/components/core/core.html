@@ -43,9 +43,19 @@
 					</li>
 				</ul>
 			</li>
-			<li>
+			<li ng-hide="logged">
 				<a ng-href="#!/login">Login</a>
 			</li>
+			<li ng-show="logged">
+				<a ng-href="#!/profile">Profile</a>
+				<ul>
+					<li ng-show="logged">
+						<a href="" ng-click="logout()">Logout</a>
+					</li>
+
+				</ul>
+			</li>
+			
 		</ul>
 	</div>
 </div>
