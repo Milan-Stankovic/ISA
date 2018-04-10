@@ -25,7 +25,7 @@ public class RegisterController {
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register") 
 	    public String register(@RequestBody RegistrovaniKorisnik kor){
-	        Korisnik k;
+
 	        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 	        Admin adm = adminService.getAdmin(kor.getUserName());
 	        if(reg!=null || adm!=null){
@@ -38,18 +38,22 @@ public class RegisterController {
 	       
 	            return "Email is already taken.";
 	        }
+	        RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
+	        rk.setUserName(kor.getUserName());
+	        rk.setPassword(kor.getPassword());
+	        rk.setEmail(kor.getEmail());
+	        rk.setStatus(StatusNaloga.NERESEN);
+	        rk.setBrojTelefona(kor.getBrojTelefona());
+	        rk.setGrad(kor.getGrad());
+	        rk.setIme(kor.getIme());
+	        rk.setPrezime(kor.getPrezime());
+	        System.out.println("Kreiran korisnik: " + rk.getUserName());
+	        userService.addUser(rk);
 	        
-	        RegistrovaniKorisnik novi = new RegistrovaniKorisnik();
-	        novi.setUserName(kor.getUserName());
-	        novi.setPassword(kor.getPassword());
-	        novi.setEmail(kor.getEmail());
-	        novi.setBrojTelefona(kor.getBrojTelefona());
-	        novi.setGrad(kor.getGrad());
-	        novi.setIme(kor.getIme());
-	        novi.setPrezime(kor.getPrezime());
-	        novi.setStatus(StatusNaloga.NERESEN);
-	        userService.addUser(novi);
-	        return "Account with username " + novi.getUserName() + "has been created. Finish your registration with link we sent you on email.";
+	        System.out.println(userService.getUser(rk.getUserName()).getUserName());
+
+	        System.out.println("Account with username " + rk.getUserName() + "has been created");
+	        return "";
 	        	
 	        
 	    }

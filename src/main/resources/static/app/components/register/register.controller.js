@@ -23,6 +23,10 @@
         		alert("Passwords don't match.")
         		return;
         	}
+        	if(isNaN(phone)){
+        		alert("Enter valid phone number.")
+        		return;
+        	}
         	var data = {
         			"userName": username,
         			"password": pass,
@@ -32,12 +36,22 @@
         			"grad": hometown,
         			"brojTelefona": phone
         	}
+        	/*alert("userName" +  username +
+        			"password"+ pass +
+        			"ime"+ fname +
+        			"prezime"+ lname +
+        			"email"+ email +
+        			"grad"+ hometown +
+        			"brojTelefona"+ phone)*/
             $http({
               method: 'POST',
               url: 'http://localhost:8096/api/register/',
               data: data
             }).then(function successCallback(response) {
-               alert(response.data)
+            	if(response.data=="")
+            		alert("We sent you an email to confirm your registration.")
+            	else
+            		alert(response.data)
 
                 }, function errorCallback(response) {
                  alert("greska u regFunc")
