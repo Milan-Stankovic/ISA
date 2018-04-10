@@ -32,6 +32,11 @@ public class UserService {
         usersRepo.save(k);
     }
 
+	public RegistrovaniKorisnik findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return usersRepo.findByEmail(email);
+	}
+
 
 
 }

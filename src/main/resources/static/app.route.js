@@ -20,6 +20,12 @@
 			controller: 'homeController',
 			controllerAs: 'hc'
 		})
+		.state('core.register', {
+			url: 'register',
+			templateUrl: 'app/components/register/register.html',
+			controller: 'registerController',
+			controllerAs: 'rc'
+		})
 		.state('core.login', {
 			url: 'login',
 			templateUrl: 'app/components/login/login.html',

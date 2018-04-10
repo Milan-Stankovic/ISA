@@ -1,0 +1,51 @@
+<style>
+tr  {color: white;}
+</style>
+<div>
+	<form>
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="username" name="username" ng-model="username"></td>
+            </tr>
+
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="pass" name="pass" ng-model="pass"></td>
+            </tr>
+            
+            <tr>
+                <td>Repeat Password:</td>
+                <td><input type="password" id="pass2" name="pass2" ng-model="pass2"></td>
+            </tr>
+            
+            <tr>
+                <td>First Name:</td>
+                <td><input type="text" id="fname" name="fname" ng-model="fname"></td>
+            </tr>
+            <tr>
+                <td>Last Name:</td>
+                <td><input type="text" id="lname" name="lname" ng-model="lname"></td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td><input type="email" id="email" name="email" ng-model="email"></td>
+            </tr>
+            <tr>
+                <td>Hometown:</td>
+                <td><input type="text" id="hometown" name="hometown" ng-model="hometown"></td>
+            </tr>
+            <tr>
+                <td>Phone Number:</td>
+                <td><input type="text" id="phone" name="phone" ng-model="phone"></td>
+            </tr>
+		
+            <tr>
+            	<td></td>
+                <td><button ng-click="indexFunc()">Back</button>
+                <button ng-click="regFunc(username, pass, pass2, fname, lname, email, hometown, phone)">Register</button></td>
+            </tr>
+
+        </table>
+    </form>
+</div>

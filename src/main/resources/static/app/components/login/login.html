@@ -2,18 +2,23 @@
     <form>
         <table>
             <tr>
-                <td>Korisničko ime:</td>
+                <td style="color:white; width:150px">Username:</td>
                 <td><input type="text" id="username" name="username" ng-model="username"></td>
             </tr>
 
             <tr>
-                <td>Lozinka:</td>
+                <td style="color:white; width:150px">Password:</td>
                 <td><input type="password" id="pass" name="pass" ng-model="pass"></td>
             </tr>
 
             <tr>
-                <td><button ng-click="indexFunc()">Nazad</button></td>
-                <td><button ng-click="prijavaFunc(username, pass)">Prijava</button></td>
+            	<td></td>
+                <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
+               <button ng-click="prijavaFunc(username, pass)">Login</button></td>
+            </tr>
+            
+            <tr>
+                <td colspan="2" style="color:white; text-align:left"><br>Don't have an Account? <a ng-href="#!/register">Register here</a></td>
             </tr>
 
         </table>
