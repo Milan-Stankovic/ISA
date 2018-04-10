@@ -32,6 +32,12 @@
 			controller: 'loginController',
 			controllerAs: 'lc'
 		})
+		  .state('core.admin', {
+          url: 'admin',
+          templateUrl: 'app/components/admin/admin.html',
+          controller: 'adminController',
+          controllerAs: 'ac'
+      })
 		.state('core.fanZone', {
 			url: 'fanZone',
 			templateUrl: 'app/components/fanZone/fanZone.html',
