@@ -601,7 +601,7 @@ p a:hover {
 	border:1px solid #4F4F4F;
 	margin:0 auto 428px;
 	overflow:hidden;
-	width:958px;
+	width:100%;
 }
 #body.rentals ul {
 	border-top:1px solid #4F4F4F;
@@ -1469,6 +1469,7 @@ p a:hover {
     color : white;
 }
 
+
 .rating {
     text-align: left;
     color : white;
@@ -1486,8 +1487,20 @@ p a:hover {
     position: absolute;
 }
 
-.white{
-    color:white;
-   margin-left: 20px;
+.white {
+    color: white;
+    margin-left: 20px;
     margin-bottom: 10px;
+}
+.fanZona{
+	width:100%;
+    text-align: left;
+    color : white;
+    font-family:oswaldregular;
+	font-size:14px;
+	line-height: normal;	
+}
+.floatRight{
+    text-align: right;
+
 }
