@@ -30,6 +30,8 @@ public abstract class Korisnik {
     protected String email;
 
     protected String brojTelefona;
+    
+    protected String grad;
 
     public Korisnik(){}
 
@@ -96,4 +98,14 @@ public abstract class Korisnik {
     public void setBrojTelefona(String brojTelefona) {
         this.brojTelefona = brojTelefona;
     }
+
+	public String getGrad() {
+		return grad;
+	}
+
+	public void setGrad(String grad) {
+		this.grad = grad;
+	}
+    
+    
 }
