@@ -39,17 +39,17 @@ public class PozoristeBioskopService {
     }
 
     public List<PozoristeBioskop> getAllPozoriste(){
-        List<PozoristeBioskop> allP = new ArrayList<>();
+       // List<PozoristeBioskop> allP = new ArrayList<>();
 
         return   pbRepository.findByTip(TipUstanove.POZORISTE);
 
 }
 
     public List<PozoristeBioskop> getAllBioskop(){
-        List<PozoristeBioskop> allB = new ArrayList<>();
-        pbRepository.findByTip(TipUstanove.BIOSKOP).addAll(allB);
+      //  List<PozoristeBioskop> allB = new ArrayList<>();
+        return pbRepository.findByTip(TipUstanove.BIOSKOP);
         //  System.out.println(allPB.size());
-        return allB;
+
     }
 
     public void updateOcena(Long id, int ocena){

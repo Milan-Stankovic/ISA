@@ -2,27 +2,52 @@
     <div>
 
         <div>
-
             <h2><a>POZORISTA</a></h2>
-
-            <h3> <a>PRVO POZORISTE</a></h3>
-            <p>
-                Test opisa : mnogo dobro
-            </p>
-            <a href="movies.html">Read More</a>
         </div>
+        <span ng-repeat="pozoriste in pozorista track by $index">
 
-    </div>
-    <div>
-        <div>
-            <h2><a>BIOSKOPI</a></h2>
-            <h3> <a>PRVI BIOSKOP</a></h3>
-            <p>
+            <div>
 
-            </p>
+                <h3> <a>{{pozoriste.naziv}}</a></h3>
 
-            <a href="movies.html">Read More</a>
-        </div>
+                <p>Opis : {{pozoriste.opis}}</p>
 
-    </div>
-</div>
+                <p>Ocena : {{pozoriste.prosecnaOcena}}</p>
+
+
+                <!-- <div class="white" ng-repeat="n in [] | range:pozoriste.prosecnaOcena" >
+                     <span>☆</span>
+                 </div>
+                 -->
+
+                 <p>Adresa : {{pozoriste.adresa}}</p>
+
+                 <iframe ng-src="{{trustSrc(pozoriste.urlMape)}}"
+                         width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+             </div>
+         </span>
+
+     </div>
+     <div>
+         <div>
+             <h2><a>BIOSKOPI</a></h2>
+         </div>
+
+         <span ng-repeat="bioskop in bioskopi track by $index">
+
+             <div>
+
+                 <h3> <a>{{bioskop.naziv}}</a></h3>
+
+                 <p>Opis : {{bioskop.opis}}</p>
+
+                 <p> Ocena : {{bioskop.prosecnaOcena}}</p>
+
+                 <p> Adresa : {{bioskop.adresa}}</p>
+
+                 <iframe ng-src="{{trustSrc(bioskop.urlMape)}}"
+                     width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+             </div>
+         </span>
+     </div>
+ </div>

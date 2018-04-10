@@ -5,14 +5,18 @@
 		.module('app')
 		.controller('homeController', homeController);
 
-    homeController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies'];
-    function homeController($location, $scope, $rootScope, $http, $cookies) {
+    homeController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce'];
+    function homeController($location, $scope, $rootScope, $http, $cookies, $sce) {
         var hc = this;
         hc.home = "Home";
         var init = function (){
         	//$location.path("/login");
         };
         init();
+
+        $scope.trustSrc = function(src) {
+            return $sce.trustAsResourceUrl(src);
+        }
 
 
         $scope.pozorista = {};
@@ -24,7 +28,6 @@
                 url: 'http://localhost:8096/p',
             }).then(function successCallback(response) {
                 $scope.pozorista = response.data;
-                console.log(response.data);
 
             }, function errorCallback(response) {
                 alert("Greska kod pozorista")
