@@ -1442,3 +1442,28 @@ p a:hover {
 #footer div div.connect a#googleplus:hover {
 	background:url(../images/icons.png) no-repeat 0 -72px;
 }
+
+.pocetna div ul {
+    display: table;
+    width: 100%;
+    list-style: none;
+    color : white;
+}
+.pocetna div ul li {
+    display: table-cell;
+    text-align: center;
+    color : white;
+}
+.pocetna div ul li a {
+    display: block;
+    color : white;
+}
+
+.pocetna div ul li:first-child {
+    text-align: left;
+    color : white;
+}
+.pocetna div ul li:last-child {
+    text-align: right;
+    color : white;
+}

@@ -1442,3 +1442,7 @@ p a:hover {
 #footer div div.connect a#googleplus:hover {
 	background:url(../images/icons.png) no-repeat 0 -72px;
 }
+
+.pocetna{
+	color : white;
+}
