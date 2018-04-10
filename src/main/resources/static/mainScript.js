@@ -1,8 +1,8 @@
 (function (angular) {
 //stari angular
-    var app = angular.module("app", []);
+    var app = angular.module("app", ['ngCookies']);
     
-    app.controller("headerCtrl", ['$scope', '$http', '$window',
+    app.controller("headerCtrl", ['$scope', '$http', '$window', '$cookies',
         function loginCtrl($scope, $http, $localStorage, $window){
 
         $scope.loginFunc = function(){
@@ -22,14 +22,26 @@
         }
 
         $scope.prijavaFunc = function(username, pass){
+        	var data = {
+        			"userName": $scope.username,
+        			"password": $scope.password
+        	}
             $http({
               method: 'POST',
-              url: 'http://localhost:8096/api/login/username='+$scope.username + "&pass=" + $scope.pass
+              url: 'http://localhost:8096/api/login/',
+              data: data
             }).then(function successCallback(response) {
                 $scope.current = response.data;
                 if($scope.current){
+                	if($scope.current.status=="NERESEN"){
+                		alert("Lozinka mora biti promenjena. Neuspesno logovanje.")
+                		
+                		$cookies.remove('username');
+                		$scope.loggedIn = false;
+                	}
                     $scope.loggedIn = true;
-
+                    bakeCookie();
+                    alert("Uspesno logovanje.")
                 }
 
                 else{
@@ -67,7 +79,16 @@
             }
 
 
+            function bakeCookie(){
+            	var cookie = $cookies.get('username');
 
+            	  if ( cookie ) {
+            		  $cookies.remove("username");
+            		  $cookies.put('username', $scope.current.userName);
+            	  } else {
+            		  $cookies.put('username', $scope.current.userName);
+            	  }
+            }
 
             function GetFBLoginStatus() {
                 FB.getLoginStatus( function(response) {
@@ -82,14 +103,21 @@
                           function(response) {
 
                             console.log(response.id);
+                            console.log(pass);
                             console.log(response.first_name);
                             console.log(response.last_name);
 
                             console.log("salje post req na fblogin")
+                            var data={
+                            	"userName": response.id,
+                            	"password": pass,
+                            	"ime": response.first_name,
+                            	"prezime": response.last_name
+                            }
                             $http({
                               method: 'POST',
-                              url: 'http://localhost:8096/api/fblogin/username='+response.id + "&pass=pass" + "&ime=" + response.first_name
-                              + "&prez=" + response.last_name
+                              url: 'http://localhost:8096/api/fblogin/',
+                              data: data
                             }).then(function successCallback(response) {
                                  $scope.current = response.data;
 
