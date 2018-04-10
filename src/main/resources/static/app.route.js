@@ -21,7 +21,7 @@
 			controllerAs: 'hc'
 		})
 		.state('core.login', {
-			url: 'home',
+			url: 'login',
 			templateUrl: 'app/components/login/login.html',
 			controller: 'loginController',
 			controllerAs: 'lc'

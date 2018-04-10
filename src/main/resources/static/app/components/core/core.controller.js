@@ -9,7 +9,7 @@
     function coreController($location, $scope, $rootScope) {
     	var cc = this;
         var init = function (){
-        	
+        	$location.path('/home');
         };
         init();
         
