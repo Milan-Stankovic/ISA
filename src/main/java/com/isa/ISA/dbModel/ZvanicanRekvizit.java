@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -19,6 +20,9 @@ public class ZvanicanRekvizit {
     private String naziv;
     
     private String opis;
+
+    @Lob
+    private byte[] slika;
     
     @ManyToOne
     private Admin postavio;
