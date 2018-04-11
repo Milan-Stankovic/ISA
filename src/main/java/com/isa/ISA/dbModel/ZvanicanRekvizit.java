@@ -105,5 +105,13 @@ public class ZvanicanRekvizit {
 	public void setRezervacije(List<RezervacijaRekvizita> rezervacije) {
 		this.rezervacije = rezervacije;
 	}
+
+	public byte[] getSlika() {
+		return slika;
+	}
+
+	public void setSlika(byte[] slika) {
+		this.slika = slika;
+	}
     
 }

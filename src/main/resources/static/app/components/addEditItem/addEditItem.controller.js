@@ -12,11 +12,15 @@
         var init = function (){
         	//proveri da li je admin koji ima pristup ovome
         	$scope.item = {
-        			"naziv": "",
-        			"opis": "",
-        			"cena": "",
-        			"slika": "",
-        			"preuzeti": ""
+        			"id" : 0,
+           			"naziv": "",
+           			"opis": "",
+           			"cena": "",
+           			"slika": "",
+           			"postavio": {},
+           			"preuzeti": {},
+           			"aktivan": true, 
+           			"rezervacije": []
         	};
         	$scope.showDone=false;
         	$scope.showSthWentWrong=false;
@@ -32,7 +36,7 @@
                    var items = response.data;
                    if (items!=null && items!=undefined){
                 	   for(var i=0; i<items.length; i++){
-                		   $scope.seller_options.push(items[i].naziv);
+                		   $scope.seller_options.push({"naziv":items[i].naziv, "id":items[i].id});
                 	   }
                    }
                 }
@@ -68,28 +72,91 @@
         		aeic.blankField("Seller");
         		return;        		
         	}
-        	var data = $scope.item;
+        	var pozBio = {};
         	$http({
-                method: 'POST',
-                url: 'http://localhost:8096/rekviziti/zvanicni',
-                data: data                
+                method: 'GET',
+                url: 'http://localhost:8096/pb/'+$scope.item.preuzeti.id
               }).then(function successCallback(response) {
-                   var items = response.data;
-                   if (items==null || items==undefined){
-                	   aeic.showSthWentWrong();
-                   }
-                   else{
-                	   aeic.showDone();
-                	   $scope.item = {
-                   			"naziv": "",
-                   			"opis": "",
-                   			"cena": "",
-                   			"slika": "",
-                   			"preuzeti": ""
-                	   };
-                   }
-                }
-              );
+                pozBio = response.data;
+	        	if($scope.item.slika=="" || $scope.item.slika==undefined){        		
+	        		var data = {
+	    				"id" : 0,
+	           			"naziv": $scope.item.naziv,
+	           			"opis": $scope.item.opis,
+	           			"cena": parseFloat($scope.item.cena),
+	           			"slika": [],
+	           			"postavio": {},
+	           			"preuzeti": pozBio,
+	           			"aktivan": true, 
+	           			"rezervacije": []
+	        		};
+	            	$http({
+	                    method: 'POST',
+	                    url: 'http://localhost:8096/rekviziti/zvanicni',
+	                    data: data                
+	                  }).then(function successCallback(response) {
+	                       var items = response.data;
+	                       if (items==null || items==undefined){
+	                    	   aeic.showSthWentWrong();
+	                       }
+	                       else{
+	                    	   aeic.showDone();
+	                    	   $scope.item = {
+	                    			"id" : 0,
+	                       			"naziv": "",
+	                       			"opis": "",
+	                       			"cena": "",
+	                       			"slika": "",
+	                       			"postavio": {},
+	                       			"preuzeti": {},
+	                       			"aktivan": true, 
+	                       			"rezervacije": []
+	                    	   };
+	                       }
+	                    });
+	        	}
+	        	//za sliku
+	        	else{
+		        	var file = $scope.item.slika;
+		        	var fileFormData = new FormData();
+		            fileFormData.append('file', file);
+		        	$http({
+		        		method: 'POST',
+		                url: 'http://localhost:8096/rekviziti/upload',
+		                file: fileFormData,
+		                transformRequest: angular.identity,
+		                headers: {'Content-Type': undefined}
+		            }).then(function successCallback(response) {
+		            	//za rekvizit
+		            	var data = $scope.item;
+		            	data.slika = response.data;
+		            	$http({
+		                    method: 'POST',
+		                    url: 'http://localhost:8096/rekviziti/zvanicni',
+		                    data: data                
+		                  }).then(function successCallback(response) {
+		                       var items = response.data;
+		                       if (items==null || items==undefined){
+		                    	   aeic.showSthWentWrong();
+		                       }
+		                       else{
+		                    	   aeic.showDone();
+		                    	   $scope.item = {
+		                       			"id" : 0,
+		                       			"naziv": "",
+		                       			"opis": "",
+		                       			"cena": "",
+		                       			"slika": "",
+		                       			"postavio": {},
+		                       			"preuzeti": {},
+		                       			"aktivan": true, 
+		                       			"rezervacije": []
+		                    	   };
+		                       }
+		                   });
+		            });    
+	        	}
+                });
         }
         
         aeic.edit = function(){

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
@@ -27,5 +28,9 @@ public class RekvizitiController {
 	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
     public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
 		return rekvizit.addTematske(zr);
+    }
+	@RequestMapping(method = RequestMethod.POST, value = "/upload")
+    public byte[] addImageToBytes(@RequestBody MultipartFile file){
+		return rekvizit.saveMultipartFile(file);
     }
 }
