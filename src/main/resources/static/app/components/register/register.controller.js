@@ -49,12 +49,12 @@
               data: data
             }).then(function successCallback(response) {
             	if(response.data=="")
-            		alert("We sent you an email to confirm your registration.")
+            		console.log("We sent you an email to confirm your registration.");
             	else
             		alert(response.data)
 
                 }, function errorCallback(response) {
-                 alert("greska u regFunc")
+                 alert("Username or email is already taken.")
 
                 });
 

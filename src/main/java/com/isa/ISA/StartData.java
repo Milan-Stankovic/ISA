@@ -102,19 +102,18 @@ public class StartData {
         System.out.println("Kreiran korisnik: " + rk3.getUserName());
         userService.addUser(rk3);
         
-   /*     Prijatelj p0 = new Prijatelj();
+        Prijatelj p0 = new Prijatelj();
         p0.setPosiljalac(userService.getUser(rk.getUserName()));
         p0.setPrimalac(userService.getUser(rk3.getUserName()));
         p0.setStatus(StatusPrijateljstva.PRIHVACENO);
         prijateljService.addFriendship(p0);
-
+  
         Prijatelj p2 = new Prijatelj();
         p2.setPosiljalac(userService.getUser(rk3.getUserName()));
         p2.setPrimalac(userService.getUser(rk2.getUserName()));
-        p2.setStatus(StatusPrijateljstva.POSLATO);
+        p2.setStatus(StatusPrijateljstva.PRIHVACENO);
         prijateljService.addFriendship(p2);
-        
-        prijateljService.connectFriends();*/
+ 
         
         Admin a = new Admin();
         a.setUserName("admin");
