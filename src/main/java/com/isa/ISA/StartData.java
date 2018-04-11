@@ -71,7 +71,9 @@ public class StartData {
         RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
         rk.setUserName("kor");
         rk.setPassword("kor");
-        rk.setEmail("kor");
+        rk.setIme("Pera");
+        rk.setPrezime("Peric");
+        rk.setEmail("pero@zahoo.com");
         rk.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + rk.getUserName());
         userService.addUser(rk);
@@ -79,12 +81,12 @@ public class StartData {
         RegistrovaniKorisnik rk2 = new RegistrovaniKorisnik();
         rk2.setUserName("a");
         rk2.setPassword("a");
-        rk2.setEmail("a@gmail.com");
+        rk2.setEmail("mirko@gmail.com");
         rk2.setStatus(StatusNaloga.AKTIVAN);
         rk2.setBrojTelefona("4444");
         rk2.setGrad("a");
-        rk2.setIme("a");
-        rk2.setPrezime("a");
+        rk2.setIme("Mirko");
+        rk2.setPrezime("Mirkovic");
         System.out.println("Kreiran korisnik: " + rk2.getUserName());
         userService.addUser(rk2);
         

@@ -10,8 +10,8 @@
         var sc = this;
         var user = undefined;
         $scope.friendsList = [];
+        
         var init = function (){ 	
-
         	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
         	$http({
   			  method: 'GET',
@@ -24,12 +24,7 @@
   			  }, function errorCallback(response) {
   				  console.log("Greska kod GET user");
   			  });
-        	
-        	
-        	
-		        
-        
-       
+
         };
         init();
         
@@ -41,40 +36,37 @@
       				 
       			}).then(function successCallback(response) {
       				user = response.data;
-      				alert(user.prijatelji==undefined)
-      				if(user.prijatelji!=undefined && user.prijatelji!=null){
-      					console.log("user not null, collecting friends, list size: " + user.prijatelji.length)
-      		        	for(var i = 0; i < user.prijatelji.length; i++){
-      						if(user.prijatelji[i].posiljalac.userName===user.userName)
-      							$scope.friendsList.push(user.prijatelji[i].primalac)
-      						else
-      							$scope.friendsList.push(user.prijatelji[i].posiljalac)
-      					}
-      		        }else console.log("user is null, no collecting friends")
-      				alert($scope.friendsList.length)
-      				//alert(user.userName)
+      				/*console.log("userName " +  user.userName +
+      	        			" password "+ user.password +
+      	        			" ime "+ user.ime +
+      	        			" prezime "+ user.prezime +
+      	        			" email "+ user.email +
+      	        			" grad "+ user.grad +
+      	        			" brojTelefona "+ user.brojTelefona + 
+      	        			"prijateji" + user.prijatelji);*/
+      				
+      				if(user!=undefined){
+      		        	console.log("frnessssss")
+      		        	var tempLista;
+      		        	$http({
+      		    			  method: 'GET',
+      		    			  url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user')
+      		    				 
+      		    			}).then(function successCallback(response) {
+      		    				$scope.friendsList = response.data;
+      		    				console.log($scope.friendsList.length);
+      		    				//alert(user.userName)
+      		    			  }, function errorCallback(response) {
+      		    				  console.log("Greska kod GET user frineds");
+      		    			  });
+      		        	
+      		        
+      		        }
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
       			  });
       	}
-        
-       /* alert(user.userName)
-    	if(user!=undefined){
-    		console.log("user not null, collecting friends")
-    		if(user.prijatelji!=undefined && user.prijatelji!=null){
-	        	for(var i = 0; i < user.prijatelji.length; i++){
-					if(user.prijatelji[i].posiljalac.userName===user.userName)
-						$scope.friendsList.push(user.prijatelji[i].primalac)
-					else
-						$scope.friendsList.push(user.prijatelji[i].posiljalac)
-				}
-	        }
-    		
-    	}else console.log("user is null, no collecting friends")*/
-        		
-        
-   
-       // alert($scope.friendsList.length)
+      
         $scope.indexFunc = function(){
         	$location.path("home");
         }
