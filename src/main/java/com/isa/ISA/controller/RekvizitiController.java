@@ -3,10 +3,12 @@ package com.isa.ISA.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.service.RekvizitService;
 
@@ -21,5 +23,9 @@ public class RekvizitiController {
 	@RequestMapping(method = RequestMethod.GET, value = "/zvanicni")
     public List<ZvanicanRekvizit> getTematske(){
 		return rekvizit.getTematske();
+    }
+	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
+    public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
+		return rekvizit.addTematske(zr);
     }
 }

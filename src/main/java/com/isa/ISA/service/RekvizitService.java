@@ -17,4 +17,8 @@ public class RekvizitService {
 		return rekvizitRepo.findByAktivan(true);
 	}
 
+	public ZvanicanRekvizit addTematske(ZvanicanRekvizit zr) {
+		return rekvizitRepo.save(zr);
+	}
+
 }

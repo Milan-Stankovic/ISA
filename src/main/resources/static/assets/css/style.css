@@ -1607,3 +1607,7 @@ p a:hover {
     align: center !important;
     width: 100px;
 }
+.secretMessage{
+	font-size:12px  !important;
+	color:  red  !important;
+}
