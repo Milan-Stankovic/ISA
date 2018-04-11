@@ -26,8 +26,8 @@ public class RekvizitiController {
 		return rekvizit.getTematske();
     }
 	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
-    public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
-		return rekvizit.addTematske(zr);
+    public void addTematske(@RequestBody ZvanicanRekvizit zr){
+		rekvizit.addTematske(zr);
     }
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
     public byte[] addImageToBytes(@RequestBody MultipartFile file){

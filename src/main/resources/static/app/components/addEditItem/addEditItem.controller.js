@@ -5,23 +5,11 @@
 		.module('app')
 		.controller('addEditItemController', addEditItemController);
 
-    addEditItemController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window', '$http', '$timeout'];
-    function addEditItemController($location, $scope, $rootScope, $cookies, $window, $http, $timeout) {
+    addEditItemController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window', '$http', '$timeout', '$stateParams'];
+    function addEditItemController($location, $scope, $rootScope, $cookies, $window, $http, $timeout, $stateParams) {
     	var aeic = this;
     	
         var init = function (){
-        	//proveri da li je admin koji ima pristup ovome
-        	$scope.item = {
-        			"id" : 0,
-           			"naziv": "",
-           			"opis": "",
-           			"cena": "",
-           			"slika": "",
-           			"postavio": {},
-           			"preuzeti": {},
-           			"aktivan": true, 
-           			"rezervacije": []
-        	};
         	$scope.showDone=false;
         	$scope.showSthWentWrong=false;
         	$scope.eshowDone=false;
@@ -29,9 +17,31 @@
         	$scope.blankField=false;
         	$scope.emptyField="";
         	$scope.seller_options = [];
+        	
+        	
+        	//proveri da li je admin koji ima pristup ovome
+        	$scope.regUser={};
+        	/*$cookies.get('user');
+        	$scope.regUser = JSON.parse($cookies.get('user'));
+        	if($scope.regUser.tip==undefined){
+        		$location.path('/home');
+        	}        	
+        	*/
+        	
+        	$scope.item = {
+        			"id" : 0,
+           			"naziv": "",
+           			"opis": "",
+           			"cena": "",
+           			"slika": "",
+           			"postavio": $scope.regUser,
+           			"preuzeti": {},
+           			"aktivan": true, 
+           			"rezervacije": []
+        	};
         	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/p'
+                url: 'http://localhost:8096/pb'
               }).then(function successCallback(response) {
                    var items = response.data;
                    if (items!=null && items!=undefined){
@@ -78,14 +88,15 @@
                 url: 'http://localhost:8096/pb/'+$scope.item.preuzeti.id
               }).then(function successCallback(response) {
                 pozBio = response.data;
-	        	if($scope.item.slika=="" || $scope.item.slika==undefined){        		
+                var file = $scope.item.slika; 
+	        	if(file=="" || file==undefined){        		
 	        		var data = {
 	    				"id" : 0,
 	           			"naziv": $scope.item.naziv,
 	           			"opis": $scope.item.opis,
 	           			"cena": parseFloat($scope.item.cena),
 	           			"slika": [],
-	           			"postavio": {},
+	           			"postavio":$scope.regUser,
 	           			"preuzeti": pozBio,
 	           			"aktivan": true, 
 	           			"rezervacije": []
@@ -107,7 +118,7 @@
 	                       			"opis": "",
 	                       			"cena": "",
 	                       			"slika": "",
-	                       			"postavio": {},
+	                       			"postavio": $scope.regUser,
 	                       			"preuzeti": {},
 	                       			"aktivan": true, 
 	                       			"rezervacije": []
@@ -118,7 +129,9 @@
 	        	//za sliku
 	        	else{
 		        	var file = $scope.item.slika;
-		        	var fileFormData = new FormData();
+		        	var array = new Uint8Array(file),
+		            binaryString = String.fromCharCode.apply(null, array);
+		        	/*var fileFormData = new FormData();
 		            fileFormData.append('file', file);
 		        	$http({
 		        		method: 'POST',
@@ -128,8 +141,30 @@
 		                headers: {'Content-Type': undefined}
 		            }).then(function successCallback(response) {
 		            	//za rekvizit
-		            	var data = $scope.item;
-		            	data.slika = response.data;
+		            	data.slika = response.data;*/
+		        		var data = {
+		    				"id" : 0,
+		           			"naziv": $scope.item.naziv,
+		           			"opis": $scope.item.opis,
+		           			"cena": parseFloat($scope.item.cena),
+		           			"slika": binaryString,
+		           			"postavio":{
+		           		        "id": 4,
+		           		        "userName": "admin",
+		           		        "password": "admin",
+		           		        "status": "AKTIVAN",
+		           		        "ime": "a",
+		           		        "prezime": "a",
+		           		        "email": "admin",
+		           		        "brojTelefona": null,
+		           		        "grad": "a",
+		           		        "tip": "SYS",
+		           		        "mesta": []
+		           		    },
+		           			"preuzeti": pozBio,
+		           			"aktivan": true, 
+		           			"rezervacije": []
+		        		};		            	
 		            	$http({
 		                    method: 'POST',
 		                    url: 'http://localhost:8096/rekviziti/zvanicni',
@@ -147,13 +182,13 @@
 		                       			"opis": "",
 		                       			"cena": "",
 		                       			"slika": "",
-		                       			"postavio": {},
+		                       			"postavio": $scope.regUser,
 		                       			"preuzeti": {},
 		                       			"aktivan": true, 
 		                       			"rezervacije": []
 		                    	   };
 		                       }
-		                   });
+		                 //  });
 		            });    
 	        	}
                 });
@@ -197,6 +232,20 @@
 					 $scope.emptyField = "";
 		      }, 3000);    
 		 }
+		 
+		 function convertFileToBase64viaFileReader(url, callback){
+			    var xhr = new XMLHttpRequest();
+			    xhr.responseType = 'blob';
+			    xhr.onload = function() {
+			      var reader  = new FileReader();
+			      reader.onloadend = function () {
+			          callback(reader.result);
+			      }
+			      reader.readAsDataURL(xhr.response);
+			    };
+			    xhr.open('GET', url);
+			    xhr.send();
+			}
         
     }
 
