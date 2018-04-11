@@ -42,7 +42,7 @@ p a:hover {
 	width:587px;
 }
 #header div ul {
-    height:200px;
+	height:50px;
 	left:144px;
 	list-style:none;
 	margin:0;
@@ -51,6 +51,10 @@ p a:hover {
 	position:absolute;
 	top:119px;
 }
+
+#header div ul:hover {
+	height:200px!important;
+	}
 #header div ul li:first-child {
 	margin:0;
 }
@@ -111,6 +115,7 @@ p a:hover {
 }
 #header div ul li ul li.selected a, #header div ul li ul li a:hover {
 	color:#fff!important;
+	height:200px!important;
 }
 /*------------------------- Body ---------------------------*/
 #body {
@@ -1576,6 +1581,7 @@ p a:hover {
     float:left  !important;
     padding: 8px 16px !important;
     text-decoration: none !important;
+
     width: 200px !important;
 	height: 16px !important;
 }
