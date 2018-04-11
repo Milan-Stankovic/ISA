@@ -53,43 +53,21 @@ public class PrijateljService {
     
     public List<Prijatelj> getUserFriends(String username){
     	List<Prijatelj> allFriends = new ArrayList<>();
-    	for(Prijatelj p : prijateljRepo.findAll())
-    		if(p.getPosiljalac().getUserName().equals(username))
+    	for(Prijatelj p : prijateljRepo.findAll()){
+    		System.out.println("Posilja;ac: " + p.getPosiljalac().getUserName());
+    		System.out.println("Status: " + p.getStatus().toString());
+    		if(p.getPosiljalac().getUserName().equals(username) && p.getStatus().toString().equals("PRIHVACENO"))
     			allFriends.add(p);
-    		else if(p.getPrimalac().getUserName().equals(username) && p.getStatus().equals("PRIHVACENO"))
+    		System.out.println("Primalac: " + p.getPrimalac().getUserName());
+    		System.out.println("Status: " + p.getStatus().toString());
+    		if(p.getPrimalac().getUserName().equals(username) && p.getStatus().toString().equals("PRIHVACENO"))
     			allFriends.add(p);
+    	}
+    		
     	return allFriends;
     }
+    
 
-	public void connectFriends() {
-		for(RegistrovaniKorisnik r : userRepo.findAll()){
-			for(Prijatelj p : prijateljRepo.findAll()){
-				if(p.getPosiljalac().getUserName().equals(r.getUserName())){
-					if(r.getPrijatelji()==null)
-						r.setPrijatelji(new ArrayList<Prijatelj>());
-					r.getPrijatelji().add(p);
-				}
-				else if(p.getPrimalac().getUserName().equals(r.getUserName())){
-					if(r.getPrijatelji()==null)
-						r.setPrijatelji(new ArrayList<Prijatelj>());
-					r.getPrijatelji().add(p);
-				}
-			}
-			
-			userRepo.save(r);
-		}
-			
-		
-				
-					
-						
-		
-	}
-
-	/*public RegistrovaniKorisnik findByEmail(String email) {
-		// TODO Auto-generated method stub
-		return prijateljRepo.findByEmail(email);
-	}*/
 
 
 }

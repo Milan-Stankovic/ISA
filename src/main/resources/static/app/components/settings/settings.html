@@ -68,7 +68,7 @@
     
     <div style="overflow-y: scroll; height:400px; width:600px">
     	<ol style="list-style-type: none; width:600px">
-    		<li ng-repeat="user in friendsList" style="width:500px; color:white">{{user.ime}} {{user.prezime}} ({{user.email}})<span>       </span><button>Delete</button></li>
+    		<li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="deleteFriend(friend.email)">Delete</button></li>
 							
     	</ol>
     </div>

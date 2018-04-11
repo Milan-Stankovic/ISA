@@ -71,6 +71,21 @@
         	$location.path("home");
         }
         
+        $scope.deleteFriend = function(email){
+        	console.log("brisem: " + email)
+        	$http({
+    			  method: 'DELETE',
+    			  url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user'),
+    			  data: email
+    			}).then(function successCallback(response) {
+    				$scope.friendsList = response.data;
+    				console.log($scope.friendsList.length);
+    				//alert(user.userName)
+    			  }, function errorCallback(response) {
+    				  console.log("Greska kod GET user frineds");
+    			  });
+        }
+        
         $scope.saveFunc = function(fname, lname, email, city, phone, pass, pass2){
         	
         	if(!(pass===pass2) && pass!='' && pass2!=''){
