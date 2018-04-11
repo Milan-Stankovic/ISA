@@ -51,13 +51,14 @@
     <br>
     <h3 style="color:white">Friends:</h3><br>
     
-    <div>
+    <div style=" width:600px">
     	<br>
-    	<table>
-    	 	<tr>
-                <td style="color:white">Add New Friend: </td>
-                <td style="width:150px"><input type="text" id="searchName" name="searchName" ng-model="searchName"></td>
-                <td><button ng-click="indexFunc()">Search</button></td>
+    	<table style=" width:600px">
+    	 	<tr style=" width:600px">
+                <td style="color:white; width:150px">Add New Friend: </td>
+                <td style="width:150px"><input type="text" id="searchfName" name="searchfName" ng-model="searchfName" placeholder="First Name"></td>
+                 <td style="width:150px"><input type="text" id="searchlName" name="searchlName" ng-model="searchlName" placeholder="Last Name"></td>
+                <td><button ng-click="searchFunc(searchfName, searchlName)">Search</button></td>
             </tr>
     		
     	</table>

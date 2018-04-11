@@ -37,6 +37,16 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return usersRepo.findByEmail(email);
 	}
+	
+	public List<RegistrovaniKorisnik> searchImePrezime(String ime, String prezime){
+		return usersRepo.findByImeAndPrezimeIgnoreCase(ime, prezime);
+	}
+	public List<RegistrovaniKorisnik> searchIme(String ime){
+		return usersRepo.findByImeIgnoreCase(ime);
+	}
+	public List<RegistrovaniKorisnik> searchPrezime(String prezime){
+		return usersRepo.findByPrezimeIgnoreCase(prezime);
+	}
 
 
 
