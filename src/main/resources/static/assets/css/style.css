@@ -42,7 +42,7 @@ p a:hover {
 	width:587px;
 }
 #header div ul {
-    height:50px;
+    height:200px;
 	left:144px;
 	list-style:none;
 	margin:0;
@@ -50,11 +50,6 @@ p a:hover {
 	padding:0;
 	position:absolute;
 	top:119px;
-}
-
-#header div ul:hover {
-    height:200px!important;
-	
 }
 #header div ul li:first-child {
 	margin:0;
@@ -1585,36 +1580,16 @@ p a:hover {
 	height: 16px !important;
 }
 
-.desnoDebeli{
-    display:block  !important;
-    float:left  !important;
-    padding: 8px 16px !important;
-    text-decoration: none !important;
-    width: 200px !important;
-    height: 48px !important;
-}
-
 .unos{
-    display:block  !important;
-    float:left  !important;
-    padding: 0 !important;
-    text-decoration: none !important;
-    padding: 7px 16px !important;
-    border: 1px solid #4f4f4f;
-    width: 450px !important;
-    height: 16px !important;
+     display:block  !important;
+     float:left  !important;
+     padding: 0 !important;
+     text-decoration: none !important;
+     padding: 7px 16px !important;
+     border: 1px solid #4f4f4f;
+     width: 450px !important;
+	height: 16px !important;
  }
-
-.unosDebeli{
-    display:block  !important;
-    float:left  !important;
-    padding: 0 !important;
-    text-decoration: none !important;
-    padding: 7px 16px !important;
-    border: 1px solid #4f4f4f;
-    width: 450px !important;
-    height: 48px !important;
-}
 
 .input{
     padding: 0 !important;
@@ -1623,15 +1598,6 @@ p a:hover {
     height: 16px !important;
 	background-color: #4f4f4f !important;
 	color: white !important;
-}
-
-.inputDebeli{
-    padding: 0 !important;
-    text-decoration: none !important;
-    width: 400px !important;
-    height: 48px !important;
-    background-color: #4f4f4f !important;
-    color: white !important;
 }
 
 .last{

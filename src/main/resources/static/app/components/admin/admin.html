@@ -2,44 +2,43 @@
 
 
 <div>
-
     <ul>
         <li>
             <ul class="adminControll">
 
                 <li class="goreDole">
 
-                    <a>POZORISTA</a>
+                    <a>THEATRE</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>BIOSKOPI</a>
+                    <a>CINEMA</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>SALE</a>
+                    <a>AUDITORIUM</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>SEDISTA</a>
+                    <a>SEATS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>DOGADJAJI</a>
+                    <a>EVENTS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>PROJEKCIJE</a>
+                    <a>PROJECTIONS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>KARTE</a>
+                    <a>TICKETS</a>
 
                 </li>
 
@@ -47,18 +46,19 @@
         </li>
 
 
+        <span ng-if="sala">
         <li>
 
             <ul class="forma">
                 <li class="desno">
-                    <a>  Naziv: </a>
+                    <a>  Name: </a>
                 </li>
                 <li class="desno">
-                    <a>  Broj redova : </a>
+                    <a>  Number of rows : </a>
                 </li>
 
                 <li class="desno">
-                    <a>Broj sedista po redu :</a>
+                    <a>Number of seats per row :</a>
                 </li>
 
             </ul>
@@ -83,6 +83,89 @@
 
             </ul>
         </li>
+
+        </span>
+
+
+        <span ng-if="dogadjaj">
+        <li>
+
+            <ul class="forma">
+                <li class="desno">
+                    <a>  Name : </a>
+                </li>
+                <li class="desno">
+                    <a>  Descritpion : </a>
+                </li>
+                 <li class="desno">
+                    <a>Genre :</a>
+                </li>
+
+                <li class="desno">
+                    <a>Director :</a>
+                </li>
+
+                <li class="desno">
+                    <a>Duration :</a>
+                </li>
+
+                <li class="desno">
+                    <a>Points :</a>
+                </li>
+
+                <li class="desno">
+                    <a>Actors :</a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
+        <li>
+            <ul class="formaUnos">
+                <li class="unos">
+                    <input class="input"  type="text" ng-model="newDogadjaName" class="form-control" id="newDogadjaName">
+                </li>
+                <li class="unos">
+                    <input class="input" type="text" ng-model="newDogadjajOpis" class="form-control" id="newDogadjajOpis">
+                </li>
+
+                <li class="unos">
+                    <select class="input" type="text"ng-model="newDogadjaZanr" ng-options="item for item in zanr" id="newDogadjajZanr"></select>
+                </li>
+
+                <li class="unos">
+                    <input class="input" type="text" ng-model="newDogadjajReziser" class="form-control" id="newDogadjajReziser">
+                </li>
+
+                <li class="unos">
+                    <input class="input" type="text" ng-model="newDogadjajTrajanje" class="form-control" id="newDogadjajTrajanje">
+                </li>
+
+                 <li class="unos">
+                    <input class="input" type="text" ng-model="newDogadjajBodovi" class="form-control" id="newDogadjajBodovi">
+                </li>
+
+                 <li class="unos">
+                    <input class="input" type="text" ng-model="newDogadjajGlumci" class="form-control" id="newDogadjajGlumci">
+                </li>
+
+                <li class="last">
+                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci )"> Add </button>
+                </li>
+
+            </ul>
+        </li>
+
+        </span>
+
+
+
+
+
+
+
 
 
 
