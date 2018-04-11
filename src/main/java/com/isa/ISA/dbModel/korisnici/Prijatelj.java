@@ -1,8 +1,13 @@
 package com.isa.ISA.dbModel.korisnici;
 
-import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
+import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
 
 @Entity
 public class Prijatelj {

@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 
 public interface RekvizitRepository extends CrudRepository<ZvanicanRekvizit, Long> {

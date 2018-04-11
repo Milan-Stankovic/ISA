@@ -3,10 +3,11 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
-import com.isa.ISA.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
+import com.isa.ISA.repository.UserRepository;
 
 @Service
 public class UserService {

@@ -1,16 +1,15 @@
 package com.isa.ISA.service;
 
-import com.isa.ISA.dbModel.enums.StatusNaloga;
-import com.isa.ISA.dbModel.enums.TipAdmina;
-import com.isa.ISA.dbModel.korisnici.Admin;
-import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
-import com.isa.ISA.repository.AdminRepository;
-import com.isa.ISA.repository.UserRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.isa.ISA.dbModel.enums.StatusNaloga;
+import com.isa.ISA.dbModel.enums.TipAdmina;
+import com.isa.ISA.dbModel.korisnici.Admin;
+import com.isa.ISA.repository.AdminRepository;
 
 @Service
 public class AdminService {

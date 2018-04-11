@@ -1,10 +1,11 @@
 package com.isa.ISA.dbModel;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import java.util.Date;
 
 @Entity
 public class Karta {

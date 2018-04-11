@@ -1,11 +1,15 @@
 package com.isa.ISA.dbModel.korisnici;
 
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
+
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.enums.TipAdmina;
-import org.hibernate.annotations.Fetch;
-
-import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Admin extends Korisnik {

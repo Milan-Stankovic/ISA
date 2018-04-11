@@ -1,15 +1,16 @@
 package com.isa.ISA.service;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.repository.ProjekcijaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 @Service
 public class ProjekcijaService {

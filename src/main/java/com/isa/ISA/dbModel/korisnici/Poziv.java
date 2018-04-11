@@ -1,12 +1,16 @@
 package com.isa.ISA.dbModel.korisnici;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
 import com.isa.ISA.dbModel.Karta;
 import com.isa.ISA.dbModel.Rezervacija;
-import com.isa.ISA.dbModel.Sediste;
 import com.isa.ISA.dbModel.enums.Status;
-
-
-import javax.persistence.*;
 
 @Entity
 public class Poziv {

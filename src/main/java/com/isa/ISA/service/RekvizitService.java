@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
-import com.isa.ISA.repository.DogadjajRepository;
 import com.isa.ISA.repository.RekvizitRepository;
 
 @Service

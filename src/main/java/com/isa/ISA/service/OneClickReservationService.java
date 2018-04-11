@@ -1,16 +1,16 @@
 package com.isa.ISA.service;
 
 
-import com.isa.ISA.dbModel.Rezervacija;
-
-import com.isa.ISA.dbModel.enums.Status;
-import com.isa.ISA.dbModel.korisnici.Poziv;
-import com.isa.ISA.repository.PozivRepository;
-import com.isa.ISA.repository.RezervacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.enums.Status;
+import com.isa.ISA.dbModel.korisnici.Poziv;
+import com.isa.ISA.repository.PozivRepository;
+import com.isa.ISA.repository.RezervacijaRepository;
 
 
 @Service

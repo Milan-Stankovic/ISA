@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.ISA.dbModel.enums.StatusNaloga;
-import com.isa.ISA.dbModel.enums.TipAdmina;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.dbModel.korisnici.Korisnik;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;

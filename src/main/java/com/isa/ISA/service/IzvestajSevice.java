@@ -1,14 +1,20 @@
 package com.isa.ISA.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.isa.ISA.dbModel.Karta;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.repository.DogadjajRepository;
 import com.isa.ISA.repository.KartaRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.*;
 
 @Service
 public class IzvestajSevice {

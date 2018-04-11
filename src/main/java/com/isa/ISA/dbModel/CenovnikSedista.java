@@ -1,8 +1,13 @@
 package com.isa.ISA.dbModel;
 
-import com.isa.ISA.dbModel.enums.TipSedista;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
+import com.isa.ISA.dbModel.enums.TipSedista;
 
 @Entity
 public class CenovnikSedista {

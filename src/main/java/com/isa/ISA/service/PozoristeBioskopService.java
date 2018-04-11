@@ -1,13 +1,14 @@
 package com.isa.ISA.service;
 
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.enums.TipUstanove;
-import com.isa.ISA.repository.PozoristeBioskopRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.enums.TipUstanove;
+import com.isa.ISA.repository.PozoristeBioskopRepository;
 
 @Service
 public class PozoristeBioskopService {

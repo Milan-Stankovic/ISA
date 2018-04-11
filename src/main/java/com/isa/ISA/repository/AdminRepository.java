@@ -1,10 +1,11 @@
 package com.isa.ISA.repository;
 
-import com.isa.ISA.dbModel.enums.TipAdmina;
-import com.isa.ISA.dbModel.korisnici.Admin;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import com.isa.ISA.dbModel.enums.TipAdmina;
+import com.isa.ISA.dbModel.korisnici.Admin;
 
 public interface AdminRepository extends CrudRepository<Admin, Long> {
     Admin findByUserName(String username);

@@ -1,11 +1,12 @@
 package com.isa.ISA.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.isa.ISA.dbModel.Karta;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.repository.KartaRepository;
 import com.isa.ISA.repository.PozvRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 @Service
 public class OcenaService {

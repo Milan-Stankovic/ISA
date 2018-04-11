@@ -1,11 +1,11 @@
 package com.isa.ISA.dbModel;
 
-import com.isa.ISA.dbModel.korisnici.Korisnik;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+
+import com.isa.ISA.dbModel.korisnici.Korisnik;
 
 /**
  * Ponuda u licitaciji

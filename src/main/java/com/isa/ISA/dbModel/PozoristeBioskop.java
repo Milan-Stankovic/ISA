@@ -1,12 +1,20 @@
 package com.isa.ISA.dbModel;
 
 
-import com.isa.ISA.dbModel.enums.TipUstanove;
-import com.isa.ISA.dbModel.korisnici.Admin;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import java.util.List;
+import com.isa.ISA.dbModel.enums.TipUstanove;
+import com.isa.ISA.dbModel.korisnici.Admin;
 
 @Entity
 public class PozoristeBioskop {

@@ -1,13 +1,14 @@
 package com.isa.ISA.repository;
 
 
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
-import org.springframework.data.repository.CrudRepository;
-
-import java.util.Date;
-import java.util.List;
 
 
 public interface ProjekcijaRepository extends CrudRepository<Projekcija, Long> {

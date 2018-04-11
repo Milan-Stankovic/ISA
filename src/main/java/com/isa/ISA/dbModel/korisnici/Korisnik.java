@@ -1,8 +1,15 @@
 package com.isa.ISA.dbModel.korisnici;
 
-import com.isa.ISA.dbModel.enums.StatusNaloga;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-import javax.persistence.*;
+import com.isa.ISA.dbModel.enums.StatusNaloga;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)

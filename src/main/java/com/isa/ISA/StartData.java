@@ -1,20 +1,38 @@
 package com.isa.ISA;
 
-import com.isa.ISA.dbModel.*;
-import com.isa.ISA.dbModel.enums.*;
-import com.isa.ISA.dbModel.korisnici.Admin;
-import com.isa.ISA.dbModel.korisnici.Korisnik;
-import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
-import com.isa.ISA.repository.SalaRepository;
-import com.isa.ISA.repository.SedisteRepository;
-import com.isa.ISA.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.isa.ISA.dbModel.Dogadjaj;
+import com.isa.ISA.dbModel.Glumac;
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Projekcija;
+import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.Sala;
+import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.dbModel.enums.StatusNaloga;
+import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
+import com.isa.ISA.dbModel.enums.TipAdmina;
+import com.isa.ISA.dbModel.enums.TipSedista;
+import com.isa.ISA.dbModel.enums.TipUstanove;
+import com.isa.ISA.dbModel.enums.Zanr;
+import com.isa.ISA.dbModel.korisnici.Admin;
+import com.isa.ISA.dbModel.korisnici.Prijatelj;
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
+import com.isa.ISA.repository.SalaRepository;
+import com.isa.ISA.repository.SedisteRepository;
+import com.isa.ISA.service.AdminService;
+import com.isa.ISA.service.DogadjajService;
+import com.isa.ISA.service.PozoristeBioskopService;
+import com.isa.ISA.service.PrijateljService;
+import com.isa.ISA.service.ProjekcijaService;
+import com.isa.ISA.service.UserService;
 
 @Component
 public class StartData {
@@ -24,6 +42,10 @@ public class StartData {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private PrijateljService prijateljService;
+
+    
     @Autowired
     private SedisteRepository sedisteRepository; // mrzi me da pravim servis sada
 
@@ -65,7 +87,35 @@ public class StartData {
         rk2.setPrezime("a");
         System.out.println("Kreiran korisnik: " + rk2.getUserName());
         userService.addUser(rk2);
+        
+        RegistrovaniKorisnik rk3 = new RegistrovaniKorisnik();
+        rk3.setUserName("f");
+        rk3.setPassword("f");
+        rk3.setEmail("f@gmail.com");
+        rk3.setStatus(StatusNaloga.AKTIVAN);
+        rk3.setBrojTelefona("4444");
+        rk3.setGrad("f");
+        rk3.setIme("f");
+        rk3.setPrezime("f");
+        
+        
+        System.out.println("Kreiran korisnik: " + rk3.getUserName());
+        userService.addUser(rk3);
+        
+   /*     Prijatelj p0 = new Prijatelj();
+        p0.setPosiljalac(userService.getUser(rk.getUserName()));
+        p0.setPrimalac(userService.getUser(rk3.getUserName()));
+        p0.setStatus(StatusPrijateljstva.PRIHVACENO);
+        prijateljService.addFriendship(p0);
 
+        Prijatelj p2 = new Prijatelj();
+        p2.setPosiljalac(userService.getUser(rk3.getUserName()));
+        p2.setPrimalac(userService.getUser(rk2.getUserName()));
+        p2.setStatus(StatusPrijateljstva.POSLATO);
+        prijateljService.addFriendship(p2);
+        
+        prijateljService.connectFriends();*/
+        
         Admin a = new Admin();
         a.setUserName("admin");
         a.setPassword("admin");

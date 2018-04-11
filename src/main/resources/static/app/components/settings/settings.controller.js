@@ -8,38 +8,72 @@
     settingsController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies'];
     function settingsController($location, $scope, $rootScope, $http, $window, $cookies) {
         var sc = this;
-        var user;
-        var init = function (){
+        var user = undefined;
+        $scope.friendsList = [];
+        var init = function (){ 	
 
-        	console.log("trazim usera, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
+        	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
         	$http({
   			  method: 'GET',
-  			  url: 'http://localhost:8096/api/user/' + $cookies.get('user')
+  			  url: 'http://localhost:8096/api/admin/' + $cookies.get('user')
   				 
   			}).then(function successCallback(response) {
   				user = response.data;
-
+  				//alert(user.userName)
+  				
   			  }, function errorCallback(response) {
   				  console.log("Greska kod GET user");
   			  });
-        	if(user===undefined){
-        		console.log("user undefined trazim admina, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
-        		$http({
-        			  method: 'GET',
-        			  url: 'http://localhost:8096/api/admin/' + $cookies.get('user')
-        				 
-        			}).then(function successCallback(response) {
-        				user = response.data;
+        	
+        	
+        	
+		        
+        
        
-        			  }, function errorCallback(response) {
-        				  console.log("Greska kod GET user");
-        			  });
-        	}
-        	
-        	
         };
         init();
         
+        if(user===undefined || user===null){
+      		console.log("user undefined trazim usra, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
+      		$http({
+      			  method: 'GET',
+      			  url: 'http://localhost:8096/api/user/' + $cookies.get('user')
+      				 
+      			}).then(function successCallback(response) {
+      				user = response.data;
+      				if(user.prijatelji!=undefined && user.prijatelji!=null){
+      					console.log("user not null, collecting friends, list size: " + user.prijatelji.length)
+      		        	for(var i = 0; i < user.prijatelji.length; i++){
+      						if(user.prijatelji[i].posiljalac.userName===user.userName)
+      							$scope.friendsList.push(user.prijatelji[i].primalac)
+      						else
+      							$scope.friendsList.push(user.prijatelji[i].posiljalac)
+      					}
+      		        }else console.log("user is null, no collecting friends")
+      				alert($scope.friendsList.length)
+      				//alert(user.userName)
+      			  }, function errorCallback(response) {
+      				  console.log("Greska kod GET user");
+      			  });
+      	}
+        
+       /* alert(user.userName)
+    	if(user!=undefined){
+    		console.log("user not null, collecting friends")
+    		if(user.prijatelji!=undefined && user.prijatelji!=null){
+	        	for(var i = 0; i < user.prijatelji.length; i++){
+					if(user.prijatelji[i].posiljalac.userName===user.userName)
+						$scope.friendsList.push(user.prijatelji[i].primalac)
+					else
+						$scope.friendsList.push(user.prijatelji[i].posiljalac)
+				}
+	        }
+    		
+    	}else console.log("user is null, no collecting friends")*/
+        		
+        
+   
+       // alert($scope.friendsList.length)
         $scope.indexFunc = function(){
         	$location.path("home");
         }

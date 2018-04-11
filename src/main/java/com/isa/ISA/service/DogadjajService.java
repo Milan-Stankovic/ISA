@@ -1,13 +1,13 @@
 package com.isa.ISA.service;
 
-import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.repository.DogadjajRepository;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.isa.ISA.dbModel.Dogadjaj;
+import com.isa.ISA.repository.DogadjajRepository;
 
 @Service
 public class DogadjajService {

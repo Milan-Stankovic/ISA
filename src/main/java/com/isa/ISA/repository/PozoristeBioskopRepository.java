@@ -1,11 +1,11 @@
 package com.isa.ISA.repository;
 
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.enums.TipUstanove;
-import com.isa.ISA.dbModel.korisnici.Admin;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.enums.TipUstanove;
 
 public interface PozoristeBioskopRepository extends CrudRepository<PozoristeBioskop, Long> {
 

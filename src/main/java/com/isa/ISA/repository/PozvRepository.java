@@ -1,7 +1,8 @@
 package com.isa.ISA.repository;
 
-import com.isa.ISA.dbModel.korisnici.Poziv;
 import org.springframework.data.repository.CrudRepository;
+
+import com.isa.ISA.dbModel.korisnici.Poziv;
 
 public interface PozvRepository extends CrudRepository<Poziv, Long> {
 }

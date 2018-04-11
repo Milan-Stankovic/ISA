@@ -2,19 +2,20 @@ package com.isa.ISA.dbModel.korisnici;
 
 
 
-import com.isa.ISA.dbModel.Ponuda;
-import com.isa.ISA.dbModel.PolovanRekvizit;
-import com.isa.ISA.dbModel.Rezervacija;
-
-import javax.persistence.Entity;
-
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+
+import com.isa.ISA.dbModel.PolovanRekvizit;
+import com.isa.ISA.dbModel.Ponuda;
+import com.isa.ISA.dbModel.Rezervacija;
 @Entity
 public class RegistrovaniKorisnik extends Korisnik {
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
     private List<Prijatelj> prijatelji;
 
     private int bodovi;

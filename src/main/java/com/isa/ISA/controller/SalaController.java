@@ -1,11 +1,12 @@
 package com.isa.ISA.controller;
 
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.Sala;
-import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Sala;
+import com.isa.ISA.repository.SalaRepository;
 
 
 @RestController

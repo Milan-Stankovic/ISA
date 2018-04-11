@@ -1,10 +1,16 @@
 package com.isa.ISA.dbModel;
 
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
-
-import javax.persistence.*;
-import java.util.List;
 
 //GOTOVO
 

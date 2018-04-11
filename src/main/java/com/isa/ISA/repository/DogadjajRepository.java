@@ -1,9 +1,10 @@
 package com.isa.ISA.repository;
 
-import com.isa.ISA.dbModel.Dogadjaj;
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
+import com.isa.ISA.dbModel.Dogadjaj;
 
 public interface DogadjajRepository extends CrudRepository<Dogadjaj,Long> {
     List<Dogadjaj> findByNaziv(String naziv);
