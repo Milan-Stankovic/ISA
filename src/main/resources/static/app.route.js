@@ -26,6 +26,12 @@
 			controller: 'adminLoginController',
 			controllerAs: 'alc'
 		})
+		.state('core.settings', {
+			url: 'settings',
+			templateUrl: 'app/components/settings/settings.html',
+			controller: 'settingsController',
+			controllerAs: 'sc'
+		})
 		.state('core.register', {
 			url: 'register',
 			templateUrl: 'app/components/register/register.html',
