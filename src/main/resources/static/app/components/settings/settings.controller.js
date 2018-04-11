@@ -41,6 +41,7 @@
       				 
       			}).then(function successCallback(response) {
       				user = response.data;
+      				alert(user.prijatelji==undefined)
       				if(user.prijatelji!=undefined && user.prijatelji!=null){
       					console.log("user not null, collecting friends, list size: " + user.prijatelji.length)
       		        	for(var i = 0; i < user.prijatelji.length; i++){

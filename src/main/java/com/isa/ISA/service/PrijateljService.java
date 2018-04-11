@@ -39,10 +39,14 @@ public class PrijateljService {
         System.out.println("status: " + k.getStatus());
         if(k.getStatus().toString().equals("PRIHVACENO")){
         	System.out.println("dodao bih prijateljstvo al nece");
-        	/* posiljalac.getPrijatelji().add(k);
+        	 posiljalac.getPrijatelji().add(k);
         	 primalac.getPrijatelji().add(k);
              userRepo.save(posiljalac);
-             userRepo.save(primalac);*/
+             userRepo.save(primalac);
+             posiljalac = userRepo.findByUserName(k.getPosiljalac().getUserName());
+             System.out.println("posiljalac sada ima prijatelja: " + posiljalac.getPrijatelji().size());
+             primalac = userRepo.findByUserName(k.getPrimalac().getUserName());
+             System.out.println("primalac sada ima prijatelja: " + primalac.getPrijatelji().size());
         }else System.out.println("NISATAAAAAAAAAAAAA");
        
     }

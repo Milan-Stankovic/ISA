@@ -7,15 +7,18 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.Ponuda;
 import com.isa.ISA.dbModel.Rezervacija;
 @Entity
 public class RegistrovaniKorisnik extends Korisnik {
 
-    @OneToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
+	@JsonBackReference
+    @ManyToMany(fetch = FetchType.EAGER,cascade = {CascadeType.ALL})
     private List<Prijatelj> prijatelji;
 
     private int bodovi;
