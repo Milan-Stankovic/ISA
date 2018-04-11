@@ -42,6 +42,8 @@ public class Dogadjaj {
 
     private int donosiBodova;
 
+    private String glumciStr;
+
     @ManyToMany
     private List<Glumac> glumci; // Ne dozvoljava cist String iz nekog razloga
 
@@ -125,5 +127,13 @@ public class Dogadjaj {
 
     public void setGlumci(List<Glumac> glumci) {
         this.glumci = glumci;
+    }
+
+    public String getGlumciStr() {
+        return glumciStr;
+    }
+
+    public void setGlumciStr(String glumciStr) {
+        this.glumciStr = glumciStr;
     }
 }
