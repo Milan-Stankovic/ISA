@@ -69,8 +69,8 @@ public class StartData {
     public void initIt(){
 
         RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
-        rk.setUserName("kor");
-        rk.setPassword("kor");
+        rk.setUserName("pero");
+        rk.setPassword("pero");
         rk.setIme("Pera");
         rk.setPrezime("Peric");
         rk.setEmail("pero@zahoo.com");
@@ -79,8 +79,8 @@ public class StartData {
         userService.addUser(rk);
         
         RegistrovaniKorisnik rk2 = new RegistrovaniKorisnik();
-        rk2.setUserName("a");
-        rk2.setPassword("a");
+        rk2.setUserName("mirko");
+        rk2.setPassword("mirko");
         rk2.setEmail("mirko@gmail.com");
         rk2.setStatus(StatusNaloga.AKTIVAN);
         rk2.setBrojTelefona("4444");
