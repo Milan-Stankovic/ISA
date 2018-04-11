@@ -25,10 +25,9 @@ public class RekvizitService {
 		return rekvizitRepo.findByAktivan(true);
 	}
 
-	public ZvanicanRekvizit addTematske(ZvanicanRekvizit zr) {
-		if(zr.getSlika()==null)
-			zr.setSlika(new byte[0]);
-		return rekvizitRepo.save(zr);
+	public void addTematske(ZvanicanRekvizit zr) {
+		zr.setRezervacije(null);
+		rekvizitRepo.save(zr);
 	}
 
 	public byte[] saveMultipartFile(MultipartFile files) {
