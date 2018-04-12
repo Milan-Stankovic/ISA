@@ -66,15 +66,31 @@
 
     <br>
     </div>
-    
-    <div style="overflow-y: scroll; height:400px; width:600px">
+
+
+    <div style="overflow-y: scroll; height:200px; width:600px; background-color:gray" ng-show="searched">
+        <h3 style="color:white" ng-show="searched">Search Result:</h3>
+        <ol style="list-style-type: none; width:600px">
+            <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})<span>       </span><button ng-click="addFriend(res.email)">Add</button></li>
+
+        </ol>
+    </div>
+
+    <div>
+        <br><br>
+    </div>
+
+    <div style="overflow-y: scroll; height:400px; width:600px; background-color:gray">
+        <h3 style="color:white">Friends List:</h3>
     	<ol style="list-style-type: none; width:600px">
     		<li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="deleteFriend(friend.email)">Delete</button></li>
 							
     	</ol>
     </div>
 
-	 
+    <div>
+        <br><br>
+    </div>
     
     
 </div>

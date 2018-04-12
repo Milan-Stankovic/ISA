@@ -10,7 +10,8 @@
         var sc = this;
         var user = undefined;
         $scope.friendsList = [];
-        
+        $scope.resList = [];
+        $scope.searched = false;
         var init = function (){ 	
         	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
         	$http({
@@ -47,7 +48,7 @@
       				
       				if(user!=undefined){
       		        	console.log("frnessssss")
-      		        	var tempLista;
+
       		        	$http({
       		    			  method: 'GET',
       		    			  url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user')
@@ -59,8 +60,8 @@
       		    			  }, function errorCallback(response) {
       		    				  console.log("Greska kod GET user frineds");
       		    			  });
-      		        	
-      		        
+
+
       		        }
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
@@ -84,8 +85,9 @@
     			  data: data
     			
     			}).then(function successCallback(response) {
-    				$scope.results = response.data;
-    				console.log($scope.results.length);
+    			    $scope.searched=true;
+    				$scope.resList = response.data;
+    				console.log($scope.resList.length);
     				//alert(user.userName)
     			  }, function errorCallback(response) {
     				  console.log("Greska kod search");
