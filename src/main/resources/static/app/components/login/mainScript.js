@@ -15,6 +15,8 @@
                  alert("greska u loginFunc")
                 });
 
+
+
         }
 
         $scope.indexFunc = function(){
