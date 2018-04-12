@@ -114,7 +114,7 @@ public class UserController {
 		Prijatelj p = new Prijatelj();
 		p.setPosiljalac(posiljalac);
 		p.setPrimalac(primalac);
-		p.setStatus(StatusPrijateljstva.PRIMLJENO);
+		p.setStatus(StatusPrijateljstva.POSLATO);
 		prijateljService.addFriendship(p);
 	}
 
@@ -151,6 +151,19 @@ public class UserController {
     	Prijatelj p = prijateljService.getPrimalacPosiljalac(primalac.getUserName(), posiljalac.getUserName());
 
 		prijateljService.remove(p);
+
+		return prijateljService.getReqFriends(primalac.getUserName());
+
+
+	}
+
+	@RequestMapping(method = RequestMethod.POST,value = "/api/user/accept/{username}")
+	public List<RegistrovaniKorisnik> accept(@PathVariable String username, @RequestBody String email){
+		RegistrovaniKorisnik primalac = userService.getUser(username);
+		RegistrovaniKorisnik posiljalac = userService.findByEmail(email);
+		Prijatelj p = prijateljService.getPrimalacPosiljalac(primalac.getUserName(), posiljalac.getUserName());
+		p.setStatus(StatusPrijateljstva.PRIHVACENO);
+		prijateljService.addFriendship(p);
 
 		return prijateljService.getReqFriends(primalac.getUserName());
 
