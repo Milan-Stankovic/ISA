@@ -34,17 +34,20 @@ public class LoginController {
     }
     // Mozes li ubaciti dodatnu proveru ako je admin da li je promenio password ?
     @RequestMapping(method = RequestMethod.POST, value = "/api/login") 
-    public Korisnik login(@RequestBody RegistrovaniKorisnik kor){
+    public Korisnik login(@RequestBody String credentials){
+    	String username = credentials.split("\\.")[0];
+		String password = credentials.split("\\.")[1];
+		 
         Korisnik k;
-        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
-        Admin adm = adminService.getAdmin(kor.getUserName());
+        RegistrovaniKorisnik reg = userService.getUser(username);
+        Admin adm = adminService.getAdmin(username);
         if(reg==null && adm==null)
             return null;
         
         else{
             k = (reg != null) ? reg: adm;
         }
-        if(k.getPassword().equals(kor.getPassword())){
+        if(k.getPassword().equals(password)){
         	if(k instanceof Admin && k.getPassword().equals("default") )
         		k.setStatus(StatusNaloga.NERESEN);
             return k;
@@ -53,7 +56,7 @@ public class LoginController {
         else
             return null;
     }
-    @RequestMapping(method = RequestMethod.POST, value = "/api/fblogin/username={username}&pass={password}&ime={ime}&prez={prez}")
+    /*@RequestMapping(method = RequestMethod.POST, value = "/api/fblogin/username={username}&pass={password}&ime={ime}&prez={prez}")
     public Korisnik fblogin(@PathVariable String username, @PathVariable String password, @PathVariable String ime, @PathVariable String prez){
         Korisnik k;
         RegistrovaniKorisnik reg = userService.getUser(username);
@@ -74,5 +77,5 @@ public class LoginController {
         else k = (reg != null) ? reg: adm;
         return k;
 
-    }
+    }*/
 }

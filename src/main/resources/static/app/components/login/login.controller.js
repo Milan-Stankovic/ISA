@@ -19,10 +19,11 @@
         }
         
         $scope.prijavaFunc = function(username, pass){
-        	var data = {
-        			"userName": username,
-        			"password": pass
+        	if(username===undefined || pass===undefined || username==="" || pass===""){
+        		alert("Enter both username and password.")
+        		return;
         	}
+        	var data = username + "." + pass;
             $http({
               method: 'POST',
               url: 'http://localhost:8096/api/login/',
