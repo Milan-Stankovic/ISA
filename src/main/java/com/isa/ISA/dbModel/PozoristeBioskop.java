@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.validator.constraints.Length;
 
 import com.isa.ISA.dbModel.enums.TipUstanove;
@@ -47,12 +48,15 @@ public class PozoristeBioskop {
     private TipUstanove tip;
 
     @OneToMany
+    @JsonBackReference
     private List<Sala> sale;
 
     @OneToMany
+    @JsonBackReference
     private List<Projekcija> projekcije;
 
     @ManyToMany
+    @JsonBackReference
     private List<Admin> admini;
 
     private float prosecnaOcena;

@@ -78,7 +78,7 @@
                 </li>
 
                 <li class="last">
-                     <button  class="button" type="submit" class="btn btn-primary"> Add </button>
+                     <button  class="button" type="submit" ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
                 </li>
 
             </ul>
@@ -94,7 +94,7 @@
                 <li class="desno">
                     <a>  Name : </a>
                 </li>
-                <li class="desno">
+                <li class="desnoDebeli">
                     <a>  Descritpion : </a>
                 </li>
                  <li class="desno">
@@ -128,7 +128,7 @@
                     <input class="input"  type="text" ng-model="newDogadjaName" class="form-control" id="newDogadjaName">
                 </li>
                 <li class="unosDebeli">
-                    <input class="inputDebeli" type="text" ng-model="newDogadjajOpis" class="form-control" id="newDogadjajOpis">
+                    <textarea class="inputDebeli"  ng-model="newDogadjajOpis" rows="3" cols="20" id="newDogadjajOpis"> </textarea>
                 </li>
 
                 <li class="unos">
@@ -159,6 +159,142 @@
         </li>
 
         </span>
+
+
+        <span ng-if="pozoriste">
+            <li>
+                 <ul class="forma" ng-repeat="pozoriste in pozoristaAdmin track by $index">
+                    <li class="desno">
+                        <a>{{pozoriste.naziv}} </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>{{pozoriste.adresa}} </a>
+                    </li>
+
+                 </ul>
+
+            </li>
+
+        </span>
+
+        <span ng-if="bioskop">
+            <li>
+                 <ul class="forma" ng-repeat="bioskop in bioskopiAdmin track by $index">
+                    <li class="desno">
+                        <a>{{bioskop.naziv}} </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>{{bioskop.adresa}} </a>
+                    </li>
+
+                 </ul>
+
+            </li>
+
+        </span>
+
+
+        <span ng-if="bpOne">
+
+            <li>
+                <ul class="forma">
+                    <li class="desno">
+                        <a>  Name : </a>
+                    </li>
+
+                    <li class="desnoDebeli">
+                        <a>Description :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>  Address : </a>
+                    </li>
+
+                     <li class="desnoDebeli">
+                        <a>  Google maps url : </a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Bronze status treshold :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Bronze status discount  :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Silver status treshold :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Silver status discount  :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Gold status treshold :</a>
+                    </li>
+
+                    <li class="desno">
+                        <a>Gold status discount  :</a>
+                    </li>
+
+                    <li class="desno">
+                        <button  class="button" type="submit" ng-click="edit()"> Toggle edit </button>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <ul class="forma" >
+                    <li class="unos">
+                        <input class="input" type="text" ng-model="bp.naziv" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unosDebeli">
+                        <textarea class="inputDebeli"  ng-model="bp.opis" rows="3" cols="20" ng-readonly="edit"> </textarea>
+                    </li>/li>
+
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.adresa" ng-readonly="edit" class="form-control" >
+                    </li>
+
+                     <li class="unosDebeli">
+                         <textarea class="inputDebeli"  ng-model="bp.urlMape" rows="3" cols="20" ng-readonly="edit"> </textarea>
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.bronzeTreshold" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.bronzePopust" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.silverTreshold" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.silverPopust" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.goldTreshold" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                         <input class="input" type="text" ng-model="bp.goldPopust" ng-readonly="edit" class="form-control" >
+                    </li>
+                    <li class="unos">
+                        <button  class="button" type="submit" ng-click="addSala(bp.id)"> Add Auditorium </button>
+                    </li>
+                    <li class="unos">
+                        <button  class="button" type="submit" ng-click="addProjekcija(bp.id)"> Add Projection </button>
+                    </li>
+
+
+                    <li class="unos">
+                        <button  class="button" type="submit" ng-click="saveBP(bp)"> Save edit </button>
+                    </li>
+                 </ul>
+            </li>
+        </span>
+
 
 
 

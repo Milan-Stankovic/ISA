@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.enums.TipAdmina;
 
@@ -19,6 +20,7 @@ public class Admin extends Korisnik {
     private TipAdmina tip;
 
     @ManyToMany
+    @JsonBackReference
     private List<PozoristeBioskop> mesta;
 
     public Admin(){ super(); }

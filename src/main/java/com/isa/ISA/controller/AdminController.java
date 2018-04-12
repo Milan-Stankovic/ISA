@@ -2,6 +2,7 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,12 +20,7 @@ public class AdminController {
     private AdminService adminService;
 
     @RequestMapping("/api/admins")
-    public List<Admin> getAllAdmins(){
-
-        System.out.println("UPADOOOOH");
-
-        return adminService.getAllAdmins();
-    }
+    public List<Admin> getAllAdmins(){ return adminService.getAllAdmins(); }
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/admins")
     public void addUser(@RequestBody Admin k){
@@ -32,11 +28,14 @@ public class AdminController {
     }
     
     @RequestMapping(method = RequestMethod.GET,value = "/api/admin/{username}")
-    public Admin getAdmin(@PathVariable String username){
-        return adminService.getAdmin(username);
-        
-    }
-    
+    public Admin getAdmin(@PathVariable String username){ return adminService.getAdmin(username); }
+
+    @RequestMapping("/admin/b/{id}")
+    public List<PozoristeBioskop> getAdminBioskopi(@PathVariable Long id){ return adminService.getAdminB(id); }
+
+    @RequestMapping("/admin/p/{id}")
+    public List<PozoristeBioskop> getAdminPozorista(@PathVariable Long id){ return adminService.getAdminP(id); }
+
     @RequestMapping("/admin/{id}")
     public Admin getAdmin(@PathVariable Long id){
         return adminService.getAdmin(id);
