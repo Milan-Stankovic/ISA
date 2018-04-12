@@ -1,0 +1,39 @@
+<div>
+    <table>
+        <tr>
+
+            <td style="width:400px"><h3 style="color:white">Visited Theatres:</h3></td>
+            <td style="width:400px"><h3 style="color:white">Visited Cinemas:</h3></td>
+
+        </tr>
+        <tr>
+            <td style="width:450px">
+
+                <div style="overflow-y: scroll; height:100px; width:100%; background-color:gray">
+
+                    <ol style="list-style-type: none; width:100%">
+                        <li ng-repeat="poz in pozorista" style="width:100%; color:white">{{poz.naziv}}
+                        </li>
+
+                    </ol>
+                </div>
+            </td>
+
+
+            <td style="width:450px">
+
+                <div style="overflow-y: scroll; height:100px; width:100%; background-color:gray">
+
+                    <ol style="list-style-type: none; width:100%">
+                        <li ng-repeat="bio in bioskopi" style="width:100%; color:white">{{bio.naziv}}
+                        </li>
+
+                    </ol>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
+
+</div>

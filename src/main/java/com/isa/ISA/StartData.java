@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import com.isa.ISA.repository.RezervacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -52,6 +53,8 @@ public class StartData {
     @Autowired
     private SalaRepository salaRepository; //dito
 
+    @Autowired
+    private RezervacijaRepository rezRepository; //dito
 
     @Autowired
     private PozoristeBioskopService pbService;
@@ -233,6 +236,17 @@ public class StartData {
         salaRepository.save(s1);
         addBioskop(a2, 1);
         addBioskop(a2, 2);
+
+        Rezervacija r = new Rezervacija();
+        r.setRezervisao(rk3);
+        r.setPopust(0);
+        r.setProjekcija(p);
+        rezRepository.save(r);
+
+        rk3.setRezervacije(new ArrayList<Rezervacija>());
+        rk3.getRezervacije().add(r);
+        userService.addUser(rk3);
+
 
 
     }

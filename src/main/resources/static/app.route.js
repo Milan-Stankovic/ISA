@@ -44,6 +44,12 @@
 			controller: 'loginController',
 			controllerAs: 'lc'
 		})
+		.state('core.regKorHome', {
+            url: 'regKorHome',
+            templateUrl: 'app/components/regKorHome/regKorHome.html',
+            controller: 'regKorHomeController',
+            controllerAs: 'rhc'
+        })
 		  .state('core.admin', {
           url: 'admin',
           templateUrl: 'app/components/admin/admin.html',
