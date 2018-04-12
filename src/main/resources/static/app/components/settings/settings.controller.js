@@ -17,10 +17,10 @@
         $scope.isDisabled = false;
         $scope.addButton = "Add";
         var init = function (){ 	
-        	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
+        	console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
         	$http({
   			  method: 'GET',
-  			  url: 'http://localhost:8096/api/admin/' + $cookies.get('user')
+  			  url: 'http://localhost:8096/admin/' + $cookies.get('user')
   				 
   			}).then(function successCallback(response) {
   				user = response.data;

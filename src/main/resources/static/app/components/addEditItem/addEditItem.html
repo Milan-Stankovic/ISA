@@ -14,7 +14,7 @@
 					</tr>
 					<tr>
 						<th>Description:</th>
-						<td><textarea ng-model="item.opis" rows='4' columns='20'></textarea></td>
+						<td><textarea ng-model="item.opis" rows='5' columns='23'></textarea></td>
 					</tr>
 					<tr>
 						<th>Seller:</th>
@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<th>Price:</th>
-						<td><input type='text' ng-model="item.cena"/></td>
+						<td><input type='text' ng-model="item.cena"/>Euro</td>
 					</tr>
 					<tr>
 						<th>Photo:</th>
@@ -51,7 +51,7 @@
 				<table class="fanZona" width='100%'>
 					<tr>
 						<th>Choose Item:</th>
-						<td><select data-ng-options="i for i in item_options" data-ng-model="itemToEdit"></select></td>
+						<td><select data-ng-options="i.naziv for i in item_options" data-ng-model="itemToEdit" ng-click="aeic.setEditFields()"></select></td>
 					</tr>
 					<tr>
 						<th width='20%'>Title:</th>
@@ -59,7 +59,7 @@
 					</tr>
 					<tr>
 						<th>Description:</th>
-						<td><textarea ng-model="eitem.opis" rows='4' columns='20'></textarea></td>
+						<td><textarea ng-model="eitem.opis" rows='5' columns='23'></textarea></td>
 					</tr>
 					<tr>
 						<th>Seller:</th>
@@ -67,7 +67,7 @@
 					</tr>
 					<tr>
 						<th>Price:</th>
-						<td><input type='text' ng-model="eitem.cena"/></td>
+						<td><input type='text' ng-model="eitem.cena"/>Euro</td>
 					</tr>
 					<tr>
 						<th>Photo:</th>
@@ -80,10 +80,15 @@
 						<th></th>
 						<td><button ng-click="aeic.edit()">Save Changes</button></td>
 					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="aeic.deleteItem()">Out of sale</button></td>
+					</tr>
 					<tr class="secretMessage">
 						<td></td>
 						<td ng-show="eshowDone">Item changed succesfully</td>
 						<td ng-show="eshowSthWentWrong">Something went wrong! Item is not changed</td>
+						<td ng-show="eblankField">{{eemptyField}} is neccesery to be added!</td>
 					</tr>
 				</table>
 			</div>	

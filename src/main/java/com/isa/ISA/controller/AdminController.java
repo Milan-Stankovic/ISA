@@ -27,7 +27,7 @@ public class AdminController {
         adminService.addAdmin(k);
     }
     
-    @RequestMapping(method = RequestMethod.GET,value = "/api/admin/{username}")
+    @RequestMapping(method = RequestMethod.GET,value = "/admin/{username}")
     public Admin getAdmin(@PathVariable String username){ return adminService.getAdmin(username); }
 
     @RequestMapping("/admin/b/{id}")

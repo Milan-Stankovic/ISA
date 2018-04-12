@@ -60,4 +60,14 @@ public class RekvizitService {
 		return fileName;
 	}
 
+	public ZvanicanRekvizit editTematske(ZvanicanRekvizit zr) {
+		return rekvizitRepo.save(zr);
+	}
+
+	public void deactivateTematske(long id) {
+		ZvanicanRekvizit zr = (ZvanicanRekvizit) rekvizitRepo.findOne(id);
+		zr.setAktivan(false);	
+		rekvizitRepo.save(zr);
+	}
+
 }
