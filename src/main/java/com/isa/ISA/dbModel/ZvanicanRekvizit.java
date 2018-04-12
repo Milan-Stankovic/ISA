@@ -22,8 +22,7 @@ public class ZvanicanRekvizit {
     
     private String opis;
 
-    @Lob
-    private byte[] slika;
+    private String slika;
     
     @ManyToOne
     private Admin postavio;
@@ -107,11 +106,11 @@ public class ZvanicanRekvizit {
 		this.rezervacije = rezervacije;
 	}
 
-	public byte[] getSlika() {
+	public String getSlika() {
 		return slika;
 	}
 
-	public void setSlika(byte[] slika) {
+	public void setSlika(String slika) {
 		this.slika = slika;
 	}
     

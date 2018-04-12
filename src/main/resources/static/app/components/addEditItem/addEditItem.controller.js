@@ -39,6 +39,7 @@
            			"aktivan": true, 
            			"rezervacije": []
         	};
+        	//postaviti samo za svoj pb Admin da moze da uredjuje
         	$http({
                 method: 'GET',
                 url: 'http://localhost:8096/pb'
@@ -95,7 +96,7 @@
 	           			"naziv": $scope.item.naziv,
 	           			"opis": $scope.item.opis,
 	           			"cena": parseFloat($scope.item.cena),
-	           			"slika": [],
+	           			"slika": "",
 	           			"postavio":$scope.regUser,
 	           			"preuzeti": pozBio,
 	           			"aktivan": true, 
@@ -129,25 +130,22 @@
 	        	//za sliku
 	        	else{
 		        	var file = $scope.item.slika;
-		        	var array = new Uint8Array(file),
-		            binaryString = String.fromCharCode.apply(null, array);
-		        	/*var fileFormData = new FormData();
+		        	var fileFormData = new FormData();
 		            fileFormData.append('file', file);
 		        	$http({
 		        		method: 'POST',
 		                url: 'http://localhost:8096/rekviziti/upload',
-		                file: fileFormData,
 		                transformRequest: angular.identity,
-		                headers: {'Content-Type': undefined}
+		                headers: {'Content-Type': undefined},
+		                data: fileFormData
 		            }).then(function successCallback(response) {
 		            	//za rekvizit
-		            	data.slika = response.data;*/
 		        		var data = {
 		    				"id" : 0,
 		           			"naziv": $scope.item.naziv,
 		           			"opis": $scope.item.opis,
 		           			"cena": parseFloat($scope.item.cena),
-		           			"slika": binaryString,
+		           			"slika": "",
 		           			"postavio":{
 		           		        "id": 4,
 		           		        "userName": "admin",
@@ -164,11 +162,13 @@
 		           			"preuzeti": pozBio,
 		           			"aktivan": true, 
 		           			"rezervacije": []
-		        		};		            	
+		        		};
+		            	data.slika = response.data.slika;
 		            	$http({
 		                    method: 'POST',
 		                    url: 'http://localhost:8096/rekviziti/zvanicni',
-		                    data: data                
+		                    headers: {'Content-Type': 'application/json'},
+		                    data: data
 		                  }).then(function successCallback(response) {
 		                       var items = response.data;
 		                       if (items==null || items==undefined){
@@ -188,7 +188,7 @@
 		                       			"rezervacije": []
 		                    	   };
 		                       }
-		                 //  });
+		                   });
 		            });    
 	        	}
                 });

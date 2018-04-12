@@ -26,11 +26,14 @@ public class RekvizitiController {
 		return rekvizit.getTematske();
     }
 	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
-    public void addTematske(@RequestBody ZvanicanRekvizit zr){
-		rekvizit.addTematske(zr);
+    public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
+		return rekvizit.addTematske(zr);
     }
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
-    public byte[] addImageToBytes(@RequestBody MultipartFile file){
-		return rekvizit.saveMultipartFile(file);
+    public ZvanicanRekvizit addImageToBytes(@RequestBody MultipartFile file){
+		String slika = rekvizit.saveMultipartFile(file);
+		ZvanicanRekvizit zr = new ZvanicanRekvizit();
+		zr.setSlika(slika);
+		return zr;
     }
 }
