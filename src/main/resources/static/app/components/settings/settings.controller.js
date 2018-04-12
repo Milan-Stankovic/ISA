@@ -153,6 +153,22 @@
 
                     }
                     $scope.resList=temp;
+
+                    for(i=0; i < $scope.resList.length; i++){
+                        for(j=0; j < $scope.reqList.length; j++){
+                            if($scope.resList[i].email===$scope.reqList[j].email){
+                                for(var k = 0; k < temp.length; k++) {
+
+                                    if($scope.resList[i].email===temp[k].email) {
+                                        break;
+                                    }
+                                }
+                                temp.splice(k, 1);
+                            }
+                         }
+
+                     }
+                    $scope.resList=temp;
     			  }, function errorCallback(response) {
     				  console.log("Greska kod search");
     			  });
@@ -215,6 +231,39 @@
                   });
 
         }
+
+        $scope.acceptFriend = function(email){
+                    console.log("prihvatam: " + email)
+                    $http({
+                          method: 'POST',
+                          url: 'http://localhost:8096/api/user/accept/' + $cookies.get('user'),
+                          data: email
+                        }).then(function successCallback(response) {
+                            $scope.reqList = response.data;
+                            console.log("requestova: " + $scope.reqList.length);
+
+                            $http({
+                                      method: 'GET',
+                                      url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user')
+
+                                    }).then(function successCallback(response) {
+                                        $scope.friendsList = response.data;
+                                        console.log("prijatelja: " + $scope.friendsList.length);
+                                        //alert(user.userName)
+                                      }, function errorCallback(response) {
+                                          console.log("Greska kod GET user frineds");
+                                      });
+
+                            //alert(user.userName)
+                          }, function errorCallback(response) {
+                              console.log("Greska kod GET user frineds");
+                          });
+
+
+                }
+
+
+
         $scope.addFriend = function(email){
             console.log("dodajem: " + email)
             $http({

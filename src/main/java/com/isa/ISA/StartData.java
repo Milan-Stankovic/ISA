@@ -132,7 +132,7 @@ public class StartData {
         Prijatelj p3 = new Prijatelj();
         p3.setPosiljalac(userService.getUser(rk4.getUserName()));
         p3.setPrimalac(userService.getUser(rk3.getUserName()));
-        p3.setStatus(StatusPrijateljstva.PRIMLJENO);
+        p3.setStatus(StatusPrijateljstva.POSLATO);
         prijateljService.addFriendship(p3);
         
         Admin a = new Admin();
