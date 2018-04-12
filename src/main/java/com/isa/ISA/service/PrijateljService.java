@@ -38,7 +38,7 @@ public class PrijateljService {
         RegistrovaniKorisnik primalac = userRepo.findByUserName(k.getPrimalac().getUserName());
         System.out.println("status: " + k.getStatus());
         if(k.getStatus().toString().equals("PRIHVACENO")){
-        	System.out.println("dodao bih prijateljstvo al nece");
+
         	 posiljalac.getPrijatelji().add(k);
         	 primalac.getPrijatelji().add(k);
              userRepo.save(posiljalac);
@@ -47,7 +47,10 @@ public class PrijateljService {
              System.out.println("posiljalac sada ima prijatelja: " + posiljalac.getPrijatelji().size());
              primalac = userRepo.findByUserName(k.getPrimalac().getUserName());
              System.out.println("primalac sada ima prijatelja: " + primalac.getPrijatelji().size());
-        }else System.out.println("NISATAAAAAAAAAAAAA");
+        }else if(k.getStatus().toString().equals("PRIMLJENO")){
+            System.out.println("nikom nista ovaj treba da prihvati");
+            prijateljRepo.save(k);
+        }
        
     }
     
@@ -73,6 +76,15 @@ public class PrijateljService {
         for(Prijatelj p : prijateljRepo.findAll()){
             if(p.getPrimalac().getUserName().equals(username) && p.getStatus().toString().equals("PRIMLJENO"))
                 allReq.add(p.getPosiljalac());
+        }
+        return allReq;
+    }
+
+    public List<RegistrovaniKorisnik> getSentFriends(String username){
+        List<RegistrovaniKorisnik> allReq = new ArrayList<>();
+        for(Prijatelj p : prijateljRepo.findAll()){
+            if(p.getPosiljalac().getUserName().equals(username) && p.getStatus().toString().equals("PRIMLJENO"))
+                allReq.add(p.getPrimalac());
         }
         return allReq;
     }

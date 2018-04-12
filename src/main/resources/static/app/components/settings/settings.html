@@ -71,7 +71,8 @@
     <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-show="searched">
         <h3 style="color:white" ng-show="searched">Search Result:</h3>
         <ol style="list-style-type: none; width:800px">
-            <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})<span>       </span><button ng-click="addFriend(res.email)">Add</button></li>
+            <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})
+                <span>       </span><button ng-disabled="isDisabled" ng-click="addFriend(res.email)">{{addButton}}</button></li>
 
         </ol>
     </div>

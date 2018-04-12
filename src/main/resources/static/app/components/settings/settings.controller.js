@@ -12,7 +12,10 @@
         $scope.friendsList = [];
         $scope.resList = [];
         $scope.reqList = [];
+        $scope.sentList = [];
         $scope.searched = false;
+        $scope.isDisabled = false;
+        $scope.addButton = "Add";
         var init = function (){ 	
         	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
         	$http({
@@ -56,7 +59,7 @@
       		    				 
       		    			}).then(function successCallback(response) {
       		    				$scope.friendsList = response.data;
-      		    				console.log($scope.friendsList.length);
+      		    				console.log("prijatelja: " + $scope.friendsList.length);
       		    				//alert(user.userName)
       		    			  }, function errorCallback(response) {
       		    				  console.log("Greska kod GET user frineds");
@@ -68,13 +71,24 @@
 
                             }).then(function successCallback(response) {
                                 $scope.reqList = response.data;
-                                console.log($scope.reqList.length);
+                                console.log("requestova: " + $scope.reqList.length);
                                 //alert(user.userName)
                               }, function errorCallback(response) {
                                   console.log("Greska kod GET user frineds");
                               });
 
 
+                        $http({
+                              method: 'GET',
+                              url: 'http://localhost:8096/api/user/sent/' + $cookies.get('user')
+
+                            }).then(function successCallback(response) {
+                                $scope.sentList = response.data;
+                                console.log("poslatih: " + $scope.sentList.length);
+                                //alert(user.userName)
+                              }, function errorCallback(response) {
+                                  console.log("Greska kod GET user frineds");
+                              });
       		        }
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
@@ -90,6 +104,8 @@
         		alert("Both search fields are empty.")
         		return;
         	}
+        	$scope.addButton = "Add";
+        	$scope.isDisabled = false;
         	var data = searchfName + "." + searchlName;
         	$scope.results=[];
         	$http({
@@ -104,9 +120,10 @@
     				var i,j;
     				var temp=[];
     				var found = false;
+    				console.log(user.email);
     				for(i=0; i < $scope.resList.length; i++){
     				    for(j=0; j < $scope.friendsList.length; j++){
-                            if($scope.resList[i].email===$scope.friendsList[j].email){
+                            if($scope.resList[i].email===$scope.friendsList[j].email || $scope.resList[i].email===user.email){
                                 found=true;
                             }
                         }
@@ -117,11 +134,25 @@
                             found = false;
                         }
 
+
     				}
     				$scope.resList=temp;
 
+    				for(i=0; i < $scope.resList.length; i++){
+                        for(j=0; j < $scope.sentList.length; j++){
+                            if($scope.resList[i].email===$scope.sentList[j].email){
+                                for(var k = 0; k < temp.length; k++) {
 
-    				//alert(user.userName)
+                                    if($scope.resList[i].email===temp[k].email) {
+                                        break;
+                                    }
+                                }
+                                temp.splice(k, 1);
+                            }
+                        }
+
+                    }
+                    $scope.resList=temp;
     			  }, function errorCallback(response) {
     				  console.log("Greska kod search");
     			  });
@@ -140,6 +171,33 @@
     			  }, function errorCallback(response) {
     				  console.log("Greska kod GET user frineds");
     			  });
+
+
+                $http({
+                    method: 'GET',
+                    url: 'http://localhost:8096/api/user/req/' + $cookies.get('user')
+
+                  }).then(function successCallback(response) {
+                      $scope.reqList = response.data;
+                      console.log("requestova: " + $scope.reqList.length);
+                      //alert(user.userName)
+                    }, function errorCallback(response) {
+                        console.log("Greska kod GET user frineds");
+                    });
+
+
+              $http({
+                    method: 'GET',
+                    url: 'http://localhost:8096/api/user/sent/' + $cookies.get('user')
+
+                  }).then(function successCallback(response) {
+                      $scope.sentList = response.data;
+                      console.log("poslatih: " + $scope.sentList.length);
+                      //alert(user.userName)
+                    }, function errorCallback(response) {
+                        console.log("Greska kod GET user frineds");
+                    });
+
         }
 
         $scope.addFriend = function(email){
@@ -149,9 +207,20 @@
                   url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user'),
                   data: email
                 }).then(function successCallback(response) {
-                    $scope.friendsList = response.data;
-                    console.log($scope.friendsList.length);
-                    //alert(user.userName)
+
+                    $scope.isDisabled = true;
+                    $scope.addButton = "Sent";
+                    $http({
+                      method: 'GET',
+                      url: 'http://localhost:8096/api/user/sent/' + $cookies.get('user')
+
+                    }).then(function successCallback(response) {
+                        $scope.sentList = response.data;
+                        console.log("poslatih: " + $scope.sentList.length);
+                        //alert(user.userName)
+                      }, function errorCallback(response) {
+                          console.log("Greska kod GET user frineds");
+                      });
                   }, function errorCallback(response) {
                       console.log("Greska kod GET user frineds");
                   });

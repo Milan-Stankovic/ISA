@@ -131,4 +131,17 @@ public class UserController {
 
 	}
 
+    @RequestMapping(method = RequestMethod.GET,value = "/api/user/sent/{username}")
+    public List<RegistrovaniKorisnik> getUserSent(@PathVariable String username){
+
+        RegistrovaniKorisnik k = userService.getUser(username);
+
+        if(k==null)
+            return new ArrayList<RegistrovaniKorisnik>();
+
+        return prijateljService.getSentFriends(k.getUserName());
+
+
+    }
+
 }
