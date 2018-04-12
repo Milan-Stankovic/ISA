@@ -80,13 +80,17 @@ public class SettingsController {
 			 return ret;	
 		 System.out.println(search);
 		 String ime = (search.split("\\.")[0].equals("undefined") || search.split("\\.")[0].equals("")) ?  "" : search.split("\\.")[0];
-		 String prezime = (search.split("\\.")[1].equals("undefined") || search.split("\\.")[1].equals("")) ? "" : search.split("\\.")[1];
-		 System.out.println("Dobio ime: " + ime + " " + prezime);
+		 String prezime="";
+		 if (!search.substring(search.length()-1).equals(".")) {
+			 prezime = (search.split("\\.")[1].equals("undefined") || search.split("\\.")[1].equals("")) ? "" : search.split("\\.")[1];
+		 }
+			 System.out.println("Dobio ime: " + ime + " " + prezime);
 		 if(ime.equals(""))
 			 return userService.searchPrezime(prezime);
 		 else if(prezime.equals(""))
 			 return userService.searchIme(ime);
 		 else
+
 			 return userService.searchImePrezime(ime,prezime);
 	
 	 }

@@ -73,7 +73,7 @@
         }
         
         $scope.searchFunc = function(searchfName, searchlName){
-        	if(searchfName==undefined && searchlName==undefined){
+        	if((searchfName==undefined || searchfName==="") && (searchlName==undefined|| searchlName==="")){
         		alert("Both search fields are empty.")
         		return;
         	}
@@ -87,7 +87,27 @@
     			}).then(function successCallback(response) {
     			    $scope.searched=true;
     				$scope.resList = response.data;
-    				console.log($scope.resList.length);
+    				console.log("pre filtera: " + $scope.resList.length);
+    				var i,j;
+    				var temp=[];
+    				var found = false;
+    				for(i=0; i < $scope.resList.length; i++){
+    				    for(j=0; j < $scope.friendsList.length; j++){
+                            if($scope.resList[i].email===$scope.friendsList[j].email){
+                                found=true;
+                            }
+                        }
+                        if(found){
+                            found = false;
+                        }else{
+                            temp.push($scope.resList[i]);
+                            found = false;
+                        }
+
+    				}
+    				$scope.resList=temp;
+
+
     				//alert(user.userName)
     			  }, function errorCallback(response) {
     				  console.log("Greska kod search");
