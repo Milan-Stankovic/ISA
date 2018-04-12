@@ -43,6 +43,7 @@
                 		alert("Login failed. Password must be changed before first login.")
                 		
                 		$cookies.remove('user');
+                		$cookies.remove('id');
                 		$window.location.href = 'http://localhost:8096/#!/adminLogin';
                 		return;
                 		
@@ -50,7 +51,7 @@
                 		alert("Before login you must confirm your registration via email.")
                 		
                 		$cookies.remove('user');
-              
+                        $cookies.remove('id');
                 		return;
                 	}
                 		
@@ -58,7 +59,10 @@
 	     			$cookies.put("user", user.userName, {
 	     			   path: 'core'
 	     			});
-	     			console.log("Uspesno logovanje: " + $cookies.get('user'))
+	     			$cookies.put("id", user.id, {
+                    	     			   path: 'core'
+                    	     			});
+	     			console.log("Uspesno logovanje: " + $cookies.get('user') + ", id: " +  $cookies.get('id'))
 	            	$window.location.href = 'http://localhost:8096/';
                 }
                 
