@@ -11,6 +11,7 @@
         var user = undefined;
         $scope.friendsList = [];
         $scope.resList = [];
+        $scope.reqList = [];
         $scope.searched = false;
         var init = function (){ 	
         	console.log("trazim admira, path: " + 'http://localhost:8096/api/admin/' + $cookies.get('user'));
@@ -60,6 +61,18 @@
       		    			  }, function errorCallback(response) {
       		    				  console.log("Greska kod GET user frineds");
       		    			  });
+
+      		    		$http({
+                              method: 'GET',
+                              url: 'http://localhost:8096/api/user/req/' + $cookies.get('user')
+
+                            }).then(function successCallback(response) {
+                                $scope.reqList = response.data;
+                                console.log($scope.reqList.length);
+                                //alert(user.userName)
+                              }, function errorCallback(response) {
+                                  console.log("Greska kod GET user frineds");
+                              });
 
 
       		        }
@@ -127,6 +140,21 @@
     			  }, function errorCallback(response) {
     				  console.log("Greska kod GET user frineds");
     			  });
+        }
+
+        $scope.addFriend = function(email){
+            console.log("dodajem: " + email)
+            $http({
+                  method: 'POST',
+                  url: 'http://localhost:8096/api/user/friends/' + $cookies.get('user'),
+                  data: email
+                }).then(function successCallback(response) {
+                    $scope.friendsList = response.data;
+                    console.log($scope.friendsList.length);
+                    //alert(user.userName)
+                  }, function errorCallback(response) {
+                      console.log("Greska kod GET user frineds");
+                  });
         }
         
         $scope.saveFunc = function(fname, lname, email, city, phone, pass, pass2){

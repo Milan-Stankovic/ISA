@@ -1,5 +1,5 @@
 <div>
-	  <br>  
+	  <br>
     <h3 style="color:white">User Information:</h3><br>
     <form>
         <table>
@@ -7,12 +7,12 @@
                 <td style="color:white; width:150px">First Name:</td>
                 <td><input type="text" id="fname" name="fname" ng-model="fname"></td>
             </tr>
-            
+
             <tr>
                 <td style="color:white; width:150px">Last Name:</td>
                 <td><input type="text" id="lname" name="lname" ng-model="lname"></td>
             </tr>
-            
+
             <tr>
                 <td style="color:white; width:150px">Email:</td>
                 <td><input type="text" id="email" name="email" ng-model="email"></td>
@@ -22,7 +22,7 @@
                 <td style="color:white; width:150px">City:</td>
                 <td><input type="text" id="city" name="city" ng-model="city"></td>
             </tr>
-            
+
             <tr>
                 <td style="color:white; width:150px">Phone Number:</td>
                 <td><input type="text" id="phone" name="phone" ng-model="phone"></td>
@@ -37,20 +37,20 @@
                 <td style="color:white; width:150px">Confirm Password:</td>
                 <td><input type="password" id="pass2" name="pass2" ng-model="pass2"></td>
             </tr>
-            
+
             <tr>
             	<td></td>
                 <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
                <button ng-click="saveFunc(fname, lname, email, city, phone, pass, pass2)">Save</button></td>
             </tr>
-            
+
 
         </table>
-        
+
     </form>
     <br>
     <h3 style="color:white">Friends:</h3><br>
-    
+
     <div style=" width:600px">
     	<br>
     	<table style=" width:600px">
@@ -60,17 +60,17 @@
                  <td style="width:150px"><input type="text" id="searchlName" name="searchlName" ng-model="searchlName" placeholder="Last Name"></td>
                 <td><button ng-click="searchFunc(searchfName, searchlName)">Search</button></td>
             </tr>
-    		
+
     	</table>
-    	
+
 
     <br>
     </div>
 
 
-    <div style="overflow-y: scroll; height:200px; width:600px; background-color:gray" ng-show="searched">
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-show="searched">
         <h3 style="color:white" ng-show="searched">Search Result:</h3>
-        <ol style="list-style-type: none; width:600px">
+        <ol style="list-style-type: none; width:800px">
             <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})<span>       </span><button ng-click="addFriend(res.email)">Add</button></li>
 
         </ol>
@@ -80,17 +80,33 @@
         <br><br>
     </div>
 
-    <div style="overflow-y: scroll; height:400px; width:600px; background-color:gray">
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray">
+        <h3 style="color:white">Request List:</h3>
+        <ol style="list-style-type: none; width:800px">
+            <li ng-repeat="req in reqList" style="width:500px; color:white">{{req.ime}} {{req.prezime}} ({{req.email}})
+                <span>       </span><button ng-click="declineFriend(req.email)">Decline</button>
+                <span>       </span><button ng-click="acceptFriend(req.email)">Accept</button>
+            </li>
+
+        </ol>
+    </div>
+
+
+    <div>
+        <br><br>
+    </div>
+
+    <div style="overflow-y: scroll; height:400px; width:800px; background-color:gray">
         <h3 style="color:white">Friends List:</h3>
-    	<ol style="list-style-type: none; width:600px">
+    	<ol style="list-style-type: none; width:800px">
     		<li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="deleteFriend(friend.email)">Delete</button></li>
-							
+
     	</ol>
     </div>
 
     <div>
         <br><br>
     </div>
-    
-    
+
+
 </div>

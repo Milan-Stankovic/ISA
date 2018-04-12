@@ -106,6 +106,29 @@ public class UserController {
     	return ret;
         
     }
-    
+
+	@RequestMapping(method = RequestMethod.POST,value = "/api/user/friends/{username}")
+	public void addFriend(@PathVariable String username, @RequestBody String email) {
+		RegistrovaniKorisnik posiljalac = userService.getUser(username);
+		RegistrovaniKorisnik primalac = userService.findByEmail(email);
+		Prijatelj p = new Prijatelj();
+		p.setPosiljalac(posiljalac);
+		p.setPrimalac(primalac);
+		p.setStatus(StatusPrijateljstva.PRIMLJENO);
+		prijateljService.addFriendship(p);
+	}
+
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/req/{username}")
+	public List<RegistrovaniKorisnik> getUserReq(@PathVariable String username){
+
+		RegistrovaniKorisnik k = userService.getUser(username);
+
+		if(k==null)
+			return new ArrayList<RegistrovaniKorisnik>();
+
+		return prijateljService.getReqFriends(k.getUserName());
+
+
+	}
 
 }

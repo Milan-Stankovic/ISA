@@ -99,10 +99,23 @@ public class StartData {
         rk3.setGrad("f");
         rk3.setIme("f");
         rk3.setPrezime("f");
-        
-        
         System.out.println("Kreiran korisnik: " + rk3.getUserName());
         userService.addUser(rk3);
+
+
+        RegistrovaniKorisnik rk4 = new RegistrovaniKorisnik();
+        rk4.setUserName("zika");
+        rk4.setPassword("zika");
+        rk4.setEmail("zika@gmail.com");
+        rk4.setStatus(StatusNaloga.AKTIVAN);
+        rk4.setBrojTelefona("4444");
+        rk4.setGrad("zika");
+        rk4.setIme("Zika");
+        rk4.setPrezime("Zikic");
+        
+        
+        System.out.println("Kreiran korisnik: " + rk4.getUserName());
+        userService.addUser(rk4);
         
         Prijatelj p0 = new Prijatelj();
         p0.setPosiljalac(userService.getUser(rk.getUserName()));
@@ -115,7 +128,12 @@ public class StartData {
         p2.setPrimalac(userService.getUser(rk2.getUserName()));
         p2.setStatus(StatusPrijateljstva.PRIHVACENO);
         prijateljService.addFriendship(p2);
- 
+
+        Prijatelj p3 = new Prijatelj();
+        p3.setPosiljalac(userService.getUser(rk4.getUserName()));
+        p3.setPrimalac(userService.getUser(rk3.getUserName()));
+        p3.setStatus(StatusPrijateljstva.PRIMLJENO);
+        prijateljService.addFriendship(p3);
         
         Admin a = new Admin();
         a.setUserName("admin");

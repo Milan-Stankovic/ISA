@@ -66,8 +66,16 @@ public class PrijateljService {
     		
     	return allFriends;
     }
-    
 
+    
+    public List<RegistrovaniKorisnik> getReqFriends(String username){
+        List<RegistrovaniKorisnik> allReq = new ArrayList<>();
+        for(Prijatelj p : prijateljRepo.findAll()){
+            if(p.getPrimalac().getUserName().equals(username) && p.getStatus().toString().equals("PRIMLJENO"))
+                allReq.add(p.getPosiljalac());
+        }
+        return allReq;
+    }
 
 
 }
