@@ -51,6 +51,10 @@ p a:hover {
 	position:absolute;
 	top:119px;
 }
+
+#header div ul:hover {
+    height:200px!important;
+}
 #header div ul li:first-child {
 	margin:0;
 }
