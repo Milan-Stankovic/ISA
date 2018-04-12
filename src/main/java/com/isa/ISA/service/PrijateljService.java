@@ -27,10 +27,6 @@ public class PrijateljService {
 
     }
 
-/*    public Prijatelj getUser(String username){
-        return prijateljRepo.findByUserName(username);
-    }*/
-
 
     public void addFriendship(Prijatelj k){
         prijateljRepo.save(k);
@@ -90,4 +86,15 @@ public class PrijateljService {
     }
 
 
+    public void remove(Prijatelj p) {
+        prijateljRepo.delete(p);
+    }
+
+    public Prijatelj getPrimalacPosiljalac(String primalac, String posiljalac) {
+        for(Prijatelj p : prijateljRepo.findAll()){
+            if(p.getPrimalac().getUserName().equals(primalac) && p.getPosiljalac().getUserName().equals(posiljalac) && p.getStatus().toString().equals("PRIMLJENO"))
+                return p;
+        }
+        return null;
+    }
 }

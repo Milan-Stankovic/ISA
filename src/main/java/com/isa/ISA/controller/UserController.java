@@ -144,4 +144,17 @@ public class UserController {
 
     }
 
+	@RequestMapping(method = RequestMethod.DELETE,value = "/api/user/decline/{username}")
+	public List<RegistrovaniKorisnik> decline(@PathVariable String username, @RequestBody String email){
+		RegistrovaniKorisnik primalac = userService.getUser(username);
+		RegistrovaniKorisnik posiljalac = userService.findByEmail(email);
+    	Prijatelj p = prijateljService.getPrimalacPosiljalac(primalac.getUserName(), posiljalac.getUserName());
+
+		prijateljService.remove(p);
+
+		return prijateljService.getReqFriends(primalac.getUserName());
+
+
+	}
+
 }

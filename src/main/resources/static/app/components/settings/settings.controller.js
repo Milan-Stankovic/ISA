@@ -200,6 +200,21 @@
 
         }
 
+        $scope.declineFriend = function(email){
+            console.log("odbijam: " + email)
+            $http({
+                  method: 'DELETE',
+                  url: 'http://localhost:8096/api/user/decline/' + $cookies.get('user'),
+                  data: email
+                }).then(function successCallback(response) {
+                    $scope.reqList = response.data;
+                    console.log("requestova: " + $scope.reqList.length);
+                    //alert(user.userName)
+                  }, function errorCallback(response) {
+                      console.log("Greska kod GET user frineds");
+                  });
+
+        }
         $scope.addFriend = function(email){
             console.log("dodajem: " + email)
             $http({
