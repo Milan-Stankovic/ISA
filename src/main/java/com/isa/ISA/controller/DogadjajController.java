@@ -2,6 +2,7 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
+import com.isa.ISA.DTO.DogadjajDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class DogadjajController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/d")
-    public void setDogadjaj(@RequestBody Dogadjaj d){
+    public void setDogadjaj(@RequestBody DogadjajDTO d){
         dogService.addDogadjaj(d);
     }
 

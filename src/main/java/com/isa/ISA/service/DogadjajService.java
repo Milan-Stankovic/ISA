@@ -3,6 +3,7 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.DTO.DogadjajDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,43 @@ public class DogadjajService {
         return allDog;
     }
 
-    public void addDogadjaj(Dogadjaj d){
-        dogRepo.save(d);
+    private Dogadjaj converter(DogadjajDTO d){
+        Dogadjaj dog = new Dogadjaj();
+        dog.setTrajanje(d.getTrajanje());
+        dog.setZanr(d.getZanr());
+        dog.setReziser(d.getReziser());
+        dog.setOpis(d.getOpis());
+        dog.setNaziv(d.getNaziv());
+        dog.setGlumci(null);
+        dog.setGlumciStr(d.getGlumciStr());
+        dog.setDonosiBodova(d.getDonosiBodova());
+        dog.setProsecnaOcena(d.getProsecnaOcena());
+        dog.setBrojOcena(d.getBrojOcena());
+        return dog;
+
+    }
+    private boolean provera(DogadjajDTO d){
+
+        if(d.getBrojOcena()>=0)
+            if(d.getDonosiBodova()>=0)
+                if(d.getGlumciStr().length()>0)
+                    if(d.getNaziv().length()>0)
+                        if(d.getOpis().length()>0)
+                            if(d.getReziser().length()>0)
+                                if(d.getTrajanje()>0)
+                                    if(d.getZanr() != null)
+                                        return true;
+        return false;
+
+    }
+
+    public void addDogadjaj(DogadjajDTO d){
+        if(provera(d))
+            dogRepo.save(converter(d));
+    }
+
+    public void addDogadjaj2(Dogadjaj d){
+            dogRepo.save(d);
     }
 
     public void updateDogadjaj(Dogadjaj d){
@@ -48,9 +84,14 @@ public class DogadjajService {
         Dogadjaj d = dogRepo.findOne(dogadjajID);
         int broj = d.getBrojOcena();
         float prosecna = d.getProsecnaOcena();
-        float nova = (prosecna*broj + projekcijaOcena)/(broj+1);
-        d.setBrojOcena(broj+1);
-        d.setProsecnaOcena(nova);
+        if(broj ==0){
+            d.setBrojOcena(1);
+            d.setProsecnaOcena(projekcijaOcena);
+        }else {
+            float nova = (prosecna * broj + projekcijaOcena) / (broj + 1);
+            d.setBrojOcena(broj + 1);
+            d.setProsecnaOcena(nova);
+        }
         dogRepo.save(d);
         pozBiService.updateOcena(pozoristeBioskopId, ambijentOcena);
     }

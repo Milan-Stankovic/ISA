@@ -132,7 +132,7 @@ public class StartData {
         Admin a2 = new Admin();
         a2.setUserName("admin2");
         a2.setPassword("default");
-        a2.setTip(TipAdmina.SYS);
+        a2.setTip(TipAdmina.POZBI);
         a2.setEmail("admin2");
         a2.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + a2.getUserName());
@@ -149,7 +149,7 @@ public class StartData {
         p1.setSilverTreshold(20);
         p1.setGoldTreshold(30);
         List<Admin> adminList = new ArrayList<>();
-        adminList.add(a);
+        adminList.add(a2);
         p1.setAdmini(adminList);
         p1.setNaziv("Moje prvo pozoriste");
         p1.setOpis("Prvo kreirano pozoriste");
@@ -168,7 +168,7 @@ public class StartData {
             Sediste sediste = new Sediste();
             sediste.setBroj(i%10);
             sediste.setRed( Math.floorDiv(i, 10));
-            sediste.setTipSedista(TipSedista.OBICNO);
+            sediste.setTipSedista(TipSedista.REGULAR);
             sedisteRepository.save(sediste);
             sedista.add(sediste);
         }
@@ -196,7 +196,7 @@ public class StartData {
         d.setZanr(Zanr.HOROR);
         d.setTrajanje(90);
 
-        dogadjajService.addDogadjaj(d);
+        dogadjajService.addDogadjaj2(d);
 
         p.setDogadjaj(d);
         projekcijaService.addProjekcija(p);
@@ -205,17 +205,21 @@ public class StartData {
         p1.setProjekcije(projekcije);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
+        a2.setMesta(new ArrayList<PozoristeBioskop>());
+        a2.getMesta().add(p1);
+
 
         PozoristeBioskop pb2 = new PozoristeBioskop();
         pb2.setId(1);
         s1.setUstanova(pb2);
         salaRepository.save(s1);
-        addBioskop(a);
+        addBioskop(a2, 1);
+        addBioskop(a2, 2);
 
 
     }
 
-    private void addBioskop(Admin a){
+    private void addBioskop(Admin a, int koji){
         PozoristeBioskop p1 = new PozoristeBioskop();
         p1.setBrojOcena(1);
         p1.setProsecnaOcena(5);
@@ -229,7 +233,10 @@ public class StartData {
         List<Admin> adminList = new ArrayList<>();
         adminList.add(a);
         p1.setAdmini(adminList);
-        p1.setNaziv("Arena Cineplex");
+        if(koji == 1)
+            p1.setNaziv("Arena Cineplex");
+        else
+            p1.setNaziv("Cinestar");
         p1.setOpis("Bioskop 101");
         p1.setTip(TipUstanove.BIOSKOP);
         p1.setUrlMape("https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2361.7969083507946!2d19.842332146552927!3d45.254552686290445!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b1069a2052523%3A0xca354a229e89ab6d!2z0J_QvtC30L7RgNC40YjQvdC4INC80YPQt9C10Zgg0JLQvtGY0LLQvtC00LjQvdC1!5e0!3m2!1ssr!2srs!4v1522785124974");
@@ -246,7 +253,7 @@ public class StartData {
             Sediste sediste = new Sediste();
             sediste.setBroj(i%10);
             sediste.setRed( Math.floorDiv(i, 10));
-            sediste.setTipSedista(TipSedista.OBICNO);
+            sediste.setTipSedista(TipSedista.REGULAR);
             sedisteRepository.save(sediste);
             sedista.add(sediste);
         }
@@ -274,7 +281,7 @@ public class StartData {
         d.setZanr(Zanr.DRAMA);
         d.setTrajanje(90);
 
-        dogadjajService.addDogadjaj(d);
+        dogadjajService.addDogadjaj2(d);
 
         p.setDogadjaj(d);
         projekcijaService.addProjekcija(p);
@@ -283,6 +290,9 @@ public class StartData {
         p1.setProjekcije(projekcije);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
+
+        a.getMesta().add(p1);
+        adminService.updateAdmin(a);
 
         PozoristeBioskop pb2 = new PozoristeBioskop();
         pb2.setId(1);

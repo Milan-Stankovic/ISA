@@ -3,6 +3,8 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.enums.TipUstanove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,32 @@ public class AdminService {
         adminRepo.findAll().forEach(allAdmins::add);
        // System.out.println(allAdmins.size());
         return allAdmins;
+    }
+
+    public List<PozoristeBioskop> getAdminP(Long id){
+
+        List<PozoristeBioskop> sve = new ArrayList<>();
+        sve= adminRepo.findOne(id).getMesta();
+        List<PozoristeBioskop> pozorista = new ArrayList<>();
+
+        for (PozoristeBioskop pb:sve) {
+            if(pb.getTip() == TipUstanove.POZORISTE)
+                pozorista.add(pb);
+        }
+        return pozorista;
+    }
+
+    public List<PozoristeBioskop> getAdminB(Long id){
+
+        List<PozoristeBioskop> sve = new ArrayList<>();
+        sve= adminRepo.findOne(id).getMesta();
+        List<PozoristeBioskop> pozorista = new ArrayList<>();
+
+        for (PozoristeBioskop pb:sve) {
+            if(pb.getTip() == TipUstanove.BIOSKOP)
+                pozorista.add(pb);
+        }
+        return pozorista;
     }
 
     public void addAdmin(Admin k){
