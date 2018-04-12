@@ -1654,3 +1654,17 @@ p a:hover {
 	color: white !important;
 
 }
+.headerrr{
+	color: white;
+	font-size:30px;
+	line-height:30px;
+	margin:0;
+	text-decoration:none;
+    font-family:oswaldregular;
+	
+}
+#map-canvas{
+        height: 100px;
+        width:  140px;
+        border: 1px solid white;
+}

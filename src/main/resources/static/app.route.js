@@ -61,6 +61,18 @@
 			templateUrl: 'app/components/addEditItem/addEditItem.html',
 			controller: 'addEditItemController',
 			controllerAs: 'aeic'
+		})
+		.state('core.sysAdmin', {
+			url: 'sysAdmin',
+			templateUrl: 'app/components/sysAdmin/sysAdmin.html',
+			controller: 'sysAdminController',
+			controllerAs: 'sac'
+		})
+		.state('core.addAdmins', {
+			url: 'addAdmins',
+			templateUrl: 'app/components/addAdmins/addAdmins.html',
+			controller: 'addAdminsController',
+			controllerAs: 'aac'
 		});
      /* $locationProvider.html5Mode({
     	  enabled: true,

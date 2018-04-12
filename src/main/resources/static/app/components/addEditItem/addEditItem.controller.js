@@ -98,7 +98,7 @@
         	}
         	var file = $scope.item.slika; 
         	if(file=="" || file==undefined){        		
-        		var data = {
+        		var postData = {
     				"id" : 0,
            			"naziv": $scope.item.naziv,
            			"opis": $scope.item.opis,
@@ -112,7 +112,8 @@
             	$http({
                     method: 'POST',
                     url: 'http://localhost:8096/rekviziti/zvanicni',
-                    data: data                
+                    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                    data: postData                
                   }).then(function successCallback(response) {
                        var items = response.data;
                        if (items==null || items==undefined){
@@ -147,7 +148,7 @@
 	                data: fileFormData
 	            }).then(function successCallback(response) {
 	            	//za rekvizit
-	        		var data = {
+	        		var postData = {
 	    				"id" : 0,
 	           			"naziv": $scope.item.naziv,
 	           			"opis": $scope.item.opis,
@@ -158,12 +159,12 @@
 	           			"aktivan": true, 
 	           			"rezervacije": []
 	        		};
-	            	data.slika = response.data.slika;
+	        		postData.slika = response.data.slika;
 	            	$http({
 	                    method: 'POST',
 	                    url: 'http://localhost:8096/rekviziti/zvanicni',
-	                    headers: {'Content-Type': 'application/json'},
-	                    data: data
+	                    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+	                    data: postData
 	                  }).then(function successCallback(response) {
 	                       var items = response.data;
 	                       if (items==null || items==undefined){
@@ -212,7 +213,7 @@
            			"naziv": $scope.eitem.naziv,
            			"opis": $scope.eitem.opis,
            			"cena": parseFloat($scope.eitem.cena),
-           			"slika": $scopee.eitem.slika,
+           			"slika": $scope.eitem.slika,
            			"postavio":$scope.regUser,
            			"preuzeti": $scope.eitem.preuzeti,
            			"aktivan": true, 
