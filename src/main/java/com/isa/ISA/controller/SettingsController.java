@@ -3,6 +3,7 @@ package com.isa.ISA.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.DTO.RegKorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ public class SettingsController {
 	}
 	
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/settings/reg") 
-	    public String save(@RequestBody RegistrovaniKorisnik kor){
+	    public String save(@RequestBody RegKorDTO kor){
 		 	Korisnik k;
 	        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 	        

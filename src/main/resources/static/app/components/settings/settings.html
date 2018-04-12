@@ -49,9 +49,9 @@
 
     </form>
     <br>
-    <h3 style="color:white">Friends:</h3><br>
+    <h3 style="color:white" ng-hide="isAdmin">Friends:</h3><br>
 
-    <div style=" width:600px">
+    <div style=" width:600px" ng-hide="isAdmin">
     	<br>
     	<table style=" width:600px">
     	 	<tr style=" width:600px">
@@ -68,7 +68,7 @@
     </div>
 
 
-    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-show="searched">
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-show="searched" ng-hide="isAdmin">
         <h3 style="color:white" ng-show="searched">Search Result:</h3>
         <ol style="list-style-type: none; width:800px">
             <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})
@@ -81,7 +81,7 @@
         <br><br>
     </div>
 
-    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray">
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-hide="isAdmin">
         <h3 style="color:white">Request List:</h3>
         <ol style="list-style-type: none; width:800px">
             <li ng-repeat="req in reqList" style="width:500px; color:white">{{req.ime}} {{req.prezime}} ({{req.email}})
@@ -97,7 +97,7 @@
         <br><br>
     </div>
 
-    <div style="overflow-y: scroll; height:400px; width:800px; background-color:gray">
+    <div style="overflow-y: scroll; height:400px; width:800px; background-color:gray" ng-hide="isAdmin">
         <h3 style="color:white">Friends List:</h3>
     	<ol style="list-style-type: none; width:800px">
     		<li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="deleteFriend(friend.email)">Delete</button></li>

@@ -34,6 +34,9 @@ public class RegKorController {
     @RequestMapping(method = RequestMethod.GET,value = "/api/regKor/{username}/visited")
     public List<PozoristeBioskop> getVisitedP(@PathVariable String username){
         RegistrovaniKorisnik k = userService.getUser(username);
+        if(k==null){
+            return new ArrayList<PozoristeBioskop>();
+        }
         List<Rezervacija> kRez = k.getRezervacije();
         List<Projekcija> kRezProjekcije  = kRez.stream().map(Rezervacija::getProjekcija).collect(Collectors.toList());
         List<Sala> kRezSala  = kRezProjekcije.stream().map(Projekcija::getSala).collect(Collectors.toList());

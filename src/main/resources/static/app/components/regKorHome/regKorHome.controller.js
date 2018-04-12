@@ -8,12 +8,30 @@
     regKorHomeController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce'];
     function regKorHomeController($location, $scope, $rootScope, $http, $cookies, $sce) {
         var rhc = this;
+        var user;
         rhc.home = "Home";
 
         var init = function (){
+            console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
+            $http({
+              method: 'GET',
+              url: 'http://localhost:8096/admin/' + $cookies.get('user')
+
+            }).then(function successCallback(response) {
+                user = response.data;
+                 if(user!=undefined){
+                       $location.path("/admin");
+                 }
+
+              }, function errorCallback(response) {
+                  console.log("Greska kod GET user");
+              });
+
         	//$location.path("/login");
         };
         init();
+
+
 
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
