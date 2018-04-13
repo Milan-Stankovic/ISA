@@ -41,9 +41,7 @@
               	                   var items = response.data;
               	                   if (items!=null && items!=undefined){
               	                	   for(var i=0; i<items.length; i++){
-              	                		//   for(var j=0;j<items[i].admini.length; j++)
-              	                			  // if(items[i].admini[j]==regUser)
-              	                				   $scope.seller_options.push(items[i]);
+              	                		   $scope.seller_options.push(items[i]);
               	                	   }
               	                   }
               	                }
@@ -56,15 +54,12 @@
                 });
         	
         	$scope.item = {
-        			"id" : 0,
-           			"naziv": "",
-           			"opis": "",
-           			"cena": "",
-           			"slika": "",
-           			"postavio": $scope.regUser,
-           			"preuzeti": {},
-           			"aktivan": true, 
-           			"rezervacije": []
+        			"naziv":"",
+        			"opis":"",
+        		    "slika":"",
+        			"cena":0,
+        			"pozBioID":0,
+        			"admin":$cookies.get('user')
         	};
         	$scope.item_options = [];
         	$http({
@@ -99,20 +94,17 @@
         	var file = $scope.item.slika; 
         	if(file=="" || file==undefined){        		
         		var postData = {
-    				"id" : 0,
            			"naziv": $scope.item.naziv,
            			"opis": $scope.item.opis,
            			"cena": parseFloat($scope.item.cena),
            			"slika": "",
-           			"postavio":$scope.regUser,
-           			"preuzeti": $scope.item.preuzeti,
-           			"aktivan": true, 
-           			"rezervacije": []
+           			"postavio":$cookies.get('user'),
+           			"preuzeti": $scope.item.preuzeti.id
         		};
             	$http({
                     method: 'POST',
                     url: 'http://localhost:8096/rekviziti/zvanicni',
-                    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+                    headers: {'Content-Type': 'application/json'},
                     data: postData                
                   }).then(function successCallback(response) {
                        var items = response.data;
@@ -120,17 +112,15 @@
                     	   aeic.showSthWentWrong();
                        }
                        else{
+                    	   $scope.item_options.push(items);
                     	   aeic.showDone();
                     	   $scope.item = {
-                    			"id" : 0,
                        			"naziv": "",
                        			"opis": "",
-                       			"cena": "",
+                       			"cena": 0,
                        			"slika": "",
-                       			"postavio": $scope.regUser,
-                       			"preuzeti": {},
-                       			"aktivan": true, 
-                       			"rezervacije": []
+                       			"postavio": $cookies.get('user'),
+                       			"preuzeti": {}
                     	   };
                        }
                     });
@@ -149,15 +139,12 @@
 	            }).then(function successCallback(response) {
 	            	//za rekvizit
 	        		var postData = {
-	    				"id" : 0,
 	           			"naziv": $scope.item.naziv,
 	           			"opis": $scope.item.opis,
 	           			"cena": parseFloat($scope.item.cena),
 	           			"slika": "",
-	           			"postavio":$scope.regUser,
-	           			"preuzeti": $scope.item.preuzeti,
-	           			"aktivan": true, 
-	           			"rezervacije": []
+	           			"postavio":$cookies.get('user'),
+	           			"preuzeti": $scope.item.preuzeti.id,
 	        		};
 	        		postData.slika = response.data.slika;
 	            	$http({
@@ -171,17 +158,15 @@
 	                    	   aeic.showSthWentWrong();
 	                       }
 	                       else{
+	                    	   $scope.item_options.push(items);
 	                    	   aeic.showDone();
 	                    	   $scope.item = {
-	                       			"id" : 0,
 	                       			"naziv": "",
 	                       			"opis": "",
-	                       			"cena": "",
+	                       			"cena": 0,
 	                       			"slika": "",
-	                       			"postavio": $scope.regUser,
-	                       			"preuzeti": {},
-	                       			"aktivan": true, 
-	                       			"rezervacije": []
+	                       			"postavio": $cookies.get('user'),
+	                       			"preuzeti": {}
 	                    	   };
 	                       }
 	                   });
@@ -209,19 +194,16 @@
         	var file = $scope.eitem.slika; 
         	if(file=="" || file==undefined){        		
         		var data = {
-    				"id" : $scope.eitem.id,
            			"naziv": $scope.eitem.naziv,
            			"opis": $scope.eitem.opis,
            			"cena": parseFloat($scope.eitem.cena),
            			"slika": $scope.eitem.slika,
-           			"postavio":$scope.regUser,
-           			"preuzeti": $scope.eitem.preuzeti,
-           			"aktivan": true, 
-           			"rezervacije": []
+           			"postavio":$cookies.get('user'),
+           			"preuzeti": $scope.eitem.preuzeti.id,
         		};
             	$http({
                     method: 'PUT',
-                    url: 'http://localhost:8096/rekviziti/zvanicni',
+                    url: 'http://localhost:8096/rekviziti/zvanicni/'+$scope.itemToEdit.id,
                     data: data              
                   }).then(function successCallback(response) {
                        var items = response.data;
@@ -232,15 +214,12 @@
                     	   aeic.eshowDone();
                     	   $scope.item_options=""
                     	   $scope.eitem = {
-                    			"id" : 0,
                        			"naziv": "",
                        			"opis": "",
-                       			"cena": "",
+                       			"cena": 0,
                        			"slika": "",
-                       			"postavio": $scope.regUser,
-                       			"preuzeti": {},
-                       			"aktivan": true, 
-                       			"rezervacije": []
+                       			"postavio": $cookies.get('user'),
+                       			"preuzeti": "",
                     	   };
                        }
                     });
@@ -259,20 +238,17 @@
 	            }).then(function successCallback(response) {
 	            	//za rekvizit
 	        		var data = {
-	    				"id" : $scope.eitem.id,
 	           			"naziv": $scope.eitem.naziv,
 	           			"opis": $scope.eitem.opis,
 	           			"cena": parseFloat($scope.eitem.cena),
 	           			"slika": "",
-	           			"postavio":$scope.regUser,
-	           			"preuzeti": $scope.eitem.preuzeti,
-	           			"aktivan": true, 
-	           			"rezervacije": []
+	           			"admin":$cookies.get('user'),
+	           			"preuzeti": $scope.eitem.preuzeti.id
 	        		};
 	            	data.slika = response.data.slika;
 	            	$http({
 	                    method: 'PUT',
-	                    url: 'http://localhost:8096/rekviziti/zvanicni',
+	                    url: 'http://localhost:8096/rekviziti/zvanicni/'+$scope.itemToEdit.id,
 	                    headers: {'Content-Type': 'application/json'},
 	                    data: data
 	                  }).then(function successCallback(response) {
@@ -284,15 +260,12 @@
 	                    	   aeic.eshowDone();
 	                    	   $scope.item_options="";
 	                    	   $scope.eitem = {
-	                       			"id" : 0,
-	                       			"naziv": "",
-	                       			"opis": "",
-	                       			"cena": "",
-	                       			"slika": "",
-	                       			"postavio": $scope.regUser,
-	                       			"preuzeti": {},
-	                       			"aktivan": true, 
-	                       			"rezervacije": []
+	                       			"naziv":"",
+	                    			"opis":"",
+	                    		    "slika":"",
+	                    			"cena":0,
+	                    			"pozBioID":0,
+	                    			"admin":$cookies.get('user')
 	                    	   };
 	                       }
 	                   });
@@ -301,7 +274,16 @@
         }
         
         aeic.setEditFields = function(){
-        	$scope.eitem = $scope.itemToEdit;        	
+        	if($scope.itemToEdit==undefined)
+        		return;
+        	$scope.eitem = $scope.itemToEdit;
+        	for(var i=0; i<$scope.seller_options.length; i++){
+        		if($scope.seller_options[i].id==$scope.itemToEdit.id){
+        			$scope.eitem.preuzeti = $scope.seller_options[i];
+        			return;
+        		}
+        	}
+        	
         }
         
         aeic.deleteItem = function(){
@@ -310,7 +292,17 @@
                 method: 'DELETE',
                 url: 'http://localhost:8096/rekviziti/zvanicni/'+$scope.itemToEdit.id
               }).then(function successCallback(response) {
-                   
+            	  var index = $scope.item_options.indexOf($scope.eitem);
+            	  $scope.item_options.splice(index, 1);
+            	  $scope.item_options="";
+            	  $scope.eitem = {
+              			"naziv":"",
+	           			"opis":"",
+	           		    "slika":"",
+	           			"cena":0,
+	           			"pozBioID":0,
+	           			"admin":$cookies.get('user')
+	           	   };
               });
         }
         

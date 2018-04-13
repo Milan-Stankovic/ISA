@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.isa.ISA.DTO.RekvizitDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.service.RekvizitService;
@@ -29,13 +30,13 @@ public class RekvizitiController {
     public List<ZvanicanRekvizit> getTematske(){
 		return rekvizit.getTematske();
     }
-	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni", consumes = {"application/json;charset=UTF-8"}, produces={"application/json;charset=UTF-8"})
-    public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
-		return rekvizit.addTematske(zr);
+	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
+    public ZvanicanRekvizit addTematske(@RequestBody RekvizitDTO rekDTO){
+		return rekvizit.addTematske(rekDTO);
     }
-	@RequestMapping(method = RequestMethod.PUT, value = "/zvanicni")
-    public ZvanicanRekvizit editTematske(@RequestBody ZvanicanRekvizit zr){
-		return rekvizit.editTematske(zr);
+	@RequestMapping(method = RequestMethod.PUT, value = "/zvanicni/{id}")
+    public ZvanicanRekvizit editTematske(@RequestBody RekvizitDTO rekDTO, @PathVariable long id){
+		return rekvizit.editTematske(rekDTO, id);
     }
 	@RequestMapping(method = RequestMethod.POST, value = "/upload")
     public ZvanicanRekvizit addImageToBytes(@RequestBody MultipartFile file){

@@ -1,15 +1,10 @@
 package com.isa.ISA.service;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
-
-import javassist.bytecode.ByteArray;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -17,8 +12,11 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.core.util.ByteArrayBuilder;
+import com.isa.ISA.DTO.RekvizitDTO;
+import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
+import com.isa.ISA.repository.AdminRepository;
+import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.RekvizitRepository;
 
 @Service
@@ -26,12 +24,29 @@ public class RekvizitService {
 	@Autowired
     private RekvizitRepository rekvizitRepo;
 
+	@Autowired
+    private AdminRepository adminRepo;
+	
+	@Autowired
+    private PozoristeBioskopRepository pbRepo;
+	
+	
 	public List<ZvanicanRekvizit> getTematske() {
 		return rekvizitRepo.findByAktivan(true);
 	}
 
-	public ZvanicanRekvizit addTematske(ZvanicanRekvizit zr) {
-		return rekvizitRepo.save(zr);
+	public ZvanicanRekvizit addTematske(RekvizitDTO zr) {
+		ZvanicanRekvizit retVal = new ZvanicanRekvizit();
+		retVal.setAktivan(true);
+		retVal.setCena(zr.getCena());
+		retVal.setId(0);
+		retVal.setNaziv(zr.getNaziv());
+		retVal.setOpis(zr.getOpis());
+		retVal.setPostavio(adminRepo.findByUserName(zr.getAdmin()));
+		retVal.setPreuzeti(pbRepo.findOne(zr.getPozBioID()));
+		retVal.setRezervacije(new ArrayList<RezervacijaRekvizita>());
+		retVal.setSlika(zr.getSlika());
+		return rekvizitRepo.save(retVal);
 	}
 
 	public String saveMultipartFile(MultipartFile file) {
@@ -60,8 +75,16 @@ public class RekvizitService {
 		return fileName;
 	}
 
-	public ZvanicanRekvizit editTematske(ZvanicanRekvizit zr) {
-		return rekvizitRepo.save(zr);
+	public ZvanicanRekvizit editTematske(RekvizitDTO zr, long id) {
+		ZvanicanRekvizit retVal = rekvizitRepo.findOne(id);
+		retVal.setCena(zr.getCena());
+		retVal.setNaziv(zr.getNaziv());
+		retVal.setOpis(zr.getOpis());
+		if(zr.getSlika()!="")
+			retVal.setSlika(zr.getSlika());
+		retVal.setPreuzeti(pbRepo.findOne(zr.getPozBioID()));
+		retVal.setPostavio(adminRepo.findByUserName(zr.getAdmin()));
+		return rekvizitRepo.save(retVal);
 	}
 
 	public void deactivateTematske(long id) {
