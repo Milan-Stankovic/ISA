@@ -1698,5 +1698,12 @@ p a:hover {
 
 }
 
+.scrollmenu {
+	width: 450px !important;
+	overflow-x: scroll !important;
+
+}
+
+
 
 
