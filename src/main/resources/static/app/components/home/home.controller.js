@@ -54,6 +54,19 @@
         getMovies();
         getPozorista();
 
+        $scope.otvori = function(id){
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/pb/' + id,
+            }).then(function successCallback(response) {
+                $scope.pozoristeBioskop = response.data;
+                $location.path("/pozoristeBioskop/" + id)
+
+            }, function errorCallback(response) {
+                alert("Greska kod pozorista")
+
+            });
+        }
 
     }
 

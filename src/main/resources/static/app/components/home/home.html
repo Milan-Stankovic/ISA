@@ -8,7 +8,7 @@
 
             <div>
 
-                <h3> <a>{{pozoriste.naziv}}</a></h3>
+                <h3> <a ng-click="otvori(pozoriste.id)">{{pozoriste.naziv}}</a></h3>
 
                 <p>Opis : {{pozoriste.opis}}</p>
 
@@ -37,7 +37,7 @@
 
              <div>
 
-                 <h3> <a>{{bioskop.naziv}}</a></h3>
+                 <h3> <a ng-click="otvori(bioskop.id)" >{{bioskop.naziv}}</a></h3>
 
                  <p>Opis : {{bioskop.opis}}</p>
 

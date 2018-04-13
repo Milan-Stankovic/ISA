@@ -15,6 +15,10 @@ body {
 }
 a {
 	outline:none;
+	cursor:hand;
+}
+[ng-click] {
+    cursor: hand;
 }
 a img {
 	border:0;
@@ -22,6 +26,7 @@ a img {
 }
 p a:hover {
 	color:#e5e5e5!important;
+	cursor:hand;
 }
 /*------------------------- Header ---------------------------*/
 #header {

@@ -44,6 +44,12 @@
 			controller: 'loginController',
 			controllerAs: 'lc'
 		})
+		.state('core.pozoristeBioskop', {
+            url: 'pozoristeBioskop/{id}',
+            templateUrl: 'app/components/pozoristeBioskop/pozoristeBioskop.html',
+            controller: 'pozoristeBioskopController',
+            controllerAs: 'pbc'
+        })
 		.state('core.regKorHome', {
             url: 'regKorHome',
             templateUrl: 'app/components/regKorHome/regKorHome.html',
