@@ -19,9 +19,11 @@
 
             }).then(function successCallback(response) {
                 user = response.data;
-                 if(user!=undefined){
+                 if(user!=undefined && user.hasOwnProperty('tip')){
+
+                       console.log("admir")
                        $location.path("/admin");
-                 }
+                 }else console.log("not admir")
 
               }, function errorCallback(response) {
                   console.log("Greska kod GET user");

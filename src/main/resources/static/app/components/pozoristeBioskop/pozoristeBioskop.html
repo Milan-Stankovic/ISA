@@ -1,0 +1,29 @@
+<div>
+    <div>
+        <h2 style="color:white"><a>{{pb.naziv}}</a></h2>
+
+        <p style="color:white">Opis : {{pb.opis}}</p>
+
+        <p style="color:white"> Ocena : {{pb.prosecnaOcena}}</p>
+
+        <p style="color:white"> Adresa : {{pb.adresa}}</p>
+
+        <iframe ng-src="{{trustSrc(pb.urlMape)}}"
+                width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+    </div>
+    <br>
+    <div>
+        <h2 style="color:white"><a>Projekcije({{projekcije.length}}):</a></h2>
+        <div style="overflow-y: scroll; height:200px;  background-color:gray">
+            <p style="color:white">ssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
+            <span ng-repeat="proj in projekcije track by $index">
+               <p style="color:white">Naziv:  <a>{{proj.dogadjaj.naziv}}</a> Vreme: {{proj.vreme}} Cena: {{proj.cena}}  </p>
+
+            </span>
+        </div>
+    </div>
+</div>
+
+
+
+</div>
