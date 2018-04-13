@@ -2,6 +2,7 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
+import com.isa.ISA.dbModel.Projekcija;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,6 +53,12 @@ public class PozoristeBioskopController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/pb/{id}")
     public void deletePozoristeBioskop(@PathVariable Long id ){
         pbService.deletePozoristeBioskop(id);
+    }
+
+    @RequestMapping("/pb/{id}/projekcije")
+    public List<Projekcija> getPozoristeBioskopProj(@PathVariable Long id){ // nisam siguran da li je ovo ok ili mora string pa string u long
+        PozoristeBioskop pb = pbService.getPozoristeBioskop(id);
+        return pb.getProjekcije();
     }
 
 }

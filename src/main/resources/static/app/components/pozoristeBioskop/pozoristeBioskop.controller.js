@@ -62,9 +62,19 @@
             url: 'http://localhost:8096/pb/' + id,
         }).then(function successCallback(response) {
             $scope.pb = response.data;
-            $scope.projekcije = [];
-            if($scope.pb.projekcije!=undefined)
-                $scope.projekcije = $scope.pb.projekcije;
+        }, function errorCallback(response) {
+            alert("Greska kod pozorista")
+
+        });
+
+        $http({
+            method: 'GET',
+            url: 'http://localhost:8096/pb/' + id + '/projekcije',
+        }).then(function successCallback(response) {
+            $scope.projekcije = response.data;
+
+            if($scope.projekcije===undefined)
+                $scope.projekcije = [];
 
             console.log("br porjekcija: " + $scope.projekcije.length)
 

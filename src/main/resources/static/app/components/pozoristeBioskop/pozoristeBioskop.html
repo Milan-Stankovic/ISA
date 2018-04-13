@@ -13,12 +13,13 @@
     </div>
     <br>
     <div>
-        <h2 style="color:white"><a>Projekcije({{projekcije.length}}):</a></h2>
+        <h2 style="color:white"><a>Program({{projekcije.length}}):</a></h2>
         <div style="overflow-y: scroll; height:200px;  background-color:gray">
-            <p style="color:white">ssssssssssssssssssssssssssssssssssssssssssssssssssss ssssssssssssssssssssssssssssssssssssssssssssssssssss</p>
             <span ng-repeat="proj in projekcije track by $index">
-               <p style="color:white">Naziv:  <a>{{proj.dogadjaj.naziv}}</a> Vreme: {{proj.vreme}} Cena: {{proj.cena}}  </p>
-
+               <p style="color:white">Naziv:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
+                <p style="color:white">Datum: {{proj.vreme  | date:'dd.MM.yyyy'}}, Vreme: {{proj.vreme  | date:'HH:mm'}}, Trajanje: {{proj.dogadjaj.trajanje}} min. </p>
+                <p style="color:white">Cena: {{proj.cena}},00</p>
+                <br>
             </span>
         </div>
     </div>
