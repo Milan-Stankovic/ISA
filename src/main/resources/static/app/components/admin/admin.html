@@ -310,20 +310,35 @@
 
 
 
+                <div class="scrollmenu">
+                    <table ng-if="showGrid"  >
 
-                    <table ng-if="showGrid">
-                        <tbody>
-                             <tr ng-repeat="items2 in split_items track by $index">
-                                <li class="unos" style="overflow-x:auto">
+
+                        <tbody  >
+                         <tr >
+
+                            <td ng-repeat="items3 in duzina track by $index">
+                                <a ng-if="$index==0">
+                                    Seat :
+                                </a>
+                                <a ng-if="$index!=0">
+                                    {{$index-1}}
+                                </a>
+
+                            </td>
+                         </tr>
+                             <tr  ng-repeat="items2 in split_items track by $index">
+                                <li  class="unos"  >
                                  <td>Row {{$index}} : </td>
-                                <td ng-repeat="i in items2" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
+                                <td ng-repeat="i in items2 track by $index" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
                                   <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
                                 </td>
                             </li>
                              </tr>
                         </tbody>
-                    </table>
 
+                    </table>
+                </div>
 
 
 
@@ -334,7 +349,7 @@
 
 
                 <li class="last">
-                     <button  class="button" type="submit"  ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
+                     <button   class="button" type="submit"  ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
                 </li>
                 <li class="unos">
                      <a class="hint">Use SHIFT click to select multiple seats at once</a>

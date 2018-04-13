@@ -50,30 +50,35 @@
         $scope.items = [];
         $scope.split_items=[];
         $scope.showGrid = false;
+        $scope.duzina = [];
 
 
         $scope.drawGrid = function(newSalaBR, newSalaBS){
+            var b = false;
             if(newSalaBR)
                 if(newSalaBS)
-                    if(newSalaBR>0 && newSalaBR<75 )
-                        if(newSalaBS>0 && newSalaBS<100)
-                            initGrid(newSalaBR, newSalaBS);
-                        else {
-                            $scope.showGrid = false;
-                            $scope.items = [];
-                            $scope.split_items = [];
-                        }
+                    if(newSalaBR>0 && newSalaBR<76 )
+                        if(newSalaBS>0 && newSalaBS<101)
+                            b= true;
 
-            $scope.showGrid = false;
-            $scope.items = [];
-            $scope.split_items = [];
 
-                            }
+            if(b)
+                initGrid(newSalaBR, newSalaBS);
+            else {
+                $scope.showGrid = false;
+                $scope.items = [];
+                $scope.split_items = [];
+                $scope.duzina = [];
+                }
+        }
+
+
 
 
         var initGrid = function (i,j) {
             $scope.items = [];
             $scope.split_items = [];
+            $scope.duzina = [];
 
             for (var z = 0; z < i*j; z++) {
                 $scope.items.push({
@@ -85,12 +90,16 @@
             var temp =[];
             for (var k = 0; k < i; k++) {
                 for(var m=0; m<j; m++){
-                    temp.push($scope.items[k*10+m]);
+                    temp.push($scope.items[k*j+m]);
                 }
                 $scope.split_items.push(temp);
                 temp=[];
             }
             $scope.showGrid = true;
+            for(var d=0; d<j; d++){
+                $scope.duzina.push(d);
+            }
+            $scope.duzina.push(j+1);
 
 
 
