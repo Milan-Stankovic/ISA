@@ -1663,6 +1663,20 @@ p a:hover {
 
 }
 
+.headerrr{
+	color: white;
+	font-size:30px;
+	line-height:30px;
+	margin:0;
+	text-decoration:none;
+	font-family:oswaldregular;
+
+}
+#map-canvas{
+	height: 100px;
+	width:  140px;
+	border: 1px solid white;
+}
 .pointer{
 	cursor: pointer;
 }
@@ -1678,3 +1692,6 @@ p a:hover {
 	text-transform : none !important;
 
 }
+
+
+

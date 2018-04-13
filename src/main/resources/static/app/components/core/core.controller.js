@@ -10,19 +10,21 @@
     	var cc = this;
     	$scope.logged = false;
     	var userCookie;
+    	var userId;
         var init = function (){
         	userCookie = $cookies.get('user');
-
-        	if (userCookie) 
+            userId = $cookies.get('id');
+        	if (userCookie && userId)
         		$scope.logged=true;
         	else $scope.logged=false;
 
         };
         init();
-        console.log("logged: " + $scope.logged + " user: " + userCookie);
-        
+        console.log("logged: " + $scope.logged + " user: " + userCookie + ", id: " + userId);
+
         $scope.logout = function(){
         	$cookies.remove('user');
+        	$cookies.remove('id');
         	$window.location.href = 'http://localhost:8096/';
         }
     }

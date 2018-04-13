@@ -1,0 +1,79 @@
+<div id="body" class="rentals">
+<h3 class="headerrr">SYS ADMIN MODE</h3>
+<table width="100%">
+	<tr>
+		<td width="50%">
+			<div id="body" class="rentals">
+				<h2>ADDING NEW ADMIN</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th width='20%'>UserName:</th>
+						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+					</tr>
+					<tr>
+						<th>Password:</th>
+						<td font-size='8'>cinema</td>
+					</tr>
+					<tr>
+						<th>Type:</th>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="item.TipAdmina"></select></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="sac.add()">Add Admin</button></td>
+					</tr>
+				</table>
+			</div>
+			
+		
+		<td width="50%">	
+			<div id="body" class="rentals">
+				<h2>EDITING TRESHOLD SYSTEM</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th colspan='4'></th>
+					</tr>
+					<tr>
+						<th width='20%'>GOLD Treshold:</th>
+						<td width='30%'><input type='text' ng-model="item.bronzeTreshold"/></td>
+						<th width='20%'>Discount:</th>
+						<td width='30%'><input type='text' ng-model="item.goldPopust"/></td>
+					</tr>
+					<tr>
+						<th width='20%'>SILVER Treshold:</th>
+						<td width='30%'><input type='text' ng-model="item.silverTreshold"/></td>
+						<th width='20%'>Discount:</th>
+						<td width='30%'><input type='text' ng-model="item.silverPopust"/></td>
+					</tr>
+					<tr>
+						<th width='20%'>BROZNE Treshold:</th>
+						<td width='30%'><input type='text' ng-model="item.bronzeTreshold"/></td>
+						<th width='20%'>Discount:</th>
+						<td width='30%'><input type='text' ng-model="item.bronzePopust"/></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='4'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td colspan='3'><button ng-click="aac.edit()">Save Changes</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="eshowDone">Changes saved succesfully</td>
+						<td ng-show="eshowSthWentWrong">Something went wrong! Change is not changed</td>
+						<td ng-show="eblankField">{{eemptyField}} is neccesery to be added!</td>
+					</tr>
+				</table>
+			</div>	
+		
+		</td>
+	</tr>
+</table>
+	

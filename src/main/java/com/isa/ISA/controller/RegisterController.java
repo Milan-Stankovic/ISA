@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.isa.ISA.DTO.RegKorDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,7 @@ public class RegisterController {
 	    }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register/admin") 
-	    public void register(@RequestBody Admin admin){
+	    public void registerA(@RequestBody RegKorDTO admin){
 		 Admin a = adminService.getAdmin(admin.getUserName());
 		 System.out.println("Status pre "+a.getStatus());
 		 a.setPassword(admin.getPassword());
@@ -40,7 +41,7 @@ public class RegisterController {
 	 }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register") 
-	    public String register(@RequestBody RegistrovaniKorisnik kor){
+	    public String registerR(@RequestBody RegKorDTO kor){
 
 	        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 	        Admin adm = adminService.getAdmin(kor.getUserName());

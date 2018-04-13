@@ -44,6 +44,12 @@
 			controller: 'loginController',
 			controllerAs: 'lc'
 		})
+		.state('core.regKorHome', {
+            url: 'regKorHome',
+            templateUrl: 'app/components/regKorHome/regKorHome.html',
+            controller: 'regKorHomeController',
+            controllerAs: 'rhc'
+        })
 		  .state('core.admin', {
           url: 'admin',
           templateUrl: 'app/components/admin/admin.html',
@@ -61,6 +67,18 @@
 			templateUrl: 'app/components/addEditItem/addEditItem.html',
 			controller: 'addEditItemController',
 			controllerAs: 'aeic'
+		})
+		.state('core.sysAdmin', {
+			url: 'sysAdmin',
+			templateUrl: 'app/components/sysAdmin/sysAdmin.html',
+			controller: 'sysAdminController',
+			controllerAs: 'sac'
+		})
+		.state('core.addAdmins', {
+			url: 'addAdmins',
+			templateUrl: 'app/components/addAdmins/addAdmins.html',
+			controller: 'addAdminsController',
+			controllerAs: 'aac'
 		});
      /* $locationProvider.html5Mode({
     	  enabled: true,

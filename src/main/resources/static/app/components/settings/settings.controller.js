@@ -16,6 +16,7 @@
         $scope.searched = false;
         $scope.isDisabled = false;
         $scope.addButton = "Add";
+        $scope.isAdmin = false;
         var init = function (){ 	
         	console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
         	$http({
@@ -24,7 +25,7 @@
   				 
   			}).then(function successCallback(response) {
   				user = response.data;
-  				//alert(user.userName)
+  				$scope.isAdmin = true;
   				
   			  }, function errorCallback(response) {
   				  console.log("Greska kod GET user");
@@ -35,22 +36,14 @@
         
         if(user===undefined || user===null){
       		console.log("user undefined trazim usra, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
+      		$scope.isAdmin = false;
       		$http({
       			  method: 'GET',
       			  url: 'http://localhost:8096/api/user/' + $cookies.get('user')
       				 
       			}).then(function successCallback(response) {
       				user = response.data;
-      				/*console.log("userName " +  user.userName +
-      	        			" password "+ user.password +
-      	        			" ime "+ user.ime +
-      	        			" prezime "+ user.prezime +
-      	        			" email "+ user.email +
-      	        			" grad "+ user.grad +
-      	        			" brojTelefona "+ user.brojTelefona + 
-      	        			"prijateji" + user.prijatelji);*/
-      				
-      				if(user!=undefined){
+      				if(user!=undefined && ($scope.isAdmin==false)){
       		        	console.log("frnessssss")
 
       		        	$http({
@@ -330,30 +323,32 @@
         			" grad "+ user.grad +
         			" brojTelefona "+ user.brojTelefona);
         			
-        	if(user.hasOwnProperty('tip'))
-            $http({
-              method: 'POST',
-              url: 'http://localhost:8096/api/settings/admin',
-              data: user
-            }).then(function successCallback(response) {
-            	if(response.data==""){
-            		alert("Changes successfully saved.")
-            		console.log("userName " +  user.userName +
-                			" password "+ user.password +
-                			" ime "+ user.ime +
-                			" prezime "+ user.prezime +
-                			" email "+ user.email +
-                			" grad "+ user.grad +
-                			" brojTelefona "+ user.brojTelefona);
-            	}
-            		
-            	else
-            		alert(response.data)
+        	if(user.hasOwnProperty('tip')){
+        	 $http({
+                  method: 'POST',
+                  url: 'http://localhost:8096/api/settings/admin',
+                  data: user
+                }).then(function successCallback(response) {
+                    if(response.data==""){
+                        alert("Changes successfully saved.")
+                        console.log("userName " +  user.userName +
+                                " password "+ user.password +
+                                " ime "+ user.ime +
+                                " prezime "+ user.prezime +
+                                " email "+ user.email +
+                                " grad "+ user.grad +
+                                " brojTelefona "+ user.brojTelefona);
+                    }
 
-                }, function errorCallback(response) {
-                 alert("greska u saveFunc")
+                    else
+                        alert(response.data)
 
-                });
+                    }, function errorCallback(response) {
+                     alert("greska u saveFunc")
+
+                    });
+        	}
+
         	else{
         		 $http({
                      method: 'POST',

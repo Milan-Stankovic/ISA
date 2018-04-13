@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 
@@ -25,6 +26,7 @@ public class Rezervacija {
     private List<Poziv> urezervaciji;
 
     @ManyToOne
+    @JsonBackReference
   //  @JoinColumn(nullable = false) Da bi omogucio one promotivne karte
     private RegistrovaniKorisnik rezervisao;
 

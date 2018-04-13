@@ -2,6 +2,9 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.core.MediaType;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +29,7 @@ public class RekvizitiController {
     public List<ZvanicanRekvizit> getTematske(){
 		return rekvizit.getTematske();
     }
-	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni")
+	@RequestMapping(method = RequestMethod.POST, value = "/zvanicni", consumes = {"application/json;charset=UTF-8"}, produces={"application/json;charset=UTF-8"})
     public ZvanicanRekvizit addTematske(@RequestBody ZvanicanRekvizit zr){
 		return rekvizit.addTematske(zr);
     }
