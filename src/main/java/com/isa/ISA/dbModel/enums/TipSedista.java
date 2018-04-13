@@ -4,5 +4,6 @@ public enum TipSedista {
     REGULAR,
     VIP,
     LOVEBOX,
-    BALCONY
+    BALCONY,
+    TAKEN
 }

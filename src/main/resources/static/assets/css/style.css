@@ -1565,7 +1565,7 @@ p a:hover {
 }
 
 .goreDole{
-
+	cursor: pointer;
     display:block  !important;
     float:left  !important;
     padding: 8px 16px !important;
@@ -1644,6 +1644,14 @@ p a:hover {
     align: center !important;
     width: 100px;
 }
+
+.buttonDebeli{
+	text-align: center !important;
+	float: none !important;
+	align: center !important;
+	width: 150px;
+}
+
 .secretMessage{
 	font-size:12px  !important;
 	color:  red  !important;
@@ -1652,5 +1660,21 @@ p a:hover {
 .inputArea{
 	background-color : #4f4f4f !important;
 	color: white !important;
+
+}
+
+.pointer{
+	cursor: pointer;
+}
+
+.hint{
+	padding: 0 !important;
+	text-decoration: none !important;
+	width: 400px !important;
+	height: 12px !important;
+	background-color: #4f4f4f !important;
+	color: white !important;
+	font-size: 12px !important;
+	text-transform : none !important;
 
 }

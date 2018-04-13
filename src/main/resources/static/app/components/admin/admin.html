@@ -8,37 +8,37 @@
 
                 <li class="goreDole">
 
-                    <a>THEATRE</a>
+                    <a  ng-click="pickPozoriste()">THEATRE</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>CINEMA</a>
+                    <a ng-click="pickBioskop()">CINEMA</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>AUDITORIUM</a>
+                    <a  ng-click="pickSala()">AUDITORIUM</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>SEATS</a>
+                    <a  ng-click="pickSedista()">SEATS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>EVENTS</a>
+                    <a  ng-click="pickDogadjaj()">EVENTS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>PROJECTIONS</a>
+                    <a  ng-click="pickProjekcija()">PROJECTIONS</a>
 
                 </li>
                 <li class="goreDole">
 
-                    <a>TICKETS</a>
+                    <a  ng-click="pickKarta()">TICKETS</a>
 
                 </li>
 
@@ -77,9 +77,39 @@
                     <input class="input" type="text" ng-model="newSalaBS" class="form-control" id="newSalaBS">
                 </li>
 
-                <li class="last">
-                     <button  class="button" type="submit" ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
+
+
+
+                <li class="unosDebeli" multiple-selection-zone>
+
+                    <table>
+                        <tbody>
+                             <tr ng-repeat="items2 in split_items track by $index">
+                                 <td>Row {{$index}} : </td>
+                                <td ng-repeat="i in items2" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
+                                  <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
+                                </td>
+                             </tr>
+                        </tbody>
+                    </table>
+
+
                 </li>
+
+
+
+
+
+
+
+                <li class="last">
+                     <button  class="button" type="submit"  ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
+                </li>
+                <li class="unos">
+                     <a class="hint">Use SHIFT click to select multiple seats at once</a>
+                </li>
+
+
 
             </ul>
         </li>
@@ -165,7 +195,7 @@
             <li>
                  <ul class="forma" ng-repeat="pozoriste in pozoristaAdmin track by $index">
                     <li class="desno">
-                        <a>{{pozoriste.naziv}} </a>
+                        <a class="pointer" ng-click="pickBpOne(pozoriste.id)">{{pozoriste.naziv}} </a>
                     </li>
 
                      <li class="desno">
@@ -182,7 +212,7 @@
             <li>
                  <ul class="forma" ng-repeat="bioskop in bioskopiAdmin track by $index">
                     <li class="desno">
-                        <a>{{bioskop.naziv}} </a>
+                        <a class="pointer" ng-click="pickBpOne(bioskop.id)">{{bioskop.naziv}} </a>
                     </li>
 
                      <li class="desno">
@@ -240,20 +270,28 @@
                         <a>Gold status discount  :</a>
                     </li>
 
-                    <li class="desno">
+                    <li class="last">
                         <button  class="button" type="submit" ng-click="edit()"> Toggle edit </button>
+                    </li>
+
+                    <li class="last">
+                        </br>
+                    </li>
+
+                       <li class="last">
+                        <button  class="button" type="submit" ng-click="saveBP(bp)"> Save edit </button>
                     </li>
                 </ul>
             </li>
 
             <li>
-                <ul class="forma" >
+                <ul class="formaUnos" >
                     <li class="unos">
                         <input class="input" type="text" ng-model="bp.naziv" ng-readonly="edit" class="form-control" >
                     </li>
                     <li class="unosDebeli">
                         <textarea class="inputDebeli"  ng-model="bp.opis" rows="3" cols="20" ng-readonly="edit"> </textarea>
-                    </li>/li>
+                    </li>
 
                     <li class="unos">
                          <input class="input" type="text" ng-model="bp.adresa" ng-readonly="edit" class="form-control" >
@@ -280,17 +318,17 @@
                     <li class="unos">
                          <input class="input" type="text" ng-model="bp.goldPopust" ng-readonly="edit" class="form-control" >
                     </li>
-                    <li class="unos">
-                        <button  class="button" type="submit" ng-click="addSala(bp.id)"> Add Auditorium </button>
+                    <li class="last">
+                        <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id)"> Add Auditorium </button>
                     </li>
-                    <li class="unos">
-                        <button  class="button" type="submit" ng-click="addProjekcija(bp.id)"> Add Projection </button>
+                    <li class="last">
+                        </br>
                     </li>
 
-
-                    <li class="unos">
-                        <button  class="button" type="submit" ng-click="saveBP(bp)"> Save edit </button>
+                    <li class="last">
+                        <button  class="buttonDebeli" type="submit" ng-click="addProjekcija(bp.id)"> Add Projection </button>
                     </li>
+
                  </ul>
             </li>
         </span>
