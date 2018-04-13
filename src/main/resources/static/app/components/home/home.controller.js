@@ -43,7 +43,7 @@
                 url: 'http://localhost:8096/b',
             }).then(function successCallback(response) {
                 $scope.bioskopi = response.data;
-                console.log(response.data);
+
 
             }, function errorCallback(response) {
                 alert("Greska kod bioskopa")

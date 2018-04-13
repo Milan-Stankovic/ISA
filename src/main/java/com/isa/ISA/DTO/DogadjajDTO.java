@@ -25,6 +25,16 @@ public class DogadjajDTO {
 
     private String glumciStr;
 
+    private Long pbId;
+
+    public Long getPbId() {
+        return pbId;
+    }
+
+    public void setPbId(Long pbId) {
+        this.pbId = pbId;
+    }
+
     public String getNaziv() {
         return naziv;
     }

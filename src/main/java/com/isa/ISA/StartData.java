@@ -210,7 +210,7 @@ public class StartData {
         d.setBrojOcena(0);
         d.setProsecnaOcena(0);
         d.setDonosiBodova(1);
-        d.setGlumci(new ArrayList<Glumac>());
+     //   d.setGlumci(new ArrayList<Glumac>());
         d.setNaziv("Isa film 1");
         d.setOpis("Akcioni film iz ise");
         d.setReziser("Minja");
@@ -226,6 +226,9 @@ public class StartData {
         p1.setProjekcije(projekcije);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
+        d.setMestoOdrzavanja(p1);
+        dogadjajService.updateDogadjaj(d);
+
         a2.setMesta(new ArrayList<PozoristeBioskop>());
         a2.getMesta().add(p1);
 
@@ -306,7 +309,6 @@ public class StartData {
         d.setBrojOcena(0);
         d.setProsecnaOcena(0);
         d.setDonosiBodova(1);
-        d.setGlumci(new ArrayList<Glumac>());
         d.setNaziv("Web Film");
         d.setOpis("Akcioni film iz ise");
         d.setReziser("Minja");
@@ -322,6 +324,8 @@ public class StartData {
         p1.setProjekcije(projekcije);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
+        d.setMestoOdrzavanja(p1);
+        dogadjajService.updateDogadjaj(d);
 
         a.getMesta().add(p1);
         adminService.updateAdmin(a);

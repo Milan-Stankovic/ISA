@@ -46,75 +46,7 @@
         </li>
 
 
-        <span ng-if="sala">
-        <li>
 
-            <ul class="forma">
-                <li class="desno">
-                    <a>  Name: </a>
-                </li>
-                <li class="desno">
-                    <a>  Number of rows : </a>
-                </li>
-
-                <li class="desno">
-                    <a>Number of seats per row :</a>
-                </li>
-
-            </ul>
-        </li>
-
-        <li>
-            <ul class="formaUnos">
-                <li class="unos">
-                    <input class="input"  type="text" ng-model="newSalaName" class="form-control" id="newSalaName">
-                </li>
-                <li class="unos">
-                    <input class="input" type="text" ng-model="newSalaBR" class="form-control" id="newSalaBR">
-                </li>
-
-                <li class="unos">
-                    <input class="input" type="text" ng-model="newSalaBS" class="form-control" id="newSalaBS">
-                </li>
-
-
-
-
-                <li class="unosDebeli" multiple-selection-zone>
-
-                    <table>
-                        <tbody>
-                             <tr ng-repeat="items2 in split_items track by $index">
-                                 <td>Row {{$index}} : </td>
-                                <td ng-repeat="i in items2" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
-                                  <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
-                                </td>
-                             </tr>
-                        </tbody>
-                    </table>
-
-
-                </li>
-
-
-
-
-
-
-
-                <li class="last">
-                     <button  class="button" type="submit"  ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
-                </li>
-                <li class="unos">
-                     <a class="hint">Use SHIFT click to select multiple seats at once</a>
-                </li>
-
-
-
-            </ul>
-        </li>
-
-        </span>
 
 
         <span ng-if="dogadjaj">
@@ -271,7 +203,7 @@
                     </li>
 
                     <li class="last">
-                        <button  class="button" type="submit" ng-click="edit()"> Toggle edit </button>
+                        <button  class="button" type="submit" ng-click="editChange()"> Toggle edit </button>
                     </li>
 
                     <li class="last">
@@ -319,7 +251,7 @@
                          <input class="input" type="text" ng-model="bp.goldPopust" ng-readonly="edit" class="form-control" >
                     </li>
                     <li class="last">
-                        <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id)"> Add Auditorium </button>
+                        <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>
                     </li>
                     <li class="last">
                         </br>
@@ -331,6 +263,88 @@
 
                  </ul>
             </li>
+        </span>
+
+        <span ng-if="sala">
+        <li>
+
+            <ul class="forma">
+
+                <li class="desno">
+                    <a>  Adding auditorium to : </a>
+                </li>
+
+                <li class="desno">
+                    <a>  Name: </a>
+                </li>
+                <li class="desno">
+                    <a>  Number of rows : </a>
+                </li>
+
+                <li class="desno">
+                    <a>Number of seats per row :</a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li>
+            <ul class="formaUnos">
+
+                 <li class="unos">
+                   <a class="input"> {{bpName}} </a>
+                </li>
+
+                <li class="unos">
+                    <input class="input"  type="text" ng-model="newSalaName" class="form-control" id="newSalaName">
+                </li>
+                <li class="unos">
+                    <input class="input"  ng-change="drawGrid(newSalaBR, newSalaBS)" type="text" ng-model="newSalaBR" class="form-control" id="newSalaBR">
+                </li>
+
+                <li class="unos">
+                    <input class="input"  ng-change="drawGrid(newSalaBR, newSalaBS)" type="text" ng-model="newSalaBS" class="form-control" id="newSalaBS">
+                </li>
+
+
+
+
+
+
+                    <table ng-if="showGrid">
+                        <tbody>
+                             <tr ng-repeat="items2 in split_items track by $index">
+                                <li class="unos" style="overflow-x:auto">
+                                 <td>Row {{$index}} : </td>
+                                <td ng-repeat="i in items2" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
+                                  <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
+                                </td>
+                            </li>
+                             </tr>
+                        </tbody>
+                    </table>
+
+
+
+
+
+
+
+
+
+
+                <li class="last">
+                     <button  class="button" type="submit"  ng-click="addSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
+                </li>
+                <li class="unos">
+                     <a class="hint">Use SHIFT click to select multiple seats at once</a>
+                </li>
+
+
+
+            </ul>
+        </li>
+
         </span>
 
 

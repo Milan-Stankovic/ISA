@@ -1,14 +1,8 @@
 package com.isa.ISA.dbModel;
 
-import java.util.List;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.enums.Zanr;
 
 
@@ -22,8 +16,8 @@ public class Dogadjaj {
     @GeneratedValue
     private long id;
 
-    //@Lob
-    //private byte[] slika; Ovo je valjda za slike ali nisam siguran...
+    @Lob
+    private byte[] slika; //Ovo je valjda za slike ali nisam siguran...
 
     private String naziv;
 
@@ -44,8 +38,12 @@ public class Dogadjaj {
 
     private String glumciStr;
 
-    @ManyToMany
-    private List<Glumac> glumci; // Ne dozvoljava cist String iz nekog razloga
+    @ManyToOne
+    @JsonBackReference
+    private PozoristeBioskop mestoOdrzavanja;
+
+    //@ManyToMany
+   // private List<Glumac> glumci; Deprecated - Mrzi me da pravim fontend za dodavanje jos jedne liste
 
     public Dogadjaj(){}
 
@@ -121,12 +119,20 @@ public class Dogadjaj {
         this.reziser = reziser;
     }
 
-    public List<Glumac> getGlumci() {
-        return glumci;
+    public byte[] getSlika() {
+        return slika;
     }
 
-    public void setGlumci(List<Glumac> glumci) {
-        this.glumci = glumci;
+    public void setSlika(byte[] slika) {
+        this.slika = slika;
+    }
+
+    public PozoristeBioskop getMestoOdrzavanja() {
+        return mestoOdrzavanja;
+    }
+
+    public void setMestoOdrzavanja(PozoristeBioskop mestoOdrzavanja) {
+        this.mestoOdrzavanja = mestoOdrzavanja;
     }
 
     public String getGlumciStr() {

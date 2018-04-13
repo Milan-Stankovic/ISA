@@ -16,7 +16,7 @@
         $scope.dogadjaj = false;
         $scope.projekcija = false;
         $scope.karte = false;
-        $scope.edit = false;
+        $scope.edit = true;
         $scope.bpOne = false;
         $scope.bp = [];
 
@@ -35,7 +35,6 @@
 
 
         $scope.pickPozoriste = function () {
-            console.log("UPAO JE ON U OVO WTF");
             $scope.sala = false;
             $scope.pozoriste = true;
             $scope.bioskop = false;
@@ -50,26 +49,55 @@
 
         $scope.items = [];
         $scope.split_items=[];
+        $scope.showGrid = false;
 
 
+        $scope.drawGrid = function(newSalaBR, newSalaBS){
+            if(newSalaBR)
+                if(newSalaBS)
+                    if(newSalaBR>0 && newSalaBR<75 )
+                        if(newSalaBS>0 && newSalaBS<100)
+                            initGrid(newSalaBR, newSalaBS);
+                        else {
+                            $scope.showGrid = false;
+                            $scope.items = [];
+                            $scope.split_items = [];
+                        }
+
+            $scope.showGrid = false;
+            $scope.items = [];
+            $scope.split_items = [];
+
+                            }
 
 
+        var initGrid = function (i,j) {
+            $scope.items = [];
+            $scope.split_items = [];
 
-        for (var i = 0; i < 30; i++) {
-            $scope.items.push({
-                id: i,
-                checked: false
-            });
-        }
-
-        var temp =[];
-        for (var i = 0; i < 3; i++) {
-            for(var j=0; j<10; j++){
-                temp.push($scope.items[i*10+j]);
+            for (var z = 0; z < i*j; z++) {
+                $scope.items.push({
+                    id: z,
+                    checked: false
+                });
             }
-            $scope.split_items.push(temp);
-            temp=[];
+
+            var temp =[];
+            for (var k = 0; k < i; k++) {
+                for(var m=0; m<j; m++){
+                    temp.push($scope.items[k*10+m]);
+                }
+                $scope.split_items.push(temp);
+                temp=[];
+            }
+            $scope.showGrid = true;
+
+
+
         }
+
+
+
 
 
         $scope.lastChecked = null;
@@ -137,7 +165,7 @@
 
         }
 
-        $scope.pickSDogadjaj = function () {
+        $scope.pickDogadjaj = function () {
 
             $scope.sala = false;
             $scope.pozoriste = false;
@@ -206,7 +234,7 @@
 
 
 
-        $scope.seditChange = function(){
+        $scope.editChange = function(){
             $scope.edit = !$scope.edit;
         }
 
@@ -272,6 +300,18 @@
             $location.path("home");
         }
 
+        $scope.bpName = "";
+
+
+        $scope.addSala = function(id, name){
+            $scope.bpName=name;
+            $scope.bpId = id;
+            $scope.pickSala();
+
+        }
+
+
+
         $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci) {
 
             var form = document.getElementById("myForm");
@@ -301,7 +341,7 @@
                     "glumciStr" : newDogadjajGlumci
                 }
 
-                console.log(dogadjajDTO)
+               // console.log(dogadjajDTO)
 
                 $http({
                     method:'POST',
@@ -313,7 +353,7 @@
 
 
                 }, function errorCallback(response){
-                    console.log("Failed to add dogadja");
+                    alert("Error occured while adding event");
                 } );
             }
         }

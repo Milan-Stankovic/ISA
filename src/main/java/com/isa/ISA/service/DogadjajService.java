@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.isa.ISA.DTO.DogadjajDTO;
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,11 +33,13 @@ public class DogadjajService {
         dog.setReziser(d.getReziser());
         dog.setOpis(d.getOpis());
         dog.setNaziv(d.getNaziv());
-        dog.setGlumci(null);
         dog.setGlumciStr(d.getGlumciStr());
         dog.setDonosiBodova(d.getDonosiBodova());
         dog.setProsecnaOcena(d.getProsecnaOcena());
         dog.setBrojOcena(d.getBrojOcena());
+        PozoristeBioskop pb = new PozoristeBioskop();
+        pb.setId(d.getPbId());
+        dog.setMestoOdrzavanja(pb);
         return dog;
 
     }
@@ -50,7 +53,8 @@ public class DogadjajService {
                             if(d.getReziser().length()>0)
                                 if(d.getTrajanje()>0)
                                     if(d.getZanr() != null)
-                                        return true;
+                                        if(d.getPbId() != null)
+                                            return true;
         return false;
 
     }
