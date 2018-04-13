@@ -25,7 +25,9 @@
   				 
   			}).then(function successCallback(response) {
   				user = response.data;
-  				$scope.isAdmin = true;
+  				 if(user!=undefined && user.hasOwnProperty('tip')){
+  				    $scope.isAdmin = true;
+  				}
   				
   			  }, function errorCallback(response) {
   				  console.log("Greska kod GET user");
