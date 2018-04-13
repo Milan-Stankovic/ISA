@@ -163,12 +163,6 @@ public class StartData {
         p1.setBrojOcena(0);
         p1.setProsecnaOcena(0);
         p1.setAdresa("Centar centra 1");
-        p1.setBronzePopust(5);
-        p1.setSilverPopust(10);
-        p1.setGoldPopust(15);
-        p1.setBronzeTreshold(10);
-        p1.setSilverTreshold(20);
-        p1.setGoldTreshold(30);
         List<Admin> adminList = new ArrayList<>();
         adminList.add(a2);
         p1.setAdmini(adminList);
@@ -259,12 +253,6 @@ public class StartData {
         p1.setBrojOcena(1);
         p1.setProsecnaOcena(5);
         p1.setAdresa("Zmaj Jovina 12");
-        p1.setBronzePopust(5);
-        p1.setSilverPopust(10);
-        p1.setGoldPopust(15);
-        p1.setBronzeTreshold(10);
-        p1.setSilverTreshold(20);
-        p1.setGoldTreshold(30);
         List<Admin> adminList = new ArrayList<>();
         adminList.add(a);
         p1.setAdmini(adminList);

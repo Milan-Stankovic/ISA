@@ -11,22 +11,40 @@
 					</tr>
 					<tr>
 						<th width='20%'>UserName:</th>
-						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+						<td width='80%'><input type='text' ng-model="item.username"/></td>
+					</tr>
+					<tr>
+						<th width='20%'>EMail:</th>
+						<td width='80%'><input type="email" ng-model="item.email"/></td>
 					</tr>
 					<tr>
 						<th>Password:</th>
-						<td font-size='8'>cinema</td>
+						<td font-size='4'>cinema123</td>
 					</tr>
 					<tr>
 						<th>Type:</th>
-						<td><select data-ng-options="t for t in type_options" data-ng-model="item.TipAdmina"></select></td>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="item.tipAdmina"></select></td>
+					</tr>
+					<tr>
+						<th>Responsible for:</th>
+						<td>
+							<div ng-repeat="p in pb">
+								  <input type="checkbox" id='checkbox' ng-click="aac.addToList(p.id)"/> {{p.naziv}} - {{p.adresa}}
+							</div>
+						</td>
 					</tr>
 					<tr height='10px'>
 						<th colspan='2'></th>
 					</tr>
 					<tr>
 						<th></th>
-						<td><button ng-click="sac.add()">Add Admin</button></td>
+						<td><button ng-click="aac.add()">Add Admin</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="showDone">Admin created succesfully</td>
+						<td ng-show="showSthWentWrong">Something went wrong! Admin is not added</td>
+						<td ng-show="blankField">{{emptyField}} is neccesery to be added!</td>
 					</tr>
 				</table>
 			</div>
@@ -41,21 +59,21 @@
 					</tr>
 					<tr>
 						<th width='20%'>GOLD Treshold:</th>
-						<td width='30%'><input type='text' ng-model="item.bronzeTreshold"/></td>
+						<td width='30%'><input type='text' ng-model="bs.goldTreshold" size="15"/></td>
 						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="item.goldPopust"/></td>
+						<td width='30%'><input type='text' ng-model="bs.goldPopust" size="2" maxlength="2"/>%</td>
 					</tr>
 					<tr>
 						<th width='20%'>SILVER Treshold:</th>
-						<td width='30%'><input type='text' ng-model="item.silverTreshold"/></td>
+						<td width='30%'><input type='text' ng-model="bs.silverTreshold" size="15"/></td>
 						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="item.silverPopust"/></td>
+						<td width='30%'><input type='text' ng-model="bs.silverPopust" size="2" maxlength="2"/>%</td>
 					</tr>
 					<tr>
 						<th width='20%'>BROZNE Treshold:</th>
-						<td width='30%'><input type='text' ng-model="item.bronzeTreshold"/></td>
+						<td width='30%'><input type='text' ng-model="bs.bronzeTreshold" size="15"/></td>
 						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="item.bronzePopust"/></td>
+						<td width='30%'><input type='text' ng-model="bs.bronzePopust" size="2" maxlength="2"/>%</td>
 					</tr>
 					<tr height='10px'>
 						<th colspan='4'></th>
@@ -66,9 +84,9 @@
 					</tr>
 					<tr class="secretMessage">
 						<td></td>
-						<td ng-show="eshowDone">Changes saved succesfully</td>
-						<td ng-show="eshowSthWentWrong">Something went wrong! Change is not changed</td>
-						<td ng-show="eblankField">{{eemptyField}} is neccesery to be added!</td>
+						<td ng-show="eshowDone" colspan='3'>Changes saved succesfully</td>
+						<td ng-show="eshowSthWentWrong" colspan='3'>Something went wrong! Change is not changed</td>
+						<td ng-show="eblankField" colspan='3'>{{eemptyField}} is neccesery to be added!</td>
 					</tr>
 				</table>
 			</div>	

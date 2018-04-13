@@ -32,18 +32,6 @@ public class PozoristeBioskop {
     @Length(max=2084)
     private String urlMape;
 
-    private int bronzeTreshold;
-
-    private int silverTreshold;
-
-    private int goldTreshold;
-
-    private int bronzePopust;
-
-    private int silverPopust;
-
-    private int goldPopust;
-
     @Enumerated(EnumType.STRING)
     private TipUstanove tip;
 
@@ -119,54 +107,6 @@ public class PozoristeBioskop {
 
     public void setAdresa(String adresa) {
         this.adresa = adresa;
-    }
-
-    public int getBronzeTreshold() {
-        return bronzeTreshold;
-    }
-
-    public void setBronzeTreshold(int bronzeTreshold) {
-        this.bronzeTreshold = bronzeTreshold;
-    }
-
-    public int getSilverTreshold() {
-        return silverTreshold;
-    }
-
-    public void setSilverTreshold(int silverTreshold) {
-        this.silverTreshold = silverTreshold;
-    }
-
-    public int getGoldTreshold() {
-        return goldTreshold;
-    }
-
-    public void setGoldTreshold(int goldTreshold) {
-        this.goldTreshold = goldTreshold;
-    }
-
-    public int getBronzePopust() {
-        return bronzePopust;
-    }
-
-    public void setBronzePopust(int bronzePopust) {
-        this.bronzePopust = bronzePopust;
-    }
-
-    public int getSilverPopust() {
-        return silverPopust;
-    }
-
-    public void setSilverPopust(int silverPopust) {
-        this.silverPopust = silverPopust;
-    }
-
-    public int getGoldPopust() {
-        return goldPopust;
-    }
-
-    public void setGoldPopust(int goldPopust) {
-        this.goldPopust = goldPopust;
     }
 
     public TipUstanove getTip() {

@@ -2,7 +2,6 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
-import com.isa.ISA.dbModel.PozoristeBioskop;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.ISA.DTO.AdminDTO;
+import com.isa.ISA.dbModel.BodovnaSkala;
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.service.AdminService;
 
@@ -26,7 +28,14 @@ public class AdminController {
     public void addUser(@RequestBody Admin k){
         adminService.addAdmin(k);
     }
-    
+    @RequestMapping(method = RequestMethod.POST,value = "/admins")
+    public Admin addAdmin(@RequestBody AdminDTO admin){
+        return adminService.addAdminBySis(admin);
+    }
+    @RequestMapping(method = RequestMethod.GET,value = "/bodSkala")
+    public BodovnaSkala getBodSkala(){
+        return adminService.getBodSkala();
+    }
     @RequestMapping(method = RequestMethod.GET,value = "/admin/{username}")
     public Admin getAdmin(@PathVariable String username){ return adminService.getAdmin(username); }
 

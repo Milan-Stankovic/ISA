@@ -3,21 +3,29 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.enums.TipUstanove;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.isa.ISA.DTO.AdminDTO;
+import com.isa.ISA.dbModel.BodovnaSkala;
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.enums.TipAdmina;
+import com.isa.ISA.dbModel.enums.TipUstanove;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.repository.AdminRepository;
+import com.isa.ISA.repository.BodSkalaRepository;
+import com.isa.ISA.repository.PozoristeBioskopRepository;
 
 @Service
 public class AdminService {
 
     @Autowired
     private AdminRepository adminRepo;
+    @Autowired
+    private PozoristeBioskopRepository pbRepo;
+    @Autowired
+    private BodSkalaRepository bsRepo;
 
 
     public List<Admin> getAllAdmins(){
@@ -100,6 +108,35 @@ public class AdminService {
         adminRepo.findByTip(TipAdmina.FAN).addAll(fanAdmin);
         return fanAdmin;
     }
+
+	public Admin addAdminBySis(AdminDTO admin) {
+		Admin retVal  = new Admin();
+		retVal.setUserName(admin.getUsername());
+		retVal.setTip(admin.getTipAdmina());
+		retVal.setPassword(admin.getPass());
+		ArrayList<PozoristeBioskop> pb = new ArrayList<PozoristeBioskop>(); 
+		for(int i=0; i<admin.getPozBio().length; i++){
+			pb.add(pbRepo.findOne(admin.getPozBio()[i]));
+		}
+		retVal.setMesta(pb);
+		retVal.setEmail(admin.getEmail());
+		retVal.setStatus(StatusNaloga.NERESEN);
+		return adminRepo.save(retVal);
+			
+	}
+
+	public BodovnaSkala getBodSkala() {
+		ArrayList<BodovnaSkala> bss = (ArrayList<BodovnaSkala>)bsRepo.findAll();
+		if(bss.size()==0)
+			return null;
+		BodovnaSkala retVal = bss.get(0);
+		for(int i=0; i<bss.size(); i++){
+			if(bss.get(i).getDatum().after(retVal.getDatum()))
+				retVal = bss.get(i);
+		}
+		return retVal;
+		
+	}
 
 
 
