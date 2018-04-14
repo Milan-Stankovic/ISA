@@ -11,8 +11,8 @@
         hc.home = "Home";
         var init = function (){
         	//$location.path("/login");
-        	if($cookies.get('user'))
-        	    $location.path("/regKorHome");
+        	//if($cookies.get('user'))
+        	    //$location.path("/regKorHome");
         };
         init();
 

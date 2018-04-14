@@ -87,6 +87,10 @@
         $scope.otvoriProj = function(proj){
             $location.path('/pozoristeBioskop/' + id + '/projekcije/' + proj)
         }
+
+        $scope.rezervisi = function(proj){
+            $location.path('/pozoristeBioskop/' + id + '/projekcije/' + proj + "/reservation")
+        }
     }
 
 

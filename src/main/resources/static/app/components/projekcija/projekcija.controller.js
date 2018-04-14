@@ -49,7 +49,9 @@
             alert("Greska kod get ustanove")
 
         });
-
+        $scope.rezervisi = function(proj){
+            $location.path('/pozoristeBioskop/' + id1 + '/projekcije/' + id2 + "/reservation")
+        }
 
     }
 
