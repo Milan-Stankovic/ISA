@@ -50,6 +50,12 @@
             controller: 'pozoristeBioskopController',
             controllerAs: 'pbc'
         })
+        .state('core.projekcija', {
+            url: 'pozoristeBioskop/{id1}/projekcije/{id2}',
+            templateUrl: 'app/components/projekcija/projekcija.html',
+            controller: 'projekcijaController',
+            controllerAs: 'prc'
+        })
 		.state('core.regKorHome', {
             url: 'regKorHome',
             templateUrl: 'app/components/regKorHome/regKorHome.html',

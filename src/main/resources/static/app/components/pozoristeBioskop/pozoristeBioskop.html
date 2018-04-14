@@ -2,25 +2,27 @@
     <div>
         <h2 style="color:white"><a>{{pb.naziv}}</a></h2>
 
-        <p style="color:white">Opis : {{pb.opis}}</p>
+        <p style="color:white">Description: {{pb.opis}}</p>
 
-        <p style="color:white"> Ocena : {{pb.prosecnaOcena}}</p>
+        <p style="color:white">Rate: {{pb.prosecnaOcena}}</p>
 
-        <p style="color:white"> Adresa : {{pb.adresa}}</p>
+        <p style="color:white"> Address: {{pb.adresa}}</p>
 
         <iframe ng-src="{{trustSrc(pb.urlMape)}}"
                 width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
     <br>
     <div>
-        <h2 style="color:white"><a>Program({{projekcije.length}}):</a></h2>
+        <h2 style="color:white"><a>Program ({{projekcije.length}}):</a></h2>
         <div style="overflow-y: scroll; height:200px;  background-color:gray">
             <span ng-repeat="proj in projekcije track by $index">
-               <p style="color:white">Naziv:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
-                <p style="color:white">Datum: {{proj.vreme  | date:'dd.MM.yyyy'}}, Vreme: {{proj.vreme  | date:'HH:mm'}}, Trajanje: {{proj.dogadjaj.trajanje}} min. </p>
-                <p style="color:white">Cena: {{proj.cena}},00</p>
+               <p style="color:white">Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
+                <p style="color:white">Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
+                <p style="color:white">Price: {{proj.cena}},00</p>
+                <button ng-click="otvoriProj(proj.id)">Details</button><span>    </span><button ng-click="rezervisi(proj.id)">Reservation</button>
                 <br>
             </span>
+            <br>
         </div>
     </div>
 </div>

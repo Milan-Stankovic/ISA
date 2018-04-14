@@ -9,9 +9,10 @@
     function pozoristeBioskopController($location, $scope, $rootScope, $http, $cookies, $sce) {
         var pbc = this;
         pbc.home = "Home";
+        var id;
         var init = function (){
 
-
+            id = /[^/]*$/.exec(window.location.href)[0];
         };
         init();
 
@@ -54,7 +55,7 @@
         getPozorista();
 
         console.log(window.location.href);
-        var id = /[^/]*$/.exec(window.location.href)[0];
+
 
 
         $http({
@@ -83,7 +84,9 @@
 
         });
 
-
+        $scope.otvoriProj = function(proj){
+            $location.path('/pozoristeBioskop/' + id + '/projekcije/' + proj)
+        }
     }
 
 

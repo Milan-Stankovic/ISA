@@ -30,9 +30,9 @@ public class ProjekcijaController {
         return allP;
     }
 
-    @RequestMapping("/pb/{id}/projekcije/{id}")
-    private Projekcija getProjekcija(@PathVariable Long id){
-        return ps.getProjekcija(id);
+    @RequestMapping("/pb/{id1}/projekcije/{id2}")
+    private Projekcija getProjekcija(@PathVariable Long id2){
+        return ps.getProjekcija(id2);
     }
 
     @RequestMapping("/pb/{id}/projekcije/od")
