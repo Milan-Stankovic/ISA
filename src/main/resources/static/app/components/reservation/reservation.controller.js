@@ -38,9 +38,8 @@
              console.log("projekcija: " + $scope.proj.dogadjaj.naziv)
              $scope.sala = $scope.proj.sala;
              $scope.sedista = $scope.sala.sedista;
-             var zadnje = $scope.sedista[$scope.sedista.length - 1];
-             $scope.redova = zadnje.red;
-             $scope.kolona = zadnje.broj;
+             $scope.redova = $scope.sala.brRed;
+             $scope.kolona = $scope.sala.brSedista;
              document.getElementById("columns").style.columns = $scope.kolona;
              console.log("OPA redova: " + $scope.redova + "kolona: " + $scope.kolona)
         }, function errorCallback(response) {
@@ -72,11 +71,50 @@
               console.log("Greska kod GET user frineds");
         });
 
+        $scope.getSediste = function(sID){
+            return $scope.sedista.filter(function(item){
+              return (item.id === sID);
+            })[0];
+          }
+
+        $scope.getIndex = function(sID){
+            for (var i = 0; i < $scope.rezervisano.length ; i++) {
+                    if ($scope.rezervisano[i].id === sID) {
+
+                        return i;
+                    }
+             }
+        }
         $scope.openList = function(){
             $scope.clicked = !$scope.clicked;
         }
+        $scope.rezervisano=[];
+        $scope.pozvanih=0;
+        $scope.dodajSediste = function(sID){
+            console.log("SID: " + sID)
+            var sediste;
+            var x = document.getElementsByClassName(sID)[0].getAttribute("src");
+            console.log(x)
+            if(x==='assets/images/zauzeto.png'){
+                document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/slobodno.png');
+                sediste = $scope.getSediste(sID)
+                console.log("oslobodjeno: " + sediste.id)
+                $scope.rezervisano.splice($scope.getIndex(sID), 1);
+                console.log("rezervisanih sada ima: " + $scope.rezervisano.length)
+
+            }
+
+            else{
+                document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/zauzeto.png');
+                sediste = $scope.getSediste(sID)
+                console.log("dodato: " + sediste.id)
+                $scope.rezervisano.push(sediste);
+                console.log("rezervisanih sada ima: " + $scope.rezervisano.length)
+
+            }
 
 
+        }
 
     }
 
