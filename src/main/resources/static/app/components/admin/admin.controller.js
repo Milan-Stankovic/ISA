@@ -84,7 +84,7 @@
                 $scope.items.push({
                     id: z,
                     checked: false,
-                    type : "regular"
+                    type : "REGULAR"
                 });
             }
 
@@ -127,29 +127,35 @@
                         case "REGULAR":
                             $(id).removeClass(); // Cist jquerry ali ono ali isto kao dole samo removeClass ne radi
                             angular.element(document.getElementById(ii.id)).addClass("clear");
+                            ii.type="REGULAR";
                             break;
                         case "VIP":
                             $(id).removeClass();
                             angular.element(document.getElementById(ii.id)).addClass("clearBlue");
+                            ii.type="VIP";
                             break;
 
                         case "LOVEBOX":
                             $(id).removeClass();
                             angular.element(document.getElementById(ii.id)).addClass("clearRed");
+                            ii.type="LOVEBOX";
                             break;
 
                         case "BALCONY":
                             $(id).removeClass();
                             angular.element(document.getElementById(ii.id)).addClass("clearGreen");
+                            ii.type="BALCONY";
                             break;
 
                         case "TAKEN":
                             $(id).removeClass();
                             angular.element(document.getElementById(ii.id)).addClass("clearWhite");
+                            ii.type="TAKEN";
                             break;
                         default:
                             angular.element(document.getElementById(ii.id)).removeClass();
                             angular.element(document.getElementById(ii.id)).addClass("clear");
+                            ii.type="REGULAR";
                     }
 
 
@@ -165,29 +171,35 @@
                 case "REGULAR":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clear");
+                    ii.type="REGULAR";
                     break;
                 case "VIP":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearBlue");
+                    ii.type="VIP";
                     break;
 
                 case "LOVEBOX":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearRed");
+                    ii.type="LOVEBOX";
                     break;
 
                 case "BALCONY":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearGreen");
+                    ii.type="BALCONY";
                     break;
 
                 case "TAKEN":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearWhite");
+                    ii.type="TAKEN";
                     break;
                 default:
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clear");
+                    ii.type="REGULAR";
             }
             $scope.lastChecked = item;
         };
@@ -395,6 +407,52 @@
             $scope.bpName=name;
             $scope.bpId = id;
             $scope.pickSala();
+
+        }
+
+        $scope.saveSala = function(newSalaName, newSalaBR, newSalaBS ){
+            var b = true;
+            if($scope.bpName != "")
+                if($scope.bpId)
+                    if($scope.bpId)
+                        if(newSalaName)
+                            if(newSalaName!="")
+                                if(newSalaBR)
+                                    if(newSalaBR>0 && newSalaBR<76)
+                                        if(newSalaBS)
+                                            if(newSalaBS>0 && newSalaBS<101)
+                                                if($scope.items.length>0)
+                                                    b=true;
+            if(b) {
+
+                var newSalaDTO = {};
+                newSalaDTO = {
+                    "brRed" : newSalaBR,
+                    "brSedista" : newSalaBS,
+                    "ime" : newSalaName,
+                    "ustanova" : $scope.bpId,
+                    "sedista" : $scope.items
+                }
+
+
+                $http({
+                    method:'POST',
+                    url: 'http://localhost:8096/d',
+                    data: newSalaDTO
+                }).then(function successCallback(response){
+                    //  location.reload(); Moze ovako clear
+                    alert("Event added sucessfully");
+
+
+                }, function errorCallback(response){
+                    alert("Error occured while adding event");
+                } );
+
+
+            }
+
+
+
 
         }
 
