@@ -80,11 +80,11 @@
 			controller: 'addEditItemController',
 			controllerAs: 'aeic'
 		})
-		.state('core.sysAdmin', {
-			url: 'sysAdmin',
-			templateUrl: 'app/components/sysAdmin/sysAdmin.html',
-			controller: 'sysAdminController',
-			controllerAs: 'sac'
+		.state('core.adminMode', {
+			url: 'adminMode',
+			templateUrl: 'app/components/adminMode/adminMode.html',
+			controller: 'adminModeController',
+			controllerAs: 'amc'
 		})
 		.state('core.addAdmins', {
 			url: 'addAdmins',

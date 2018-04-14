@@ -2,7 +2,7 @@
 <h3 class="headerrr">SYS ADMIN MODE</h3>
 <table width="100%">
 	<tr>
-		<td width="50%">
+		<td width="100%">
 			<div id="body" class="rentals">
 				<h2>ADDING NEW ADMIN</h2>
 				<table class="fanZona" width='100%'>
@@ -48,50 +48,7 @@
 					</tr>
 				</table>
 			</div>
-			
 		
-		<td width="50%">	
-			<div id="body" class="rentals">
-				<h2>EDITING TRESHOLD SYSTEM</h2>
-				<table class="fanZona" width='100%'>
-					<tr height='20px'>
-						<th colspan='4'></th>
-					</tr>
-					<tr>
-						<th width='20%'>GOLD Treshold:</th>
-						<td width='30%'><input type='text' ng-model="bs.goldTreshold" size="15"/></td>
-						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="bs.goldPopust" size="2" maxlength="2"/>%</td>
-					</tr>
-					<tr>
-						<th width='20%'>SILVER Treshold:</th>
-						<td width='30%'><input type='text' ng-model="bs.silverTreshold" size="15"/></td>
-						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="bs.silverPopust" size="2" maxlength="2"/>%</td>
-					</tr>
-					<tr>
-						<th width='20%'>BROZNE Treshold:</th>
-						<td width='30%'><input type='text' ng-model="bs.bronzeTreshold" size="15"/></td>
-						<th width='20%'>Discount:</th>
-						<td width='30%'><input type='text' ng-model="bs.bronzePopust" size="2" maxlength="2"/>%</td>
-					</tr>
-					<tr height='10px'>
-						<th colspan='4'></th>
-					</tr>
-					<tr>
-						<th></th>
-						<td colspan='3'><button ng-click="aac.edit()">Save Changes</button></td>
-					</tr>
-					<tr class="secretMessage">
-						<td></td>
-						<td ng-show="eshowDone" colspan='3'>Changes saved succesfully</td>
-						<td ng-show="eshowSthWentWrong" colspan='3'>Something went wrong! Change is not changed</td>
-						<td ng-show="eblankField" colspan='3'>{{eemptyField}} is neccesery to be added(as integer)!</td>
-					</tr>
-				</table>
-			</div>	
-		
-		</td>
 	</tr>
 </table>
 	

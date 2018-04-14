@@ -1,0 +1,221 @@
+<div id="body" class="rentals">
+<h3 class="headerrr">SYS ADMIN MODE</h3>
+<table width="100%">
+	<tr>
+		<td width="50%">
+			<div id="body" class="rentals" ng-show='adding'>
+				<h2>ADDING THEATRE/CINEMA</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th width='20%'>Name:</th>
+						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+					</tr>
+					<tr>
+						<th>Description:</th>
+						<td><textarea ng-model="item.opis" rows='5' columns='23'></textarea></td>
+					</tr>
+					<tr>
+						<th>Address:</th>
+						<td><input type='text' ng-model="item.adresa"></textarea></td>
+					</tr>
+					<tr>
+						<th>Type:</th>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="item.tipUstanove"></select></td>
+					</tr>
+					<tr>
+						<th>On the Map:</th>
+						<td><my-maps id="map-canvas"></my-maps></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="sac.add()">Add it</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="showDone">Changes saved succesfully</td>
+						<td ng-show="showSthWentWrong">Something went wrong! Change is not changed</td>
+						<td ng-show="blankField">{{emptyField}} is neccesery to be added!</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		
+		<td width="50%">	
+			<div id="body" class="rentals">
+				<h2>EDITING THEATRE/CINEMA</h2>
+				<table class="fanZona" width='100%'>
+					<tr>
+						<th>Choose Theatre/Cinema:</th>
+						<td><select data-ng-options="tc.naziv for tc in tc_options" data-ng-model="itemToEdit" ng-click="aeic.setEditFields()"></select></td>
+					</tr>
+					<tr>
+						<th width='20%'>Name:</th>
+						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+					</tr>
+					<tr>
+						<th>Description:</th>
+						<td><textarea ng-model="item.opis" rows='5' columns='23'></textarea></td>
+					</tr>
+					<tr>
+						<th>Address:</th>
+						<td><input type='text' ng-model="item.adresa" ></textarea></td>
+					</tr>
+					<tr>
+						<th>Type:</th>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="item.tipUstanove"></select></td>
+					</tr>
+					<tr>
+						<th>On the Map:</th>
+						<td><my-maps id="map-canvas"></my-maps></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="sac.edit()">Save changes</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="eshowDone">Changes saved succesfully</td>
+						<td ng-show="eshowSthWentWrong">Something went wrong! Change is not changed</td>
+						<td ng-show="eblankField">{{eemptyField}} is neccesery to be added!</td>
+					</tr>
+				</table>
+			</div>	
+		
+		</td>
+	</tr>
+	<tr>
+		<td width="50%">
+			<div id="body" class="rentals" ng-show='adding'>
+				<h2>ADDING ADMIN</h2>
+				<table class="fanZona" width='100%'>					
+					<tr>
+						<th>Responsible for:</th>
+						<td>
+							<div ng-repeat="p in pb">
+								  <input type="radio" id='radio' /> {{p.naziv}} - {{p.adresa}}
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<th width='20%'>UserName:</th>
+						<td width='80%'><input type='text' ng-model="adm.username"/></td>
+					</tr>
+					<tr>
+						<th width='20%'>EMail:</th>
+						<td width='80%'><input type="email" ng-model="adm.email"/></td>
+					</tr>
+					<tr>
+						<th>Password:</th>
+						<td font-size='4'>theatre123</td>
+					</tr>
+					<tr>
+						<th>Type:</th>
+						<td><select data-ng-options="t for t in admType_options" data-ng-model="adm.tipAdmina"></select></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='2'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td><button ng-click="amc.addAdmin()">Add Admin</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="showDone">Admin created succesfully</td>
+						<td ng-show="showSthWentWrong">Something went wrong! Admin is not added</td>
+						<td ng-show="blankField">{{emptyField}} is neccesery to be added!</td>
+					</tr>
+				</table>
+			</div>
+		</td>
+		
+		<td width="50%">		
+			<div id="body" class="rentals">
+				<h2>ADDING HALL</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th width='20%'>Where:</th>
+						<td width='80%'><div ng-repeat="p in pb">
+								  <input type="radio" id='radio' ng-model='hall.ustanova' value='p.id'/> {{p.naziv}} - {{p.adresa}}
+						</div></td>
+					</tr>
+					<tr>
+						<th>Name:</th>
+						<td><input type='text' ng-model="hall.ime"/></td>
+					</tr>
+					<tr>
+						<th width='20%>Number of Rows:</th>
+						<td><input type='text' ng-model="hall.brRed" size="4" maxlength="4"/></td>
+					</tr>
+					<tr>
+						<th>Number of Seats in a Row:</th>
+						<td><input type='text' ng-model="hall.brSedista" size="4" maxlength="4"/></td>
+					</tr>
+					<tr>
+						<th>Default Seat Type:</th>
+						<td><select data-ng-options="t for t in seatType_options" data-ng-model="hall.tipSedista"></select></td>
+					</tr>
+					<tr height='10px'>
+						<th colspan='4'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td colspan='3'><button ng-click="amc.addHall()">Add Hall</button></td>
+					</tr>
+					<tr class="secretMessage">
+						<td></td>
+						<td ng-show="hshowDone" colspan='3'>Hall added succesfully</td>
+						<td ng-show="hshowSthWentWrong" colspan='3'>Something went wrong! Hall not added</td>
+						<td ng-show="hblankField" colspan='3'>{{hemptyField}} is neccesery to be added!</td>
+					</tr>
+				</table>
+			</div>			
+		</td> 
+	</tr>
+	<tr>
+		<td width="100%" claspan='2'>		
+			<div id="body" class="rentals">
+				<h2>EDITING TRESHOLD SYSTEM</h2>
+				<table class="fanZona" width='100%'>
+					<tr width='100%'>
+						<td width='33%'>GOLD Treshold: <input type='text' ng-model="bs.goldTreshold" size="15"/><br/>
+							Discount: <input type='text' ng-model="bs.goldPopust" size="2" maxlength="2"/> %
+						</td>
+						<td width='33%'>SILVER Treshold: <input type='text' ng-model="bs.silverTreshold" size="15"/><br/>
+							Discount: <input type='text' ng-model="bs.silverPopust" size="2" maxlength="2"/> %
+						</td>
+						<td width='33%'>BRONZE Treshold: <input type='text' ng-model="bs.bronzeTreshold" size="15"/><br/>
+							Discount: <input type='text' ng-model="bs.bronzePopust" size="2" maxlength="2"/> %
+						</td>
+					</tr>					
+					<tr height='10px'>
+						<th colspan='3'></th>
+					</tr>
+					<tr>
+						<th></th>
+						<td ><button ng-click="amc.editTreshhold()">Save Changes</button></td>
+						<th></th>
+					</tr>
+					<tr class="secretMessage">
+						<th></th>
+						<td ng-show="tshowDone" >Changes saved succesfully</td>
+						<td ng-show="tshowSthWentWrong" >Something went wrong! Change is not changed</td>
+						<td ng-show="tblankField">{{temptyField}} is neccesery to be added(as integer)!</td>
+						<th></th>
+					</tr>
+				</table>
+			</div>			
+		</td> 
+		
+	</tr>
+</table>
+	

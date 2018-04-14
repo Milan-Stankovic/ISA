@@ -608,7 +608,7 @@ p a:hover {
 }
 #body.rentals {
 	border:1px solid #4F4F4F;
-	margin:0 auto 428px;
+	margin:0 auto 10px;
 	overflow:hidden;
 	width:100%;
 }
