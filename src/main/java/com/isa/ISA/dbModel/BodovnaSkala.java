@@ -1,6 +1,7 @@
 package com.isa.ISA.dbModel;
 
 import java.sql.Date;
+import java.sql.Time;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +26,7 @@ public class BodovnaSkala {
 
     private int goldPopust;
     
-    private Date datum;
+    private Time datum;
 
 	public BodovnaSkala() {
 	}
@@ -86,11 +87,11 @@ public class BodovnaSkala {
 		this.goldPopust = goldPopust;
 	}
 
-	public Date getDatum() {
+	public Time getDatum() {
 		return datum;
 	}
 
-	public void setDatum(Date datum) {
+	public void setDatum(Time datum) {
 		this.datum = datum;
 	}
     

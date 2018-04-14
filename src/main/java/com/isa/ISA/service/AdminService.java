@@ -138,6 +138,10 @@ public class AdminService {
 		
 	}
 
+	public BodovnaSkala setBodSkala(BodovnaSkala bs) {
+		return bsRepo.save(bs);
+	}
+
 
 
 }

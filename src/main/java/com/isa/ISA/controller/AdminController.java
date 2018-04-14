@@ -32,10 +32,6 @@ public class AdminController {
     public Admin addAdmin(@RequestBody AdminDTO admin){
         return adminService.addAdminBySis(admin);
     }
-    @RequestMapping(method = RequestMethod.GET,value = "/bodSkala")
-    public BodovnaSkala getBodSkala(){
-        return adminService.getBodSkala();
-    }
     @RequestMapping(method = RequestMethod.GET,value = "/admin/{username}")
     public Admin getAdmin(@PathVariable String username){ return adminService.getAdmin(username); }
 
@@ -65,5 +61,15 @@ public class AdminController {
         adminService.deleteAdmin(a);
     }
 
+    
+    
+    @RequestMapping(method = RequestMethod.GET,value = "/bodSkala")
+    public BodovnaSkala getBodSkala(){
+        return adminService.getBodSkala();
+    }
+    @RequestMapping(method = RequestMethod.POST,value = "/bodSkala")
+    public BodovnaSkala setBodSkala(@RequestBody BodovnaSkala bs){
+        return adminService.setBodSkala(bs);
+    }
 
 }

@@ -106,6 +106,35 @@
         }	 
         
         aac.edit = function(){
+        	if($scope.bs.goldTreshold=="" || $scope.bs.silverTreshold=="" || $scope.bs.bronzeTreshold=="" ||
+        			!parseInt($scope.bs.goldTreshold) || !parseInt($scope.bs.silverTreshold) || !parseInt($scope.bs.bronzeTreshold)){
+        		aac.eblankField("Some Treshold");
+        		return;
+        	}
+        	if($scope.bs.bronzePopust=="" || $scope.bs.silverPopust=="" || $scope.bs.goldPopust=="" ||
+        		!parseInt($scope.bs.goldPopust) || !parseInt($scope.bs.silverPopust) || !parseInt($scope.bs.bronzePopust)){
+        		aac.eblankField("Some Discount");
+        		return;
+        	}
+        	var d = new Date();
+        	var n = d.getTime();
+        	var data = { "id": 0,
+        			"goldTreshold":parseInt($scope.bs.goldTreshold),
+    				"silverTreshold":parseInt($scope.bs.silverTreshold),
+    				"bronzeTreshold":parseInt($scope.bs.bronzeTreshold),
+    				"goldPopust":parseInt($scope.bs.goldPopust),
+    				"silverPopust":parseInt($scope.bs.silverPopust),
+    				"bronzePopust":parseInt($scope.bs.bronzePopust),
+    				"datum": n
+    				};
+        	$http({
+                method: 'POST',
+                url: 'http://localhost:8096/bodSkala',
+                data: data
+              }).then(function successCallback(response) {
+            	  aac.eshowDone();  
+              });
+        	
         	
         }
         
