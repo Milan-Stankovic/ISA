@@ -89,7 +89,7 @@
             $scope.clicked = !$scope.clicked;
         }
         $scope.rezervisano=[];
-        $scope.pozvanih=0;
+        $scope.pozvanih=[];
         $scope.dodajSediste = function(sID){
             console.log("SID: " + sID)
             var sediste;
@@ -113,6 +113,23 @@
 
             }
 
+
+        }
+
+        $scope.inviteFriends = function(friend){
+            $scope.pozvanih.push(friend);
+
+
+        }
+
+        $scope.finish = function(){
+            if($scope.pozvanih.length+1>$scope.rezervisano.length){
+                if($scope.pozvanih.length>0)
+                    alert("Error. More invited friends than reserved seats. Don't leave your friends standing!")
+                else
+                    alert("You have to reserve at least one seat.")
+                return;
+            }
 
         }
 
