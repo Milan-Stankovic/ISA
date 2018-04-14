@@ -11,8 +11,9 @@
         hc.home = "Home";
         var init = function (){
         	//$location.path("/login");
-        	if($cookies.get('user'))
-        	    $location.path("/regKorHome");
+        	//zakomentarisano za sad, kad se odrade all cinemas i all theatres vracam
+        	//if($cookies.get('user'))
+        	    //$location.path("/regKorHome");
         };
         init();
 

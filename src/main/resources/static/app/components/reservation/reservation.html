@@ -1,0 +1,57 @@
+<style>
+h2,p ,a  {color: white;}
+#columns {
+  columns: 3;
+}
+.box
+	{
+		opacity: 1;
+	    filter: alpha(opacity=100);
+	}
+	.box:hover
+	{
+	opacity: 0.3;
+	filter: alpha(opacity=30);
+	}
+</style>
+
+<div>
+    <h2>RESERVATION</h2>
+    <br>
+    <p> Naziv: {{proj.dogadjaj.naziv  | uppercase }}</p>
+    <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
+    <p>Price: {{proj.cena}},00</p>
+    <br>
+    <button ng-click="openList()">Invite Friends</button>
+    <br>
+    <div style="overflow-y: scroll; height:150px; width:500px; background-color:gray" ng-show="clicked">
+        <ol style="list-style-type: none; width:500px">
+            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="inviteFriend(friend.email)">Invite</button></li>
+
+        </ol>
+    </div>
+    <br>
+    <div>
+        <p>Choose your Seat(s):</p>
+        <div id="columns" style="background:gray">
+            <div ng-repeat="s in sedista">
+                <a ng-click="addS(s.id)">
+                    <span ng-switch on="s.tipSedista">
+                       <img class="box" ng-switch-when="REGULAR" height="40px" width="40px" src='assets/images/slobodno.png'>
+                       <img ng-switch-when="TAKEN" height="40px" width="40px" src='assets/images/zauzeto.png'>
+                        <img ng-switch-when="LOVEBOX" height="40px" width="40px" src='assets/images/kliknuto.png'>
+                        <img ng-switch-when="VIP" height="40px" width="40px" src='assets/images/vip.png'>
+                        <img ng-switch-when="BALCONY" height="40px" width="40px" src='assets/images/balkon.png'>
+                    </span>
+
+
+
+                    <!--<img height="40px" width="40px" ng-src="{{s.tip != 'tipSedista' && 'assets/images/kliknuto.png' || 'assets/images/zauzeto.png'}}" alt="">--></a>
+            </div>
+        </div>
+        <button ng-click="finish()">Finish</button>
+    </div>
+    <br>
+
+
+</div>

@@ -86,10 +86,11 @@ public class UserController {
     public List<RegistrovaniKorisnik> getUserFriends(@PathVariable String username){
     	List<RegistrovaniKorisnik> ret = new ArrayList<>();
     	RegistrovaniKorisnik k = userService.getUser(username);
+		if(k==null)
+			return ret;
     	k.setPrijatelji(prijateljService.getUserFriends(k.getUserName()));
     	userService.addUser(k);
-    	if(k==null)
-    		return ret;
+
     	if(k.getPrijatelji()!=null){
     		System.out.println("B prijatelja: " + k.getPrijatelji().size());
     		if(k.getPrijatelji().size()>0){
