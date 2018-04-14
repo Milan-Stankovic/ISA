@@ -1704,6 +1704,38 @@ p a:hover {
 
 }
 
+.clear {
+	all: unset !important;
+    background-color:transparent !important;
+
+}
+
+.clearRed {
+    all: unset !important;
+    background-color: red !important;
+}
+
+.clearBlue {
+    all: unset !important;
+    background-color: blue !important;
+}
+
+.clearGreen {
+    all: unset !important;
+    background-color: green !important;
+}
+
+
+.clearWhite {
+    all: unset !important;
+    background-color: white !important;
+}
+
+
+.clearAll {
+    all: unset !important;
+    background-color:transparent !important;
+}
 
 
 

@@ -74,7 +74,7 @@
 
 
 
-
+        $scope.divs = {};
         var initGrid = function (i,j) {
             $scope.items = [];
             $scope.split_items = [];
@@ -83,7 +83,8 @@
             for (var z = 0; z < i*j; z++) {
                 $scope.items.push({
                     id: z,
-                    checked: false
+                    checked: false,
+                    type : "regular"
                 });
             }
 
@@ -113,18 +114,84 @@
         $scope.lastMouseChecked = null;
         $scope.futureCheckState = false;
 
-        $scope.select = function(item, $event) {
+        $scope.select = function(item, $event, tip) {
             if ($event.shiftKey && $scope.lastChecked) {
                 var start = $scope.items.indexOf(item);
                 var end = $scope.items.indexOf($scope.lastChecked);
                 var toBeChecked = $scope.items.slice(Math.min(start, end), Math.max(start, end) + 1);
                 angular.forEach(toBeChecked, function(ii) {
+                    var id ="";
+                    id+="#"+ii.id;
+
+                    switch(tip) {
+                        case "REGULAR":
+                            $(id).removeClass(); // Cist jquerry ali ono ali isto kao dole samo removeClass ne radi
+                            angular.element(document.getElementById(ii.id)).addClass("clear");
+                            break;
+                        case "VIP":
+                            $(id).removeClass();
+                            angular.element(document.getElementById(ii.id)).addClass("clearBlue");
+                            break;
+
+                        case "LOVEBOX":
+                            $(id).removeClass();
+                            angular.element(document.getElementById(ii.id)).addClass("clearRed");
+                            break;
+
+                        case "BALCONY":
+                            $(id).removeClass();
+                            angular.element(document.getElementById(ii.id)).addClass("clearGreen");
+                            break;
+
+                        case "TAKEN":
+                            $(id).removeClass();
+                            angular.element(document.getElementById(ii.id)).addClass("clearWhite");
+                            break;
+                        default:
+                            angular.element(document.getElementById(ii.id)).removeClass();
+                            angular.element(document.getElementById(ii.id)).addClass("clear");
+                    }
+
+
                     ii.checked = $scope.futureCheckState;
+                    ii.type= tip;
                 });
+            }
+
+            var id ="";
+            id+="#"+item.id;
+
+            switch(tip) {
+                case "REGULAR":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clear");
+                    break;
+                case "VIP":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clearBlue");
+                    break;
+
+                case "LOVEBOX":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clearRed");
+                    break;
+
+                case "BALCONY":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clearGreen");
+                    break;
+
+                case "TAKEN":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clearWhite");
+                    break;
+                default:
+                    $(id).removeClass();
+                    angular.element(document.getElementById(item.id)).addClass("clear");
             }
             $scope.lastChecked = item;
         };
-        $scope.mouseSelect = function(item, $event, start) {
+        $scope.mouseSelect = function(item, $event, start, tip) {
             if (start) {
 
                 $scope.lastMouseChecked = item;
@@ -135,7 +202,7 @@
                 var ev = {
                     shiftKey: true
                 };
-                select(item, ev);
+                select(item, ev, tip);
             }
         };
 
@@ -280,27 +347,39 @@
         getBioskopi();
 
 
-        $scope.zanr = [
-            "HOROR",
-            "COMEDY",
-            "THRILLER",
-            "ACTION",
-            "ADVENTURE",
-            "CRIME",
-            "DRAMA",
-            "FANTASY",
-            "FICTION",
-            "MISTERY",
-            "MUSICAL",
-            "SATIRE",
-            "DOCUMENTARY"
 
-        ];
 
 
         var ac = this;
 
         var init = function () {
+
+            $scope.zanr = [
+                "HOROR",
+                "COMEDY",
+                "THRILLER",
+                "ACTION",
+                "ADVENTURE",
+                "CRIME",
+                "DRAMA",
+                "FANTASY",
+                "FICTION",
+                "MISTERY",
+                "MUSICAL",
+                "SATIRE",
+                "DOCUMENTARY"
+
+            ];
+
+            $scope.tipSedista =[
+                "REGULAR",
+                "VIP",
+                "LOVEBOX",
+                "BALCONY",
+                "TAKEN"
+            ];
+
+            $scope.class = "clear";
 
         };
         init();

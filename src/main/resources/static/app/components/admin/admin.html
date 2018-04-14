@@ -178,29 +178,6 @@
                         <a>  Google maps url : </a>
                     </li>
 
-                    <li class="desno">
-                        <a>Bronze status treshold :</a>
-                    </li>
-
-                    <li class="desno">
-                        <a>Bronze status discount  :</a>
-                    </li>
-
-                    <li class="desno">
-                        <a>Silver status treshold :</a>
-                    </li>
-
-                    <li class="desno">
-                        <a>Silver status discount  :</a>
-                    </li>
-
-                    <li class="desno">
-                        <a>Gold status treshold :</a>
-                    </li>
-
-                    <li class="desno">
-                        <a>Gold status discount  :</a>
-                    </li>
 
                     <li class="last">
                         <button  class="button" type="submit" ng-click="editChange()"> Toggle edit </button>
@@ -232,24 +209,7 @@
                      <li class="unosDebeli">
                          <textarea class="inputDebeli"  ng-model="bp.urlMape" rows="3" cols="20" ng-readonly="edit"> </textarea>
                     </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.bronzeTreshold" ng-readonly="edit" class="form-control" >
-                    </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.bronzePopust" ng-readonly="edit" class="form-control" >
-                    </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.silverTreshold" ng-readonly="edit" class="form-control" >
-                    </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.silverPopust" ng-readonly="edit" class="form-control" >
-                    </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.goldTreshold" ng-readonly="edit" class="form-control" >
-                    </li>
-                    <li class="unos">
-                         <input class="input" type="text" ng-model="bp.goldPopust" ng-readonly="edit" class="form-control" >
-                    </li>
+
                     <li class="last">
                         <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>
                     </li>
@@ -285,6 +245,10 @@
                     <a>Number of seats per row :</a>
                 </li>
 
+                <li class="desno">
+                    <a>Type of seat :</a>
+                </li>
+
             </ul>
         </li>
 
@@ -304,6 +268,10 @@
 
                 <li class="unos">
                     <input class="input"  ng-change="drawGrid(newSalaBR, newSalaBS)" type="text" ng-model="newSalaBS" class="form-control" id="newSalaBS">
+                </li>
+
+                  <li class="unos">
+                    <select class="input" type="text"ng-model="newSalaTipSedista" ng-options="itemz for itemz in tipSedista" id="newSalaTipSedista"></select>
                 </li>
 
 
@@ -330,8 +298,10 @@
                              <tr  ng-repeat="items2 in split_items track by $index">
                                 <li  class="unos"  >
                                  <td>Row {{$index}} : </td>
-                                <td ng-repeat="i in items2 track by $index" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
-                                  <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
+                                <td ng-repeat="i in items2 track by $index" ng-mousedown="mouseSelect(i, $event, true, newSalaTipSedista)" ng-mouseup="mouseSelect(i, $event, false, newSalaTipSedista)">
+                                    <div class="clear" id="{{i.id}}">
+                                        <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event, newSalaTipSedista)" />
+                                    </div>
                                 </td>
                             </li>
                              </tr>
