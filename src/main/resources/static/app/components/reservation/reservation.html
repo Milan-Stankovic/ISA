@@ -26,7 +26,7 @@ h2,p ,a  {color: white;}
     <br>
     <div style="overflow-y: scroll; height:150px; width:500px; background-color:gray" ng-show="clicked">
         <ol style="list-style-type: none; width:500px">
-            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="inviteFriend(friend.email)">Invite</button></li>
+            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button id="button{{friend.id}}" ng-click="inviteFriend(friend)">Invite</button></li>
 
         </ol>
     </div>
