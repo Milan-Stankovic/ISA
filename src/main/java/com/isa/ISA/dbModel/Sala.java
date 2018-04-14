@@ -2,11 +2,7 @@ package com.isa.ISA.dbModel;
 
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -26,7 +22,7 @@ public class Sala {
     /**
      * Lista svih sedisat u sali
      */
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
     private List<Sediste> sedista;
 
     private String ime;
