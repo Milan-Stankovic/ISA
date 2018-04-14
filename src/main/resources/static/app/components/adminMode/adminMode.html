@@ -3,27 +3,27 @@
 <table width="100%">
 	<tr>
 		<td width="50%">
-			<div id="body" class="rentals" ng-show='adding'>
+			<div id="body" class="rentals" >
 				<h2>ADDING THEATRE/CINEMA</h2>
 				<table class="fanZona" width='100%'>
 					<tr height='20px'>
 						<th colspan='2'></th>
 					</tr>
 					<tr>
-						<th width='20%'>Name:</th>
-						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+						<th width='30%'>Name:</th>
+						<td width='70%'><input type='text' ng-model="tc.naziv"/></td>
 					</tr>
 					<tr>
 						<th>Description:</th>
-						<td><textarea ng-model="item.opis" rows='5' columns='23'></textarea></td>
+						<td><textarea ng-model="tc.opis" rows='5' columns='23'></textarea></td>
 					</tr>
 					<tr>
 						<th>Address:</th>
-						<td><input type='text' ng-model="item.adresa"></textarea></td>
+						<td><input type='text' ng-model="tc.adresa"></textarea></td>
 					</tr>
 					<tr>
 						<th>Type:</th>
-						<td><select data-ng-options="t for t in type_options" data-ng-model="item.tipUstanove"></select></td>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="tc.tipUstanove"></select></td>
 					</tr>
 					<tr>
 						<th>On the Map:</th>
@@ -34,13 +34,13 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><button ng-click="sac.add()">Add it</button></td>
+						<td><button ng-click="amc.addTC()">Add it</button></td>
 					</tr>
 					<tr class="secretMessage">
 						<td></td>
-						<td ng-show="showDone">Changes saved succesfully</td>
-						<td ng-show="showSthWentWrong">Something went wrong! Change is not changed</td>
-						<td ng-show="blankField">{{emptyField}} is neccesery to be added!</td>
+						<td ng-show="tcshowDone">Changes saved succesfully</td>
+						<td ng-show="tcshowSthWentWrong">Something went wrong! Change is not changed</td>
+						<td ng-show="tcblankField">{{tcemptyField}} is neccesery to be added!</td>
 					</tr>
 				</table>
 			</div>
@@ -52,23 +52,23 @@
 				<table class="fanZona" width='100%'>
 					<tr>
 						<th>Choose Theatre/Cinema:</th>
-						<td><select data-ng-options="tc.naziv for tc in tc_options" data-ng-model="itemToEdit" ng-click="aeic.setEditFields()"></select></td>
+						<td><select data-ng-options="p.naziv for p in pb" data-ng-model="tcToEdit" ng-click="amc.setTCToEdit()"></select></td>
 					</tr>
 					<tr>
 						<th width='20%'>Name:</th>
-						<td width='80%'><input type='text' ng-model="item.naziv"/></td>
+						<td width='80%'><input type='text' ng-model="e.naziv"/></td>
 					</tr>
 					<tr>
 						<th>Description:</th>
-						<td><textarea ng-model="item.opis" rows='5' columns='23'></textarea></td>
+						<td><textarea ng-model="e.opis" rows='5' columns='23'></textarea></td>
 					</tr>
 					<tr>
 						<th>Address:</th>
-						<td><input type='text' ng-model="item.adresa" ></textarea></td>
+						<td><input type='text' ng-model="e.adresa" ></textarea></td>
 					</tr>
 					<tr>
 						<th>Type:</th>
-						<td><select data-ng-options="t for t in type_options" data-ng-model="item.tipUstanove"></select></td>
+						<td><select data-ng-options="t for t in type_options" data-ng-model="e.tipUstanove"></select></td>
 					</tr>
 					<tr>
 						<th>On the Map:</th>
@@ -79,7 +79,7 @@
 					</tr>
 					<tr>
 						<th></th>
-						<td><button ng-click="sac.edit()">Save changes</button></td>
+						<td><button ng-click="amc.editTC()">Save changes</button></td>
 					</tr>
 					<tr class="secretMessage">
 						<td></td>
@@ -94,14 +94,14 @@
 	</tr>
 	<tr>
 		<td width="50%">
-			<div id="body" class="rentals" ng-show='adding'>
+			<div id="body" class="rentals">
 				<h2>ADDING ADMIN</h2>
 				<table class="fanZona" width='100%'>					
 					<tr>
 						<th>Responsible for:</th>
 						<td>
 							<div ng-repeat="p in pb">
-								  <input type="radio" id='radio' /> {{p.naziv}} - {{p.adresa}}
+								  <input type="radio" id='radio' value="p.id" ng-value="p.id" ng-model="adm.resp"/> {{p.naziv}} - {{p.adresa}}
 							</div>
 						</td>
 					</tr>
@@ -130,9 +130,9 @@
 					</tr>
 					<tr class="secretMessage">
 						<td></td>
-						<td ng-show="showDone">Admin created succesfully</td>
-						<td ng-show="showSthWentWrong">Something went wrong! Admin is not added</td>
-						<td ng-show="blankField">{{emptyField}} is neccesery to be added!</td>
+						<td ng-show="ashowDone">Admin created succesfully</td>
+						<td ng-show="ashowSthWentWrong">Something went wrong! Admin is not added</td>
+						<td ng-show="ablankField">{{aemptyField}} is neccesery to be added!</td>
 					</tr>
 				</table>
 			</div>
@@ -143,17 +143,15 @@
 				<h2>ADDING HALL</h2>
 				<table class="fanZona" width='100%'>
 					<tr height='20px'>
-						<th width='20%'>Where:</th>
-						<td width='80%'><div ng-repeat="p in pb">
-								  <input type="radio" id='radio' ng-model='hall.ustanova' value='p.id'/> {{p.naziv}} - {{p.adresa}}
-						</div></td>
+						<th width='40%'>Where:</th>
+						<td width='60%'><select data-ng-options="p.naziv for p in pb" data-ng-model="pbHall"></select></td>
 					</tr>
 					<tr>
 						<th>Name:</th>
 						<td><input type='text' ng-model="hall.ime"/></td>
 					</tr>
 					<tr>
-						<th width='20%>Number of Rows:</th>
+						<th>Number of Rows:</th>
 						<td><input type='text' ng-model="hall.brRed" size="4" maxlength="4"/></td>
 					</tr>
 					<tr>

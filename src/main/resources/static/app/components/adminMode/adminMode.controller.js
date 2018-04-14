@@ -19,6 +19,26 @@
               		if(response.data.tip!="SYS")
               			$location.path('/home');
               });*/
+//ADD theatre/cinema
+        	$scope.tcshowDone=false;
+            $scope.tcshowSthWentWrong=false;
+            $scope.tcblankField=false;
+            $scope.tcemptyField="";
+        	$scope.type_options = ["theatre", "cinema"];
+        	$scope.tc={"naziv":"",
+        				"opis":"",
+        				"adresa":"",
+        				"tipUstanove":"theatre"};
+//EDIT theatre/cinema
+        	$scope.eshowDone=false;
+            $scope.eshowSthWentWrong=false;
+            $scope.eblankField=false;
+            $scope.eemptyField="";
+        	$scope.e={"naziv":"",
+        			 "opis":"",
+        		     "adresa":"",
+        			 "tipUstanove":""};
+//treshold
             $scope.tshowDone=false;
             $scope.tshowSthWentWrong=false;
             $scope.tblankField=false;
@@ -38,7 +58,7 @@
 	        		  $scope.bs =response.data;
 	          });
             
-
+//hall
             $scope.hshowDone=false;
             $scope.hshowSthWentWrong=false;
             $scope.hblankField=false;
@@ -47,10 +67,21 @@
             $scope.hall={"ime":"",
             			"brSedista":"",
             			"brRed":"",
-            			"ustanova": 0};
-	    	
-        	$scope.adding=true;
-        	$scope.type_options = ["theatre", "cinema"];
+            			"ustanova": 0,
+            			"tipSedista": "regular"};
+//admin	    	
+            $scope.ashowDone=false;
+            $scope.ashowSthWentWrong=false;
+            $scope.ablankField=false;
+            $scope.aemptyField="";
+            $scope.admType_options = ["fanZone", "for Theatre/Cinema"];
+            $scope.adm={"resp": "",
+            			"username": "",
+            			"email":"",
+            			"pass":"theatre123",
+            			"tipAdmina":"fanZone"};
+            
+            
         	$http({
                 method: 'GET',
                 url: 'http://localhost:8096/pb'
@@ -99,8 +130,61 @@
         	
         }
         
+        amc.addAdmin = function(){
+        	
+        }
+        
+        amc.addTC = function(){
+        	
+        }
+        amc.editTC = function(){
+        	
+        }
+        amc.setTCToEdit = function(){
+        	
+        }
         
         
+        amc.tcshowDone = function() {
+		      $scope.tcshowDone = true;
+		      $timeout(function() {
+		    	  $scope.tcshowDone = false;
+		      }, 3000);    
+		 }
+		 amc.tcblankField = function(field){
+			 $scope.tcblankField = true;
+			 $scope.tcemptyField = field;
+		      $timeout(function() {
+		    	  $scope.tcblankField = false;
+					 $scope.tcemptyField = "";
+		      }, 3000);    
+		  }
+		 amc.tcshowSthWentWrong = function() {
+		      $scope.tcshowSthWentWrong = true;
+		      $timeout(function() {
+		    	  $scope.tcshowSthWentWrong = false;
+		      }, 3000);    
+		 }
+		 amc.eshowDone = function() {
+		      $scope.eshowDone = true;
+		      $timeout(function() {
+		    	  $scope.eshowDone = false;
+		      }, 3000);    
+		 }
+		 amc.eblankField = function(field){
+			 $scope.eblankField = true;
+			 $scope.eemptyField = field;
+		      $timeout(function() {
+		    	  $scope.eblankField = false;
+					 $scope.eemptyField = "";
+		      }, 3000);    
+		  }
+		 amc.eshowSthWentWrong = function() {
+		      $scope.eshowSthWentWrong = true;
+		      $timeout(function() {
+		    	  $scope.eshowSthWentWrong = false;
+		      }, 3000);    
+		 }
         amc.tshowDone = function() {
 		      $scope.tshowDone = true;
 		      $timeout(function() {
@@ -139,6 +223,26 @@
 		      $scope.hshowSthWentWrong = true;
 		      $timeout(function() {
 		    	  $scope.hshowSthWentWrong = false;
+		      }, 3000);    
+		 }
+		 amc.ashowDone = function() {
+		      $scope.ashowDone = true;
+		      $timeout(function() {
+		    	  $scope.ashowDone = false;
+		      }, 3000);    
+		 }
+		 amc.ablankField = function(field){
+			 $scope.ablankField = true;
+			 $scope.aemptyField = field;
+		      $timeout(function() {
+		    	  $scope.ablankField = false;
+					 $scope.aemptyField = "";
+		      }, 3000);    
+		  }
+		 amc.ashowSthWentWrong = function() {
+		      $scope.ashowSthWentWrong = true;
+		      $timeout(function() {
+		    	  $scope.ashowSthWentWrong = false;
 		      }, 3000);    
 		 }
     }
