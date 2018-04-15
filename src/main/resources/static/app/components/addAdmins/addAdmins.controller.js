@@ -14,16 +14,13 @@
         	$scope.showSthWentWrong=false;
         	$scope.blankField=false;
         	$scope.emptyField="";
-        	$scope.seller_options = [];
-        	$scope.type_options = ['FanZone', 'Regular'];
         	$scope.pozBio = [];
         	$scope.item = {"username": "",
-	        				"pass": "cinema123",
+	        				"pass": "default",
 	        				"tipAdmina": "Regular",
 	        				"pozBio": [],
 	        				"email": ""
-	        				};
-        	
+	        				};        	
         	
         	var regUser={};
         	regUser = $cookies.get('user');
@@ -31,18 +28,8 @@
                 method: 'GET',
                 url: 'http://localhost:8096/admin/'+regUser,
               }).then(function successCallback(response) {
-              		if(response.data.tip!="PRED")
-              			$location.path('/home');
-              });
-        	$scope.pb = [];
-        	$http({
-                method: 'GET',
-                url: 'http://localhost:8096/pb'
-              }).then(function successCallback(response) {
-              		var pozBio = response.data;
-              		for(var i=0; i<pozBio.length; i++){
-              			$scope.pb.push(pozBio[i]);
-              		}
+              	//	if(response.data.tip!="PRED")
+              		//	$location.path('/home');
               });
 
         };
@@ -68,9 +55,9 @@
         		return;
         	}
         	var data = {"username": $scope.item.username,
-        				"pass": "cinema123",
+        				"pass": "default",
         				"tipAdmina": "SYS",
-        				"pozBio": $scope.pozBio,
+        				"pozBio": [],
         				"email": $scope.item.email
         				};
         	$http({
@@ -81,13 +68,10 @@
             	  aac.showDone();
             	  $scope.item.username="";
             	  $scope.item.email="";
-            	  $scope.item.tipAdmina="Regular";
               });
         		
         }	 
         
-        
-		
 		 aac.showSthWentWrong = function() {
 		      $scope.showSthWentWrong = true;
 		      $timeout(function() {
