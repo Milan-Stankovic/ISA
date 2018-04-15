@@ -32,5 +32,9 @@ public class SalaController {
         sService.addSala(s);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/sala/edit/{id}")
+    public void addSala(@RequestBody SalaDTO s, @PathVariable Long id){ sService.editSala(s, id); }
+
+
 
 }

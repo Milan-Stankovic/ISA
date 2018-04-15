@@ -34,7 +34,7 @@ public class Konverter {
             Sediste temp = new Sediste();
             temp.setRed(sed.getId()/brojSedista);
             temp.setBroj(sed.getId()%brojSedista);
-            if(sed.isChecked())
+            if(sed.getType() !=null)
                 temp.setTipSedista(TipSedista.valueOf(sed.getType()));
             else
                 temp.setTipSedista(TipSedista.REGULAR);

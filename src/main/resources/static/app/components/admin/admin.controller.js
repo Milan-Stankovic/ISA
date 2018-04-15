@@ -18,11 +18,12 @@
         $scope.karte = false;
         $scope.edit = true;
         $scope.bpOne = false;
+        $scope.editOneSala = false;
         $scope.bp = [];
 
         //#$cookies.get("id");
 
-        $scope.pickSala = function () {
+        $scope.pickSala = function (edit) {
             $scope.sala = true;
             $scope.pozoriste = false;
             $scope.bioskop = false;
@@ -31,6 +32,23 @@
             $scope.projekcija = false;
             $scope.karte = false;
             $scope.bpOne = false;
+            $scope.editOneSala=true;
+            if(!edit){
+                $scope.editOneSala=false;
+                $scope.newSalaName = "";
+                $scope.newSalaBR = "";
+                $scope.newSalaBS = "";
+                $scope.items=[];
+                $scope.split_items=[];
+                $scope.duzina=[];
+                $scope.editOneSala = false;
+
+            }
+
+
+           // if(edit)
+
+
         }
 
 
@@ -51,6 +69,8 @@
         $scope.split_items=[];
         $scope.showGrid = false;
         $scope.duzina = [];
+
+
 
 
         $scope.drawGrid = function(newSalaBR, newSalaBS){
@@ -419,27 +439,144 @@
         $scope.addSala = function(id, name){
             $scope.bpName=name;
             $scope.bpId = id;
-            $scope.pickSala();
+            $scope.pickSala(false);
 
         }
 
         $scope.oneSala =[];
 
-        $scope.editSala = function(id){
+
+        var drawEditGrid= function(sedista, brRed, brSed){
+
+            var i = brRed;
+            var j = brSed;
+
+            $scope.items = [];
+            $scope.split_items = [];
+            $scope.duzina = [];
+            var trenutniRed = 0;
+
+            for(var z =0; z<sedista.length; z++){
+                trenutniRed=Math.floor(z/brSed);
+               var sediste =  sedista[z];
+               var id =brSed*trenutniRed+sediste.broj;
+               var type = sediste.tipSedista;
+
+                $scope.items.push({
+                    id: id,
+                    checked: true,
+                    type : type
+                });// mozda treba sort na kraju
+
+            }
+
+
+
+            function compare(a,b) {
+                if (a.id > b.id)
+                    return -1;
+                if (a.id < b.id)
+                    return 1;
+                return 0;
+            }
+
+            $scope.items.sort(compare);
+
+            var temp =[];
+            for (var k = 0; k < i; k++) {
+                for(var m=0; m<j; m++){
+                    temp.push($scope.items[k*j+m]);
+                }
+                $scope.split_items.push(temp);
+                temp=[];
+            }
+            $scope.showGrid = true;
+            for(var d=0; d<j; d++){
+                $scope.duzina.push(d);
+            }
+            $scope.duzina.push(j+1);
+
+
+
+            angular.element(function () {
+                for(var z =0; z<$scope.items.length; z++){
+                    var sediste =  $scope.items[z];
+                    if(sediste.type != "REGULAR")
+                        changeClass(sediste.id, sediste.type);
+                }
+            });
+
+
+
+        }
+
+        var changeClass = function(itemId,tip){
+
+            console.log("Upao u ovaj change class");
+            var id ="";
+            id+="#"+itemId;
+
+            switch(tip) {
+                case "REGULAR":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clear");
+                    break;
+                case "VIP":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clearBlue");
+                    console.log("Can je upao i u Vip, mozda da sacekam ? :D");
+                    break;
+
+                case "LOVEBOX":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clearRed");
+                    break;
+
+                case "BALCONY":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clearGreen");
+                    break;
+
+                case "TAKEN":
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clearWhite");
+                    break;
+                default:
+                    $(id).removeClass();
+                    angular.element(document.getElementById(itemId)).addClass("clear");
+            }
+        }
+
+
+        $scope.editSala = function(id, name, idBp){
             $http({
                 method: 'GET',
                 url: 'http://localhost:8096/sala/' +id,
             }).then(function successCallback(response) {
                 $scope.oneSala = response.data;
+                $scope.newSalaName = $scope.oneSala.ime;
+                $scope.newSalaBR = $scope.oneSala.brRed;
+                $scope.newSalaBS = $scope.oneSala.brSedista;
+                $scope.bpName = name;
+                $scope.bpId=idBp;
+
+                drawEditGrid($scope.oneSala.sedista,  $scope.newSalaBR,  $scope.newSalaBS);
+
+                $scope.pickSala(true);
+
+
+
+
 
             }, function errorCallback(response) {
                 alert("Greska kod dobijanja sale za edit")
 
             });
 
+
         }
 
-        $scope.saveSala = function(newSalaName, newSalaBR, newSalaBS ){
+        $scope.saveSala = function(newSalaName, newSalaBR, newSalaBS, edit ){
             var b = true;
             if($scope.bpName != "")
                 if($scope.bpId)
@@ -453,30 +590,60 @@
                                                 if($scope.items.length>0)
                                                     b=true;
             if(b) {
+                if(edit){
 
-                var newSalaDTO = {};
-                newSalaDTO = {
-                    "brRed" : newSalaBR,
-                    "brSedista" : newSalaBS,
-                    "ime" : newSalaName,
-                    "ustanova" : $scope.bpId,
-                    "sedista" : $scope.items
+                    var newSalaDTO = {};
+                    newSalaDTO = {
+                        "brRed": newSalaBR,
+                        "brSedista": newSalaBS,
+                        "ime": newSalaName,
+                        "ustanova": $scope.bpId,
+                        "sedista": $scope.items
+                    }
+
+
+                    // console.log(newSalaDTO);
+                    $http({
+                        method: 'PUT',
+                        url: 'http://localhost:8096/sala/edit/'+$scope.oneSala.id,
+                        data: newSalaDTO
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Auditorium edited sucessfully");
+
+
+                    }, function errorCallback(response) {
+                        alert("Error occured while editing auditorium");
+                    });
+
+
+                }else {
+
+                    var newSalaDTO = {};
+                    newSalaDTO = {
+                        "brRed": newSalaBR,
+                        "brSedista": newSalaBS,
+                        "ime": newSalaName,
+                        "ustanova": $scope.bpId,
+                        "sedista": $scope.items
+                    }
+
+
+                    // console.log(newSalaDTO);
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:8096/sala/add',
+                        data: newSalaDTO
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Auditorium added sucessfully");
+
+
+                    }, function errorCallback(response) {
+                        alert("Error occured while adding auditorium");
+                    });
+
                 }
-
-
-               // console.log(newSalaDTO);
-                $http({
-                    method:'POST',
-                    url: 'http://localhost:8096/sala/add',
-                    data: newSalaDTO
-                }).then(function successCallback(response){
-                    //  location.reload(); Moze ovako clear
-                    alert("Auditorium added sucessfully");
-
-
-                }, function errorCallback(response){
-                    alert("Error occured while adding auditorium");
-                } );
 
 
             }
