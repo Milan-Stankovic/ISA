@@ -20,13 +20,14 @@ h2,p ,a  {color: white;}
     <br>
     <p> Naziv: {{proj.dogadjaj.naziv  | uppercase }}</p>
     <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
-    <p>Price: {{proj.cena}},00</p>
+    <p>Price: {{proj.cena*(pozvanih.length+1)}},00 RSD</p>
+    <p>Discount: 0,00 RSD</p>
     <br>
     <button ng-click="openList()">Invite Friends</button>
     <br>
     <div style="overflow-y: scroll; height:150px; width:500px; background-color:gray" ng-show="clicked">
         <ol style="list-style-type: none; width:500px">
-            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button id="button{{friend.id}}" ng-click="inviteFriend(friend)">Invite</button></li>
+            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button id="button{{friend.id}}" ng-click="inviteFriends(friend)">Invite</button></li>
 
         </ol>
     </div>
@@ -43,13 +44,26 @@ h2,p ,a  {color: white;}
                         <img class="box {{s.id}}"   ng-switch-when="VIP" height="40px" width="40px" src='assets/images/vip.png' ng-click="dodajSediste(s.id)">
                         <img  class="box {{s.id}}"  ng-switch-when="BALCONY" height="40px" width="40px" src='assets/images/balkon.png' ng-click="dodajSediste(s.id)">
                     </span>
-
-
-
-                    <!--<img height="40px" width="40px" ng-src="{{s.tip != 'tipSedista' && 'assets/images/kliknuto.png' || 'assets/images/zauzeto.png'}}" alt="">--></a>
+                </a>
             </div>
+            <br>
         </div>
-        <button ng-click="finish()">Finish</button>
+        <div style="background:gray">
+            <br>
+            <p><img height="30px" width="30px" src='assets/images/kliknuto.png'> Chosen Seat</p>
+            <p><img height="30px" width="30px" src='assets/images/zauzeto.png'> Unavailable Seat</p>
+            <p><img height="30px" width="30px" src='assets/images/slobodno.png'> Regular Seat (+0.00 RSD)</p>
+            <p><img height="30px" width="30px" src='assets/images/lovebox.png'> LoveBox Seat (+{{loveboxDodatno}},00 RSD)</p>
+            <p><img height="30px" width="30px" src='assets/images/vip.png'> VIP Seat (+{{vipDodatno}},00 RSD)</p>
+            <p><img height="30px" width="30px" src='assets/images/balkon.png'> Balcony Seat (+{{balkonDodatno}},00 RSD)</p>
+            <br>
+
+        </div>
+       <div>
+           <br>
+           <br>
+       </div>
+        <button ng-click="finish()">Finish Reservation</button>
     </div>
     <br>
 

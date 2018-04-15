@@ -42,6 +42,31 @@
              $scope.kolona = $scope.sala.brSedista;
              document.getElementById("columns").style.columns = $scope.kolona;
              console.log("OPA redova: " + $scope.redova + "kolona: " + $scope.kolona)
+              console.log("sala: " + $scope.sala.id)
+
+              $http({
+                        method: 'POST',
+                        url: 'http://localhost:8096/api/cenovnikSedista',
+                        data: $scope.sala.id
+                      }).then(function successCallback(response) {
+                          $scope.cenovnik = response.data;
+                          console.log("cenovnik: " + $scope.cenovnik.length);
+                          if($scope.cenovnik!=undefined){
+                              for(var i = 0; i < $scope.cenovnik.length; i++){
+                                  if($scope.cenovnik[i].tip=="VIP")
+                                      $scope.vipDodatno = $scope.cenovnik[i].doplata;
+                                    if($scope.cenovnik[i].tip=="BALCONY")
+                                      $scope.balkonDodatno = $scope.cenovnik[i].doplata;
+                                    if($scope.cenovnik[i].tip=="LOVEBOX")
+                                      $scope.loveboxDodatno = $scope.cenovnik[i].doplata;
+                              }
+                          }
+                          //alert(user.userName)
+                        }, function errorCallback(response) {
+                            console.log("Greska kod cenovnika");
+                      });
+
+
         }, function errorCallback(response) {
             alert("Greska kod get projekcije")
 
@@ -71,6 +96,14 @@
               console.log("Greska kod GET user frineds");
         });
 
+        $scope.cenovnik = [];
+        $scope.loveboxDodatno = 0;
+        $scope.vipDodatno = 0;
+        $scope.balkonDodatno = 0;
+
+
+
+
         $scope.getSediste = function(sID){
             return $scope.sedista.filter(function(item){
               return (item.id === sID);
@@ -95,7 +128,7 @@
             var sediste;
             var x = document.getElementsByClassName(sID)[0].getAttribute("src");
             console.log(x)
-            if(x==='assets/images/zauzeto.png'){
+            if(x==='assets/images/kliknuto.png'){
                 document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/slobodno.png');
                 sediste = $scope.getSediste(sID)
                 console.log("oslobodjeno: " + sediste.id)
@@ -105,7 +138,7 @@
             }
 
             else{
-                document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/zauzeto.png');
+                document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/kliknuto.png');
                 sediste = $scope.getSediste(sID)
                 console.log("dodato: " + sediste.id)
                 $scope.rezervisano.push(sediste);
@@ -118,18 +151,27 @@
 
         $scope.inviteFriends = function(friend){
             $scope.pozvanih.push(friend);
-
+            console.log("button" + friend.id)
+            document.getElementById("button" + friend.id).innerHTML = "Sent";
+            document.getElementById("button" + friend.id).disabled=true;
+            console.log($scope.pozvanih.length)
+            //OVIMA TREBA POSLATI INVITE AKO REZERVACIJA PRODJE USPESNO
 
         }
 
         $scope.finish = function(){
             if($scope.pozvanih.length+1>$scope.rezervisano.length){
                 if($scope.pozvanih.length>0)
-                    alert("Error. More invited friends than reserved seats. Don't leave your friends standing!")
+                    alert("You didn't reserve enough seats for all invited friends. Reserve at least " + ($scope.pozvanih.length+1-$scope.rezervisano.length) + " more.")
                 else
                     alert("You have to reserve at least one seat.")
                 return;
             }
+            //kreira pozive za svakog od prijatelja ili praznu listu stavim u rezervaciju
+            //dodam cookie usera kao rzervisao
+            //ddam i projekciju
+            //a popust u kontroleru vidim za taj bioskop ili pozorite koliki je pa setujem
+            //posalje rezervaciju da napravi
 
         }
 

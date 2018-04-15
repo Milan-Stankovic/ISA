@@ -18,7 +18,7 @@
             <span ng-repeat="proj in projekcije track by $index">
                <p style="color:white">Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
                 <p style="color:white">Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
-                <p style="color:white">Price: {{proj.cena}},00</p>
+                <p style="color:white">Price: {{proj.cena}},00 RSD</p>
                 <button ng-click="otvoriProj(proj.id)">Details</button><span>    </span><button ng-click="rezervisi(proj.id)">Reservation</button>
                 <br>
             </span>

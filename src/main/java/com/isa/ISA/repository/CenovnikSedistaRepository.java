@@ -13,6 +13,7 @@ public interface CenovnikSedistaRepository extends CrudRepository<CenovnikSedist
     List<CenovnikSedista> findByTip(TipSedista tip);
     List<CenovnikSedista> findByUstanova(PozoristeBioskop id); // Ne znam da li mu je ovako ok ili ce traziti ceo objekat
     List<CenovnikSedista> findBySala(Sala id);
+    List<CenovnikSedista> findBySalaId(Long id);
     List<CenovnikSedista> findByUstanovaAndSala(PozoristeBioskop id, Sala s);
     List<CenovnikSedista> findByUstanovaAndTip(PozoristeBioskop id, TipSedista tip);
     List<CenovnikSedista> findBySalaAndTip(Sala id, TipSedista tip);
