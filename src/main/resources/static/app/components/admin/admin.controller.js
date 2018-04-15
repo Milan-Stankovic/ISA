@@ -280,6 +280,7 @@
 
 
         }
+        $scope.bpSale = {};
 
         $scope.pickKarta = function () {
 
@@ -302,6 +303,18 @@
                 url: 'http://localhost:8096/pb/'+id,
             }).then(function successCallback(response) {
                 $scope.bp = response.data;
+
+            }, function errorCallback(response) {
+                alert("Greska kod admin get one BP")
+
+            });
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096//pb/sale/'+id,
+            }).then(function successCallback(response) {
+                $scope.bpSale = response.data;
+
 
             }, function errorCallback(response) {
                 alert("Greska kod admin get one BP")
@@ -410,6 +423,22 @@
 
         }
 
+        $scope.oneSala =[];
+
+        $scope.editSala = function(id){
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/sala/' +id,
+            }).then(function successCallback(response) {
+                $scope.oneSala = response.data;
+
+            }, function errorCallback(response) {
+                alert("Greska kod dobijanja sale za edit")
+
+            });
+
+        }
+
         $scope.saveSala = function(newSalaName, newSalaBR, newSalaBS ){
             var b = true;
             if($scope.bpName != "")
@@ -435,6 +464,7 @@
                 }
 
 
+               // console.log(newSalaDTO);
                 $http({
                     method:'POST',
                     url: 'http://localhost:8096/sala/add',

@@ -178,6 +178,10 @@
                         <a>  Google maps url : </a>
                     </li>
 
+                    <li class="desno">
+                        <a>  Sale : </a>
+                    </li>
+
 
                     <li class="last">
                         <button  class="button" type="submit" ng-click="editChange()"> Toggle edit </button>
@@ -209,6 +213,12 @@
                      <li class="unosDebeli">
                          <textarea class="inputDebeli"  ng-model="bp.urlMape" rows="3" cols="20" ng-readonly="edit"> </textarea>
                     </li>
+
+
+                    <li class="unos" ng-repeat="sala in bpSale">
+                         <a class="pointer" ng-click="editSala(sala.id)">{{sala.ime}} </a>
+                    </li>
+
 
                     <li class="last">
                         <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>

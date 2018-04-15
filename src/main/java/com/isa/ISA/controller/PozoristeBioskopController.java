@@ -2,6 +2,8 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
+import com.isa.ISA.dbModel.Projekcija;
+import com.isa.ISA.dbModel.Sala;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.ISA.DTO.PozoristeBioskopDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.service.PozoristeBioskopService;
 
 @RestController
@@ -38,6 +39,11 @@ public class PozoristeBioskopController {
     @RequestMapping("/pb/{id}")
     public PozoristeBioskop getPozoristeBioskop(@PathVariable Long id){ // nisam siguran da li je ovo ok ili mora string pa string u long
         return pbService.getPozoristeBioskop(id);
+    }
+
+    @RequestMapping("/pb/sale/{id}")
+    public List<Sala> getPozoristeBioskopSale(@PathVariable Long id){
+        return pbService.getPozoristeBioskop(id).getSale();
     }
 
 

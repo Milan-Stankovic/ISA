@@ -51,9 +51,6 @@ public class StartData {
     @Autowired
     private PrijateljService prijateljService;
 
-    
-    @Autowired
-    private SedisteRepository sedisteRepository; // mrzi me da pravim servis sada
 
     @Autowired
     private SalaRepository salaRepository; //dito
