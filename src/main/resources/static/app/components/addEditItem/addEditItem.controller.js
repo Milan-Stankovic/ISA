@@ -32,9 +32,9 @@
               			$location.path('/home');
               			return;
               		}else{
-              			if(response.data.tip!="FAN"){
+              		/*	if(response.data.tip!="FAN"){
                   			$location.path('/home');              				
-              			}
+              			}*/
               				$scope.regUser=response.data;
               				$http({
               	                method: 'GET',
