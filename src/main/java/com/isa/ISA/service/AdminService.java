@@ -115,8 +115,10 @@ public class AdminService {
 		retVal.setTip(admin.getTipAdmina());
 		retVal.setPassword(admin.getPass());
 		ArrayList<PozoristeBioskop> pb = new ArrayList<PozoristeBioskop>(); 
-		for(int i=0; i<admin.getPozBio().length; i++){
-			pb.add(pbRepo.findOne(admin.getPozBio()[i]));
+		if(admin.getPozBio()!=null){
+			for(int i=0; i<admin.getPozBio().length; i++){
+				pb.add(pbRepo.findOne(admin.getPozBio()[i]));
+			}		
 		}
 		retVal.setMesta(pb);
 		retVal.setEmail(admin.getEmail());
@@ -140,6 +142,10 @@ public class AdminService {
 
 	public BodovnaSkala setBodSkala(BodovnaSkala bs) {
 		return bsRepo.save(bs);
+	}
+
+	public List<PozoristeBioskop> getFanPozBio(long id) {
+		return adminRepo.findOne(id).getMesta();
 	}
 
 

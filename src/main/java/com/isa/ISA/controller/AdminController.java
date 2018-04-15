@@ -60,7 +60,12 @@ public class AdminController {
     public void deleteAdmin(@RequestBody Admin a, @PathVariable Long id){
         adminService.deleteAdmin(a);
     }
-
+    
+    
+    @RequestMapping(method = RequestMethod.GET,value = "/fanAdmin/{id}/pb")
+    public List<PozoristeBioskop> getFanPozBio(@PathVariable Long id){
+        return adminService.getFanPozBio(id);
+    }
     
     
     @RequestMapping(method = RequestMethod.GET,value = "/bodSkala")

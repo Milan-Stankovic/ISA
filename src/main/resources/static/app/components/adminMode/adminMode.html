@@ -2,7 +2,7 @@
 <h3 class="headerrr">SYS ADMIN MODE</h3>
 <table width="100%">
 	<tr>
-		<td width="50%">
+		<td width="50%" rowspan='2'>
 			<div id="body" class="rentals" >
 				<h2>ADDING THEATRE/CINEMA</h2>
 				<table class="fanZona" width='100%'>
@@ -11,23 +11,27 @@
 					</tr>
 					<tr>
 						<th width='30%'>Name:</th>
-						<td width='70%'><input type='text' ng-model="tc.naziv"/></td>
+						<td width='70%'><input type='text' ng-model="tc.naziv" size="30"/></td>
 					</tr>
 					<tr>
 						<th>Description:</th>
-						<td><textarea ng-model="tc.opis" rows='5' columns='23'></textarea></td>
+						<td><textarea ng-model="tc.opis" rows='5' size='30'></textarea></td>
 					</tr>
 					<tr>
 						<th>Address:</th>
-						<td><input type='text' ng-model="tc.adresa"></textarea></td>
+						<td><input type='text' ng-model="tc.adresa" size="30"></textarea></td>
 					</tr>
 					<tr>
 						<th>Type:</th>
 						<td><select data-ng-options="t for t in type_options" data-ng-model="tc.tipUstanove"></select></td>
 					</tr>
 					<tr>
-						<th>On the Map:</th>
-						<td><my-maps id="map-canvas"></my-maps></td>
+						<th>URL to GoogleMap:</th>
+						<td><input type="url" ng-model="tc.mapa" size="40" ng-change="amc.addSufix()"></textarea></td>
+					</tr>
+					<tr>
+						<td colspan='2'> <iframe ng-src="{{trustSrc(tc.mapaDone)}}"
+                         width="420" height="150" frameborder="1" style="border:1" allowfullscreen></iframe></td>
 					</tr>
 					<tr height='10px'>
 						<th colspan='2'></th>
@@ -45,66 +49,10 @@
 				</table>
 			</div>
 		</td>
-		
-		<td width="50%">	
-			<div id="body" class="rentals">
-				<h2>EDITING THEATRE/CINEMA</h2>
-				<table class="fanZona" width='100%'>
-					<tr>
-						<th>Choose Theatre/Cinema:</th>
-						<td><select data-ng-options="p.naziv for p in pb" data-ng-model="tcToEdit" ng-click="amc.setTCToEdit()"></select></td>
-					</tr>
-					<tr>
-						<th width='20%'>Name:</th>
-						<td width='80%'><input type='text' ng-model="e.naziv"/></td>
-					</tr>
-					<tr>
-						<th>Description:</th>
-						<td><textarea ng-model="e.opis" rows='5' columns='23'></textarea></td>
-					</tr>
-					<tr>
-						<th>Address:</th>
-						<td><input type='text' ng-model="e.adresa" ></textarea></td>
-					</tr>
-					<tr>
-						<th>Type:</th>
-						<td><select data-ng-options="t for t in type_options" data-ng-model="e.tipUstanove"></select></td>
-					</tr>
-					<tr>
-						<th>On the Map:</th>
-						<td><my-maps id="map-canvas"></my-maps></td>
-					</tr>
-					<tr height='10px'>
-						<th colspan='2'></th>
-					</tr>
-					<tr>
-						<th></th>
-						<td><button ng-click="amc.editTC()">Save changes</button></td>
-					</tr>
-					<tr class="secretMessage">
-						<td></td>
-						<td ng-show="eshowDone">Changes saved succesfully</td>
-						<td ng-show="eshowSthWentWrong">Something went wrong! Change is not changed</td>
-						<td ng-show="eblankField">{{eemptyField}} is neccesery to be added!</td>
-					</tr>
-				</table>
-			</div>	
-		
-		</td>
-	</tr>
-	<tr>
 		<td width="50%">
 			<div id="body" class="rentals">
 				<h2>ADDING ADMIN</h2>
-				<table class="fanZona" width='100%'>					
-					<tr>
-						<th>Responsible for:</th>
-						<td>
-							<div ng-repeat="p in pb">
-								  <input type="radio" id='radio' value="p.id" ng-value="p.id" ng-model="adm.resp"/> {{p.naziv}} - {{p.adresa}}
-							</div>
-						</td>
-					</tr>
+				<table class="fanZona" width='100%'>		
 					<tr>
 						<th width='20%'>UserName:</th>
 						<td width='80%'><input type='text' ng-model="adm.username"/></td>
@@ -114,12 +62,16 @@
 						<td width='80%'><input type="email" ng-model="adm.email"/></td>
 					</tr>
 					<tr>
-						<th>Password:</th>
-						<td font-size='4'>theatre123</td>
-					</tr>
-					<tr>
 						<th>Type:</th>
 						<td><select data-ng-options="t for t in admType_options" data-ng-model="adm.tipAdmina"></select></td>
+					</tr>			
+					<tr>
+						<th>Responsible for:</th>
+						<td>
+							<div ng-repeat="p in pb">
+								  <input type="checkbox" id='checkbox' ng-click="amc.addToList(p.id)"/> {{p.naziv}} - {{p.adresa}}
+							</div>
+						</td>
 					</tr>
 					<tr height='10px'>
 						<th colspan='2'></th>
@@ -136,51 +88,10 @@
 					</tr>
 				</table>
 			</div>
-		</td>
-		
-		<td width="50%">		
-			<div id="body" class="rentals">
-				<h2>ADDING HALL</h2>
-				<table class="fanZona" width='100%'>
-					<tr height='20px'>
-						<th width='40%'>Where:</th>
-						<td width='60%'><select data-ng-options="p.naziv for p in pb" data-ng-model="pbHall"></select></td>
-					</tr>
-					<tr>
-						<th>Name:</th>
-						<td><input type='text' ng-model="hall.ime"/></td>
-					</tr>
-					<tr>
-						<th>Number of Rows:</th>
-						<td><input type='text' ng-model="hall.brRed" size="4" maxlength="4"/></td>
-					</tr>
-					<tr>
-						<th>Number of Seats in a Row:</th>
-						<td><input type='text' ng-model="hall.brSedista" size="4" maxlength="4"/></td>
-					</tr>
-					<tr>
-						<th>Default Seat Type:</th>
-						<td><select data-ng-options="t for t in seatType_options" data-ng-model="hall.tipSedista"></select></td>
-					</tr>
-					<tr height='10px'>
-						<th colspan='4'></th>
-					</tr>
-					<tr>
-						<th></th>
-						<td colspan='3'><button ng-click="amc.addHall()">Add Hall</button></td>
-					</tr>
-					<tr class="secretMessage">
-						<td></td>
-						<td ng-show="hshowDone" colspan='3'>Hall added succesfully</td>
-						<td ng-show="hshowSthWentWrong" colspan='3'>Something went wrong! Hall not added</td>
-						<td ng-show="hblankField" colspan='3'>{{hemptyField}} is neccesery to be added!</td>
-					</tr>
-				</table>
-			</div>			
-		</td> 
+		</td>		
 	</tr>
-	<tr>
-		<td width="100%" claspan='2'>		
+	<tr>		
+		<td width="50%" claspan='2'>		
 			<div id="body" class="rentals">
 				<h2>EDITING TRESHOLD SYSTEM</h2>
 				<table class="fanZona" width='100%'>

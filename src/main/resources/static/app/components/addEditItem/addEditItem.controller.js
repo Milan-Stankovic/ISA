@@ -32,11 +32,13 @@
               			$location.path('/home');
               			return;
               		}else{
-              		//	if(response.data.tip!="FAN")
+              			if(response.data.tip!="FAN"){
+                  			$location.path('/home');              				
+              			}
               				$scope.regUser=response.data;
               				$http({
               	                method: 'GET',
-              	                url: 'http://localhost:8096/pb'
+              	                url: 'http://localhost:8096/fanAdmin/'+$scope.regUser.id+'/pb'
               	              }).then(function successCallback(response) {
               	                   var items = response.data;
               	                   if (items!=null && items!=undefined){
