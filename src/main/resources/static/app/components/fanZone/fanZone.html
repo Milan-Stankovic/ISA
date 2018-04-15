@@ -2,36 +2,35 @@
 	<h2>ITEMS</h2>
 	<table class="fanZona">
 		<tr ng-repeat="item in items">
-			<td><a href="#"><img src={{item.slika}} alt=""></a></td>
-			<td>
+			<td width='30%'><img class ='itemImage' src={{item.slika}} alt=""></td>
+			<td width='70%'>
 				<div>
-					<table>
+					<table class='itemTable'>
 							<tr>
-								<td><h3>{{item.naziv}}</h3></td>
-								<td class="floatRight"><button ng-click="fzc.rezervisi(item.id)">book item</button></td>
+								<td colspan='2' class='itemTitle'>{{item.naziv}}</td>
 							</tr>
 							<tr>
-								<td colspan='2'><h3>{{item.opis}}</h3></td>
+								<td colspan='2'>{{item.opis}}</td>
 							</tr>
 							<tr>
-								<td><h4>Picking up at:</h4></td>
-								<td><span>{{item.preuzeti.naziv}}</br>{{item.preuzeti.adresa}}</span></td>
+								<td width='30%'><h4>Picking up at:</h4></td>
+								<td width='70%'>{{item.preuzeti.naziv}}</br>{{item.preuzeti.adresa}}</td>
 							</tr>
 							<tr>
 								<td><h4>Price:</h4></td>
-								<td>{{item.cena}}€</td>
+								<td>{{item.cena}} RSD</td>
 							</tr>
 							<tr>
-								<td><h4>Deadline:</h4></td>
-								<td>7 days</td>
+								<td></td>
+								<td><button ng-click="fzc.rezervisi(item.id)">book item</button></td>
 							</tr>		
-							<tr ng-show="{{item.showDone}}">
+							<tr ng-show="item.showDone" class='secretMessage'>
+								<td></td>
 								<td><h4>Booking done successfully!</h4></td>
-								<td></td>
 							</tr>			
-							<tr ng-show="{{item.showSthWentWrong}}">
-								<td><h4>Something went wrong</h4></td>
+							<tr ng-show="item.showSthWentWrong" class='secretMessage'>
 								<td></td>
+								<td><h4>Something went wrong</h4></td>
 							</tr>				
 					</table>
 				</div>

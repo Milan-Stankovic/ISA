@@ -5,45 +5,34 @@
 		.module('app')
 		.controller('fanZoneController', fanZoneController);
 
-    fanZoneController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window', '$http'];
-    function fanZoneController($location, $scope, $rootScope, $cookies, $window, $http) {
+    fanZoneController.$inject = ['$location', '$scope', '$rootScope', '$cookies', '$window', '$http', '$timeout'];
+    function fanZoneController($location, $scope, $rootScope, $cookies, $window, $http, $timeout) {
     	var fzc = this;
     	
         var init = function (){
-        	/*$scope.items = [
-        	  {"id" : 1,
-        	    "naziv" : "naziv",
-        	    "opis": "opis opis opis opis",
-        		"slika": "assets/images/cinema3.jpg",
-        		"preuzeti": {"naziv":"Naziv bioskopa", 
-        					 "adresa": "adresa bioskopa broj5"},
-        		"cena": 423.5},
-    		{"id" : 2,
-    	     "naziv" : "naziv2",
-    	     "opis": "opis opis opis opis",
-    		 "slika": "assets/images/conference2.jpg",
-    		 "preuzeti": {"naziv":"Naziv bioskopa2", 
-    					 "adresa": "adresa bioskopa broj5"},
-    		 "cena": 423.5},
-        	{"id" : 3,
-    	     "naziv" : "naziv3",
-    	     "opis": "opis opis opis opis",
-    	     "slika": "assets/images/conference2.jpg",
-    		 "preuzeti": {"naziv":"Naziv bioskopa3", 
-    					 "adresa": "adresa bioskopa broj5"},
-    		 "cena": 423.5}
-                		
-            ];*/
+
+        	$http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+$cookies.get('user'),
+              }).then(function successCallback(response) {
+            	  if(response.data!=""){
+            		  if(response.data.TipAdmina!=""){
+            			  $location.path('/home');
+            		  }
+            		  $scope.userID=response.data.id;
+            	  }
+            	  });
         	
         	$http({
                 method: 'GET',
                 url: 'http://localhost:8096/rekviziti/zvanicni'
               }).then(function successCallback(response) {
                    var items = response.data;
-                   if (items!=null && items!=undefined){
+                   if (items!=""){
                 	   $scope.items = items;
                 	   for(var i=0; i<$scope.items.length; i++){
-                		   $scope.items[i].push({"showDone": false, "showSthWentWrong": false});
+                		   $scope.items[i].showDone= false;
+                		   $scope.items[i].showSthWentWrong = false;
                 	   }
                    }else{
                 	   $scope.items = [];
@@ -55,48 +44,39 @@
         init();
        
         fzc.rezervisi = function(id){
-        	http({
-                method: 'GET',
-                url: 'http://localhost:8096/admin/'+regUser,
-              }).then(function successCallback(response) {
-            	  if(response.data!="")
-              		$scope.userID=response.data.id;
-            	  else{
-            		  fzc.showSthWentWrong(id);
-            		  return;
-            	  }
-              });
-        	$http({
+      		$http({
                 method: 'PUT',
-                url: 'http://localhost:8096/rekviziti/'+id+'/rezervisi/'+userID
+                url: 'http://localhost:8096/rekviziti/'+id+'/rezervisi/'+$scope.userID
               }).then(function successCallback(response) {
-	            	 result = response.data;
-	         		 if(result==""){
+	            	 var result = response.data;
+	         		 if(result!=""){
 	         			 fzc.showDone(id);
 	         		 }
 	         		 else
 	         			 fzc.showSthWentWrong(id);	         			 
-                }
-              );
-
+              });      	
         }
 
         fzc.showDone = function(id) {
+        	  var regI; 
         	  for(var i=0; i<$scope.items.length; i++){
         		  if($scope.items[i].id==id){
-        		      $scope.items[i].showDone = true;
+        			  regI = i;
+        		      $scope.items[regI].showDone = true;
         		      $timeout(function() {
-        		    	  $scope.items[i].showDone = false;
+        		    	  $scope.items[regI].showDone = false;
         		      }, 3000);        			  
         		  }
         	  }
 		 };
 		 fzc.showSthWentWrong = function(id) {
+       	  var regI; 
        	  for(var i=0; i<$scope.items.length; i++){
        		  if($scope.items[i].id==id){
-       		      $scope.items[i].showSthWentWrong = true;
+       			  regI = i;
+       		      $scope.items[regI].showSthWentWrong = true;
        		      $timeout(function() {
-       		    	  $scope.items[i].showSthWentWrong = false;
+       		    	  $scope.items[regI].showSthWentWrong = false;
        		      }, 3000);        			  
        		  }
        	  }

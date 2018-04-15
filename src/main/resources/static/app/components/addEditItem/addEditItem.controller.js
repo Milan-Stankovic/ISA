@@ -100,8 +100,8 @@
            			"opis": $scope.item.opis,
            			"cena": parseFloat($scope.item.cena),
            			"slika": "",
-           			"postavio":$cookies.get('user'),
-           			"preuzeti": $scope.item.preuzeti.id
+           			"admin":$cookies.get('user'),
+           			"pozBioID": $scope.item.preuzeti.id
         		};
             	$http({
                     method: 'POST',
@@ -110,7 +110,7 @@
                     data: postData                
                   }).then(function successCallback(response) {
                        var items = response.data;
-                       if (items==null || items==undefined){
+                       if (items==null || items==undefined || items==""){
                     	   aeic.showSthWentWrong();
                        }
                        else{
@@ -121,8 +121,8 @@
                        			"opis": "",
                        			"cena": 0,
                        			"slika": "",
-                       			"postavio": $cookies.get('user'),
-                       			"preuzeti": {}
+                       			"admin": $cookies.get('user'),
+                       			"pozBioID": {}
                     	   };
                        }
                     });
@@ -145,8 +145,8 @@
 	           			"opis": $scope.item.opis,
 	           			"cena": parseFloat($scope.item.cena),
 	           			"slika": "",
-	           			"postavio":$cookies.get('user'),
-	           			"preuzeti": $scope.item.preuzeti.id,
+	           			"admin":$cookies.get('user'),
+	           			"pozBioID": $scope.item.preuzeti.id,
 	        		};
 	        		postData.slika = response.data.slika;
 	            	$http({
@@ -156,7 +156,7 @@
 	                    data: postData
 	                  }).then(function successCallback(response) {
 	                       var items = response.data;
-	                       if (items==null || items==undefined){
+	                       if (items==null || items==undefined || items==""){
 	                    	   aeic.showSthWentWrong();
 	                       }
 	                       else{
@@ -167,8 +167,8 @@
 	                       			"opis": "",
 	                       			"cena": 0,
 	                       			"slika": "",
-	                       			"postavio": $cookies.get('user'),
-	                       			"preuzeti": {}
+	                       			"admin": $cookies.get('user'),
+	                       			"pozBioID": {}
 	                    	   };
 	                       }
 	                   });
@@ -200,8 +200,8 @@
            			"opis": $scope.eitem.opis,
            			"cena": parseFloat($scope.eitem.cena),
            			"slika": $scope.eitem.slika,
-           			"postavio":$cookies.get('user'),
-           			"preuzeti": $scope.eitem.preuzeti.id,
+           			"admin":$cookies.get('user'),
+           			"pozBioID": $scope.eitem.preuzeti.id,
         		};
             	$http({
                     method: 'PUT',
@@ -220,8 +220,8 @@
                        			"opis": "",
                        			"cena": 0,
                        			"slika": "",
-                       			"postavio": $cookies.get('user'),
-                       			"preuzeti": "",
+                       			"admin": $cookies.get('user'),
+                       			"pozBioID": "",
                     	   };
                        }
                     });
@@ -245,7 +245,7 @@
 	           			"cena": parseFloat($scope.eitem.cena),
 	           			"slika": "",
 	           			"admin":$cookies.get('user'),
-	           			"preuzeti": $scope.eitem.preuzeti.id
+	           			"pozBioID": $scope.eitem.preuzeti.id
 	        		};
 	            	data.slika = response.data.slika;
 	            	$http({

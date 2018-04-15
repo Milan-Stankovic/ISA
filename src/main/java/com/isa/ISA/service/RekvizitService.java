@@ -78,7 +78,7 @@ public class RekvizitService {
         } catch (Exception e) {
         	throw new RuntimeException();
         }
-		return fileName;
+		return "assets/images/"+fileName;
 	}
 
 	public ZvanicanRekvizit editTematske(RekvizitDTO zr, long id) {

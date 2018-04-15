@@ -1736,6 +1736,19 @@ p a:hover {
     all: unset !important;
     background-color:transparent !important;
 }
-
-
+.itemTitle{
+	color: red;
+	font-size: 16px;
+}
+.itemTable{
+	width:100%;
+	width:200px;
+	color: white !important;
+	font-size: 12px !important;
+	
+}
+.itemImage{
+	width:250px;
+	height:200px;
+}
 
