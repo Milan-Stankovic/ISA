@@ -13,10 +13,10 @@
 
         	$http({
                 method: 'GET',
-                url: 'http://localhost:8096/admin/'+$cookies.get('user'),
+                url: 'http://localhost:8096/api/user/'+$cookies.get('user'),
               }).then(function successCallback(response) {
             	  if(response.data!=""){
-            		  if(response.data.TipAdmina!=""){
+            		  if(response.data==""){
             			  $location.path('/home');
             		  }
             		  $scope.userID=response.data.id;

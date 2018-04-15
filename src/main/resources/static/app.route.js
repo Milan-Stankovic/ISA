@@ -97,6 +97,12 @@
 			templateUrl: 'app/components/addAdmins/addAdmins.html',
 			controller: 'addAdminsController',
 			controllerAs: 'aac'
+		})
+		.state('core.oglasi', {
+			url: 'oglasi',
+			templateUrl: 'app/components/oglasi/oglasi.html',
+			controller: 'oglasiController',
+			controllerAs: 'oc'
 		});
      /* $locationProvider.html5Mode({
     	  enabled: true,

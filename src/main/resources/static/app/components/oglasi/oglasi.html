@@ -1,0 +1,65 @@
+<h3 class="headerrr">ITEMS FOR SALE</h3>
+<table width='100%'>
+	<tr >
+		<td width='100%'>
+			<div id="body" class="rentals">
+				<h2>ADD ITEM FOR SALE</h2>
+				<table class="fanZona" width='100%'>
+					<tr height='20px'>
+						<th width='40%'>Title:       <input type='text' ng-model="it.naziv" size='24'/><br/><br/>
+										Description: <textarea ng-model="it.opis" rows='5' columns='20'></textarea>
+						</th>
+						<th width='60%'>Sale finishes on: <input type="date" ng-model="it.datum" ng-min="today"/><br/><br/>
+							Photo:            <input type="file" demo-file-model="it.slika" accept=".jpg, .png"/><br/><br/>
+							<span/><br/>
+							<button ng-click="oc.add()">   Sell it   </button><br/><br/>
+							<div lass="secretMessage"  ng-show="ashowDone">Item added succesfully</div>
+							<div lass="secretMessage" ng-show="ashowSthWentWrong">Something went wrong! Item is not added</div>
+							<div lass="secretMessage" ng-show="ablankField">{{aemptyField}} is neccesery to be added!</div>
+						</th>
+					</tr>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<div id="body" class="rentals">
+	<h2>ITEMS FOR SALE</h2>
+	<table class="fanZona">
+		<tr ng-repeat="item in items">
+			<td width='30%'><img class ='itemImage' src={{item.slika}} alt=""></td>
+			<td width='70%'>
+				<div>
+					<table class='itemTable'>
+							<tr>
+								<td colspan='2' class='itemTitle'>{{item.naziv}}</td>
+							</tr>
+							<tr>
+								<td colspan='2'>{{item.opis}}</td>
+							</tr>
+							<tr>
+								<td><h4>Price:</h4></td>
+								<td>{{item.cena}} RSD</td>
+							</tr>
+							<tr>
+								<td><h4>Active untill:</h4></td>
+								<td>{{item.datum}}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><button ng-click="oc.makeOffer(item.id)">make an offer</button></td>
+							</tr>		
+							<tr ng-show="item.showDone" class='secretMessage'>
+								<td></td>
+								<td><h4>Your offer is accepted!</h4></td>
+							</tr>			
+							<tr ng-show="item.showSthWentWrong" class='secretMessage'>
+								<td></td>
+								<td><h4>Something went wrong</h4></td>
+							</tr>				
+					</table>
+				</div>
+			</td>
+		</tr>		
+	</table>
+</div>
