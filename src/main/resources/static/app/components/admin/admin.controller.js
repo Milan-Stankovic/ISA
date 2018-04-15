@@ -171,35 +171,35 @@
                 case "REGULAR":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clear");
-                    ii.type="REGULAR";
+                    item.type="REGULAR";
                     break;
                 case "VIP":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearBlue");
-                    ii.type="VIP";
+                    item.type="VIP";
                     break;
 
                 case "LOVEBOX":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearRed");
-                    ii.type="LOVEBOX";
+                    item.type="LOVEBOX";
                     break;
 
                 case "BALCONY":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearGreen");
-                    ii.type="BALCONY";
+                    item.type="BALCONY";
                     break;
 
                 case "TAKEN":
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clearWhite");
-                    ii.type="TAKEN";
+                    item.type="TAKEN";
                     break;
                 default:
                     $(id).removeClass();
                     angular.element(document.getElementById(item.id)).addClass("clear");
-                    ii.type="REGULAR";
+                    item.type="REGULAR";
             }
             $scope.lastChecked = item;
         };
@@ -437,15 +437,15 @@
 
                 $http({
                     method:'POST',
-                    url: 'http://localhost:8096/d',
+                    url: 'http://localhost:8096/sala/add',
                     data: newSalaDTO
                 }).then(function successCallback(response){
                     //  location.reload(); Moze ovako clear
-                    alert("Event added sucessfully");
+                    alert("Auditorium added sucessfully");
 
 
                 }, function errorCallback(response){
-                    alert("Error occured while adding event");
+                    alert("Error occured while adding auditorium");
                 } );
 
 

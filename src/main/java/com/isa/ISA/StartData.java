@@ -193,7 +193,6 @@ public class StartData {
             sediste.setBroj(i%10);
             sediste.setRed( Math.floorDiv(i, 10));
             sediste.setTipSedista(TipSedista.REGULAR);
-            sedisteRepository.save(sediste);
             sedista.add(sediste);
         }
 
@@ -296,7 +295,6 @@ public class StartData {
             sediste.setBroj(i%10);
             sediste.setRed( Math.floorDiv(i, 10));
             sediste.setTipSedista(TipSedista.REGULAR);
-            sedisteRepository.save(sediste);
             sedista.add(sediste);
         }
 

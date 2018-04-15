@@ -1,7 +1,11 @@
 package com.isa.ISA.service;
 
 import com.isa.ISA.DTO.SalaDTO;
+import com.isa.ISA.DTO.SedisteDTO;
+import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Sala;
+import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,9 @@ public class SalaService  {
     @Autowired
     private SalaRepository sRepo;
 
+    @Autowired
+    private PozoristeBioskopRepository pbRepo;
+
     public List<Sala> getAll(){
         List<Sala> allDog = new ArrayList<>();
         sRepo.findAll().forEach(allDog::add);
@@ -25,8 +32,10 @@ public class SalaService  {
         return sRepo.findOne(id);
     }
 
-    public void addSala(SalaDTO sd){
 
+    public void addSala(SalaDTO sd){
+        if(provera(sd))
+            sRepo.save(converter(sd));
     }
 
     private Sala converter(SalaDTO s){
@@ -34,7 +43,23 @@ public class SalaService  {
         sal.setIme(s.getIme());
         sal.setBrSedista(s.getBrSedista());
         sal.setBrRed(s.getBrRed());
+        PozoristeBioskop pb = new PozoristeBioskop();
+        pb.setId(s.getUstanova());
+        sal.setUstanova(pb);
+        int brojRedova = s.getBrRed();
+        int brojSedista = s.getBrSedista();
 
+        ArrayList<Sediste> sedista = new ArrayList<>();
+
+        for (SedisteDTO sed:s.getSedista()) {
+
+            Sediste temp = new Sediste();
+            temp.setRed(sed.getId()/brojSedista);
+            temp.setBroj(sed.getId()%brojSedista);
+            temp.setTipSedista(sed.getTipSedista());
+            sedista.add(temp);
+        }
+        sal.setSedista(sedista);
 
         return sal;
 
@@ -51,7 +76,8 @@ public class SalaService  {
                                 if(s.getUstanova() >0)
                                     if(s.getSedista() != null)
                                         if(s.getSedista().size() >0)
-                                            b=true;
+                                            if(pbRepo.findOne(s.getUstanova()) != null)
+                                                b=true;
         return b;
 
 

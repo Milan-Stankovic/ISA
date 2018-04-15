@@ -1,9 +1,9 @@
 package com.isa.ISA.controller;
 
+import com.isa.ISA.DTO.SalaDTO;
 import com.isa.ISA.service.SalaService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Sala;
@@ -23,12 +23,13 @@ public class SalaController {
         return sService.getAll();
     }
 
-    @RequestMapping("/sala")
-    public Sala getSala(Long id){
+    @RequestMapping("/sala/{id}")
+    public Sala getSala(@PathVariable Long id){
         return sService.getOne(id);
     }
 
-    @RequestMapping("/s")
-    public void addSala(){
+    @RequestMapping(method = RequestMethod.POST, value = "/sala/add")
+    public void addSala(@RequestBody SalaDTO sd){
+        sService.addSala(sd);
     }
 }
