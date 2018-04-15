@@ -55,8 +55,19 @@
         init();
        
         fzc.rezervisi = function(id){
+        	http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+regUser,
+              }).then(function successCallback(response) {
+            	  if(response.data!="")
+              		$scope.userID=response.data.id;
+            	  else{
+            		  fzc.showSthWentWrong(id);
+            		  return;
+            	  }
+              });
         	$http({
-                method: 'POST',
+                method: 'PUT',
                 url: 'http://localhost:8096/rekviziti/'+id+'/rezervisi/'+userID
               }).then(function successCallback(response) {
 	            	 result = response.data;

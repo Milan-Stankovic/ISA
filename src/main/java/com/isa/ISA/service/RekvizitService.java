@@ -3,6 +3,7 @@ package com.isa.ISA.service;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,11 +14,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.isa.ISA.DTO.RekvizitDTO;
+import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.repository.AdminRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.RekvizitRepository;
+import com.isa.ISA.repository.UserRepository;
 
 @Service
 public class RekvizitService {
@@ -26,6 +29,9 @@ public class RekvizitService {
 
 	@Autowired
     private AdminRepository adminRepo;
+	
+	@Autowired
+    private UserRepository userRepo;
 	
 	@Autowired
     private PozoristeBioskopRepository pbRepo;
@@ -91,6 +97,17 @@ public class RekvizitService {
 		ZvanicanRekvizit zr = (ZvanicanRekvizit) rekvizitRepo.findOne(id);
 		zr.setAktivan(false);	
 		rekvizitRepo.save(zr);
+	}
+
+	public ZvanicanRekvizit rezervisiTematske(long id, long userID) {
+		ZvanicanRekvizit retVal = rekvizitRepo.findOne(id);
+		RezervacijaRekvizita rez = new RezervacijaRekvizita();
+		rez.setIzvrsio(userRepo.findOne(userID));
+		rez.setDatum(new Time(System.currentTimeMillis()));
+		rez.setReseno(false);
+		
+		retVal.getRezervacije().add(rez);
+		return rekvizitRepo.save(retVal);
 	}
 
 }

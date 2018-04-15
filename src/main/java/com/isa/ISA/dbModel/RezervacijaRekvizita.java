@@ -1,5 +1,6 @@
 package com.isa.ISA.dbModel;
 
+import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -18,7 +19,7 @@ public class RezervacijaRekvizita {
     @ManyToOne
     private Korisnik izvrsio;
 
-    private Date datum;
+    private Time datum;
     
     private boolean reseno;
 
@@ -33,7 +34,7 @@ public class RezervacijaRekvizita {
 		return izvrsio;
 	}
 
-	public Date getDatum() {
+	public Time getDatum() {
 		return datum;
 	}
 
@@ -49,7 +50,7 @@ public class RezervacijaRekvizita {
 		this.izvrsio = izvrsio;
 	}
 
-	public void setDatum(Date datum) {
+	public void setDatum(Time datum) {
 		this.datum = datum;
 	}
 

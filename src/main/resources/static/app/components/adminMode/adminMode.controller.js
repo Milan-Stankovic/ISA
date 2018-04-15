@@ -28,7 +28,9 @@
         	$scope.tc={"naziv":"",
         				"opis":"",
         				"adresa":"",
-        				"tipUstanove":"theatre"};
+        				"tipUstanove":"theatre",
+          				"mapaDone": "",
+          				"mapa": ""};
 //treshold
             $scope.tshowDone=false;
             $scope.tshowSthWentWrong=false;
@@ -59,7 +61,7 @@
             $scope.adm={"resp": [],
             			"username": "",
             			"email":"",
-            			"pass":"theatre123",
+            			"pass":"default",
             			"tipAdmina":"fanZone"};
             
             
@@ -127,7 +129,36 @@
         		amc.tcblankField("Type");
         		return;
         	}
-        	
+        	var data = {"id": 0,
+        				"naziv":$scope.tc.naziv,
+        				"opis":$scope.tc.opis,
+        				"adresa":$scope.tc.adresa,
+        				"urlMape":$scope.tc.mapa,
+        				"tip":"BIOSKOP",
+    				};
+        	if($scope.tc.tipUstanove=="theatre")
+        		data.tip="POZORISTE";
+        	$http({
+                method: 'POST',
+                url: 'http://localhost:8096/pbDTO',
+                data: data
+              }).then(function successCallback(response) {
+            	  if(response.data!=""){
+            		  amc.tcshowDone();
+                	  $scope.tc={"naziv":"",
+              				"opis":"",
+              				"adresa":"",
+              				"tipUstanove":"theatre",
+              				"mapaDone": "",
+              				"mapa": ""};
+                      $scope.tc.mapaDone="";
+                      $scope.pb.push(response.data);
+            	  }
+            	  else{
+            		amc.tcshowSthWentWrong();
+                  	
+            	  }
+              });
         }
         
         amc.addAdmin = function(){
