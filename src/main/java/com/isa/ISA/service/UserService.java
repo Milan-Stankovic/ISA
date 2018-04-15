@@ -28,6 +28,10 @@ public class UserService {
         return usersRepo.findByUserName(username);
     }
 
+    public RegistrovaniKorisnik getUserID(Long id){
+        return usersRepo.findById(id);
+    }
+
 
     public void addUser(RegistrovaniKorisnik k){
         usersRepo.save(k);

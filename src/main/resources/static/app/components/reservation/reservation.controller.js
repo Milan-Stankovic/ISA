@@ -203,7 +203,7 @@
         }
 
         $scope.inviteFriends = function(friend){
-            $scope.pozvanih.push(friend);
+            $scope.pozvanih.push(friend.id);
             console.log("button" + friend.id)
             document.getElementById("button" + friend.id).innerHTML = "Sent";
             document.getElementById("button" + friend.id).disabled=true;
@@ -220,6 +220,29 @@
                     alert("You have to reserve at least one seat.")
                 return;
             }
+            var sedistaID = [];
+            for(var k = 0; k < $scope.rezervisano.length; k++){
+                sedistaID.push($scope.rezervisano[k].id);
+            }
+
+            var rez = {
+                "sedista" : sedistaID,
+                "rezervisao" : $scope.user.id,
+                "pozvani" : $scope.pozvanih,
+                "projekcija" : $scope.proj,
+                "popust" : $scope.popust
+            }
+
+            $http({
+                method: 'POST',
+                url: 'http://localhost:8096/api/reserve',
+                data: rez
+                }).then(function successCallback(response) {
+                    alert("Uspesna rezervacija!")
+                  //alert(user.userName)
+                }, function errorCallback(response) {
+                    console.log("Greska kod rezervacije");
+                });
             //kreira pozive za svakog od prijatelja ili praznu listu stavim u rezervaciju
             //dodam cookie usera kao rzervisao
             //ddam i projekciju
