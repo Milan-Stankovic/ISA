@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.isa.ISA.DTO.PozoristeBioskopDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.service.PozoristeBioskopService;
 
@@ -50,7 +51,10 @@ public class PozoristeBioskopController {
     public void addPozoristeBioskop(@RequestBody PozoristeBioskop pb){
         pbService.addPozoristeBioskop(pb);
     }
-
+    @RequestMapping(method = RequestMethod.POST, value = "/pbDTO")
+    public PozoristeBioskop addPozoristeBioskopDTO(@RequestBody PozoristeBioskopDTO pb){
+        return pbService.addPozoristeBioskopDTO(pb);
+    }
     @RequestMapping(method = RequestMethod.PUT, value = "/pb/{id}")
     public void updatePozoristeBioskop(@RequestBody PozoristeBioskop pb, @PathVariable Long id){ // Nisam siguran ni sta ce mi id ali lepse izgleda url
         pbService.updatePozoristeBioskop(pb);

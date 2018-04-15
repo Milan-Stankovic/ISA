@@ -49,4 +49,9 @@ public class RekvizitiController {
     public void deactivateTematske(@PathVariable long id){
 		rekvizit.deactivateTematske(id);
     }
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/rezervisi/{userID}")
+    public ZvanicanRekvizit rezervisiTematske(@PathVariable long id, @PathVariable long userID){
+		return rekvizit.rezervisiTematske(id, userID);
+    }
 }

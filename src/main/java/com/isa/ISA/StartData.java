@@ -7,16 +7,20 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 
 import com.isa.ISA.repository.RezervacijaRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.isa.ISA.DTO.RekvizitDTO;
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.Glumac;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
 import com.isa.ISA.dbModel.enums.TipAdmina;
@@ -33,6 +37,7 @@ import com.isa.ISA.service.DogadjajService;
 import com.isa.ISA.service.PozoristeBioskopService;
 import com.isa.ISA.service.PrijateljService;
 import com.isa.ISA.service.ProjekcijaService;
+import com.isa.ISA.service.RekvizitService;
 import com.isa.ISA.service.UserService;
 
 @Component
@@ -64,6 +69,8 @@ public class StartData {
 
     @Autowired
     private PozoristeBioskopService pozoristeBioskopService;
+   
+
 
     @PostConstruct
     public void initIt(){
@@ -155,6 +162,7 @@ public class StartData {
         a2.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + a2.getUserName());
         adminService.addAdmin(a2);
+        
 
         PozoristeBioskop p1 = new PozoristeBioskop();
         p1.setBrojOcena(0);
@@ -174,6 +182,7 @@ public class StartData {
        // s1.setUstanova(p1);
         List<Sala> sale = new ArrayList<>();
 
+   
 
         List<Sediste> sedista = new ArrayList<>();
         for(int i =0; i<=99; i++){
@@ -240,7 +249,17 @@ public class StartData {
         rk3.getRezervacije().add(r);
         userService.addUser(rk3);
 
-
+        Admin a3 = new Admin();
+        a3.setUserName("fanadmin");
+        a3.setPassword("fanadmin");
+        a3.setTip(TipAdmina.FAN);
+        a3.setEmail("adm@fan.com");
+        a3.setStatus(StatusNaloga.AKTIVAN);
+        ArrayList<PozoristeBioskop> pppppp = new ArrayList<PozoristeBioskop>();
+        pppppp.add(p1);
+        a3.setMesta(pppppp);
+     //   System.out.println("Kreiran korisnik: " + a3.getUserName());
+        adminService.addAdmin(a3);
 
     }
 
@@ -318,7 +337,7 @@ public class StartData {
         s1.setUstanova(pb2);
         salaRepository.save(s1);
 
-
+ 
     }
 
 }

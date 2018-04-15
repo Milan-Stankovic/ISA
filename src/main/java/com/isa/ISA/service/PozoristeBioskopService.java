@@ -13,8 +13,12 @@ import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.isa.ISA.DTO.PozoristeBioskopDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Projekcija;
+import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.enums.TipUstanove;
+import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 
 @Service
@@ -29,9 +33,22 @@ public class PozoristeBioskopService {
       //  System.out.println(allPB.size());
         return allPB;
     }
-
     public void addPozoristeBioskop(PozoristeBioskop pb){
-        pbRepository.save(pb);
+    	pbRepository.save(pb);
+    }
+    public PozoristeBioskop addPozoristeBioskopDTO(PozoristeBioskopDTO pb){
+    	PozoristeBioskop retVal = new PozoristeBioskop();
+    	retVal.setAdresa(pb.getAdresa());
+    	retVal.setAdmini(new ArrayList<Admin>());
+    	retVal.setBrojOcena(0);
+    	retVal.setNaziv(pb.getNaziv());
+    	retVal.setOpis(pb.getOpis());
+    	retVal.setProjekcije(new ArrayList<Projekcija>());
+    	retVal.setProsecnaOcena(0);
+    	retVal.setSale(new ArrayList<Sala>());
+    	retVal.setTip(pb.getTip());
+    	retVal.setUrlMape(pb.getUrlMape());
+        return pbRepository.save(retVal);
     }
 
     public PozoristeBioskop getPozoristeBioskop(Long l){

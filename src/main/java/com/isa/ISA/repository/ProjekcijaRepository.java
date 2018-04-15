@@ -22,5 +22,6 @@ public interface ProjekcijaRepository extends CrudRepository<Projekcija, Long> {
     List<Projekcija> findByVremeBetween(Date pocetak, Date kraj);
     List<Projekcija> findByVremeAfter(Date kraj);
     List<Projekcija> findByVremeBefore(Date pocetak);
+    Projekcija getProjekcijaById(Long id);
 
 }

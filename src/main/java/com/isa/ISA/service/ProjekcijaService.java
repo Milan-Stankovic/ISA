@@ -28,6 +28,10 @@ public class ProjekcijaService {
         return pr.findOne(id);
     }
 
+    public Projekcija getProjekcijaID(Long id){
+        return pr.getProjekcijaById(id);
+    }
+
     public void deleteProjekcija(Long id){
         pr.delete(id);
     }
