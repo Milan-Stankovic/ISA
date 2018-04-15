@@ -18,7 +18,7 @@
                 </li>
                 <li class="goreDole">
 
-                    <a  ng-click="pickSala()">AUDITORIUM</a>
+                    <a  ng-click="pickSala(false)">AUDITORIUM</a>
 
                 </li>
                 <li class="goreDole">
@@ -216,7 +216,7 @@
 
 
                     <li class="unos" ng-repeat="sala in bpSale">
-                         <a class="pointer" ng-click="editSala(sala.id)">{{sala.ime}} </a>
+                         <a class="pointer" ng-click="editSala(sala.id, bp.naziv, bp.id)">{{sala.ime}} </a>
                     </li>
 
 
@@ -329,7 +329,7 @@
 
 
                 <li class="last">
-                     <button   class="button" type="submit"  ng-click="saveSala( newSalaName, newSalaBR, newSalaBS )"> Add </button>
+                     <button   class="button" type="submit"  ng-click="saveSala( newSalaName, newSalaBR, newSalaBS, editOneSala )"> Save </button>
                 </li>
                 <li class="unos">
                      <a class="hint">Use SHIFT click to select multiple seats at once</a>

@@ -43,5 +43,16 @@ public class SalaService  {
         }
     }
 
+    public void editSala(SalaDTO s, Long id){
+        if(Konverter.proveraSale(s)){
+            if(sRepo.findOne(id)!=null) {
+                System.out.println("Edituje salu");
+                Sala sala = Konverter.converterSale(s);
+                sala.setId(id);
+                sRepo.save(sala);
+            }
+        }
+    }
+
 
 }

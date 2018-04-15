@@ -22,7 +22,7 @@ public class Sala {
     /**
      * Lista svih sedisat u sali
      */
-    @OneToMany(cascade =CascadeType.PERSIST)
+    @OneToMany(cascade ={CascadeType.PERSIST,CascadeType.MERGE })
     private List<Sediste> sedista;
 
     private String ime;
