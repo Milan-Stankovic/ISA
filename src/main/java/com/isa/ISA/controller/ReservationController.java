@@ -13,10 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+@RestController
 public class ReservationController {
 
     @Autowired
@@ -32,7 +34,7 @@ public class ReservationController {
     public ReservationController(){}
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/reserve")
-    public void reserve(RezervacijaDTO r){
+    public void reserve(@RequestBody  RezervacijaDTO r){
         rezService.reserve(r);
     }
 }

@@ -228,8 +228,8 @@
             var rez = {
                 "sedista" : sedistaID,
                 "rezervisao" : $scope.user.id,
+                "projekcija" : $scope.proj.id,
                 "pozvani" : $scope.pozvanih,
-                "projekcija" : $scope.proj,
                 "popust" : $scope.popust
             }
 

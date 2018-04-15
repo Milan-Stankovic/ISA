@@ -6,6 +6,8 @@ import com.isa.ISA.dbModel.enums.Status;
 import com.isa.ISA.dbModel.enums.TipSedista;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
+import com.isa.ISA.repository.KartaRepository;
+import com.isa.ISA.repository.PozivRepository;
 import com.isa.ISA.repository.RezervacijaRepository;
 import com.isa.ISA.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +33,12 @@ public class ReservationService {
     @Autowired
     private ProjekcijaService projekcijaService;
 
+    @Autowired
+    private PozivRepository pozRepo;
+
+    @Autowired
+    private KartaRepository kartaRepo;
+
 
     public void addRez(Rezervacija r){
         rezRepo.save(r);
@@ -46,10 +54,14 @@ public class ReservationService {
 
         RegistrovaniKorisnik rezervisao = userService.getUserID(k.getRezervisao());
         ArrayList<RegistrovaniKorisnik> pozvani = new ArrayList<>();
-        for(Long kor : k.getPozvani()){
-            pozvani.add(userService.getUserID(kor));
+        if(k.getPozvani()!=null){
+            for(Long kor : k.getPozvani()){
+                pozvani.add(userService.getUserID(kor));
+            }
         }
-        Projekcija projekcija = projekcijaService.getProjekcija(k.getProjekcija());
+
+        System.out.println(k.getProjekcija());
+        Projekcija projekcija = projekcijaService.getProjekcijaID((long) k.getProjekcija());
         Sala sala = projekcija.getSala();
         //temp sediste u koje stavljam ova trenutno zauzeta da bih lakse isla redom i dodeljivala svima u rezervaciji
         ArrayList<Sediste> temp = new ArrayList<>();
@@ -85,8 +97,9 @@ public class ReservationService {
         ka.setPozoristeBioskop(sala.getUstanova());
         int ukupno = (int) ( ((pozvani.size()+1)*projekcija.getCena()) - (k.getPopust()/100*((pozvani.size()+1)*projekcija.getCena()) ) );
         ka.setPunaCena(ukupno);
-
+        kartaRepo.save(ka);
         poz.setKarta(ka);
+        pozRepo.save(poz);
         ArrayList<Poziv> pozivi = new ArrayList<>();
         pozivi.add(poz);
         for(RegistrovaniKorisnik reg : pozvani){
@@ -102,9 +115,10 @@ public class ReservationService {
             karta.setSediste(temp.get(brojac));
             brojac++;
             karta.setPunaCena(ukupno);
-
+            kartaRepo.save(karta);
             p.setKarta(karta);
             pozivi.add(p);
+            pozRepo.save(poz);
         }
         rez.setUrezervaciji(pozivi);
         rezRepo.save(rez);
