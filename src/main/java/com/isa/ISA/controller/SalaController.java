@@ -27,9 +27,10 @@ public class SalaController {
     public Sala getSala(@PathVariable Long id){
         return sService.getOne(id);
     }
-
     @RequestMapping(method = RequestMethod.POST, value = "/sala/add")
-    public void addSala(@RequestBody SalaDTO sd){
-        sService.addSala(sd);
+    public void addSala(@RequestBody SalaDTO s){
+        sService.addSala(s);
     }
+
+
 }

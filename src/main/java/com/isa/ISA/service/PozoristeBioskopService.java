@@ -3,6 +3,13 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.DTO.SalaDTO;
+import com.isa.ISA.DTO.SedisteDTO;
+import com.isa.ISA.dbModel.Sala;
+import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.dbModel.enums.TipSedista;
+import com.isa.ISA.dodatno.Konverter;
+import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +77,13 @@ public class PozoristeBioskopService {
         return foundPB;
 
     }
+
+
+
+
+
+
+
 
 
 }

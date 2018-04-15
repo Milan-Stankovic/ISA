@@ -1,14 +1,12 @@
 package com.isa.ISA.DTO;
 
-import com.isa.ISA.dbModel.enums.TipSedista;
-
 public class SedisteDTO {
 
     private int id;
 
     private boolean checked;
 
-    private TipSedista tipSedista;
+    private String type;
 
     public SedisteDTO(){
     }
@@ -29,11 +27,11 @@ public class SedisteDTO {
         this.checked = checked;
     }
 
-    public TipSedista getTipSedista() {
-        return tipSedista;
+    public String getType() {
+        return type;
     }
 
-    public void setTipSedista(TipSedista tipSedista) {
-        this.tipSedista = tipSedista;
+    public void setType(String type) {
+        this.type = type;
     }
 }
