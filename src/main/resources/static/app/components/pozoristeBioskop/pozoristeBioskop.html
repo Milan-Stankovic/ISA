@@ -1,24 +1,38 @@
+<style>
+    p, h2, span{
+        color:white;
+        }
+</style>
+
 <div>
     <div>
-        <h2 style="color:white"><a>{{pb.naziv}}</a></h2>
+        <h2><a>{{pb.naziv}}</a></h2>
 
-        <p style="color:white">Description: {{pb.opis}}</p>
+        <p>Description: {{pb.opis}}</p>
 
-        <p style="color:white">Rate: {{pb.prosecnaOcena}}</p>
+        <p>Rate: {{pb.prosecnaOcena}}</p>
 
-        <p style="color:white"> Address: {{pb.adresa}}</p>
+        <p> Address: {{pb.adresa}}</p>
 
         <iframe ng-src="{{trustSrc(pb.urlMape)}}"
                 width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
     </div>
     <br>
     <div>
-        <h2 style="color:white"><a>Program ({{projekcije.length}}):</a></h2>
+        <form>
+            <span>Choose Date:</span>
+            <input type="date" name="date" id="projDate" ng-model="date" min="currentDate">
+            <input type="submit" ng-click="odabranDatum()">
+        </form>
+    </div>
+
+    <div>
+        <h2><a>Program ({{filteredProj.length}}):</a></h2>
         <div style="overflow-y: scroll; height:200px;  background-color:gray">
-            <span ng-repeat="proj in projekcije track by $index">
-               <p style="color:white">Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
-                <p style="color:white">Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
-                <p style="color:white">Price: {{proj.cena}},00 RSD</p>
+            <span ng-repeat="proj in filteredProj track by $index">
+               <p>Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
+                <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
+                <p>Price: {{proj.cena}},00 RSD</p>
                 <button ng-click="otvoriProj(proj.id)">Details</button><span>    </span><button ng-click="rezervisi(proj.id)">Reservation</button>
                 <br>
             </span>

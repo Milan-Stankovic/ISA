@@ -337,6 +337,35 @@ public class StartData {
         s1.setUstanova(pb2);
         salaRepository.save(s1);
 
+
+        Projekcija pp = new Projekcija();
+        pp.setCena(300);
+        pp.setSala(s1);
+        pp.setVreme(new Date(System.currentTimeMillis()+24*60*60*1000));
+        pp.setZauzetaSedista(new ArrayList<Sediste>());
+        pp.setRezervacije(new ArrayList<Rezervacija>());
+        Dogadjaj dd = new Dogadjaj();
+        dd.setBrojOcena(0);
+        dd.setProsecnaOcena(0);
+        dd.setDonosiBodova(1);
+        dd.setNaziv("Web Film vol. 2");
+        dd.setOpis("Akcioni film iz ise 2: Minja's revenge!");
+        dd.setReziser("Minja");
+        dd.setZanr(Zanr.HOROR);
+        dd.setTrajanje(90);
+
+        dogadjajService.addDogadjaj2(dd);
+
+        pp.setDogadjaj(dd);
+        projekcijaService.addProjekcija(pp);
+
+        projekcije.add(pp);
+        p1.setProjekcije(projekcije);
+
+        pozoristeBioskopService.addPozoristeBioskop(p1);
+        dd.setMestoOdrzavanja(p1);
+        dogadjajService.updateDogadjaj(dd);
+
  
     }
 
