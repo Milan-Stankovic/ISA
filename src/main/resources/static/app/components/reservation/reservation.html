@@ -1,7 +1,7 @@
 <style>
 h2,p ,a  {color: white;}
 #columns {
-  columns: 3;
+  rows: 3;
 }
 .box
 	{
@@ -32,22 +32,40 @@ h2,p ,a  {color: white;}
         </ol>
     </div>
     <br>
-    <div>
+    <div style="width:800px; overflow-y: scroll; overflow-x: scroll; background:gray" >
         <p>Choose your Seat(s):</p>
-        <div id="columns" style="background:gray">
-            <div ng-repeat="s in sedista">
-                <a ng-click="addS(s.id)">
-                    <span ng-switch on="s.tipSedista">
-                       <img class="box {{s.id}}" ng-switch-when="REGULAR" height="40px" width="40px" src='assets/images/slobodno.png' ng-click="dodajSediste(s.id)">
+
+            <table style="background:gray">
+                <tr ng-repeat="group in groups">
+                    <td ng-repeat="s in group">
+                         <span ng-switch on="s.tipSedista">
+                        <img class="box {{s.id}}" ng-switch-when="REGULAR" height="40px" width="40px" src='assets/images/slobodno.png' ng-click="dodajSediste(s.id)">
                        <img class="box {{s.id}}" ng-switch-when="TAKEN" height="40px" width="40px" src='assets/images/zauzeto.png' ng-click="dodajSediste(s.id)">
                         <img class="box {{s.id}}"  ng-switch-when="LOVEBOX" height="40px" width="40px" src='assets/images/lovebox.png' ng-click="dodajSediste(s.id)">
                         <img class="box {{s.id}}"   ng-switch-when="VIP" height="40px" width="40px" src='assets/images/vip.png' ng-click="dodajSediste(s.id)">
                         <img  class="box {{s.id}}"  ng-switch-when="BALCONY" height="40px" width="40px" src='assets/images/balkon.png' ng-click="dodajSediste(s.id)">
                     </span>
-                </a>
-            </div>
+                    </td>
+
+                </tr>
+            </table>
+
+
+            <!--<div ng-repeat="group in groups">
+                    <div ng-repeat="s in group ">
+                        <span ng-switch on="s.tipSedista">
+                        <img class="box {{s.id}}" ng-switch-when="REGULAR" height="40px" width="40px" src='assets/images/slobodno.png' ng-click="dodajSediste(s.id)">
+                       <img class="box {{s.id}}" ng-switch-when="TAKEN" height="40px" width="40px" src='assets/images/zauzeto.png' ng-click="dodajSediste(s.id)">
+                        <img class="box {{s.id}}"  ng-switch-when="LOVEBOX" height="40px" width="40px" src='assets/images/lovebox.png' ng-click="dodajSediste(s.id)">
+                        <img class="box {{s.id}}"   ng-switch-when="VIP" height="40px" width="40px" src='assets/images/vip.png' ng-click="dodajSediste(s.id)">
+                        <img  class="box {{s.id}}"  ng-switch-when="BALCONY" height="40px" width="40px" src='assets/images/balkon.png' ng-click="dodajSediste(s.id)">
+                        <span> {{s.red}} {{s.broj}}</span>
+                    </span>
+
+                    </div>
+            </div>-->
             <br>
-        </div>
+
         <div style="background:gray">
             <br>
             <p><img height="30px" width="30px" src='assets/images/kliknuto.png'> Chosen Seat</p>
@@ -59,13 +77,10 @@ h2,p ,a  {color: white;}
             <br>
 
         </div>
-       <div>
-           <br>
-           <br>
-       </div>
-        <button ng-click="finish()">Finish Reservation</button>
     </div>
+
+       <div> <p></p><button ng-click="finish()">Finish Reservation</button></div>
+
     <br>
 
 
-</div>

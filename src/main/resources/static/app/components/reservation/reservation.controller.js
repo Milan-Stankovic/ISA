@@ -56,8 +56,16 @@
                  $scope.sedista = $scope.sala.sedista;
                  $scope.redova = $scope.sala.brRed;
                  $scope.kolona = $scope.sala.brSedista;
-                 document.getElementById("columns").style.columns = $scope.kolona;
+                 if($scope.sedista[0].red==$scope.redova-1)
+                    $scope.sedista.reverse();
+             /*    document.getElementById("columns").style.columns = $scope.kolona;*/
+                 /*document.getElementById("columns").style.rows = $scope.redova;*/
                  console.log("OPA redova: " + $scope.redova + "kolona: " + $scope.kolona)
+                 $scope.groups = $scope.sedista.map( function(e,i){
+                     return i%$scope.kolona===0 ? $scope.sedista.slice(i,i+$scope.kolona) : null;
+                 })
+                 .filter(function(e){ return e; });
+
                   console.log("sala: " + $scope.sala.id)
 
                   $http({
@@ -181,9 +189,20 @@
             var sediste;
             var x = document.getElementsByClassName(sID)[0].getAttribute("src");
             console.log(x)
+            if(x==='assets/images/zauzeto.png'){
+                return;
+            }
             if(x==='assets/images/kliknuto.png'){
-                document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/slobodno.png');
-                sediste = getSediste(sID)
+                sediste = getSediste(sID);
+                if(sediste.tipSedista=="REGULAR")
+                    document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/slobodno.png');
+                else if(sediste.tipSedista=="LOVEBOX")
+                    document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/lovebox.png');
+                else if(sediste.tipSedista=="BALCONY")
+                    document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/balkon.png');
+                else if(sediste.tipSedista=="VIP")
+                    document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/vip.png');
+                else alert("aaaaaaa")
                 console.log("oslobodjeno: " + sediste.id)
                 $scope.rezervisano.splice(getIndex(sID), 1);
                 console.log("rezervisanih sada ima: " + $scope.rezervisano.length)
