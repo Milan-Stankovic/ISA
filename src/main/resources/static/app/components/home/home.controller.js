@@ -9,13 +9,15 @@
     function homeController($location, $scope, $rootScope, $http, $cookies, $sce) {
         var hc = this;
         hc.home = "Home";
+        var user;
         var init = function (){
-        	//$location.path("/login");
-        	//zakomentarisano za sad, kad se odrade all cinemas i all theatres vracam
-        	//if($cookies.get('user'))
-        	    //$location.path("/regKorHome");
-        };
-        init();
+            $rootScope.showBioskopi=true;
+            $rootScope.showPozorista=true;
+
+            };
+            init();
+
+
 
         $scope.trustSrc = function(src) {
             return $sce.trustAsResourceUrl(src);
