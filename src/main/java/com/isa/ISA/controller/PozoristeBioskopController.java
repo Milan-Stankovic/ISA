@@ -46,7 +46,6 @@ public class PozoristeBioskopController {
         return pbService.getPozoristeBioskop(id).getSale();
     }
 
-
     @RequestMapping(method = RequestMethod.POST, value = "/pb")
     public void addPozoristeBioskop(@RequestBody PozoristeBioskop pb){
         pbService.addPozoristeBioskop(pb);

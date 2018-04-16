@@ -1,7 +1,9 @@
 package com.isa.ISA.dodatno;
 
+import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.DTO.SalaDTO;
 import com.isa.ISA.DTO.SedisteDTO;
+import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
@@ -60,6 +62,43 @@ public class Konverter {
                                                 b=true;
         return b;
 
+
+    }
+
+    public static Dogadjaj converterDogadjaja(DogadjajDTO d){
+        Dogadjaj dog = new Dogadjaj();
+        dog.setTrajanje(d.getTrajanje());
+        dog.setZanr(d.getZanr());
+        dog.setReziser(d.getReziser());
+        dog.setOpis(d.getOpis());
+        dog.setNaziv(d.getNaziv());
+        dog.setGlumciStr(d.getGlumciStr());
+        dog.setDonosiBodova(d.getDonsiBodova());
+        dog.setProsecnaOcena(5);
+        dog.setBrojOcena(1);
+        dog.setSlika(d.getSlika());
+        PozoristeBioskop pb = new PozoristeBioskop();
+        pb.setId(d.getPbId());
+        dog.setMestoOdrzavanja(pb);
+        return dog;
+
+    }
+    public static boolean proveraDogadjaja(DogadjajDTO d){
+
+        System.out.println("TU SAM KOD PROVERE");
+
+
+        if(d.getGlumciStr().length()>0)
+            if(d.getNaziv().length()>0)
+                if(d.getOpis().length()>0)
+                    if(d.getReziser().length()>0)
+                        if(d.getTrajanje()>0)
+                            if(d.getZanr() != null)
+                                if(d.getPbId() != null)
+                                    if(d.getSlika() !=null)
+                                        if(d.getSlika().length() >0)
+                                            return true;
+        return false;
 
     }
 }

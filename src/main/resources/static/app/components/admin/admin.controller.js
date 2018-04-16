@@ -26,7 +26,7 @@
     fileUpload.$inject = ['$parse'];
 
     function fileUpload($parse) {
-        console.log("Upao u upload");
+
         var directive = {
             restrict: 'A',
             link: function (scope, element, attrs) {
@@ -37,7 +37,6 @@
                     scope.$apply(function () {
 
                         scope.myFile = event.target.files[0];
-                        console.log(scope.myFile);
                         event.preventDefault();
                     });
                 });
@@ -66,6 +65,7 @@
         $scope.bpOne = false;
         $scope.editOneSala = false;
         $scope.bp = [];
+        $scope.allDogadjaji = false;
 
         //#$cookies.get("id");
 
@@ -79,6 +79,7 @@
             $scope.karte = false;
             $scope.bpOne = false;
             $scope.editOneSala=true;
+            $scope.allDogadjaji = false;
             if(!edit){
                 $scope.editOneSala=false;
                 $scope.newSalaName = "";
@@ -110,6 +111,7 @@
             $scope.projekcija = false;
             $scope.karte = false;
             $scope.bpOne = false;
+            $scope.allDogadjaji = false;
 
 
         }
@@ -182,6 +184,7 @@
         $scope.lastChecked = null;
         $scope.lastMouseChecked = null;
         $scope.futureCheckState = false;
+        $scope.bpDogadjaj=[];
 
         $scope.select = function(item, $event, tip) {
             if ($event.shiftKey && $scope.lastChecked) {
@@ -304,6 +307,7 @@
             $scope.projekcija = false;
             $scope.karte = false;
             $scope.bpOne = false;
+            $scope.allDogadjaji = false;
 
 
         }
@@ -318,13 +322,13 @@
             $scope.projekcija = false;
             $scope.karte = false;
             $scope.bpOne = false;
+            $scope.allDogadjaji = false;
 
 
         }
 
         $scope.pickDogadjaj = function (edit) {
 
-            if(!edit) {
                 $scope.sala = false;
                 $scope.pozoriste = false;
                 $scope.bioskop = false;
@@ -333,14 +337,23 @@
                 $scope.projekcija = false;
                 $scope.karte = false;
                 $scope.bpOne = false;
+                $scope.allDogadjaji = false;
+
+            if(!edit){
+                $scope.dogadjajEdit = false;
+                $scope.newDogadjaName="";
+                $scope.newDogadjajOpis="";
+                $scope.newDogadjajReziser="";
+                $scope.newDogadjajTrajanje="";
+                $scope.newDogadjajBodovi="";
+                $scope.newDogadjajGlumci="";
+                this.myFile=null;
             }
-
-
 
 
         }
 
-        $scope.pickProjekcija = function () {
+        $scope.pickProjekcija = function (edit) {
 
             $scope.sala = false;
             $scope.pozoriste = false;
@@ -350,6 +363,7 @@
             $scope.projekcija = true;
             $scope.karte = false;
             $scope.bpOne = false;
+            $scope.allDogadjaji = false;
 
 
         }
@@ -365,11 +379,14 @@
             $scope.projekcija = false;
             $scope.karte = true;
             $scope.bpOne = false;
+            $scope.allDogadjaji = false;
 
 
         }
 
         $scope.pickBpOne = function (id) {
+
+
 
             $http({
                 method: 'GET',
@@ -382,9 +399,11 @@
 
             });
 
+
+
             $http({
                 method: 'GET',
-                url: 'http://localhost:8096//pb/sale/'+id,
+                url: 'http://localhost:8096/pb/sale/'+id,
             }).then(function successCallback(response) {
                 $scope.bpSale = response.data;
 
@@ -394,6 +413,8 @@
 
             });
 
+
+
             $scope.sala = false;
             $scope.pozoriste = false;
             $scope.bioskop = false;
@@ -402,11 +423,78 @@
             $scope.projekcija = false;
             $scope.karte = false;
             $scope.bpOne = true;
+            $scope.allDogadjaji = false;
+
+
+        }
+
+        $scope.pickAllDogadjaji = function(id, naziv){
+
+            $scope.sala = false;
+            $scope.pozoriste = false;
+            $scope.bioskop = false;
+            $scope.sedista = false;
+            $scope.dogadjaj = false;
+            $scope.projekcija = false;
+            $scope.karte = false;
+
+            $scope.bpId=id;
+            $scope.bpName=naziv;
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/pb/dogadjaj/'+id,
+            }).then(function successCallback(response) {
+                $scope.bpDogadjaj = response.data;
+                $scope.bpOne = false;
+                $scope.allDogadjaji = true;
+
+
+            }, function errorCallback(response) {
+                alert("Greska kod admin get one BP");
+                $scope.pickBpOne(id);
+
+
+            });
 
 
         }
 
 
+
+        $scope.dogadjajEdit = false;
+
+        $scope.editDogadjaj = function(dogadjajId, bpNaziv, bpId){
+
+
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/d/'+dogadjajId,
+            }).then(function successCallback(response) {
+                var dogadjaj = response.data;
+                $scope.dogadjajEdit = true;
+                $scope.dogadjajId = dogadjajId;
+                pickZanr(dogadjaj.zanr);
+                $scope.newDogadjaName = dogadjaj.naziv;
+                $scope.newDogadjajOpis=dogadjaj.opis;
+                $scope.newDogadjajReziser=dogadjaj.reziser;
+                $scope.newDogadjajTrajanje=dogadjaj.trajanje;
+                $scope.newDogadjajBodovi=dogadjaj.donosiBodova;
+                $scope.newDogadjajGlumci=dogadjaj.glumciStr;
+                $scope.dogadjaSlika = dogadjaj.slika;
+                $scope.bpId=bpId;
+                $scope.bpName=bpNaziv;
+                $scope.pickDogadjaj(true);
+
+            }, function errorCallback(response) {
+                alert("Error getting Event");
+                $scope.pickBpOne(bpId);
+
+
+            });
+
+        }
 
         $scope.editChange = function(){
             $scope.edit = !$scope.edit;
@@ -443,6 +531,53 @@
             });
         }
         getBioskopi();
+
+        var pickZanr = function(zanr){
+
+            switch(zanr) {
+                case "HOROR":
+                    $scope.newDogadjajZanr = $scope.zanr[0];
+                    break;
+                case "COMEDY":
+                    $scope.newDogadjajZanr = $scope.zanr[1];
+                    break;
+                case "THRILLER":
+                    $scope.newDogadjajZanr = $scope.zanr[2];
+                    break;
+                case "ACTION":
+                    $scope.newDogadjajZanr = $scope.zanr[3];
+                    break;
+                case "ADVENTURE":
+                    $scope.newDogadjajZanr = $scope.zanr[4];
+                    break;
+                case "CRIME":
+                    $scope.newDogadjajZanr = $scope.zanr[5];
+                    break;
+                case "DRAMA":
+                    $scope.newDogadjajZanr = $scope.zanr[6];
+                    break;
+                case "FANTASY":
+                    $scope.newDogadjajZanr = $scope.zanr[7];
+                    break;
+                case "FICTION":
+                    $scope.newDogadjajZanr = $scope.zanr[8];
+                    break;
+                case "MISTERY":
+                    $scope.newDogadjajZanr = $scope.zanr[9];
+                    break;
+                case "MUSICAL":
+                    $scope.newDogadjajZanr = $scope.zanr[10];
+                    break;
+                case "SATIRE":
+                    $scope.newDogadjajZanr = $scope.zanr[11];
+                    break;
+                case "DOCUMENTARY":
+                    $scope.newDogadjajZanr = $scope.zanr[12];
+                    break;
+                default:
+                    $scope.newDogadjajZanr = null;
+            }
+        }
 
 
 
@@ -493,6 +628,16 @@
             $scope.bpName=name;
             $scope.bpId = id;
             $scope.pickSala(false);
+
+        }
+
+        $scope.dogadjajNaziv="";
+
+        $scope.addProjection = function(bpId, id, name){
+            $scope.dogadjajId=id;
+            $scope.bpId = bpId;
+            $scope.dogadjajNaziv = name;
+            $scope.pickProjekcija(false);
 
         }
 
@@ -733,34 +878,34 @@
                         alert("Error occured while deleting auditorium");
                     });
                 }
+        }
+
+        $scope.deleteDogadjaj= function(id, pbId){
+            if(id)
+                if(pbId){
+                    $http({
+                        method: 'DELETE',
+                        url: 'http://localhost:8096/d/delete/'+id
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Event deleted sucessfully");
+                        $scope.pickBpOne(pbId);
 
 
 
+                    }, function errorCallback(response) {
+                        alert("Error occured while deleting event");
+                    });
+                }
         }
 
 
 
-        function create_blob(file) {
-            var deferred = $q.defer();
-            var reader = new FileReader();
-            reader.onload = function() {
-                deferred.resolve(reader.result);
-            };
-            reader.readAsDataURL(file);
-            return deferred.promise;
-        }
-        $scope.$watch('files', function() {
-            $scope.upload($scope.files);
-        });
-
-        $scope.upload = function(files){
-
-        }
 
 
 
 
-        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId) {
+        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, edit) {
 
 
                 var provera = false;
@@ -773,70 +918,119 @@
                                         if(newDogadjajTrajanje>0)
                                             if(newDogadjajBodovi)
                                                 if(newDogadjajBodovi>=0)
-                                                    if(this.myFile)
+                                                    if(this.myFile || edit)
                                                         provera=true;
 
 
                 if(provera) {
 
                     var fd = new FormData();
-                    console.log(this.myFile);
+                   // console.log(this.myFile);
                     fd.append('file', this.myFile);
                     fd.append('data', 'string');
                    // console.log(fd);
 
 
-                    console.log("UPAO U DODAVANJE");
+                    var dogadjajDTO = {
+                        "naziv" : newDogadjaName,
+                        "trajanje" : newDogadjajTrajanje,
+                        "zanr" : newDogadjaZanr,
+                        "opis" : newDogadjajOpis,
+                        "reziser": newDogadjajReziser,
+                        "donosiBodova" : newDogadjajBodovi,
+                        "glumciStr" : newDogadjajGlumci,
+                        "pbId": bpId,
+                        "slika" : $scope.dogadjaSlika ///Ako bude bug zbog ovoga je
+                    }
 
+                    if(edit){
 
-                    $http({
-                        method:'POST',
-                        url: 'http://localhost:8096/upload',
-                        transformRequest: angular.identity,
-                        headers: {'Content-Type': undefined},
-                        data : fd
-                    }).then(function successCallback(response){
-                        var lokacija = response.data.rezultat;
-                        if(lokacija != "FAILED"){
-
-
-                            var dogadjajDTO = {
-                                "naziv" : newDogadjaName,
-                                "trajanje" : newDogadjajTrajanje,
-                                "zanr" : newDogadjaZanr,
-                                "opis" : newDogadjajOpis,
-                                "reziser": newDogadjajReziser,
-                                "donosiBodova" : newDogadjajBodovi,
-                                "glumciStr" : newDogadjajGlumci,
-                                "pbId": bpId,
-                                "slika" : lokacija
-                            }
-
+                        if(this.myFile){
 
                             $http({
                                 method:'POST',
-                                url: 'http://localhost:8096/d',
+                                url: 'http://localhost:8096/upload',
+                                transformRequest: angular.identity,
+                                headers: {'Content-Type': undefined},
+                                data : fd
+                            }).then(function successCallback(response){
+                                var lokacija = response.data.rezultat;
+                                if(lokacija != "FAILED"){
+                                    dogadjajDTO.slika=lokacija;
+
+
+                                    $http({
+                                        method:'PUT',
+                                        url: 'http://localhost:8096/d/'+ $scope.dogadjajId,
+                                        data : dogadjajDTO
+                                    }).then(function successCallback(response){
+                                        $scope.pickBpOne(bpId);
+                                        alert("Event edited sucessfully");
+                                    }, function errorCallback(response){
+                                        alert("Error occured while editing event");
+                                    } )
+
+
+                                }else
+                                    alert("Error occured while editing event");
+
+                            }, function errorCallback(response){
+                                alert("Error occured while editing event");
+                            } )
+                        }else{
+
+                            $http({
+                                method:'PUT',
+                                url: 'http://localhost:8096/d/'+ $scope.dogadjajId,
                                 data : dogadjajDTO
                             }).then(function successCallback(response){
-                                $scope.pickBpOne()
-                                alert("Event added sucessfully");
-                            })
+                                $scope.pickBpOne(bpId);
+                                alert("Event edited sucessfully");
+                            }, function errorCallback(response){
+                                alert("Error occured while editing event");
+                            } )
 
 
-                        }else
+                        }
+
+
+
+                    }else{
+
+                        $http({
+                            method:'POST',
+                            url: 'http://localhost:8096/upload',
+                            transformRequest: angular.identity,
+                            headers: {'Content-Type': undefined},
+                            data : fd
+                        }).then(function successCallback(response){
+                            var lokacija = response.data.rezultat;
+                            if(lokacija != "FAILED"){
+                                dogadjajDTO.slika=lokacija;
+                                $http({
+                                    method:'POST',
+                                    url: 'http://localhost:8096/d',
+                                    data : dogadjajDTO
+                                }).then(function successCallback(response){
+                                    $scope.pickBpOne(bpId);
+                                    alert("Event added sucessfully");
+                                })
+
+
+                            }else
+                                alert("Error occured while adding event");
+
+                        }, function errorCallback(response){
                             alert("Error occured while adding event");
+                        } )
 
-                    }, function errorCallback(response){
-                        alert("Error occured while adding event");
-                    } )
+
+                    }
                 }
+                else
+                    alert("You must enter all of the fields to save");
 
         }
-
-
-
-
-
 
     }
 })();

@@ -65,12 +65,10 @@ public class StartData {
     private DogadjajService dogadjajService;
 
     @Autowired
-    private ProjekcijaService projekcijaService;
+    private PozoristeBioskopService pozoristeBioskopService;
 
     @Autowired
-    private PozoristeBioskopService pozoristeBioskopService;
-   
-
+    private ProjekcijaService projekcijaService;
 
     @PostConstruct
     public void initIt(){
@@ -84,7 +82,7 @@ public class StartData {
         rk.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + rk.getUserName());
         userService.addUser(rk);
-        
+
         RegistrovaniKorisnik rk2 = new RegistrovaniKorisnik();
         rk2.setUserName("mirko");
         rk2.setPassword("mirko");
@@ -96,7 +94,7 @@ public class StartData {
         rk2.setPrezime("Mirkovic");
         System.out.println("Kreiran korisnik: " + rk2.getUserName());
         userService.addUser(rk2);
-        
+
         RegistrovaniKorisnik rk3 = new RegistrovaniKorisnik();
         rk3.setUserName("f");
         rk3.setPassword("f");
@@ -119,17 +117,17 @@ public class StartData {
         rk4.setGrad("zika");
         rk4.setIme("Zika");
         rk4.setPrezime("Zikic");
-        
-        
+
+
         System.out.println("Kreiran korisnik: " + rk4.getUserName());
         userService.addUser(rk4);
-        
+
         Prijatelj p0 = new Prijatelj();
         p0.setPosiljalac(userService.getUser(rk.getUserName()));
         p0.setPrimalac(userService.getUser(rk3.getUserName()));
         p0.setStatus(StatusPrijateljstva.PRIHVACENO);
         prijateljService.addFriendship(p0);
-  
+
         Prijatelj p2 = new Prijatelj();
         p2.setPosiljalac(userService.getUser(rk3.getUserName()));
         p2.setPrimalac(userService.getUser(rk2.getUserName()));
@@ -141,7 +139,7 @@ public class StartData {
         p3.setPrimalac(userService.getUser(rk3.getUserName()));
         p3.setStatus(StatusPrijateljstva.POSLATO);
         prijateljService.addFriendship(p3);
-        
+
         Admin a = new Admin();
         a.setUserName("admin");
         a.setPassword("admin");
@@ -153,7 +151,7 @@ public class StartData {
         a.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + a.getIme());
         adminService.addAdmin(a);
-        
+
         Admin a2 = new Admin();
         a2.setUserName("admin2");
         a2.setPassword("default");
@@ -162,7 +160,7 @@ public class StartData {
         a2.setStatus(StatusNaloga.AKTIVAN);
         System.out.println("Kreiran korisnik: " + a2.getUserName());
         adminService.addAdmin(a2);
-        
+
 
         PozoristeBioskop p1 = new PozoristeBioskop();
         p1.setBrojOcena(0);
@@ -179,10 +177,10 @@ public class StartData {
         s1.setBrRed(10);
         s1.setBrSedista(10);
         s1.setIme("Prva sala u pozoristu");
-       // s1.setUstanova(p1);
+        // s1.setUstanova(p1);
         List<Sala> sale = new ArrayList<>();
 
-   
+
 
         List<Sediste> sedista = new ArrayList<>();
         for(int i =0; i<=99; i++){
@@ -209,7 +207,7 @@ public class StartData {
         d.setBrojOcena(0);
         d.setProsecnaOcena(0);
         d.setDonosiBodova(1);
-     //   d.setGlumci(new ArrayList<Glumac>());
+        //   d.setGlumci(new ArrayList<Glumac>());
         d.setNaziv("Isa film 1");
         d.setOpis("Akcioni film iz ise");
         d.setReziser("Minja");
@@ -226,7 +224,7 @@ public class StartData {
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
         d.setMestoOdrzavanja(p1);
-        dogadjajService.updateDogadjaj(d);
+        dogadjajService.updateDogadjaj2(d);
 
         a2.setMesta(new ArrayList<PozoristeBioskop>());
         a2.getMesta().add(p1);
@@ -258,7 +256,7 @@ public class StartData {
         ArrayList<PozoristeBioskop> pppppp = new ArrayList<PozoristeBioskop>();
         pppppp.add(p1);
         a3.setMesta(pppppp);
-     //   System.out.println("Kreiran korisnik: " + a3.getUserName());
+        //   System.out.println("Kreiran korisnik: " + a3.getUserName());
         adminService.addAdmin(a3);
 
     }
@@ -327,7 +325,7 @@ public class StartData {
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
         d.setMestoOdrzavanja(p1);
-        dogadjajService.updateDogadjaj(d);
+        dogadjajService.updateDogadjaj2(d);
 
         a.getMesta().add(p1);
         adminService.updateAdmin(a);
@@ -364,9 +362,9 @@ public class StartData {
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
         dd.setMestoOdrzavanja(p1);
-        dogadjajService.updateDogadjaj(dd);
+        dogadjajService.updateDogadjaj2(dd);
 
- 
+
     }
 
 }
