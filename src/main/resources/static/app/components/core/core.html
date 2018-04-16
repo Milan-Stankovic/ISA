@@ -49,13 +49,19 @@
 			<li ng-hide="logged">
 				<a ng-href="#!/login">Login</a>
 			</li>
-			<li ng-show="logged">
+			<li ng-show="logged" style="width:100px">
 				<a ng-href="#!/profile">Profile</a>
-				<ul>
-					<li ng-show="logged">
+				<ul style="width:100px">
+					<li ng-show="logged" style="width:100px">
 						<a href="#!/settings">Settings</a>
 					</li>
-					<li ng-show="logged">
+					<li style="width:100px" ng-show="logged">
+						<a href="#!/friends">Friends</a>
+					</li>
+					<li style="width:100px" ng-show="logged">
+						<a href="#!/settings">Reservations</a>
+					</li>
+					<li style="width:100px" ng-show="logged">
 						<a href="" ng-click="logout()">Logout</a>
 					</li>
 

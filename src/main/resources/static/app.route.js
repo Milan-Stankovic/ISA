@@ -38,6 +38,12 @@
 			controller: 'registerController',
 			controllerAs: 'rc'
 		})
+		.state('core.friends', {
+            url: 'friends',
+            templateUrl: 'app/components/friends/friends.html',
+            controller: 'friendsController',
+            controllerAs: 'fc'
+        })
 		.state('core.login', {
 			url: 'login',
 			templateUrl: 'app/components/login/login.html',

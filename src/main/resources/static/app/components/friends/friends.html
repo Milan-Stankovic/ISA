@@ -1,0 +1,58 @@
+<div>
+
+    <h3 style="color:white" ng-hide="isAdmin" id="friends">Friends:</h3><br>
+
+    <div style=" width:600px" ng-hide="isAdmin">
+        <br>
+        <table style=" width:600px">
+            <tr style=" width:600px">
+                <td style="color:white; width:150px">Add New Friend: </td>
+                <td style="width:150px"><input type="text" id="searchfName" name="searchfName" ng-model="searchfName" placeholder="First Name"></td>
+                <td style="width:150px"><input type="text" id="searchlName" name="searchlName" ng-model="searchlName" placeholder="Last Name"></td>
+                <td><button ng-click="searchFunc(searchfName, searchlName)">Search</button></td>
+            </tr>
+
+        </table>
+
+
+        <br>
+    </div>
+
+
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-show="searched&&!isAdmin">
+        <h3 style="color:white">Search Result:</h3>
+        <ol style="list-style-type: none; width:800px">
+            <li ng-repeat="res in resList" style="width:500px; color:white">{{res.ime}} {{res.prezime}} ({{res.email}})
+                <span>       </span><button ng-disabled="isDisabled" ng-click="addFriend(res.email)">{{addButton}}</button></li>
+
+        </ol>
+    </div>
+
+    <div>
+        <br><br>
+    </div>
+
+    <div style="overflow-y: scroll; height:200px; width:800px; background-color:gray" ng-hide="isAdmin">
+        <h3 style="color:white">Request List:</h3>
+        <ol style="list-style-type: none; width:800px">
+            <li ng-repeat="req in reqList" style="width:500px; color:white">{{req.ime}} {{req.prezime}} ({{req.email}})
+                <span>       </span><button ng-click="declineFriend(req.email)">Decline</button>
+                <span>       </span><button ng-click="acceptFriend(req.email)">Accept</button>
+            </li>
+
+        </ol>
+    </div>
+
+
+    <div>
+        <br><br>
+    </div>
+
+    <div style="overflow-y: scroll; height:400px; width:800px; background-color:gray" ng-hide="isAdmin">
+        <h3 style="color:white">Friends List:</h3>
+        <ol style="list-style-type: none; width:800px">
+            <li ng-repeat="friend in friendsList" style="width:500px; color:white">{{friend.ime}} {{friend.prezime}} ({{friend.email}})<span>       </span><button ng-click="deleteFriend(friend.email)">Delete</button></li>
+
+        </ol>
+    </div>
+</div>
