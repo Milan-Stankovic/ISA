@@ -13,7 +13,8 @@
         var init = function (){
             $rootScope.showBioskopi=true;
             $rootScope.showPozorista=true;
-
+            if($cookies.get('user'))
+                $location.path("regKorHome")
             };
             init();
 

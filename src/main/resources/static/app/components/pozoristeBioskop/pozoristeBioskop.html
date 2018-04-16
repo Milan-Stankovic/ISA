@@ -28,7 +28,7 @@
 
     <div>
         <h2><a>Program ({{filteredProj.length}}):</a></h2>
-        <div style="overflow-y: scroll; height:200px;  background-color:gray">
+        <div style="overflow-y: scroll; height:300px;  background-color:gray">
             <span ng-repeat="proj in filteredProj track by $index">
                <p>Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
                 <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
