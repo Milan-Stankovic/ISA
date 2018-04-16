@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.isa.ISA.repository.DogadjajRepository;
+import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,12 @@ public class ProjekcijaService {
 
     @Autowired
     private ProjekcijaRepository pr;
+
+    @Autowired
+    private SalaRepository sr;
+
+    @Autowired
+    private DogadjajRepository dr;
 
     public List<Projekcija> getAll(){
         List<Projekcija> allP = new ArrayList<>();
@@ -97,6 +105,32 @@ public class ProjekcijaService {
         List<Projekcija> allP = new ArrayList<>();
         pr.findBySalaAndVremeBetween(s, d, b).forEach(allP::add);
         return allP;
+    }
+
+
+    public void deleteProjekcijaByIds(List<Long> ids){
+        for(Long id:ids){
+            pr.delete(id);
+        }
+    }
+
+    public ArrayList<Long> getProjekcijeToBeDeleted(Long id){
+        ArrayList<Long> ids = new ArrayList<>();
+        Sala s = sr.findOne(id);
+        List<Projekcija>  projekcije=  pr.findBySala(s);
+        for (Projekcija p: projekcije) {
+            ids.add(p.getId());
+        }
+        return ids;
+    }
+
+    public void deleteProjekcijaByDogadjaj(Long id){
+        Dogadjaj d = dr.findOne(id);
+        List<Projekcija>  projekcije=  pr.findByDogadjaj(d);
+        for (Projekcija p: projekcije) {
+            pr.delete(p);
+        }
+
     }
 
 

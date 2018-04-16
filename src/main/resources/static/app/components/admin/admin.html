@@ -216,7 +216,17 @@
 
 
                     <li class="unos" ng-repeat="sala in bpSale">
-                         <a class="pointer" ng-click="editSala(sala.id, bp.naziv, bp.id)">{{sala.ime}} </a>
+
+
+
+                         <button type="submit" class="delete" class="btn btn-primary"  ng-confirm-click="Are you sure to delete this Auditorium ?" confirmed-click="deleteSala(sala.id, bp.id)" >
+					        <img class="clearDelete" src="../../../assets/images/trash.png" width="20" height="20" title="Delete" alt="submit" />
+				        </button>
+
+                        <a class="pointer" ng-click="editSala(sala.id, bp.naziv, bp.id)">{{sala.ime}} </a>
+
+
+
                     </li>
 
 

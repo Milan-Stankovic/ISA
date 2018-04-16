@@ -3,6 +3,7 @@ package com.isa.ISA.service;
 import com.isa.ISA.DTO.SalaDTO;
 import com.isa.ISA.DTO.SedisteDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
 import com.isa.ISA.dbModel.enums.TipSedista;
@@ -46,13 +47,47 @@ public class SalaService  {
     public void editSala(SalaDTO s, Long id){
         if(Konverter.proveraSale(s)){
             if(sRepo.findOne(id)!=null) {
-                System.out.println("Edituje salu");
                 Sala sala = Konverter.converterSale(s);
                 sala.setId(id);
                 sRepo.save(sala);
             }
         }
     }
+
+
+    public void deleteProjekcijeFromPB(List<Long> ids, Long idpb) {
+        PozoristeBioskop pb = pbRepo.findOne(idpb);
+        int i = 0;
+        for (Long projId : ids) {
+            i = 0;
+            for (Projekcija p : pb.getProjekcije()) {
+                if (p.getId() == projId) {
+                    pb.getProjekcije().remove(i);
+                    break;
+                }
+                i++;
+            }
+        }
+        pbRepo.save(pb);
+    }
+
+    public void deleteSala(Long id, Long idpb,List<Long> projekcije){
+        PozoristeBioskop pb = pbRepo.findOne(idpb);
+        int i =0;
+        for (Sala s:pb.getSale()) {
+            if(s.getId()==id){
+                pb.getSale().remove(i);
+                break;
+            }
+            i++;
+        }
+
+        pbRepo.save(pb);
+
+        sRepo.delete(id);
+    }
+
+
 
 
 }

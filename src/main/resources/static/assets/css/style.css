@@ -1750,4 +1750,16 @@ p a:hover {
 	width:250px;
 	height:200px;
 }
+.delete{
+	height:20px !important;
+	width:20px !important;
+    margin-right: 10px !important;
+    background: transparent;
+    border: none !important;
+    font-size:0 !important;
+}
+.clearDelete{
+    height:20px !important;
+    width:20px !important;
 
+}

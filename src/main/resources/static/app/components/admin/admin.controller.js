@@ -2,10 +2,26 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('app').directive('ngConfirmClick', [
+        function(){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick || "Are you sure?";
+                    var clickAction = attr.confirmedClick;
+                    element.bind('click',function (event) {
+                        if ( window.confirm(msg) ) {
+                            scope.$eval(clickAction)
+                        }
+                    });
+                }
+            };
+        }])
+
         .controller('adminController', adminController);
 
     adminController.$inject = ['$location', '$scope', '$rootScope', '$http', '$window', '$cookies', '$document'];
+
+
 
     function adminController($location, $scope, $rootScope, $http, $window, $cookies, $document) {
 
@@ -512,7 +528,6 @@
 
         var changeClass = function(itemId,tip){
 
-            console.log("Upao u ovaj change class");
             var id ="";
             id+="#"+itemId;
 
@@ -524,7 +539,6 @@
                 case "VIP":
                     $(id).removeClass();
                     angular.element(document.getElementById(itemId)).addClass("clearBlue");
-                    console.log("Can je upao i u Vip, mozda da sacekam ? :D");
                     break;
 
                 case "LOVEBOX":
@@ -610,6 +624,7 @@
                     }).then(function successCallback(response) {
                         //  location.reload(); Moze ovako clear
                         alert("Auditorium edited sucessfully");
+                        $scope.pickBpOne($scope.bpId);
 
 
                     }, function errorCallback(response) {
@@ -637,6 +652,7 @@
                     }).then(function successCallback(response) {
                         //  location.reload(); Moze ovako clear
                         alert("Auditorium added sucessfully");
+                        $scope.pickBpOne($scope.bpId);
 
 
                     }, function errorCallback(response) {
@@ -648,6 +664,30 @@
 
             }
 
+
+
+
+        }
+
+        $scope.deleteSala = function(id, pbId){
+
+            if(id)
+                if(pbId){
+
+                    $http({
+                        method: 'DELETE',
+                        url: 'http://localhost:8096/sala/delete/'+pbId+'/'+id
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Auditorium deleted sucessfully");
+                        $scope.pickBpOne(pbId);
+
+
+
+                    }, function errorCallback(response) {
+                        alert("Error occured while deleting auditorium");
+                    });
+                }
 
 
 

@@ -5,6 +5,9 @@ import java.util.List;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.hibernate.annotations.Cascade;
+
+import static org.hibernate.annotations.CascadeType.DELETE_ORPHAN;
 
 @Entity
 public class Sala {
@@ -22,7 +25,8 @@ public class Sala {
     /**
      * Lista svih sedisat u sali
      */
-    @OneToMany(cascade ={CascadeType.PERSIST,CascadeType.MERGE })
+
+    @OneToMany(cascade ={CascadeType.PERSIST,CascadeType.MERGE, CascadeType.REMOVE })
     private List<Sediste> sedista;
 
     private String ime;
