@@ -17,15 +17,13 @@ public class DogadjajDTO {
 
     private String reziser;
 
-    private float prosecnaOcena;
-
-    private int brojOcena; //Postaviti na nula kada se kreira
-
-    private int donosiBodova;
-
     private String glumciStr;
 
+    private int donsiBodova;
+
     private Long pbId;
+
+    private String slika;
 
     public Long getPbId() {
         return pbId;
@@ -75,30 +73,6 @@ public class DogadjajDTO {
         this.reziser = reziser;
     }
 
-    public float getProsecnaOcena() {
-        return prosecnaOcena;
-    }
-
-    public void setProsecnaOcena(float prosecnaOcena) {
-        this.prosecnaOcena = prosecnaOcena;
-    }
-
-    public int getBrojOcena() {
-        return brojOcena;
-    }
-
-    public void setBrojOcena(int brojOcena) {
-        this.brojOcena = brojOcena;
-    }
-
-    public int getDonosiBodova() {
-        return donosiBodova;
-    }
-
-    public void setDonosiBodova(int donosiBodova) {
-        this.donosiBodova = donosiBodova;
-    }
-
     public String getGlumciStr() {
         return glumciStr;
     }
@@ -109,5 +83,19 @@ public class DogadjajDTO {
 
     public DogadjajDTO(){}
 
+    public String getSlika() {
+        return slika;
+    }
 
+    public void setSlika(String slika) {
+        this.slika = slika;
+    }
+
+    public int getDonsiBodova() {
+        return donsiBodova;
+    }
+
+    public void setDonsiBodova(int donsiBodova) {
+        this.donsiBodova = donsiBodova;
+    }
 }

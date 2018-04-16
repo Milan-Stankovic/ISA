@@ -16,8 +16,7 @@ public class Dogadjaj {
     @GeneratedValue
     private long id;
 
-    @Lob
-    private byte[] slika; //Ovo je valjda za slike ali nisam siguran...
+    private String slika; //Ovo je valjda za slike ali nisam siguran...
 
     private String naziv;
 
@@ -119,11 +118,11 @@ public class Dogadjaj {
         this.reziser = reziser;
     }
 
-    public byte[] getSlika() {
+    public String getSlika() {
         return slika;
     }
 
-    public void setSlika(byte[] slika) {
+    public void setSlika(String slika) {
         this.slika = slika;
     }
 

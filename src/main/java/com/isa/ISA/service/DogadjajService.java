@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,9 +35,10 @@ public class DogadjajService {
         dog.setOpis(d.getOpis());
         dog.setNaziv(d.getNaziv());
         dog.setGlumciStr(d.getGlumciStr());
-        dog.setDonosiBodova(d.getDonosiBodova());
-        dog.setProsecnaOcena(d.getProsecnaOcena());
-        dog.setBrojOcena(d.getBrojOcena());
+        dog.setDonosiBodova(d.getDonsiBodova());
+        dog.setProsecnaOcena(5);
+        dog.setBrojOcena(1);
+        dog.setSlika(d.getSlika());
         PozoristeBioskop pb = new PozoristeBioskop();
         pb.setId(d.getPbId());
         dog.setMestoOdrzavanja(pb);
@@ -45,21 +47,22 @@ public class DogadjajService {
     }
     private boolean provera(DogadjajDTO d){
 
-        if(d.getBrojOcena()>=0)
-            if(d.getDonosiBodova()>=0)
-                if(d.getGlumciStr().length()>0)
-                    if(d.getNaziv().length()>0)
-                        if(d.getOpis().length()>0)
-                            if(d.getReziser().length()>0)
-                                if(d.getTrajanje()>0)
-                                    if(d.getZanr() != null)
-                                        if(d.getPbId() != null)
+        if(d.getGlumciStr().length()>0)
+            if(d.getNaziv().length()>0)
+                if(d.getOpis().length()>0)
+                    if(d.getReziser().length()>0)
+                        if(d.getTrajanje()>0)
+                            if(d.getZanr() != null)
+                                if(d.getPbId() != null)
+                                    if(d.getSlika() !=null)
+                                        if(d.getSlika().length() >0)
                                             return true;
         return false;
 
     }
 
     public void addDogadjaj(DogadjajDTO d){
+
         if(provera(d))
             dogRepo.save(converter(d));
     }
