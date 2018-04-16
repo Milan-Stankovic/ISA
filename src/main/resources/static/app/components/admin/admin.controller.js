@@ -4,7 +4,8 @@
 
 
     angular
-        .module('app').directive('ngConfirmClick', [
+        .module('app')
+        .directive('ngConfirmClick', [
         function(){
             return {
                 link: function (scope, element, attr) {
@@ -18,27 +19,34 @@
                 }
             };
         }])
-        .controller('adminController', adminController);
 
-    angular
-        .module('app').directive('fileread', [function () {
 
-            return{
+        .controller('adminController', adminController).directive('fileUpload', fileUpload);
 
-                scope: {
-                    fileread:"=",
-                },
-                link: function (scope,element,attributes) {
-                    element.bind("change",function (changeEvent) {
-                        scope.fileread =changeEvent.target.files[0];
-                    })
+    fileUpload.$inject = ['$parse'];
 
-                }
+    function fileUpload($parse) {
+        console.log("Upao u upload");
+        var directive = {
+            restrict: 'A',
+            link: function (scope, element, attrs) {
+                var model = $parse(attrs.fileUpload);
+                var modelSetter = model.assign;
+
+                element.bind('change', function (event) {
+                    scope.$apply(function () {
+
+                        scope.myFile = event.target.files[0];
+                        console.log(scope.myFile);
+                        event.preventDefault();
+                    });
+                });
 
             }
+        };
+        return directive;
+
     }
-            
-    ]);
 
 
     adminController.$inject = ['$location', '$scope', '$rootScope', '$http', '$window', '$cookies', '$document'];
@@ -89,24 +97,8 @@
 
         }
 
-       $scope.uploadImage = function(){ // OVDE NASTAVITI
-            var data = new FormData();
-            data.append('image',$scope.image);
-
-           $http({
-               method: 'POST',
-               url: 'http://localhost:8096//pb/sale/'+id,
-           }).then(function successCallback(response) {
-               $scope.bpSale = response.data;
 
 
-           }, function errorCallback(response) {
-               alert("Greska kod admin get one BP")
-
-           });
-
-
-       }
 
 
         $scope.pickPozoriste = function () {
@@ -330,16 +322,20 @@
 
         }
 
-        $scope.pickDogadjaj = function () {
+        $scope.pickDogadjaj = function (edit) {
 
-            $scope.sala = false;
-            $scope.pozoriste = false;
-            $scope.bioskop = false;
-            $scope.sedista = false;
-            $scope.dogadjaj = true;
-            $scope.projekcija = false;
-            $scope.karte = false;
-            $scope.bpOne = false;
+            if(!edit) {
+                $scope.sala = false;
+                $scope.pozoriste = false;
+                $scope.bioskop = false;
+                $scope.sedista = false;
+                $scope.dogadjaj = true;
+                $scope.projekcija = false;
+                $scope.karte = false;
+                $scope.bpOne = false;
+            }
+
+
 
 
         }
@@ -497,6 +493,14 @@
             $scope.bpName=name;
             $scope.bpId = id;
             $scope.pickSala(false);
+
+        }
+
+
+        $scope.addDogadjaj = function(id, name){
+            $scope.bpName=name;
+            $scope.bpId = id;
+            $scope.pickDogadjaj(false);
 
         }
 
@@ -736,50 +740,97 @@
 
 
 
-        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci) {
+        function create_blob(file) {
+            var deferred = $q.defer();
+            var reader = new FileReader();
+            reader.onload = function() {
+                deferred.resolve(reader.result);
+            };
+            reader.readAsDataURL(file);
+            return deferred.promise;
+        }
+        $scope.$watch('files', function() {
+            $scope.upload($scope.files);
+        });
 
-            var form = document.getElementById("myForm");
+        $scope.upload = function(files){
 
-            var provera = false;
-            if(newDogadjajGlumci)
-                if(newDogadjaName)
-                    if(newDogadjaZanr)
-                        if(newDogadjajReziser)
-                            if(newDogadjajOpis)
-                                if(newDogadjajTrajanje)
-                                    if(newDogadjajTrajanje>0)
-                                        if(newDogadjajBodovi)
-                                            if(newDogadjajBodovi>=0)
-                                                provera=true;
+        }
 
-            if(provera) {
-                var dogadjajDTO = {
-                    "naziv" : newDogadjaName,
-                    "trajanje" : newDogadjajTrajanje,
-                    "zanr" : newDogadjaZanr,
-                    "opis" : newDogadjajOpis,
-                    "reziser": newDogadjajReziser,
-                    "prosecnaOcena" : 0,
-                    "brojOcena" : 0,
-                    "donosiBodova" : newDogadjajBodovi,
-                    "glumciStr" : newDogadjajGlumci
+
+
+
+        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId) {
+
+
+                var provera = false;
+                if(newDogadjajGlumci)
+                    if(newDogadjaName)
+                        if(newDogadjaZanr)
+                            if(newDogadjajReziser)
+                                if(newDogadjajOpis)
+                                    if(newDogadjajTrajanje)
+                                        if(newDogadjajTrajanje>0)
+                                            if(newDogadjajBodovi)
+                                                if(newDogadjajBodovi>=0)
+                                                    if(this.myFile)
+                                                        provera=true;
+
+
+                if(provera) {
+
+                    var fd = new FormData();
+                    console.log(this.myFile);
+                    fd.append('file', this.myFile);
+                    fd.append('data', 'string');
+                   // console.log(fd);
+
+
+                    console.log("UPAO U DODAVANJE");
+
+
+                    $http({
+                        method:'POST',
+                        url: 'http://localhost:8096/upload',
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined},
+                        data : fd
+                    }).then(function successCallback(response){
+                        var lokacija = response.data.rezultat;
+                        if(lokacija != "FAILED"){
+
+
+                            var dogadjajDTO = {
+                                "naziv" : newDogadjaName,
+                                "trajanje" : newDogadjajTrajanje,
+                                "zanr" : newDogadjaZanr,
+                                "opis" : newDogadjajOpis,
+                                "reziser": newDogadjajReziser,
+                                "donosiBodova" : newDogadjajBodovi,
+                                "glumciStr" : newDogadjajGlumci,
+                                "pbId": bpId,
+                                "slika" : lokacija
+                            }
+
+
+                            $http({
+                                method:'POST',
+                                url: 'http://localhost:8096/d',
+                                data : dogadjajDTO
+                            }).then(function successCallback(response){
+                                $scope.pickBpOne()
+                                alert("Event added sucessfully");
+                            })
+
+
+                        }else
+                            alert("Error occured while adding event");
+
+                    }, function errorCallback(response){
+                        alert("Error occured while adding event");
+                    } )
                 }
 
-               // console.log(dogadjajDTO)
-
-                $http({
-                    method:'POST',
-                    url: 'http://localhost:8096/d',
-                    data: dogadjajDTO
-                }).then(function successCallback(response){
-                  //  location.reload(); Moze ovako clear
-                    alert("Event added sucessfully");
-
-
-                }, function errorCallback(response){
-                    alert("Error occured while adding event");
-                } );
-            }
         }
 
 

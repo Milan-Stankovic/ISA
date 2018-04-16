@@ -53,6 +53,11 @@
         <li>
 
             <ul class="forma">
+
+                <li class="desno">
+                    <a>  Adding auditorium to : </a>
+                </li>
+
                 <li class="desno">
                     <a>  Name : </a>
                 </li>
@@ -86,6 +91,11 @@
 
         <li>
             <ul class="formaUnos">
+
+                 <li class="unos">
+                   <a class="input"> {{bpName}} </a>
+                </li>
+
                 <li class="unos">
                     <input class="input"  type="text" ng-model="newDogadjaName" class="form-control" id="newDogadjaName">
                 </li>
@@ -113,8 +123,11 @@
                     <input class="input" type="text" ng-model="newDogadjajGlumci" class="form-control" id="newDogadjajGlumci">
                 </li>
 
+	                <input type="file" file-upload="myFile" accept=".jpg,.png">
+
+
                 <li class="last">
-                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci )"> Add </button>
+                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId)"> Save </button>
                 </li>
 
             </ul>
@@ -230,6 +243,11 @@
                     </li>
 
 
+                     <li class="last">
+                        <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>
+                    </li>
+
+
                     <li class="last">
                         <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>
                     </li>
@@ -238,7 +256,7 @@
                     </li>
 
                     <li class="last">
-                        <button  class="buttonDebeli" type="submit" ng-click="addProjekcija(bp.id)"> Add Projection </button>
+                        <button  class="buttonDebeli" type="submit" ng-click="addDogadjaj(bp.id, bp.naziv)"> Add  Event</button>
                     </li>
 
                  </ul>
