@@ -3,6 +3,7 @@ package com.isa.ISA.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.dbModel.Rezervacija;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -170,5 +171,13 @@ public class UserController {
 
 
 	}
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/reservations/{username}")
+	public List<Rezervacija> getRez(@PathVariable String username){
+		RegistrovaniKorisnik kor = userService.getUser(username);
+		if(kor.getRezervacije()==null)
+			return new ArrayList<Rezervacija>();
+		return kor.getRezervacije();
+		}
+
 
 }

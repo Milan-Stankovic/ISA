@@ -23,7 +23,14 @@
 
                        console.log("admir")
                        $location.path("/admin");
-                 }else console.log("not admir")
+                       $rootScope.showBioskopi = false;
+                       $rootScope.showPozorista = false;
+                 }else {
+                    console.log("not admir")
+                    $location.path("/regKorHome");
+                    $rootScope.showBioskopi = false;
+                    $rootScope.showPozorista = false;
+                 }
 
               }, function errorCallback(response) {
                   console.log("Greska kod GET user");
@@ -39,6 +46,57 @@
             return $sce.trustAsResourceUrl(src);
         }
 
+        $scope.svaPozorista = {};
+        $scope.sviBioskopi = {};
+
+        var getPozorista = function () {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/p',
+            }).then(function successCallback(response) {
+                $scope.svaPozorista = response.data;
+                console.log("sva pozorista: " + $scope.svaPozorista.length)
+            }, function errorCallback(response) {
+                alert("Greska kod pozorista")
+
+            });
+        }
+
+        var getMovies = function () {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/b',
+            }).then(function successCallback(response) {
+                $scope.sviBioskopi = response.data;
+                console.log("svi bioskopi: " + $scope.sviBioskopi.length)
+
+            }, function errorCallback(response) {
+                alert("Greska kod bioskopa")
+
+            });
+        }
+
+        getMovies();
+        getPozorista();
+
+
+        $scope.rezervacije = [];
+        var getRez = function () {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/api/user/reservations/' + $cookies.get('user'),
+            }).then(function successCallback(response) {
+                $scope.rezervacije = response.data;
+                console.log("sve rezervacije: " + $scope.rezervacije.length)
+
+            }, function errorCallback(response) {
+                alert("Greska kod bioskopa")
+
+            });
+        }
+
+        getRez();
+
         $scope.visited=[];
         $scope.pozorista = [];
         $scope.bioskopi = [];
@@ -49,21 +107,18 @@
                 url: 'http://localhost:8096/api/regKor/' + user + '/visited',
             }).then(function successCallback(response) {
                 $scope.visited = response.data;
-                console.log($scope.visited.length)
                 for(var i = 0; i < $scope.visited.length; i++){
-                    console.log("ttttttiiiip: " + $scope.visited[i].tip)
+
                     if($scope.visited[i].tip=="POZORISTE"){
-                        console.log("pozoristeeeeeeee")
+
                         $scope.pozorista.push($scope.visited[i]);
                     }
                     else{
-                        console.log("bioskooooooop")
+
                         $scope.bioskopi.push($scope.visited[i]);
                     }
 
                 }
-                 console.log($scope.pozorista.length)
-                 console.log($scope.bioskopi.length)
 
             }, function errorCallback(response) {
                 alert("Greska kod pozorista")
@@ -75,6 +130,38 @@
         getVisited();
 
 
+
+
+        $scope.otvori = function(id){
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/pb/' + id,
+            }).then(function successCallback(response) {
+                $scope.pozoristeBioskop = response.data;
+                $location.path("/pozoristeBioskop/" + id)
+
+            }, function errorCallback(response) {
+                alert("Greska kod pozorista")
+
+            });
+        }
+
+        $scope.showOnlyBioskopi=function(){
+            $rootScope.showBioskopi=true;
+            $rootScope.showPozorista=false;
+
+        }
+
+        $scope.showOnlyPozorista=function(){
+            $rootScope.showBioskopi=false;
+            $rootScope.showPozorista=true;
+        }
+
+        $scope.showAll=function(){
+            $rootScope.showBioskopi=false;
+            $rootScope.showPozorista=false;
+
+        }
     }
 
 

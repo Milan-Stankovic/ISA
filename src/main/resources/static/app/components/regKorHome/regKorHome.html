@@ -1,39 +1,113 @@
+<style>
+    p,a,h2,h3,td,li{
+        color:white;
+        }
+</style>
 <div>
-    <table>
-        <tr>
+    <div ng-hide="showBioskopi || showPozorista">
+        <table>
+            <tr>
 
-            <td style="width:400px"><h3 style="color:white">Visited Theatres:</h3></td>
-            <td style="width:400px"><h3 style="color:white">Visited Cinemas:</h3></td>
+                <td style="width:450px"><h3 style="color:white">Visited Theatres:</h3></td>
+                <td style="width:450px"><h3 style="color:white">Visited Cinemas:</h3></td>
 
-        </tr>
-        <tr>
-            <td style="width:450px">
+            </tr>
+            <tr>
+                <td style="width:450px;height:150px;">
 
-                <div style="overflow-y: scroll; height:100px; width:100%; background-color:gray">
+                    <div style="overflow-y: scroll; height:150px; width:100%; background-color:gray">
 
-                    <ol style="list-style-type: none; width:100%">
-                        <li ng-repeat="poz in pozorista" style="width:100%; color:white">{{poz.naziv}}
-                        </li>
+                        <ol style="list-style-type: none; width:100%">
+                            <li ng-repeat="poz in pozorista" style="width:100%; color:white">{{poz.naziv}}
+                            </li>
 
-                    </ol>
-                </div>
-            </td>
+                        </ol>
+                    </div>
+                </td>
 
 
-            <td style="width:450px">
+                <td style="width:450px; height:150px;">
 
-                <div style="overflow-y: scroll; height:100px; width:100%; background-color:gray">
+                    <div style="overflow-y: scroll; height:150px; width:100%; background-color:gray">
 
-                    <ol style="list-style-type: none; width:100%">
-                        <li ng-repeat="bio in bioskopi" style="width:100%; color:white">{{bio.naziv}}
-                        </li>
+                        <ol style="list-style-type: none; width:100%">
+                            <li ng-repeat="bio in bioskopi" style="width:100%; color:white">{{bio.naziv}}
+                            </li>
 
-                    </ol>
-                </div>
-            </td>
-        </tr>
-    </table>
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div >
+    <div ng-hide="showBioskopi || showPozorista">
+        <table>
+            <tr>
+                <td style="width:450px"><h3>Reservations:</h3></td>
+            </tr>
+            <tr>
+                <td style="width:450px; height:150px;">
 
+                    <div style="overflow-y: scroll; height:150px; width:100%; background-color:gray">
+
+                        <ol style="list-style-type: none; width:100%">
+                            <li ng-repeat="rez in rezervacije" style="width:100%">"{{rez.projekcija.dogadjaj.naziv}}",
+                                Date: {{rez.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{rez.projekcija.vreme  | date:'HH:mm'}}
+                                <span>          </span>
+                                <button>Cancel</button>
+                            </li>
+
+                        </ol>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div ng-show="showPozorista">
+        <!--DODATI NG HIDE I SHOW NA CLICK ALL CINEMAS I ALL THEATERS-->
+        <div>
+            <h2><a>THEATRES</a></h2>
+        </div>
+        <span ng-repeat="pozoriste in svaPozorista">
+
+            <div>
+
+                <h3> <a ng-click="otvori(pozoriste.id)">{{pozoriste.naziv}}</a></h3>
+
+                <p>Description: {{pozoriste.opis}}</p>
+
+                <p>Rate: {{pozoriste.prosecnaOcena}}</p>
+
+                 <p>Address: {{pozoriste.adresa}}</p>
+
+                 <iframe ng-src="{{trustSrc(pozoriste.urlMape)}}"
+                         width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+             </div>
+         </span>
+
+    </div>
+    <div ng-show="showBioskopi">
+        <div>
+            <h2><a>CINEMAS</a></h2>
+        </div>
+
+        <span ng-repeat="bioskop in sviBioskopi">
+
+             <div>
+
+                 <h3> <a ng-click="otvori(bioskop.id)" >{{bioskop.naziv}}</a></h3>
+
+                 <p>Description: {{bioskop.opis}}</p>
+
+                 <p>Rate: {{bioskop.prosecnaOcena}}</p>
+
+                 <p>Address: {{bioskop.adresa}}</p>
+
+                 <iframe ng-src="{{trustSrc(bioskop.urlMape)}}"
+                         width="300" height="250" frameborder="0" style="border:0" allowfullscreen></iframe>
+             </div>
+         </span>
+    </div>
 
 
 </div>
