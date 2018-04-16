@@ -1,6 +1,8 @@
 (function() {
     'use strict';
 
+
+
     angular
         .module('app').directive('ngConfirmClick', [
         function(){
@@ -16,8 +18,28 @@
                 }
             };
         }])
-
         .controller('adminController', adminController);
+
+    angular
+        .module('app').directive('fileread', [function () {
+
+            return{
+
+                scope: {
+                    fileread:"=",
+                },
+                link: function (scope,element,attributes) {
+                    element.bind("change",function (changeEvent) {
+                        scope.fileread =changeEvent.target.files[0];
+                    })
+
+                }
+
+            }
+    }
+            
+    ]);
+
 
     adminController.$inject = ['$location', '$scope', '$rootScope', '$http', '$window', '$cookies', '$document'];
 
@@ -66,6 +88,25 @@
 
 
         }
+
+       $scope.uploadImage = function(){ // OVDE NASTAVITI
+            var data = new FormData();
+            data.append('image',$scope.image);
+
+           $http({
+               method: 'POST',
+               url: 'http://localhost:8096//pb/sale/'+id,
+           }).then(function successCallback(response) {
+               $scope.bpSale = response.data;
+
+
+           }, function errorCallback(response) {
+               alert("Greska kod admin get one BP")
+
+           });
+
+
+       }
 
 
         $scope.pickPozoriste = function () {
