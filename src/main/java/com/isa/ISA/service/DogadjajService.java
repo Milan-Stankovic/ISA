@@ -72,6 +72,7 @@ public class DogadjajService {
         if(Konverter.proveraProjekcije(projDTO)){ // Dodatne provere
 
             Projekcija p= new Projekcija();
+            p.setAktivna(projDTO.isAktivna());
             DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             try {
                 Date date = dateFormat.parse(projDTO.getDate());

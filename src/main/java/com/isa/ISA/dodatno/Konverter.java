@@ -8,6 +8,7 @@ import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.dbModel.enums.DogadjajStatus;
 import com.isa.ISA.dbModel.enums.TipSedista;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -82,6 +83,8 @@ public class Konverter {
         dog.setProsecnaOcena(5);
         dog.setBrojOcena(1);
         dog.setSlika(d.getSlika());
+        DogadjajStatus dos = DogadjajStatus.valueOf(d.getStatus());
+        dog.setStatus(dos);
         PozoristeBioskop pb = new PozoristeBioskop();
         pb.setId(d.getPbId());
         dog.setMestoOdrzavanja(pb);

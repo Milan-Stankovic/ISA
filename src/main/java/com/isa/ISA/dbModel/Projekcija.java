@@ -29,6 +29,8 @@ public class Projekcija {
     @JoinColumn(nullable = false)
     private Sala sala;
 
+    private boolean aktivna;
+
     /**
      * Ovde cuvamo sva zauzeta sedista, ta sedista moraju biti ista ona koja su u Sali, tj. tokom rezervacije se mora dodati to mesto u ovu listu.
      */
@@ -102,5 +104,13 @@ public class Projekcija {
 
     public void setCena(double cena) {
         this.cena = cena;
+    }
+
+    public boolean isAktivna() {
+        return aktivna;
+    }
+
+    public void setAktivna(boolean aktivna) {
+        this.aktivna = aktivna;
     }
 }

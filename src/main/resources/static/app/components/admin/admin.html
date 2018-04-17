@@ -84,6 +84,10 @@
                     <a>Actors :</a>
                 </li>
 
+                <li class="desno">
+                    <a>Status :</a>
+                </li>
+
                 <li class="desnoDebeli" ng-if="dogadjajEdit">
                     <a>Poster :</a>
                 </li>
@@ -102,7 +106,7 @@
             <ul class="formaUnos">
 
                  <li class="unos">
-                   <a class="input"> {{bpName}} </a>
+                   <a class="input" class="pointer" ng-click="pickBpOne(bpId)"> {{bpName}} </a>
                 </li>
 
                 <li class="unos">
@@ -132,6 +136,10 @@
                     <input class="input" type="text" ng-model="newDogadjajGlumci" class="form-control" id="newDogadjajGlumci">
                 </li>
 
+                <li class="unos">
+                    <select class="input" type="text"ng-model="statusDogadjaja" ng-options="status for status in dogadjajStatusi" ></select>
+                </li>
+
 
                 <li class="bigImage" ng-if="dogadjajEdit">
                     <img class="bigImageData" ng-src="/download/{{dogadjaSlika}}" width="200" height="200">
@@ -142,7 +150,7 @@
 
 
                 <li class="last">
-                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjajZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, dogadjajEdit)"> Save </button>
+                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjajZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, dogadjajEdit, newProjekcijaStatus)"> Save </button>
                 </li>
 
             </ul>
@@ -168,8 +176,12 @@
                         <a>  Date and Time  : </a>
                     </li>
 
+                    <li class="desno">
+                        <a>  Active : </a>
+                    </li>
+
                     <li class="last">
-                          <button  class="button" type="submit" ng-click="saveProjection(bp.id,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, editProjekcija, bpName)"> Save</button>
+                          <button  class="button" type="submit" ng-click="saveProjection(bp.id,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, editProjekcija, bpName, newProjekcijaAktivan)"> Save</button>
                     </li>
 
                 </ul>
@@ -179,7 +191,7 @@
             <li>
                 <ul class="formaUnos">
                     <li class="unos">
-                        <a class="input"> {{dogadjajNaziv}} </a>
+                        <a class="input" class="pointer" ng-click="editDogadjaj(dogadjajId, bpName, bpId)"> {{dogadjajNaziv}} </a>
                     </li>
 
                     <li class="unos">
@@ -192,6 +204,10 @@
 
                     <li class="unos">
                         <input class="input" ng-model="newProjekcijaDate" datetime-picker future-only date-format="dd-MM-yyyy HH:mm:ss" />
+                    </li>
+
+                    <li class="unos">
+                        <input id="input" type="checkbox" ng-checked="newProjekcijaAktivan">
                     </li>
 
 
@@ -225,8 +241,32 @@
              <li>
                 <ul class="forma">
                      <li class="desno">
-                         <a>  All events in : </a>
+                         <a>  Events in : </a>
                      </li>
+
+                    <li class="desno">
+                         <button  class="button" type="submit" ng-click="getEvents(0)"> Show current </button>
+                     </li>
+
+                    <li class="desno">
+                         <br/>
+                     </li>
+                    <li class="desno">
+                        <button  class="button" type="submit" ng-click="getEvents(1)"> Show upcoming</button>
+                     </li>
+                      <li class="desno">
+                         <br/>
+                     </li>
+                    <li class="desno">
+                         <button  class="button" type="submit" ng-click="getEvents(2)"> Show ended </button>
+                     </li>
+                      <li class="desno">
+                         <br/>
+                     </li>
+                    <li class="desno">
+                         <button  class="button" type="submit" ng-click="getEvents(3)"> Show all </button>
+                     </li>
+
                 </ul>
              </li>
 
@@ -234,7 +274,7 @@
             <li>
                 <ul class="formaUnos" >
                     <li class="unos">
-                         <a class="input"> {{bpName}} </a>
+                         <a class="input" class="pointer" ng-click="pickBpOne(bpId)"> {{bpName}} </a>
                     </li>
 
 
@@ -406,7 +446,7 @@
             <ul class="formaUnos">
 
                  <li class="unos">
-                   <a class="input"> {{bpName}} </a>
+                   <a class="input" class="pointer" ng-click="pickBpOne(bpId)"> {{bpName}} </a>
                 </li>
 
                 <li class="unos">
@@ -473,15 +513,6 @@
         </li>
 
         </span>
-
-
-
-
-
-
-
-
-
 
 
     </ul>

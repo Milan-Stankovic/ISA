@@ -429,6 +429,54 @@
 
         }
 
+        $scope.getEvents = function(koji){
+            switch (koji) {
+                case 0:
+                    $scope.bpDogadjaj = $scope.currentDogadjajiFilter;
+                    break;
+                case 1:
+                    $scope.bpDogadjaj = $scope.upcomingDogadjajiFilter;
+                    break;
+
+                case 2:
+                    $scope.bpDogadjaj = $scope.endedDogadjajiFitler;
+                    break;
+                case 3:
+                    $scope.bpDogadjaj = $scope.allDogadjajiFilter;
+                    break;
+
+                default :
+                    $scope.bpDogadjaj = $scope.currentDogadjajiFilter;
+            }
+        }
+
+        $scope.allDogadjajiFilter=[];
+        $scope.currentDogadjajiFilter=[];
+        $scope.upcomingDogadjajiFilter=[];
+        $scope.endedDogadjajiFitler=[];
+
+        var filterCurrent = function(dogadjaji){
+            $scope.currentDogadjajiFilter=[];
+            for(var i in dogadjaji){
+                if(dogadjaji[i].status == "CURRENT")
+                    $scope.currentDogadjajiFilter.push(dogadjaji[i]);
+            }
+        }
+        var filterUpcoming = function(dogadjaji){
+            $scope.upcomingDogadjajiFilter=[];
+            for(var i in dogadjaji){
+                if(dogadjaji[i].status == "UPCOMING")
+                    $scope.upcomingDogadjajiFilter.push(dogadjaji[i]);
+            }
+        }
+        var filterEnded = function(dogadjaji){
+            $scope.endedDogadjajiFitler=[];
+            for(var i in dogadjaji){
+                if(dogadjaji[i].status == "ENDED")
+                    $scope.endedDogadjajiFitler.push(dogadjaji[i]);
+            }
+        }
+
         $scope.pickAllDogadjaji = function(id, naziv){
 
             $scope.sala = false;
@@ -442,11 +490,16 @@
             $scope.bpId=id;
             $scope.bpName=naziv;
 
+
             $http({
                 method: 'GET',
                 url: 'http://localhost:8096/pb/dogadjaj/'+id,
             }).then(function successCallback(response) {
+                $scope.allDogadjajiFilter= response.data;
                 $scope.bpDogadjaj = response.data;
+                filterCurrent($scope.bpDogadjaj);
+                filterEnded($scope.bpDogadjaj);
+                filterUpcoming($scope.bpDogadjaj);
                 $scope.bpOne = false;
                 $scope.allDogadjaji = true;
 
@@ -484,6 +537,7 @@
                 $scope.newDogadjajBodovi=dogadjaj.donosiBodova;
                 $scope.newDogadjajGlumci=dogadjaj.glumciStr;
                 $scope.dogadjaSlika = dogadjaj.slika;
+                switchStatus(dogadjaj.status);
                 $scope.bpId=bpId;
                 $scope.bpName=bpNaziv;
                 $scope.pickDogadjaj(true);
@@ -532,6 +586,31 @@
             });
         }
         getBioskopi();
+
+
+        $scope.dogadjajStatusi = [
+            "UPCOMING",
+            "ENDED",
+            "CURRENT"
+        ];
+
+        var switchStatus = function(status) {
+            switch (status) {
+                case "UPCOMING":
+                    $scope.statusDogadjaja = $scope.dogadjajStatusi[0];
+                    break;
+                case "ENDED":
+                    $scope.statusDogadjaja = $scope.dogadjajStatusi[1];
+                    break;
+
+                case "CURRENT":
+                    $scope.statusDogadjaja = $scope.dogadjajStatusi[2];
+                    break;
+
+                default :
+                    $scope.statusDogadjaja = $scope.dogadjajStatusi[0];
+            }
+        }
 
         var pickZanr = function(zanr){
 
@@ -797,7 +876,7 @@
 
         $scope.editProjekcija = false;
 
-        $scope.saveProjection = function(bpId,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, menjaj, bpNaziv){
+        $scope.saveProjection = function(bpId,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, menjaj, bpNaziv, newProjekcijaAktivan){
 
             var moze=false;
             if(bpId)
@@ -815,7 +894,8 @@
                         "sala": newProjekcijaSala.id,
                         "date": newProjekcijaDate,
                         "ustanova": bpId,
-                        "dogadjaj": dogadjajId
+                        "dogadjaj": dogadjajId,
+                        "aktivna" : newProjekcijaAktivan
                     }
 
                     console.log(newProjekcijaDate);
@@ -971,7 +1051,7 @@
 
 
 
-        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, edit) {
+        $scope.addNewEvent = function (newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, edit,newDogadjajStatus) {
 
 
                 var provera = false;
@@ -996,6 +1076,9 @@
                     fd.append('data', 'string');
                    // console.log(fd);
 
+                    $scope.statusDogadjaja = newDogadjajStatus;
+                    switchStatus(newDogadjajStatus);
+
 
                     var dogadjajDTO = {
                         "naziv" : newDogadjaName,
@@ -1006,6 +1089,7 @@
                         "donosiBodova" : newDogadjajBodovi,
                         "glumciStr" : newDogadjajGlumci,
                         "pbId": bpId,
+                        "status": $scope.statusDogadjaja,
                         "slika" : $scope.dogadjaSlika ///Ako bude bug zbog ovoga je
                     }
 

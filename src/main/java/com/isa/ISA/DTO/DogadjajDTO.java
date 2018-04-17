@@ -25,6 +25,17 @@ public class DogadjajDTO {
 
     private String slika;
 
+    private String status;
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Long getPbId() {
         return pbId;
     }

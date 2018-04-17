@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import com.isa.ISA.dbModel.enums.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +17,6 @@ import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
-import com.isa.ISA.dbModel.enums.StatusNaloga;
-import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
-import com.isa.ISA.dbModel.enums.TipAdmina;
-import com.isa.ISA.dbModel.enums.TipSedista;
-import com.isa.ISA.dbModel.enums.TipUstanove;
-import com.isa.ISA.dbModel.enums.Zanr;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
@@ -195,12 +190,14 @@ public class StartData {
 
         List<Projekcija> projekcije = new ArrayList<>();
         Projekcija p = new Projekcija();
+        p.setAktivna(true);
         p.setCena(300);
         p.setSala(s1);
         p.setVreme(new Date());
         p.setZauzetaSedista(new ArrayList<Sediste>());
         p.setRezervacije(new ArrayList<Rezervacija>());
         Dogadjaj d = new Dogadjaj();
+        d.setStatus(DogadjajStatus.CURRENT);
         d.setBrojOcena(0);
         d.setProsecnaOcena(0);
         d.setDonosiBodova(1);
@@ -315,12 +312,14 @@ public class StartData {
 
         List<Projekcija> projekcije = new ArrayList<>();
         Projekcija p = new Projekcija();
+        p.setAktivna(true);
         p.setCena(300);
         p.setSala(s1);
         p.setVreme(new Date());
         p.setZauzetaSedista(new ArrayList<Sediste>());
         p.setRezervacije(new ArrayList<Rezervacija>());
         Dogadjaj d = new Dogadjaj();
+        d.setStatus(DogadjajStatus.CURRENT);
         d.setBrojOcena(0);
         d.setProsecnaOcena(0);
         d.setDonosiBodova(1);
@@ -353,12 +352,14 @@ public class StartData {
 
 
         Projekcija pp = new Projekcija();
+        pp.setAktivna(true);
         pp.setCena(300);
         pp.setSala(s1);
         pp.setVreme(new Date(System.currentTimeMillis()+24*60*60*1000));
         pp.setZauzetaSedista(new ArrayList<Sediste>());
         pp.setRezervacije(new ArrayList<Rezervacija>());
         Dogadjaj dd = new Dogadjaj();
+        dd.setStatus(DogadjajStatus.CURRENT);
         dd.setBrojOcena(0);
         dd.setProsecnaOcena(0);
         dd.setDonosiBodova(1);

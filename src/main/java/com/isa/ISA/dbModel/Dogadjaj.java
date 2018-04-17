@@ -3,7 +3,9 @@ package com.isa.ISA.dbModel;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.isa.ISA.dbModel.enums.DogadjajStatus;
 import com.isa.ISA.dbModel.enums.Zanr;
+import com.isa.ISA.service.DogadjajService;
 
 import java.util.List;
 
@@ -38,6 +40,9 @@ public class Dogadjaj {
     private int donosiBodova;
 
     private String glumciStr;
+
+    @Enumerated(EnumType.STRING)
+    private DogadjajStatus status;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JsonBackReference
@@ -152,7 +157,17 @@ public class Dogadjaj {
         return prikazujeSe;
     }
 
+    public DogadjajStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(DogadjajStatus status) {
+        this.status = status;
+    }
+
     public void setPrikazujeSe(List<Projekcija> prikazujeSe) {
         this.prikazujeSe = prikazujeSe;
     }
 }
+
+

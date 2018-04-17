@@ -12,6 +12,16 @@ public class ProjekcijaDTO {
 
     private String date;
 
+    private boolean aktivna;
+
+    public boolean isAktivna() {
+        return aktivna;
+    }
+
+    public void setAktivna(boolean aktivna) {
+        this.aktivna = aktivna;
+    }
+
     public ProjekcijaDTO(){}
 
     public int getCena() {
@@ -53,4 +63,6 @@ public class ProjekcijaDTO {
     public void setDate(String date) {
         this.date = date;
     }
+
+
 }
