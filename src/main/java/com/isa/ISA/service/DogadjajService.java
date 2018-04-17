@@ -1,17 +1,20 @@
 package com.isa.ISA.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.isa.ISA.DTO.DogadjajDTO;
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.Projekcija;
+import com.isa.ISA.DTO.ProjekcijaDTO;
+import com.isa.ISA.dbModel.*;
 import com.isa.ISA.dodatno.Konverter;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.repository.DogadjajRepository;
 
 @Service
@@ -22,6 +25,9 @@ public class DogadjajService {
 
     @Autowired
     private PozoristeBioskopService pozBiService;
+
+    @Autowired
+    private SalaService salaService;
 
     public List<Dogadjaj> getAllDogadjaj(){
         List<Dogadjaj> allDog = new ArrayList<>();
@@ -60,6 +66,53 @@ public class DogadjajService {
             dog.setId(id);
             dogRepo.save(dog);
         }
+    }
+
+    public void addProjekcija(ProjekcijaDTO projDTO){
+        if(Konverter.proveraProjekcije(projDTO)){ // Dodatne provere
+
+            Projekcija p= new Projekcija();
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            try {
+                Date date = dateFormat.parse(projDTO.getDate());
+                p.setVreme(date);
+                p.setCena(projDTO.getCena());
+                List<Rezervacija> rezervacije = new ArrayList<>();
+                List<Sediste> sedista = new ArrayList<>();
+
+                p.setRezervacije(rezervacije);
+                p.setZauzetaSedista(sedista);
+
+                PozoristeBioskop pb = pozBiService.getPozoristeBioskop(projDTO.getUstanova());
+                if(pb != null){
+                    Sala s = salaService.getOne(projDTO.getSala());
+                    if(s!=null){
+                        p.setSala(s);
+
+                        Dogadjaj d = dogRepo.findOne(projDTO.getDogadjaj());
+                        if(d!=null){
+                            p.setDogadjaj(d);
+                            d.getPrikazujeSe().add(p);
+                            d=dogRepo.save(d);
+                            for (Projekcija p1:d.getPrikazujeSe()) {
+                                if(p1.getSala()==p.getSala() && p1.getVreme()==p.getVreme()){
+                                    pb.getProjekcije().add(p1);
+                                    pozBiService.updatePozoristeBioskop(pb);
+                                }
+
+                            }
+                        }
+
+
+                    }
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     public void updateDogadjaj2(Dogadjaj d){

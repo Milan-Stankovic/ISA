@@ -3,6 +3,7 @@
 
 
 
+
     angular
         .module('app')
         .directive('ngConfirmClick', [
@@ -526,7 +527,7 @@
                 $scope.bioskopiAdmin = response.data;
 
             }, function errorCallback(response) {
-                alert("Greska kod admin bioskopi")
+                alert("Error getting cinemas")
 
             });
         }
@@ -634,10 +635,24 @@
         $scope.dogadjajNaziv="";
 
         $scope.addProjection = function(bpId, id, name){
-            $scope.dogadjajId=id;
-            $scope.bpId = bpId;
-            $scope.dogadjajNaziv = name;
-            $scope.pickProjekcija(false);
+
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/pb/sale/'+bpId, // FALI MI DEO ZA ID
+            }).then(function successCallback(response) {
+                $scope.saleProjekcija = response.data;
+                $scope.dogadjajId=id;
+                $scope.bpId = bpId;
+                $scope.dogadjajNaziv = name;
+                $scope.pickProjekcija(false);
+
+            }, function errorCallback(response) {
+                alert("Error getting Auditoriums for a Projection")
+
+            });
+
+
 
         }
 
@@ -776,6 +791,57 @@
                 alert("Greska kod dobijanja sale za edit")
 
             });
+
+
+        }
+
+        $scope.editProjekcija = false;
+
+        $scope.saveProjection = function(bpId,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, menjaj, bpNaziv){
+
+            var moze=false;
+            if(bpId)
+                if(dogadjajId)
+                    if(newProjekcijaCena)
+                        if(newProjekcijaSala)
+                            if(newProjekcijaDate)
+                                if(newProjekcijaCena>0)
+                                    moze=true;
+            if(moze){
+                if(!menjaj){
+                    var newProjekcijaDTO = {};
+                    newProjekcijaDTO = {
+                        "cena": newProjekcijaCena,
+                        "sala": newProjekcijaSala.id,
+                        "date": newProjekcijaDate,
+                        "ustanova": bpId,
+                        "dogadjaj": dogadjajId
+                    }
+
+                    console.log(newProjekcijaDate);
+                  //  console.log(newProjekcijaDTO);
+
+                    $http({
+                        method: 'POST',
+                        url: 'http://localhost:8096/d/projekcija',
+                        data: newProjekcijaDTO
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Auditorium added sucessfully");
+                        $scope.editDogadjaj(dogadjajId,bpNaziv, bpId);
+
+
+                    }, function errorCallback(response) {
+                        alert("Error occured while adding projection");
+                    });
+
+
+                }
+            }
+
+
+
+
 
 
         }

@@ -1,6 +1,7 @@
 package com.isa.ISA.dodatno;
 
 import com.isa.ISA.DTO.DogadjajDTO;
+import com.isa.ISA.DTO.ProjekcijaDTO;
 import com.isa.ISA.DTO.SalaDTO;
 import com.isa.ISA.DTO.SedisteDTO;
 import com.isa.ISA.dbModel.Dogadjaj;
@@ -11,7 +12,11 @@ import com.isa.ISA.dbModel.enums.TipSedista;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Konverter {
 
@@ -83,10 +88,25 @@ public class Konverter {
         return dog;
 
     }
+
+
+    public static boolean proveraProjekcije(ProjekcijaDTO p){
+       boolean b = false;
+
+        if(p.getCena() >0)
+            if(p.getDate() != null)
+                if(p.getDate().length() >0)
+                    if(p.getDogadjaj() !=null)
+                        if(p.getDogadjaj()>0)
+                            if(p.getSala() != null)
+                                if(p.getSala() >0)
+                                    if(p.getUstanova() != null)
+                                        if(p.getUstanova() > 0)
+                                            b= true;
+        return b;
+    }
+
     public static boolean proveraDogadjaja(DogadjajDTO d){
-
-        System.out.println("TU SAM KOD PROVERE");
-
 
         if(d.getGlumciStr().length()>0)
             if(d.getNaziv().length()>0)

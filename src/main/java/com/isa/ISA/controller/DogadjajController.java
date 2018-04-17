@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.DTO.FileDTO;
+import com.isa.ISA.DTO.ProjekcijaDTO;
 import com.isa.ISA.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -48,6 +49,11 @@ public class DogadjajController {
     @RequestMapping(method = RequestMethod.POST,value = "/d")
     public void setDogadjaj(@RequestBody DogadjajDTO d){
         dogService.addDogadjaj(d);
+    }
+
+    @RequestMapping(method = RequestMethod.POST,value = "/d/projekcija")
+    public void addProjekcija(@RequestBody ProjekcijaDTO pd){
+        dogService.addProjekcija(pd);
     }
 
     @RequestMapping(

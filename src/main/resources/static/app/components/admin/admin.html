@@ -89,7 +89,7 @@
                 </li>
 
                   <li class="last" ng-if="dogadjajEdit">
-                        <button  class="button" type="submit" ng-click="addProjection(bp.id,dogadjajId,newDogadjaName )"> Add Projection </button>
+                        <button  class="button" type="submit" ng-click="addProjection(bp.id,dogadjajId,newDogadjaName)"> Add Projection </button>
                   </li>
 
 
@@ -159,8 +159,17 @@
                      <li class="desno">
                         <a>  Price : </a>
                     </li>
-                     <li class="desnoDebeli">
-                        <a>  Date and Time : </a>
+
+                    <li class="desno">
+                        <a>  Auditorium : </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>  Date and Time  : </a>
+                    </li>
+
+                    <li class="last">
+                          <button  class="button" type="submit" ng-click="saveProjection(bp.id,dogadjajId,newProjekcijaCena,newProjekcijaSala,newProjekcijaDate, editProjekcija, bpName)"> Save</button>
                     </li>
 
                 </ul>
@@ -168,7 +177,7 @@
             </li>
 
             <li>
-                <ul>
+                <ul class="formaUnos">
                     <li class="unos">
                         <a class="input"> {{dogadjajNaziv}} </a>
                     </li>
@@ -178,12 +187,13 @@
                     </li>
 
                     <li class="unos">
-                        <input class="input"  type="text" ng-model="newProjekcijaCena" class="form-control" id="newProjekcijaSala">
+                        <select class="input" type="text"ng-model="newProjekcijaSala" ng-options="item as item.ime for item in saleProjekcija" ></select>
                     </li>
 
-                    <li class="unosDebeli">
-
+                    <li class="unos">
+                        <input class="input" ng-model="newProjekcijaDate" datetime-picker future-only date-format="dd-MM-yyyy HH:mm:ss" />
                     </li>
+
 
                 </ul>
 

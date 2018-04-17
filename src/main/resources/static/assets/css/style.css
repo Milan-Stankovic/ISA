@@ -1619,6 +1619,17 @@ p a:hover {
     height: 48px !important;
 }
 
+.unosDateTime{
+	display:block  !important;
+	float:left  !important;
+	padding: 0 !important;
+	text-decoration: none !important;
+	padding: 7px 16px !important;
+	border: 1px solid #4f4f4f;
+	width: 400px !important;
+	height: 200px !important;
+}
+
 .input{
     padding: 0 !important;
     text-decoration: none !important;
@@ -1635,6 +1646,15 @@ p a:hover {
     height: 48px !important;
     background-color: #4f4f4f !important;
     color: white !important;
+}
+
+.inputDateTime{
+	padding: 0 !important;
+	text-decoration: none !important;
+	width: 400px !important;
+	height: 200px !important;
+	background-color: #4f4f4f !important;
+	color: white !important;
 }
 
 .last{
@@ -1706,7 +1726,6 @@ p a:hover {
 .clear {
 	all: unset !important;
     background-color:transparent !important;
-
 }
 
 .clearRed {
