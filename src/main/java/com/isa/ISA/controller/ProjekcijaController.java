@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.isa.ISA.DTO.ProjekcijaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +34,11 @@ public class ProjekcijaController {
     @RequestMapping("/pb/{id1}/projekcije/{id2}")
     private Projekcija getProjekcija(@PathVariable Long id2){
         return ps.getProjekcija(id2);
+    }
+
+    @RequestMapping("/projekcija/{id}")
+    private Projekcija getProjekcijaEz(@PathVariable Long id){
+        return ps.getProjekcija(id);
     }
 
     @RequestMapping("/pb/{id}/projekcije/od")
@@ -82,6 +88,11 @@ public class ProjekcijaController {
     }
 
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/projekcija/{id}")
+    public void updateProjekcijaLikeABoss(@RequestBody ProjekcijaDTO pr, @PathVariable Long id){
+        ps.greatUpdateProjekcija(pr, id);
+    }
+
     @RequestMapping(method = RequestMethod.PUT, value = "/pb/{id}/projekcije/{id2}")
     public void updateProjekcija(@RequestBody Projekcija pr, @PathVariable Long id, @PathVariable Long id2){ // Nisam siguran ni sta ce mi id ali lepse izgleda url
         ps.updateProjekcija(pr);
@@ -90,6 +101,12 @@ public class ProjekcijaController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/pb/{id}/projekcije/{id2}")
     public void deleteProjekcija(@PathVariable Long id, @PathVariable Long id2 ){
         ps.deleteProjekcija(id2);
+
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/projekcija/{id}")
+    public void deleteProjekcijaLikeABoss(@PathVariable Long id){
+        ps.deleteProjekcija(id);
 
     }
 

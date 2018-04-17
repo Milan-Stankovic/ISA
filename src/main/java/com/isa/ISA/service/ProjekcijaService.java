@@ -1,9 +1,14 @@
 package com.isa.ISA.service;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.isa.ISA.DTO.ProjekcijaDTO;
+import com.isa.ISA.dodatno.Konverter;
 import com.isa.ISA.repository.DogadjajRepository;
 import com.isa.ISA.repository.SalaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +51,28 @@ public class ProjekcijaService {
 
     public void updateProjekcija(Projekcija p){
         pr.save(p);
+    }
+
+    public void greatUpdateProjekcija(ProjekcijaDTO p, Long id){
+        if(Konverter.proveraProjekcije(p)){
+            Projekcija proj = getProjekcija(id);
+            proj.setAktivna(p.isAktivna());
+            Sala s = sr.findOne(p.getSala());
+            proj.setSala(s);
+            proj.setCena(p.getCena());
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            try{
+                Date date = dateFormat.parse(p.getDate());
+                proj.setVreme(date);
+                pr.save(proj);
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+
     }
 
     public void addProjekcija(Projekcija p){

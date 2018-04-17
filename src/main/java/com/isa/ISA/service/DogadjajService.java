@@ -124,6 +124,21 @@ public class DogadjajService {
         dogRepo.delete(id);
     }
 
+    public void deleteProjekcija(Long idDogadjaj, Long idProjekcije){
+
+        int i =0;
+        Dogadjaj d= dogRepo.findOne(idDogadjaj);
+        for (Projekcija p:d.getPrikazujeSe()) {
+            if(p.getId()==idProjekcije){
+                d.getPrikazujeSe().remove(i);
+                break;
+            }
+            i++;
+        }
+        dogRepo.save(d);
+
+    }
+
     public Dogadjaj getDogadjaj(Long l){
         return dogRepo.findOne(l);
     }
