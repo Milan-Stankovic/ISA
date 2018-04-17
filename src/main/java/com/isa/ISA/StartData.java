@@ -210,6 +210,7 @@ public class StartData {
         d.setReziser("Minja");
         d.setZanr(Zanr.HOROR);
         d.setTrajanje(90);
+        d.setSlika("5d2f9b0e-5fc2-4c47-8cd3-807e1dc99e42");
 
         dogadjajService.addDogadjaj2(d);
 
@@ -327,6 +328,7 @@ public class StartData {
         d.setOpis("Akcioni film iz ise");
         d.setReziser("Minja");
         d.setZanr(Zanr.DRAMA);
+        d.setSlika("e9a798ab-cbed-4348-bf05-4b09661e624a");
         d.setTrajanje(90);
 
         dogadjajService.addDogadjaj2(d);
@@ -363,6 +365,7 @@ public class StartData {
         dd.setNaziv("Web Film vol. 2");
         dd.setOpis("Akcioni film iz ise 2: Minja's revenge!");
         dd.setReziser("Minja");
+        dd.setSlika("d0b0c187-9a31-430b-9dad-df78adc180d2");
         dd.setZanr(Zanr.HOROR);
         dd.setTrajanje(90);
 
