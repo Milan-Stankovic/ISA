@@ -5,6 +5,8 @@ import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.enums.Zanr;
 
+import java.util.List;
+
 
 /**
  * Ova klasa predstavlja Film ili Predstavu
@@ -36,6 +38,10 @@ public class Dogadjaj {
     private int donosiBodova;
 
     private String glumciStr;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonBackReference
+    private List<Projekcija> prikazujeSe;
 
     @ManyToOne
     @JsonBackReference
@@ -140,5 +146,13 @@ public class Dogadjaj {
 
     public void setGlumciStr(String glumciStr) {
         this.glumciStr = glumciStr;
+    }
+
+    public List<Projekcija> getPrikazujeSe() {
+        return prikazujeSe;
+    }
+
+    public void setPrikazujeSe(List<Projekcija> prikazujeSe) {
+        this.prikazujeSe = prikazujeSe;
     }
 }

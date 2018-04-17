@@ -7,6 +7,7 @@ import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.DTO.FileDTO;
 import com.isa.ISA.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import com.isa.ISA.dbModel.Dogadjaj;
 import com.isa.ISA.service.DogadjajService;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.core.io.Resource;
 
 @RestController
 public class DogadjajController {
@@ -30,6 +33,11 @@ public class DogadjajController {
     @RequestMapping("/do")
     public List<Dogadjaj> getAllDogadjaj() {
         return dogService.getAllDogadjaj();
+    }
+
+    @RequestMapping("/pb/dogadjaj/{id}")
+    public List<Dogadjaj> getDogadjajbyPozBi(@PathVariable Long id){
+        return dogService.findByPozBi(id);
     }
 
     @RequestMapping("/d/{id}")
@@ -65,16 +73,22 @@ public class DogadjajController {
             return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(f);
         }
 
+    }
 
-
+    @RequestMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String id){
+      Resource image=   upS.download(id);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + image.getFilename() + "\"")
+                .body(image);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/d/{id}")
-    public void updateDogadjaj(@PathVariable Long id, @RequestBody Dogadjaj d){
-        dogService.updateDogadjaj(d);
+    public void updateDogadjaj(@PathVariable Long id, @RequestBody DogadjajDTO d){
+        dogService.updateDogadjaj(d, id);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/d/{id}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/d/delete/{id}")
     public void deleteDogadjaj(@PathVariable Long id){
         dogService.deleteDogadjaj(id);
     }

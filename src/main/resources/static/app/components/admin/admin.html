@@ -55,7 +55,7 @@
             <ul class="forma">
 
                 <li class="desno">
-                    <a>  Adding auditorium to : </a>
+                    <a>  Event in : </a>
                 </li>
 
                 <li class="desno">
@@ -84,6 +84,15 @@
                     <a>Actors :</a>
                 </li>
 
+                <li class="desnoDebeli" ng-if="dogadjajEdit">
+                    <a>Poster :</a>
+                </li>
+
+                  <li class="last" ng-if="dogadjajEdit">
+                        <button  class="button" type="submit" ng-click="addProjection(bp.id,dogadjajId,newDogadjaName )"> Add Projection </button>
+                  </li>
+
+
 
 
             </ul>
@@ -104,7 +113,7 @@
                 </li>
 
                 <li class="unos">
-                    <select class="input" type="text"ng-model="newDogadjaZanr" ng-options="item for item in zanr" id="newDogadjajZanr"></select>
+                    <select class="input" type="text"ng-model="newDogadjajZanr" ng-options="item for item in zanr" id="newDogadjajZanr"></select>
                 </li>
 
                 <li class="unos">
@@ -123,15 +132,62 @@
                     <input class="input" type="text" ng-model="newDogadjajGlumci" class="form-control" id="newDogadjajGlumci">
                 </li>
 
+
+                <li class="bigImage" ng-if="dogadjajEdit">
+                    <img class="bigImageData" ng-src="/download/{{dogadjaSlika}}" width="200" height="200">
+                </li>
+
+
 	                <input type="file" file-upload="myFile" accept=".jpg,.png">
 
 
                 <li class="last">
-                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjaZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId)"> Save </button>
+                     <button  class="button" type="submit" ng-click="addNewEvent(newDogadjaName, newDogadjajOpis,newDogadjajZanr, newDogadjajReziser,newDogadjajTrajanje,newDogadjajBodovi,newDogadjajGlumci, bpId, dogadjajEdit)"> Save </button>
                 </li>
 
             </ul>
         </li>
+
+        </span>
+
+        <span ng-if="projekcija">
+            <li>
+                <ul class="forma">
+                    <li class="desno">
+                        <a>  Projection in : </a>
+                    </li>
+                     <li class="desno">
+                        <a>  Price : </a>
+                    </li>
+                     <li class="desnoDebeli">
+                        <a>  Date and Time : </a>
+                    </li>
+
+                </ul>
+
+            </li>
+
+            <li>
+                <ul>
+                    <li class="unos">
+                        <a class="input"> {{dogadjajNaziv}} </a>
+                    </li>
+
+                    <li class="unos">
+                        <input class="input"  type="text" ng-model="newProjekcijaCena" class="form-control" id="newProjekcijaCena">
+                    </li>
+
+                    <li class="unos">
+                        <input class="input"  type="text" ng-model="newProjekcijaCena" class="form-control" id="newProjekcijaSala">
+                    </li>
+
+                    <li class="unosDebeli">
+
+                    </li>
+
+                </ul>
+
+            </li>
 
         </span>
 
@@ -150,6 +206,43 @@
                  </ul>
 
             </li>
+
+        </span>
+
+
+        <span ng-if="allDogadjaji">
+
+             <li>
+                <ul class="forma">
+                     <li class="desno">
+                         <a>  All events in : </a>
+                     </li>
+                </ul>
+             </li>
+
+
+            <li>
+                <ul class="formaUnos" >
+                    <li class="unos">
+                         <a class="input"> {{bpName}} </a>
+                    </li>
+
+
+                     <li class="unos" ng-repeat="dogadjaj in bpDogadjaj">
+
+
+                         <button type="submit" class="delete" class="btn btn-primary"  ng-confirm-click="Are you sure to delete this Event ?" confirmed-click="deleteDogadjaj(dogadjaj.id, bp.id)" >
+					        <img class="clearDelete" src="../../../assets/images/trash.png" width="20" height="20" title="Delete" alt="submit" />
+				        </button>
+
+                        <a class="pointer" ng-click="editDogadjaj(dogadjaj.id, bp.naziv, bp.id)">{{dogadjaj.naziv}} </a>
+
+
+
+                    </li>
+                </ul>
+            </li>
+
 
         </span>
 
@@ -192,9 +285,21 @@
                     </li>
 
                     <li class="desno">
-                        <a>  Sale : </a>
+                        <a>  Auditoriums : </a>
                     </li>
 
+
+                    <li class="last">
+                        </br>
+                    </li>
+
+                    <li class="last">
+                        <button  class="button" type="submit" ng-click="pickAllDogadjaji(bp.id, bp.naziv)"> Events </button>
+                    </li>
+
+                     <li class="last">
+                        </br>
+                    </li>
 
                     <li class="last">
                         <button  class="button" type="submit" ng-click="editChange()"> Toggle edit </button>
@@ -230,21 +335,16 @@
 
                     <li class="unos" ng-repeat="sala in bpSale">
 
-
-
                          <button type="submit" class="delete" class="btn btn-primary"  ng-confirm-click="Are you sure to delete this Auditorium ?" confirmed-click="deleteSala(sala.id, bp.id)" >
 					        <img class="clearDelete" src="../../../assets/images/trash.png" width="20" height="20" title="Delete" alt="submit" />
 				        </button>
 
                         <a class="pointer" ng-click="editSala(sala.id, bp.naziv, bp.id)">{{sala.ime}} </a>
 
-
-
                     </li>
 
-
-                     <li class="last">
-                        <button  class="buttonDebeli" type="submit" ng-click="addSala(bp.id, bp.naziv)"> Add Auditorium </button>
+                      <li class="last">
+                        </br>
                     </li>
 
 
@@ -262,6 +362,8 @@
                  </ul>
             </li>
         </span>
+
+
 
         <span ng-if="sala">
         <li>
@@ -347,14 +449,6 @@
 
                     </table>
                 </div>
-
-
-
-
-
-
-
-
 
                 <li class="last">
                      <button   class="button" type="submit"  ng-click="saveSala( newSalaName, newSalaBR, newSalaBS, editOneSala )"> Save </button>

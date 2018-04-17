@@ -5,6 +5,8 @@ import java.util.List;
 
 import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Projekcija;
+import com.isa.ISA.dodatno.Konverter;
 import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,51 +29,40 @@ public class DogadjajService {
         return allDog;
     }
 
-    private Dogadjaj converter(DogadjajDTO d){
-        Dogadjaj dog = new Dogadjaj();
-        dog.setTrajanje(d.getTrajanje());
-        dog.setZanr(d.getZanr());
-        dog.setReziser(d.getReziser());
-        dog.setOpis(d.getOpis());
-        dog.setNaziv(d.getNaziv());
-        dog.setGlumciStr(d.getGlumciStr());
-        dog.setDonosiBodova(d.getDonsiBodova());
-        dog.setProsecnaOcena(5);
-        dog.setBrojOcena(1);
-        dog.setSlika(d.getSlika());
-        PozoristeBioskop pb = new PozoristeBioskop();
-        pb.setId(d.getPbId());
-        dog.setMestoOdrzavanja(pb);
-        return dog;
 
-    }
-    private boolean provera(DogadjajDTO d){
-
-        if(d.getGlumciStr().length()>0)
-            if(d.getNaziv().length()>0)
-                if(d.getOpis().length()>0)
-                    if(d.getReziser().length()>0)
-                        if(d.getTrajanje()>0)
-                            if(d.getZanr() != null)
-                                if(d.getPbId() != null)
-                                    if(d.getSlika() !=null)
-                                        if(d.getSlika().length() >0)
-                                            return true;
-        return false;
-
-    }
 
     public void addDogadjaj(DogadjajDTO d){
+        if(Konverter.proveraDogadjaja(d)){
+            Dogadjaj dog = Konverter.converterDogadjaja(d);
+            List<Projekcija> proj= new ArrayList<>();
+            dog.setPrikazujeSe(proj);
+            System.out.println("TU SAM WTF IZNAD SAVE DOG");
+            dogRepo.save(dog);
+           // dogRepo.save(Konverter.converterDogadjaja(d));
+        }
+    }
 
-        if(provera(d))
-            dogRepo.save(converter(d));
+
+    public List<Dogadjaj> findByPozBi(Long id){
+        PozoristeBioskop pb = new PozoristeBioskop();
+        pb.setId(id);
+        return dogRepo.findByMestoOdrzavanja(pb);
     }
 
     public void addDogadjaj2(Dogadjaj d){
             dogRepo.save(d);
     }
 
-    public void updateDogadjaj(Dogadjaj d){
+    public void updateDogadjaj(DogadjajDTO d, Long id){
+
+        if(Konverter.proveraDogadjaja(d)) {
+            Dogadjaj dog = Konverter.converterDogadjaja(d);
+            dog.setId(id);
+            dogRepo.save(dog);
+        }
+    }
+
+    public void updateDogadjaj2(Dogadjaj d){
         dogRepo.save(d);
     }
 

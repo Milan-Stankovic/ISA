@@ -38,6 +38,12 @@
 			controller: 'registerController',
 			controllerAs: 'rc'
 		})
+		.state('core.friends', {
+            url: 'friends',
+            templateUrl: 'app/components/friends/friends.html',
+            controller: 'friendsController',
+            controllerAs: 'fc'
+        })
 		.state('core.login', {
 			url: 'login',
 			templateUrl: 'app/components/login/login.html',
@@ -56,6 +62,12 @@
             controller: 'reservationController',
             controllerAs: 'resc'
         })
+        .state('core.allReservations', {
+          url: 'allReservations',
+          templateUrl: 'app/components/allReservations/allReservations.html',
+          controller: 'allReservationsController',
+          controllerAs: 'arc'
+      })
         .state('core.projekcija', {
             url: 'pozoristeBioskop/{id1}/projekcije/{id2}',
             templateUrl: 'app/components/projekcija/projekcija.html',
