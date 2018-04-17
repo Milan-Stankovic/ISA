@@ -16,8 +16,12 @@
     	var init = function(){
         	userCookie = $cookies.get('user');
             userId = $cookies.get('id');
-        	if (userCookie && userId)
-        		$scope.logged=true;
+        	if (userCookie && userId){
+        	    $rootScope.showBioskopi=false;
+                $rootScope.showPozorista=false;
+                $scope.logged=true;
+        	}
+
         	else $scope.logged=false;
 
 
@@ -35,17 +39,35 @@
         $scope.showOnlyBioskopi=function(){
             $rootScope.showBioskopi=true;
             $rootScope.showPozorista=false;
+            if($scope.logged)
+                $location.path("regKorHome")
+            else $location.path("home")
 
         }
 
         $scope.showOnlyPozorista=function(){
             $rootScope.showBioskopi=false;
             $rootScope.showPozorista=true;
+            if($scope.logged)
+                $location.path("regKorHome")
+            else $location.path("home")
+
         }
 
          $scope.showAll=function(){
-            $rootScope.showBioskopi=true;
-            $rootScope.showPozorista=true;
+
+            if($scope.logged){
+                $rootScope.showBioskopi=false;
+                $rootScope.showPozorista=false;
+                $location.path("regKorHome")
+            }
+
+            else{
+                $rootScope.showBioskopi=true;
+                $rootScope.showPozorista=true;
+                $location.path("home")
+            }
+
         }
     }
 

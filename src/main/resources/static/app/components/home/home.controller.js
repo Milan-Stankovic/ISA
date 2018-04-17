@@ -11,8 +11,7 @@
         hc.home = "Home";
         var user;
         var init = function (){
-            $rootScope.showBioskopi=true;
-            $rootScope.showPozorista=true;
+
             if($cookies.get('user'))
                 $location.path("regKorHome")
             };

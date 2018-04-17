@@ -23,13 +23,10 @@
 
                        console.log("admir")
                        $location.path("/admin");
-                       $rootScope.showBioskopi = false;
-                       $rootScope.showPozorista = false;
+
                  }else {
                     console.log("not admir")
                     $location.path("/regKorHome");
-                    $rootScope.showBioskopi = false;
-                    $rootScope.showPozorista = false;
                  }
 
               }, function errorCallback(response) {
