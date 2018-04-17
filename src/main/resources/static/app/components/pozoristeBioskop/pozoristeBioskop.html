@@ -28,13 +28,15 @@
 
     <div>
         <h2><a>Program ({{filteredProj.length}}):</a></h2>
-        <div style="overflow-y: scroll; height:300px;  background-color:gray">
+        <div style="overflow-y: scroll; height:600px;  background-color:gray">
             <span ng-repeat="proj in filteredProj track by $index">
                <p>Name:  <a>"{{proj.dogadjaj.naziv}}"</a></p>
+                <img ng-src="/download/{{proj.dogadjaj.slika}}" style="width:100%; max-width:100px;">
                 <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}, Length: {{proj.dogadjaj.trajanje}} min. </p>
+                <p>Auditorium: {{proj.sala.ime}}</p>
                 <p>Price: {{proj.cena}},00 RSD</p>
                 <button ng-click="otvoriProj(proj.id)">Details</button><span>    </span><button ng-click="rezervisi(proj.id)">Reservation</button>
-                <br>
+                <br><br><br>
             </span>
             <br>
         </div>

@@ -33,10 +33,25 @@
         }).then(function successCallback(response) {
             $scope.proj = response.data;
              console.log("projekcija: " + $scope.proj.dogadjaj.naziv)
+
+             $http({
+                      method: 'GET',
+                      url: 'http://localhost:8096/sala/ustanova/' + $scope.proj.sala.id
+                     }).then(function successCallback(response) {
+                     $scope.salaUstanova = response.data;
+                     }, function errorCallback(response) {
+                                   alert("Greska kod get ustanova")
+
+                               });
+
         }, function errorCallback(response) {
             alert("Greska kod get projekcije")
 
         });
+
+
+
+
 
         $http({
             method: 'GET',
