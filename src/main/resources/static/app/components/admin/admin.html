@@ -16,35 +16,98 @@
                     <a ng-click="pickBioskop()">CINEMA</a>
 
                 </li>
+
                 <li class="goreDole">
 
-                    <a  ng-click="pickSala(false)">AUDITORIUM</a>
+                    <a  ng-click="pickKarta()">QUICK RESERVATION</a>
 
                 </li>
+
                 <li class="goreDole">
 
-                    <a  ng-click="pickSedista()">SEATS</a>
+                    <a  ng-click="pickIzvestaj()">REPORTS</a>
 
+                </li>
+
+                <li class="goreDole">
+                    <br/>
                 </li>
                 <li class="goreDole">
-
-                    <a  ng-click="pickDogadjaj()">EVENTS</a>
-
+                    <br/>
                 </li>
                 <li class="goreDole">
-
-                    <a  ng-click="pickProjekcija()">PROJECTIONS</a>
-
+                    <br/>
                 </li>
-                <li class="goreDole">
 
-                    <a  ng-click="pickKarta()">TICKETS</a>
-
-                </li>
 
             </ul>
         </li>
 
+        <span ng-if="izvestaj">
+
+            <ul class="forma">
+                <li class="desno">
+                     <button  class="button" type="submit" ng-click="getProjections(0)"> Show active</button>
+                </li>
+                 <li class="desno">
+                     <button  class="button" type="submit" ng-click="getProjections(0)"> Show active</button>
+                </li>
+                 <li class="desno">
+                     <button  class="button" type="submit" ng-click="getProjections(0)"> Show active</button>
+                </li>
+            </ul>
+
+        </span>
+
+        <span ng-if="allProjekcije">
+
+            <li>
+                <ul  class="forma">
+                    <li class="desno">
+                        <a>  Projections for : </a>
+                    </li>
+
+                     <li class="desno">
+                        <button  class="button" type="submit" ng-click="getProjections(0)"> Show active</button>
+                     </li>
+                      <li class="desno">
+                         <br/>
+                     </li>
+                    <li class="desno">
+                         <button  class="button" type="submit" ng-click="getProjections(1)"> Show inactive </button>
+                     </li>
+                      <li class="desno">
+                         <br/>
+                     </li>
+                    <li class="desno">
+                         <button  class="button" type="submit" ng-click="getProjections(2)"> Show all </button>
+                     </li>
+
+                </ul>
+            </li>
+
+             <li>
+                <ul  class="formaUnos">
+                    <li  class="unos">
+                         <a class="pointer" ng-click="editDogadjaj(dogadjajId, bpName, bpId)"> {{newDogadjaName}} </a>
+                    </li>
+
+                     <li class="unos" ng-repeat="projekcija in eventProjekcije">
+
+
+                         <button type="submit" class="delete" class="btn btn-primary"  ng-confirm-click="Are you sure to delete this Projection ?" confirmed-click="deleteProjekcija(projekcija.id, bpId, dogadjajId,newDogadjaName )" >
+					        <img class="clearDelete" src="../../../assets/images/trash.png" width="20" height="20" title="Delete" alt="submit" />
+				        </button>
+
+                        <a class="pointer" ng-click="editProjection(projekcija.id, dogadjajId, newDogadjaName, bpId, bpName)">{{projekcija.vreme}} </a>
+
+
+
+                    </li>
+                </ul>
+            </li>
+
+        </span>
 
 
 
@@ -96,6 +159,13 @@
                         <button  class="button" type="submit" ng-click="addProjection(bp.id,dogadjajId,newDogadjaName)"> Add Projection </button>
                   </li>
 
+                <li class="last">
+                    <br/>
+                </li>
+
+                <li class="last" ng-if="dogadjajEdit">
+                        <button  class="button" type="submit" ng-click="showProjections(bpId,dogadjajId,newDogadjaName)"> Show Projections </button>
+                  </li>
 
 
 
@@ -172,6 +242,10 @@
                         <a>  Auditorium : </a>
                     </li>
 
+                    <li ng-if="editProjekcija" class="desno">
+                        <a>  Current auditorium : </a>
+                    </li>
+
                      <li class="desno">
                         <a>  Date and Time  : </a>
                     </li>
@@ -199,7 +273,11 @@
                     </li>
 
                     <li class="unos">
-                        <select class="input" type="text"ng-model="newProjekcijaSala" ng-options="item as item.ime for item in saleProjekcija" ></select>
+                        <select class="input" type="text" data-ng-model="newProjekcijaSala" ng-options="item as item.ime for item in saleProjekcija" ></select>
+                    </li>
+
+                     <li ng-if="editProjekcija" class="desno">
+                        <a> {{newProjekcijaSala.ime}} </a>
                     </li>
 
                     <li class="unos">
@@ -207,7 +285,7 @@
                     </li>
 
                     <li class="unos">
-                        <input id="input" type="checkbox" ng-checked="newProjekcijaAktivan">
+                        <input id="input" type="checkbox" ng-checked="newProjekcijaAktivan" ng-click="changeCheckbox()">
                     </li>
 
 
@@ -285,7 +363,7 @@
 					        <img class="clearDelete" src="../../../assets/images/trash.png" width="20" height="20" title="Delete" alt="submit" />
 				        </button>
 
-                        <a class="pointer" ng-click="editDogadjaj(dogadjaj.id, bp.naziv, bp.id)">{{dogadjaj.naziv}} </a>
+                        <a class="pointer" ng-click="editDogadjaj(dogadjaj.id, bpName, bpId  )">{{dogadjaj.naziv}} </a>
 
 
 
