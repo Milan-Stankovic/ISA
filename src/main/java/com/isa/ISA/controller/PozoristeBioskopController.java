@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.isa.ISA.dbModel.Projekcija;
@@ -67,7 +68,15 @@ public class PozoristeBioskopController {
     @RequestMapping("/pb/{id}/projekcije")
     public List<Projekcija> getPozoristeBioskopProj(@PathVariable Long id){ // nisam siguran da li je ovo ok ili mora string pa string u long
         PozoristeBioskop pb = pbService.getPozoristeBioskop(id);
-        return pb.getProjekcije();
+        ArrayList<Projekcija> ret = new ArrayList<>();
+
+        for(Projekcija p : pb.getProjekcije()){
+            if(p.getDogadjaj().getStatus().toString().equals("CURRENT"))
+                ret.add(p);
+        }
+        return ret;
     }
+
+
 
 }
