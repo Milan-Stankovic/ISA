@@ -13,11 +13,18 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.isa.ISA.PolovanRekvRepository;
+import com.isa.ISA.DTO.PolovanRekvDTO;
+import com.isa.ISA.DTO.PonudaDTO;
 import com.isa.ISA.DTO.RekvizitDTO;
-import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.PolovanRekvizit;
+import com.isa.ISA.dbModel.Ponuda;
 import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
+import com.isa.ISA.dbModel.enums.StatusLicitacije;
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.AdminRepository;
+import com.isa.ISA.repository.PonudaRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.RekvizitRepository;
 import com.isa.ISA.repository.UserRepository;
@@ -26,6 +33,8 @@ import com.isa.ISA.repository.UserRepository;
 public class RekvizitService {
 	@Autowired
     private RekvizitRepository rekvizitRepo;
+	@Autowired
+    private PolovanRekvRepository polovanRepo;
 
 	@Autowired
     private AdminRepository adminRepo;
@@ -35,6 +44,9 @@ public class RekvizitService {
 	
 	@Autowired
     private PozoristeBioskopRepository pbRepo;
+
+	@Autowired
+    private PonudaRepository ponudaRepo;
 	
 	
 	public List<ZvanicanRekvizit> getTematske() {
@@ -108,6 +120,41 @@ public class RekvizitService {
 		
 		retVal.getRezervacije().add(rez);
 		return rekvizitRepo.save(retVal);
+	}
+
+	public PolovanRekvizit addPolovan(PolovanRekvDTO rekDTO) {
+		PolovanRekvizit retVal = new PolovanRekvizit();
+		retVal.setKraj(rekDTO.getDatum());
+		retVal.setLicitacija(new ArrayList<Ponuda>());
+		retVal.setNaziv(rekDTO.getNaziv());
+		retVal.setOpis(rekDTO.getOpis());
+		retVal.setPostavio(userRepo.findByUserName(rekDTO.getUsername()));
+		retVal.setStatus(StatusLicitacije.UTOKU);
+		//retVal.setStatus(StatusLicitacije.POSTAVLJENO);
+		retVal.setSlika(rekDTO.getSlika());
+		return polovanRepo.save(retVal);
+	}
+
+	public List<PolovanRekvizit> getPolovan(long userID) {
+		ArrayList<PolovanRekvizit> all = (ArrayList<PolovanRekvizit>)polovanRepo.findByStatus(StatusLicitacije.UTOKU);
+		ArrayList<PolovanRekvizit> retVal = new ArrayList<PolovanRekvizit>();
+		for(PolovanRekvizit pr : all){
+			if(pr.getPostavio().getId()!=userID)
+				retVal.add(pr);
+		}
+		return retVal;
+	}
+
+	public PolovanRekvizit ponudiPolovne(PonudaDTO p) {
+		PolovanRekvizit retVal = polovanRepo.findOne(p.getIdRekvizita());
+		Ponuda p0 = new Ponuda();
+		p0.setPonudio(p.getUsername());
+		p0.setPrihvaceno(false);
+		p0.setRekvizit(retVal);
+		p0.setSuma(p.getCena());
+		retVal.getLicitacija().add(p0);
+		ponudaRepo.save(p0);
+		return polovanRepo.save(retVal);
 	}
 
 }

@@ -7,15 +7,15 @@
 				<table class="fanZona" width='100%'>
 					<tr height='20px'>
 						<th width='40%'>Title:       <input type='text' ng-model="it.naziv" size='24'/><br/><br/>
-										Description: <textarea ng-model="it.opis" rows='5' columns='20'></textarea>
+										Description: <textarea ng-model="it.opis" rows='5' columns='20'></textarea><br/><br/>
 						</th>
-						<th width='60%'>Sale finishes on: <input type="date" ng-model="it.datum" ng-min="today"/><br/><br/>
+						<th width='60%'>Sale finishes on:  <input type="date" ng-model="it.datum" placeholder="yyyy-MM-dd" min="{{today}}"><br/><br/><br/>
 							Photo:            <input type="file" demo-file-model="it.slika" accept=".jpg, .png"/><br/><br/>
 							<span/><br/>
 							<button ng-click="oc.add()">   Sell it   </button><br/><br/>
-							<div lass="secretMessage"  ng-show="ashowDone">Item added succesfully</div>
-							<div lass="secretMessage" ng-show="ashowSthWentWrong">Something went wrong! Item is not added</div>
-							<div lass="secretMessage" ng-show="ablankField">{{aemptyField}} is neccesery to be added!</div>
+							<div class="secretMessage"  ng-show="ashowDone">Item added succesfully</div>
+							<div class="secretMessage" ng-show="ashowSthWentWrong">Something went wrong! Item is not added</div>
+							<div class="secretMessage" ng-show="ablankField">{{aemptyField}} is neccesery to be added!</div>
 						</th>
 					</tr>
 				</table>
@@ -23,11 +23,12 @@
 		</td>
 	</tr>
 </table>
-<div id="body" class="rentals">
-	<h2>ITEMS FOR SALE</h2>
+
+<div id="body" class="rentals" ng-show="preview.length">
+	<h2>PREVIEW</h2>
 	<table class="fanZona">
-		<tr ng-repeat="item in items">
-			<td width='30%'><img class ='itemImage' src={{item.slika}} alt=""></td>
+		<tr ng-repeat="item in preview">
+			<td width='30%'><img class ='itemImage' src="((item.slika}}" alt=""></td>
 			<td width='70%'>
 				<div>
 					<table class='itemTable'>
@@ -38,17 +39,45 @@
 								<td colspan='2'>{{item.opis}}</td>
 							</tr>
 							<tr>
-								<td><h4>Price:</h4></td>
-								<td>{{item.cena}} RSD</td>
+								<td><h4>Active until<br/>[yyyy-MM-dd]:</h4></td>
+								<td>{{item.kraj}}</td>
+							</tr>			
+					</table>
+				</div>
+			</td>
+		</tr>		
+	</table>
+</div>
+<div id="body" class="rentals">
+	<h2>ITEMS FOR SALE</h2>
+	<table class="fanZona">
+		<tr ng-repeat="item in items">
+			<td width='30%'><img class ='itemImage' src="{{item.slika}}" alt=""></td>
+			<td width='70%'>
+				<div>
+					<table class='itemTable'>
+							<tr>
+								<td colspan='2' class='itemTitle'>{{item.naziv}}</td>
 							</tr>
 							<tr>
-								<td><h4>Active untill:</h4></td>
-								<td>{{item.datum}}</td>
+								<td colspan='2'>{{item.opis}}</td>
+							</tr>
+							<tr>
+								<td width='50%'><h4>Active until<br/>[yyyy-MM-dd]:</h4></td>
+							 	<td width='50%'>{{item.kraj}}</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td><button ng-click="oc.makeOffer(item.id)">make an offer</button></td>
-							</tr>		
+								<td> </td>
+							</tr>
+								<tr ng-hide="oc.showBTN(item)"	>
+									<td>My offer:</td>
+									<td><input type='text' ng-model="item.cena" size='5'/></td>
+								</tr>	
+								<tr ng-hide="oc.showBTN(item)"	>
+									<td></td>
+									<td><button ng-click="oc.makeOffer(item)">make an offer</button></td>
+								</tr>	
 							<tr ng-show="item.showDone" class='secretMessage'>
 								<td></td>
 								<td><h4>Your offer is accepted!</h4></td>
