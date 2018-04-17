@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,8 @@ import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.service.PrijateljService;
 import com.isa.ISA.service.UserService;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 public class UserController {
@@ -201,6 +204,16 @@ public class UserController {
 		for(Sala s : kRezSala)
 			kRezUstanova.add(s.getUstanova());
 		return kRezUstanova;
+	}
+
+	@RequestMapping(method = RequestMethod.GET,value = "api/user/invitation/{username}/event/{rezID}")
+	public void setRez(HttpServletResponse response, @PathVariable String username, @PathVariable String rezID){
+		try {
+			response.sendRedirect("http://localhost:8096/#!/invitation/"+username+"/event/"+rezID);
+		}catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 
