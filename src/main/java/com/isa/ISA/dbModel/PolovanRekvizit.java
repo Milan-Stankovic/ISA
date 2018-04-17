@@ -25,15 +25,24 @@ public class PolovanRekvizit {
     
     private String opis;
 
-    @Lob
-    private byte[] slika;// Ovo je valjda za slike ali nisam siguran...
+    private String slika;
 
     @ManyToOne
     private Korisnik postavio;
 
     private Date kraj;
+    
 
-    @OneToMany
+    public String getSlika() {
+		return slika;
+	}
+
+
+	public void setSlika(String slika) {
+		this.slika = slika;
+	}
+
+	@OneToMany
     private List<Ponuda> licitacija;
 
     @Enumerated(EnumType.STRING)

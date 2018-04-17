@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.korisnici.Korisnik;
 
 /**
@@ -16,12 +17,13 @@ public class Ponuda {
     @Id
     @GeneratedValue
     private long id;
-
-    @ManyToOne
-    private Korisnik ponudio;
+    
+    private String ponudio;//username korisnika koji je dao ponudu
 
     private double suma;
+    
 
+    @JsonBackReference
     @ManyToOne
     private PolovanRekvizit rekvizit;
 
@@ -37,11 +39,11 @@ public class Ponuda {
         this.id = id;
     }
 
-    public Korisnik getPonudio() {
+    public String getPonudio() {
         return ponudio;
     }
 
-    public void setPonudio(Korisnik ponudio) {
+    public void setPonudio(String ponudio) {
         this.ponudio = ponudio;
     }
 

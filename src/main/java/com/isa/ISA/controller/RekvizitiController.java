@@ -2,9 +2,6 @@ package com.isa.ISA.controller;
 
 import java.util.List;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.isa.ISA.DTO.PolovanRekvDTO;
+import com.isa.ISA.DTO.PonudaDTO;
 import com.isa.ISA.DTO.RekvizitDTO;
-import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.service.RekvizitService;
 
@@ -53,5 +52,18 @@ public class RekvizitiController {
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/rezervisi/{userID}")
     public ZvanicanRekvizit rezervisiTematske(@PathVariable long id, @PathVariable long userID){
 		return rekvizit.rezervisiTematske(id, userID);
+    }
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/polovni/{userID}")
+    public List<PolovanRekvizit> getPolovan(@PathVariable long userID){
+		return rekvizit.getPolovan(userID);
+    }
+	@RequestMapping(method = RequestMethod.POST, value = "/polovni")
+    public PolovanRekvizit addPolovan(@RequestBody PolovanRekvDTO rekDTO){
+		return rekvizit.addPolovan(rekDTO);
+    }
+	@RequestMapping(method = RequestMethod.POST, value = "/polovni/ponuda")
+    public void ponudiPolovne(@RequestBody PonudaDTO p){
+		 rekvizit.ponudiPolovne(p);
     }
 }

@@ -1,26 +1,21 @@
 package com.isa.ISA;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 
-import com.isa.ISA.repository.RezervacijaRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.isa.ISA.DTO.RekvizitDTO;
+import com.isa.ISA.DTO.PolovanRekvDTO;
 import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.Glumac;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
-import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.Sediste;
-import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
 import com.isa.ISA.dbModel.enums.TipAdmina;
@@ -30,8 +25,8 @@ import com.isa.ISA.dbModel.enums.Zanr;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
+import com.isa.ISA.repository.RezervacijaRepository;
 import com.isa.ISA.repository.SalaRepository;
-import com.isa.ISA.repository.SedisteRepository;
 import com.isa.ISA.service.AdminService;
 import com.isa.ISA.service.DogadjajService;
 import com.isa.ISA.service.PozoristeBioskopService;
@@ -71,6 +66,8 @@ public class StartData {
     private PozoristeBioskopService pozoristeBioskopService;
    
 
+    @Autowired
+    private RekvizitService rekvizitService;
 
     @PostConstruct
     public void initIt(){
@@ -260,7 +257,24 @@ public class StartData {
         a3.setMesta(pppppp);
      //   System.out.println("Kreiran korisnik: " + a3.getUserName());
         adminService.addAdmin(a3);
-
+        
+        PolovanRekvDTO pr0 = new PolovanRekvDTO();
+        pr0.setCena(124.42);
+        pr0.setDatum(new java.sql.Date(2018, 4,27));
+        pr0.setNaziv("first item");
+        pr0.setOpis("item to sellllll");
+        pr0.setSlika("assets/images/balkon.png");
+        pr0.setUsername("zika");
+        rekvizitService.addPolovan(pr0);
+        
+        PolovanRekvDTO pr1 = new PolovanRekvDTO();
+        pr1.setCena(455.00);
+        pr1.setDatum(new java.sql.Date(2018, 4,30));
+        pr1.setNaziv("second item");
+        pr1.setOpis("my second hand item");
+        pr1.setSlika("assets/images/baby-with-dog.jpg");
+        pr1.setUsername("zika");
+        rekvizitService.addPolovan(pr1);
     }
 
     private void addBioskop(Admin a, int koji){
