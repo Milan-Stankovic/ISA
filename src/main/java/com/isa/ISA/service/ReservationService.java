@@ -28,6 +28,9 @@ public class ReservationService {
     private RezervacijaRepository rezRepo;
 
     @Autowired
+    private SalaService salaService;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -50,12 +53,12 @@ public class ReservationService {
     @Transactional( readOnly = false,
             propagation = Propagation.REQUIRED,
             isolation = Isolation.SERIALIZABLE)
-    public void reserve(@RequestBody RezervacijaDTO k){
+    public void reserve(@RequestBody RezervacijaDTO k) {
 
         RegistrovaniKorisnik rezervisao = userService.getUserID(k.getRezervisao());
         ArrayList<RegistrovaniKorisnik> pozvani = new ArrayList<>();
-        if(k.getPozvani()!=null){
-            for(Long kor : k.getPozvani()){
+        if (k.getPozvani() != null) {
+            for (Long kor : k.getPozvani()) {
                 pozvani.add(userService.getUserID(kor));
             }
         }
@@ -65,9 +68,9 @@ public class ReservationService {
         Sala sala = projekcija.getSala();
         //temp sediste u koje stavljam ova trenutno zauzeta da bih lakse isla redom i dodeljivala svima u rezervaciji
         ArrayList<Sediste> temp = new ArrayList<>();
-        for(Long sID : k.getSedista()){
-            for(Sediste s : sala.getSedista()){
-                if(s.getId()==sID){
+        for (Long sID : k.getSedista()) {
+            for (Sediste s : sala.getSedista()) {
+                if (s.getId() == sID) {
                     s.setTipSedista(TipSedista.TAKEN);
                     projekcija.getZauzetaSedista().add(s);
                     temp.add(s);
@@ -95,14 +98,14 @@ public class ReservationService {
         brojac++;
         ka.setVremeOdrzavanja(projekcija.getVreme());
         ka.setPozoristeBioskop(sala.getUstanova());
-        int ukupno = (int) ( ((pozvani.size()+1)*projekcija.getCena()) - (k.getPopust()/100*((pozvani.size()+1)*projekcija.getCena()) ) );
+        int ukupno = (int) (((pozvani.size() + 1) * projekcija.getCena()) - (k.getPopust() / 100 * ((pozvani.size() + 1) * projekcija.getCena())));
         ka.setPunaCena(ukupno);
         kartaRepo.save(ka);
         poz.setKarta(ka);
         pozRepo.save(poz);
         ArrayList<Poziv> pozivi = new ArrayList<>();
         pozivi.add(poz);
-        for(RegistrovaniKorisnik reg : pozvani){
+        for (RegistrovaniKorisnik reg : pozvani) {
             Poziv p = new Poziv();
             p.setOsoba(reg);
             p.setPozvan(true);
@@ -124,10 +127,15 @@ public class ReservationService {
         rezRepo.save(rez);
         rezervisao.getRezervacije().add(rez);
         userService.addUser(rezervisao);
-        for(RegistrovaniKorisnik kor : pozvani){
+        for (RegistrovaniKorisnik kor : pozvani) {
             kor.getRezervacije().add(rez);
             userService.addUser(kor);
         }
-
+        for (Sediste s : temp)
+            for (Sediste ss : sala.getSedista()) {
+                if (ss.getId() == s.getId())
+                    ss.setTipSedista(TipSedista.TAKEN);
+            }
+        salaService.saveSala(sala);
     }
 }

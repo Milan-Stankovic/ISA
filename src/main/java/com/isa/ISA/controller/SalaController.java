@@ -49,6 +49,11 @@ public class SalaController {
 
     }
 
+    @RequestMapping("/sala/ustanova/{id}")
+    public PozoristeBioskop getSalaUstanova(@PathVariable Long id){
 
+        Sala s = sService.getOne(id);
+        return s.getUstanova();
+    }
 
 }

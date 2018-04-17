@@ -2,8 +2,12 @@ package com.isa.ISA.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.Sala;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -177,7 +181,28 @@ public class UserController {
 		if(kor.getRezervacije()==null)
 			return new ArrayList<Rezervacija>();
 		return kor.getRezervacije();
+
+    }
+
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/visited/{username}")
+	public List<PozoristeBioskop> getVisitedP(@PathVariable String username){
+		RegistrovaniKorisnik k = userService.getUser(username);
+		if(k==null){
+			return new ArrayList<PozoristeBioskop>();
 		}
+		List<Rezervacija> kRez = k.getRezervacije();
+		List<Projekcija> kRezProjekcije  = new ArrayList<>();
+		for(Rezervacija r : kRez)
+			kRezProjekcije.add(r.getProjekcija());
+		List<Sala> kRezSala  = new ArrayList<>();
+		for(Projekcija p : kRezProjekcije)
+			kRezSala.add(p.getSala());
+		List<PozoristeBioskop> kRezUstanova  = new ArrayList<>();
+		for(Sala s : kRezSala)
+			kRezUstanova.add(s.getUstanova());
+		return kRezUstanova;
+	}
+
 
 
 }

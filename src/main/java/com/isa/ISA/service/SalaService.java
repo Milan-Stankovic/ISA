@@ -87,6 +87,9 @@ public class SalaService  {
         sRepo.delete(id);
     }
 
+    public void saveSala(Sala s){
+        sRepo.save(s);
+    }
 
 
 

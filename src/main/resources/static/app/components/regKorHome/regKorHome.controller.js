@@ -104,7 +104,7 @@
         var getVisited = function () {
             $http({
                 method: 'GET',
-                url: 'http://localhost:8096/api/regKor/' + user + '/visited',
+                url: 'http://localhost:8096/api/user/visited/' + user,
             }).then(function successCallback(response) {
                 $scope.visited = response.data;
                 for(var i = 0; i < $scope.visited.length; i++){

@@ -20,6 +20,7 @@ h2,p ,a  {color: white;}
     <br>
     <p> Naziv: {{proj.dogadjaj.naziv  | uppercase }}</p>
     <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
+    <p>Place: {{salaUstanova.naziv}}, Auditorium: {{sala.ime}}</p>
     <p>Price: {{ proj.cena*(pozvanih.length+1) - ( popust/100*(proj.cena*(pozvanih.length+1)) )}},00 RSD</p>
     <p>Discount: {{popust}}%</p>
     <br>

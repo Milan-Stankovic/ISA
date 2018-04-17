@@ -23,6 +23,7 @@ public class Rezervacija {
     private long id;
 
     @OneToMany
+    @JsonBackReference
     private List<Poziv> urezervaciji;
 
     @ManyToOne

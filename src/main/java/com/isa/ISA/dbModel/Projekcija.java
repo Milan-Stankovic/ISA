@@ -1,5 +1,7 @@
 package com.isa.ISA.dbModel;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +36,7 @@ public class Projekcija {
     private List<Sediste> zauzetaSedista;
 
     @OneToMany
+    @JsonBackReference
     private List<Rezervacija> rezervacije;
 
     @Column(nullable = false)

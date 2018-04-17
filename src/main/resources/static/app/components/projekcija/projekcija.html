@@ -9,6 +9,7 @@ h2,p   {color: white;}
     <p>Starring: {{proj.dogadjaj.glumciStr}}</p>
     <p>Rate: {{proj.dogadjaj.prosecnaOcena}}</p>
     <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
+    <p>Place: {{ustanova.naziv}}, Auditorium: {{proj.sala.ime}}</p>
     <p>Price: {{proj.cena}},00 RSD</p>
     <button ng-click="rezervisi(proj.id)">Reservation</button>
 </div>

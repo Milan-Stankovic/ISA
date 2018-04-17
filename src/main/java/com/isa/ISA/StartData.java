@@ -239,7 +239,7 @@ public class StartData {
         r.setPopust(0);
         r.setProjekcija(p);
         rezRepository.save(r);
-
+        p.getRezervacije().add(r);
         rk3.setRezervacije(new ArrayList<Rezervacija>());
         rk3.getRezervacije().add(r);
         userService.addUser(rk3);
@@ -293,7 +293,7 @@ public class StartData {
         Sala s1 = new Sala();
         s1.setBrRed(10);
         s1.setBrSedista(10);
-        s1.setIme("Prva sala u pozoristu");
+        s1.setIme("Vrh sala");
         // s1.setUstanova(p1);
         List<Sala> sale = new ArrayList<>();
 

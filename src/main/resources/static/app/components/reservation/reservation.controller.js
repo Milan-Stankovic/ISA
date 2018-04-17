@@ -60,6 +60,16 @@
                     $scope.sedista.reverse();
              /*    document.getElementById("columns").style.columns = $scope.kolona;*/
                  /*document.getElementById("columns").style.rows = $scope.redova;*/
+
+                   $http({
+                         method: 'GET',
+                         url: 'http://localhost:8096/sala/ustanova/' + $scope.sala.id
+                     }).then(function successCallback(response) {
+                        $scope.salaUstanova = response.data;
+                     }, function errorCallback(response) {
+                                      alert("Greska kod get ustanova")
+
+                                  });
                  console.log("OPA redova: " + $scope.redova + "kolona: " + $scope.kolona)
                  $scope.groups = $scope.sedista.map( function(e,i){
                      return i%$scope.kolona===0 ? $scope.sedista.slice(i,i+$scope.kolona) : null;
