@@ -1,0 +1,194 @@
+<div>
+
+    <ul>
+
+        <li>
+            <ul class="adminControll">
+
+                <li class="goreDole">
+
+                    <a  ng-click="go('core.admin')">Home</a>
+
+                </li>
+                <li class="goreDole">
+
+                    <a  ng-click="pickTheater()">THEATRE STATISTICS</a>
+
+                </li>
+                <li class="goreDole">
+
+                    <a ng-click="pickCinema()">CINEMA STATISTICS</a>
+
+                </li>
+
+                <li class="goreDole">
+                    <br/>
+                </li>
+                <li class="goreDole">
+                    <br/>
+                </li>
+                <li class="goreDole">
+                    <br/>
+                </li>
+
+            </ul>
+        </li>
+
+
+    <span ng-if="pozoriste">
+            <li>
+                 <ul class="forma" ng-repeat="pozoriste in pozoristaAdmin track by $index">
+                    <li class="desno">
+                        <a class="pointer" ng-click="pickBpOne(pozoriste.id, pozoriste.naziv)">{{pozoriste.naziv}} </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>{{pozoriste.adresa}} </a>
+                    </li>
+
+                 </ul>
+
+            </li>
+
+    </span>
+
+
+        <span ng-if="showReport">
+            <li>
+                <ul class ="formaUnos">
+                    <li>
+                        <a class="inputReport">
+                            {{dobijenIzvestaj.ocenaPb}}
+                        </a>
+                    </li>
+
+                    <li class="inputReport">
+                            </br>
+                        </li>
+
+                    <li>
+                        <a class="inputReport">
+                            Event ratings :
+                        </a>
+                    </li>
+                     <li class="inputReport">
+                            </br>
+                        </li>
+
+                        <div  ng-repeat="item in dobijenIzvestaj.ocenaDogadjaja track by $index ">
+                          <li>
+                           <a class="inputReport">{{item}}</a>
+                          </li>
+
+                            <li class="inputReport">
+                            </br>
+                        </li>
+
+                        </div>
+
+
+
+                    <li>
+                        <a class="inputReport">
+                            Earnings :
+                        </a>
+                    </li>
+                     <li class="inputReport">
+                            </br>
+                        </li>
+
+
+                        <li>
+                            <a class="inputReport">
+                                {{dobijenIzvestaj.zaradaOdKarata}}
+                            </a>
+                        </li>
+                    <li class="inputReport">
+                            </br>
+                        </li>
+                        <li>
+                            <a class="inputReport">
+                                {{dobijenIzvestaj.zaradaOdRekvizita}}
+                            </a>
+                        </li>
+                    <li class="inputReport">
+                            </br>
+                        </li>
+                        <li>
+                            <a class="inputReport">
+                                {{dobijenIzvestaj.ukupnaZarada}}
+                            </a>
+                        </li>
+                    <li class="inputReportGraph">
+                        <highchart class="inputReportGraph" id="chart1" config="chartConfig"></highchart>
+
+                    </li>
+
+
+
+                </ul>
+            </li>
+
+        </span>
+
+
+        <span ng-if="choseTime">
+            <li>
+                <ul class="forma">
+                    <li class="desno">
+                          <a>  Report for : </a>
+                    </li>
+
+                    <li class="desno">
+                          <a>  Date from : </a>
+                    </li>
+
+
+                    <li class="desno">
+                          <a>  Date to : </a>
+                    </li>
+
+                    <li class="desno">
+                          <button  class="button" type="submit" ng-click="saveIzvestaj(newDateOd, newDateDo)"> Save</button>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li>
+                <ul class="formaUnos">
+                    <li>
+                        <a class="input"> {{bpName}} </a>
+                    </li>
+
+                     <li class="unos">
+                        <input class="input" ng-model="newDateOd" datetime-picker date-format="dd-MM-yyyy HH:mm:ss" />
+                    </li>
+
+                     <li class="unos">
+                        <input class="input" ng-model="newDateDo" datetime-picker date-format="dd-MM-yyyy HH:mm:ss" />
+                    </li>
+                </ul>
+            </li>
+
+        </span>
+
+    <span ng-if="bioskop">
+            <li>
+                 <ul class="forma" ng-repeat="bioskop in bioskopiAdmin track by $index">
+                    <li class="desno">
+                        <a class="pointer" ng-click="izvestaj(bioskop.id, biosko.naziv)">{{bioskop.naziv}} </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>{{bioskop.adresa}} </a>
+                    </li>
+
+                 </ul>
+
+            </li>
+
+        </span>
+    </ul>
+
+</div>

@@ -92,6 +92,16 @@
           controller: 'adminController',
           controllerAs: 'ac'
       })
+
+          .state('core.adminIzvestaj', {
+              url: 'adminIzvestaj',
+              templateUrl: 'app/components/adminIzvestaj/izvestaj.html',
+              controller: 'adminIzvestajController',
+              controllerAs: 'ic',
+			  params: {id :null}
+
+
+          })
 		.state('core.fanZone', {
 			url: 'fanZone',
 			templateUrl: 'app/components/fanZone/fanZone.html',
