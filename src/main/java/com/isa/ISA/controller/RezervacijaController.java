@@ -41,17 +41,8 @@ public class RezervacijaController {
         return rezService.getRez(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "api/user/invitation/accept/{username}/event/{rezID}")
-    public void acceptRez(HttpServletResponse response, @PathVariable String username, @PathVariable Long rezID){
-        RegistrovaniKorisnik k = userService.getUser(username);
-        Rezervacija rez = rezService.getRez(rezID);
-        for(Poziv p : rez.getUrezervaciji()){
-            if(p.getOsoba().getId()==k.getId()){
-                p.setStatus(Status.PRIHVACENO);
-            }
-        }
-        rezService.addRez(rez);
-
+    @RequestMapping(method = RequestMethod.GET,value = "api/invitation/{username}/event/{rezID}")
+    public void setRez(HttpServletResponse response, @PathVariable String username, @PathVariable String rezID){
         try {
             response.sendRedirect("http://localhost:8096/#!/invitation/"+username+"/event/"+rezID);
         }catch (IOException e) {
@@ -60,7 +51,26 @@ public class RezervacijaController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET,value = "api/user/invitation/decline/{username}/event/{rezID}")
+    @RequestMapping(method = RequestMethod.GET,value = "api/invitation/accept/{username}/event/{rezID}")
+    public void acceptRez(HttpServletResponse response, @PathVariable String username, @PathVariable Long rezID){
+        RegistrovaniKorisnik k = userService.getUser(username);
+        Rezervacija rez = rezService.getRez(rezID);
+        for(Poziv p : rez.getUrezervaciji()){
+            if(p.getOsoba().getId()==k.getId()){
+                if(!p.getStatus().toString().equals("PRIHVACENO"))
+                    p.setStatus(Status.PRIHVACENO);
+                else
+                    return;
+            }
+        }
+        rezService.addRez(rez);
+        k.getRezervacije().add(rez);
+        userService.addUser(k);
+
+
+    }
+
+    @RequestMapping(method = RequestMethod.GET,value = "api/invitation/decline/{username}/event/{rezID}")
     public void declineRez(HttpServletResponse response, @PathVariable String username, @PathVariable Long rezID){
         RegistrovaniKorisnik k = userService.getUser(username);
         Rezervacija rez = rezService.getRez(rezID);

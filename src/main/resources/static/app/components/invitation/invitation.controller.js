@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('invitationController', invitationController);
 
-    invitationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$timeout'];
-    function invitationController($location, $scope, $rootScope, $http, $cookies, $timeout) {
+    invitationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$timeout', '$window'];
+    function invitationController($location, $scope, $rootScope, $http, $cookies, $timeout, $window) {
         var ic = this;
         ic.home = "Home";
 
@@ -15,6 +15,11 @@
         var userID;
         var rezID;
         var init = function (){
+            if($cookies.get('user')){
+                $cookies.remove('user');
+                $window.location.reload();
+            }
+
             $scope.message=""
             var part = window.location.href.substring(0, window.location.href.indexOf("/event"));
             var new_str = part.split("/event")[0];
@@ -47,7 +52,7 @@
         }).then(function successCallback(response) {
             $scope.rez = response.data;
             $scope.proj = $scope.rez.projekcija;
-            console.log($scope.proj)
+            console.log("prpjekcoja" + $scope.proj)
             getUstanova();
 
 
@@ -64,7 +69,7 @@
 
             $http({
               method: 'GET',
-              url: 'http://localhost:8096/api/rezervacija/accept/'+ userID +'/event/' +rezID
+              url: 'http://localhost:8096/#!/api/invitation/accept/'+ userID +'/event/' +rezID
 
             }).then(function successCallback(response) {
 
@@ -86,7 +91,7 @@
 
             $http({
               method: 'GET',
-              url: 'http://localhost:8096/api/rezervacija/decline/'+ userID +'/event/' +rezID
+              url: 'http://localhost:8096/#!/api/invitation/decline/'+ userID +'/event/' +rezID
 
             }).then(function successCallback(response) {
 
