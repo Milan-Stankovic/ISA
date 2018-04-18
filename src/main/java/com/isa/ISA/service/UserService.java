@@ -19,7 +19,7 @@ public class UserService {
     public List<RegistrovaniKorisnik> getAllUsers(){
         List<RegistrovaniKorisnik> allUsers = new ArrayList<>();
         usersRepo.findAll().forEach(allUsers::add);
-        System.out.println(allUsers.size());
+
         return allUsers;
 
     }

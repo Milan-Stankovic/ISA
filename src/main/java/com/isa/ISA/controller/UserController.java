@@ -5,14 +5,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.isa.ISA.DTO.InvitationDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.Sala;
 import com.isa.ISA.dbModel.enums.Status;
 import com.isa.ISA.dbModel.korisnici.Poziv;
-import com.isa.ISA.service.ReservationService;
-import com.isa.ISA.service.RezervacijaService;
+import com.isa.ISA.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
 import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
-import com.isa.ISA.service.PrijateljService;
-import com.isa.ISA.service.UserService;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,6 +37,12 @@ public class UserController {
 
 	@Autowired
 	private ReservationService resService;
+
+	@Autowired
+	private ReservationService rezService;
+
+	@Autowired
+	private ProjekcijaService projekcijaService;
 
 
     @RequestMapping(method = RequestMethod.GET,value = "/api/users")
@@ -214,10 +218,31 @@ public class UserController {
 		return kRezUstanova;
 	}
 
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/invitations/{username}")
+	public List<Rezervacija> getInvitations(@PathVariable String username) {
+		ArrayList<Rezervacija> ret = new ArrayList<>();
+		RegistrovaniKorisnik reg = userService.getUser(username);
+		for(Rezervacija r : reg.getRezervacije()){
+			for(Poziv p : r.getUrezervaciji()){
+				if(p.getOsoba().getUserName().equals(username) && p.isPozvan() && p.getStatus().toString().equals("CEKA"))
+					ret.add(r);
+			}
+		}
+		return ret;
+	}
 
-
-
-
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/invAccepted/{username}")
+	public List<Rezervacija> getInvAccepted(@PathVariable String username) {
+		ArrayList<Rezervacija> ret = new ArrayList<>();
+		RegistrovaniKorisnik reg = userService.getUser(username);
+		for(Rezervacija r : reg.getRezervacije()){
+			for(Poziv p : r.getUrezervaciji()){
+				if(p.getOsoba().getUserName().equals(username) && p.isPozvan() && p.getStatus().toString().equals("PRIHVACENO"))
+					ret.add(r);
+			}
+		}
+		return ret;
+	}
 
 
 }
