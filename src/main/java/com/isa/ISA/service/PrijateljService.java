@@ -22,7 +22,7 @@ public class PrijateljService {
     public List<Prijatelj> getAllFriends(){
         List<Prijatelj> allFriends = new ArrayList<>();
         prijateljRepo.findAll().forEach(allFriends::add);
-        System.out.println(allFriends.size());
+
         return allFriends;
 
     }

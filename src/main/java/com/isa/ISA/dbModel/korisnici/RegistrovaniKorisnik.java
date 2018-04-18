@@ -29,7 +29,7 @@ public class RegistrovaniKorisnik extends Korisnik {
     @OneToMany
     private List<PolovanRekvizit> rekviziti;
 
-    @OneToMany
+    @ManyToMany
     private List<Rezervacija> rezervacije;
 
     @OneToMany

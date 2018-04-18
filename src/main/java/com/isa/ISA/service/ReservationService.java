@@ -112,6 +112,7 @@ public class ReservationService {
 
         for (RegistrovaniKorisnik reg : pozvani) {
 
+            reg.getRezervacije().add(rez);
             userService.addUser(reg);
             Poziv p = new Poziv();
             p.setOsoba(reg);
@@ -133,7 +134,6 @@ public class ReservationService {
         }
         rez.setUrezervaciji(pozivi);
         rezService.addRez(rez);
-
 
         EmailService em;
 

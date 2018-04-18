@@ -9,22 +9,29 @@
     function invitationController($location, $scope, $rootScope, $http, $cookies, $timeout, $window) {
         var ic = this;
         ic.home = "Home";
-
+        $scope.logged=false;
         $scope.user;
         $scope.rez;
         var userID;
         var rezID;
         var init = function (){
-            if($cookies.get('user')){
-                $cookies.remove('user');
-                $window.location.reload();
-            }
 
             $scope.message=""
             var part = window.location.href.substring(0, window.location.href.indexOf("/event"));
             var new_str = part.split("/event")[0];
             userID = /[^/]*$/.exec(new_str)[0];
             rezID = /[^/]*$/.exec(window.location.href)[0];
+
+            if($cookies.get('user')!=undefined && $cookies.get('user')!=userID){
+                $cookies.remove('user');
+                $cookies.remove('id');
+                $window.location.reload();
+            }else if($cookies.get('user')==undefined){
+                $scope.logged=false;
+            }else{
+                $scope.logged=true;
+            }
+
 
 
             $http({
@@ -52,7 +59,6 @@
         }).then(function successCallback(response) {
             $scope.rez = response.data;
             $scope.proj = $scope.rez.projekcija;
-            console.log("prpjekcoja" + $scope.proj)
             getUstanova();
 
 
@@ -67,16 +73,18 @@
 
         $scope.accept = function() {
 
-            $http({
+
+           $http({
               method: 'GET',
-              url: 'http://localhost:8096/#!/api/invitation/accept/'+ userID +'/event/' +rezID
+              url: 'http://localhost:8096/#!/api/poziv/' + $scope.rez.id
 
             }).then(function successCallback(response) {
-
-                 $scope.message = "Invitation accepted!";
-                 $timeout(function() {
+                 $scope.pozivi = response.data;
+                 console.log($scope.pozivi[0])
+                 /*$scope.message = "Invitation accepted!";
+                $timeout(function() {
                    $location.path("home");
-                  }, 4000);
+                  }, 4000);*/
 
 
               }, function errorCallback(response) {
@@ -91,7 +99,7 @@
 
             $http({
               method: 'GET',
-              url: 'http://localhost:8096/#!/api/invitation/decline/'+ userID +'/event/' +rezID
+              url: 'http://localhost:8096/#!/api/user/invitation/decline/'+ userID +'/event/' +rezID
 
             }).then(function successCallback(response) {
 
@@ -116,7 +124,7 @@
         }).then(function successCallback(response) {
             $scope.salaUstanova = response.data;
         }, function errorCallback(response) {
-           alert("Greska kod get ustanova")
+
 
        });
 
