@@ -58,12 +58,22 @@
                     			$scope.items[i].showSthWentWrong=false;
                     			$scope.items[i].ponuda = 0;
                     			$scope.items[i].hasOffered = oc.showBTN($scope.items[i]);
+	                  			$scope.items[i].kraj = oc.parseDate(all[i].kraj);
                     		}
                     });
               });
         	$scope.preview=[];
         };
         init();
+        
+        oc.parseDate = function(d){
+        	var date = new Date(d);
+			var day = date.getDate();
+			day = day = (day < 10) ? ("0" + day) : day;
+			var month = date.getMonth() + 1;
+			month = (month < 10) ? ("0" + month) : month;
+			return (day + "-" + month + "-" + date.getFullYear());
+        }
         
       oc.showBTN = function(item){
     	  for(var i=0; i<item.licitacija.length; i++){
@@ -83,10 +93,6 @@
         		oc.ablankField("Description");
         		return;
         	}
-        	if($scope.it.cena=="" || !parseFloat($scope.it.cena)){
-        		oc.ablankField("Price");
-        		return;
-        	}
         	if($scope.it.datum=="" ){
         		oc.ablankField("Date");
         		return;
@@ -95,7 +101,7 @@
             		"slika":"",
             		"naziv":$scope.it.naziv,
             		"opis": $scope.it.opis,
-            		"cena": parseFloat($scope.it.cena),
+            		"cena": "",
             		"datum": new Date($scope.it.datum),
             		"username": $cookies.get('user')
         		};
@@ -161,8 +167,8 @@
         		data: data
               }).then(function successCallback(response) {
             	  if(response.data==""){
-            		  oc.showDone(item.id);
-            		  item.cena="";
+            		  oc.showDone(item.id, parseFloat(item.cena));
+            		  $scope.item.cena="";
             	  }
             	  else{
             		  oc.showSthWentWrong(item.id);
@@ -212,13 +218,14 @@
 					 $scope.aemptyField = "";
 		      }, 3000);    
 		 }
-        oc.showDone = function(id) {
+        oc.showDone = function(id, suma) {
       	  var regI; 
       	  for(var i=0; i<$scope.items.length; i++){
       		  if($scope.items[i].id==id){
       			  regI = i;
       		      $scope.items[regI].showDone = true;
       		      $scope.items[regI].hasOffered = true;
+      		      $scope.items[regI].suma = suma;
       		      $timeout(function() {
       		    	  $scope.items[regI].showDone = false;
       		      }, 3000);        			  

@@ -158,9 +158,17 @@ public class RekvizitService {
 	}
 
 	public void updatePonude(PonudaDTO p) {
-		Ponuda p0 = ponudaRepo.findByPonudio(p.getUsername());
+		Ponuda p0 = ponudaRepo.findByPonudioAndRekvizitId(p.getUsername(), p.getIdRekvizita());
 		p0.setSuma(p.getCena());
 		ponudaRepo.save(p0);
+	}
+
+	public List<PolovanRekvizit> getMojiOglasi(long userID) {
+		return polovanRepo.findByPostavioId(userID);
+	}
+
+	public List<PolovanRekvizit> getMojePonude(String username) {
+		return polovanRepo.findByLicitacijaPonudio(username);
 	}
 
 }
