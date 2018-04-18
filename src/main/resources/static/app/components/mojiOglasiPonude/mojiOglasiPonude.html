@@ -1,0 +1,108 @@
+<table width='100%'>
+	<tr width='100%'>
+		<td width='50%'><a class='mopMenu' ng-click='mopc.toggleSales()'>My Items on Sale</a></td>
+		<td width='50%'><a class='mopMenu' ng-click='mopc.toggleOffers()'>My Offers</a></td>
+	</tr>
+</table>
+<table width='100%' ng-show='showSales' class='itemTable'>
+	<tr width='100%'>
+		<td colspan='2'><h1>MY SALES<h1></td>
+	</tr>
+	<tr ng-repeat="item in mySales">
+			<td width='30%'><img class ='itemImage' src="{{item.slika}}" alt=""></td>
+			<td width='70%'>
+				<div>
+					<table class='itemTable' width='100%' ng-hide="item.showEdit">
+							<tr>
+								<td colspan='2' class='itemTitle'>{{item.naziv}}</td>
+							</tr>
+							<tr>
+								<td colspan='2'>{{item.opis}}</td>
+							</tr>
+							<tr>
+								<td width='50%'><h4>Active until<br/>[yyyy-MM-dd]:</h4></td>
+							 	<td width='50%'>{{item.kraj}}</td>
+							</tr>
+							<tr>
+								<td><button ng-click="mopc.editItem(item)">change it</button></td>
+								<td> <button ng-click="mopc.checkOffers(item)">show offers</button></td>
+							</tr>
+							<tr ng-repeat="offer in item.licitacije">
+								<div ng-show='showOffers'>
+									<table class='itemTable' width='100%'>
+										<tr>
+											<td width='40%'>By: {{offer.ponudio}}</td>
+											<td width='30%'>price: {{offer.suma}}</h4></td>
+										 	<td width='30%'><button ng-click="mopc.acceptOffer(item, offer)">Accept offer</button></td>
+										</tr>
+									</table>
+								</div>
+							</tr>											
+					</table>
+					<table class="fanZona" width='100%' ng-show="item.showEdit">
+						<tr height='20px'>
+							<th width='40%'>Title:       <input type='text' ng-model="item.naziv" size='24'/><br/><br/>
+											Description: <textarea ng-model="item.opis" rows='5' columns='20'></textarea><br/><br/>
+							</th>
+							<th width='60%'>Sale finishes on:  <input type="date" ng-model="item.kraj" placeholder="yyyy-MM-dd" min="{{today}}"><br/><br/><br/>
+								Photo:            <input type="file" demo-file-model="item.slika" accept=".jpg, .png"/><br/><br/>
+								<span/><br/>
+								<button ng-click="mopc.saveChanges(item)">   Save changes   </button><br/><br/>
+								<div class="secretMessage"  ng-show="ashowDone">Item changed succesfully</div>
+								<div class="secretMessage" ng-show="ashowSthWentWrong">Something went wrong! Item is not changed</div>
+								<div class="secretMessage" ng-show="ablankField">{{aemptyField}} is neccesery to be added!</div>
+							</th>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>		
+</table>
+<table width='100%' ng-hide='showSales' class='itemTable'>
+	<tr width='100%'>
+		<td colspan='2'><h1 color='red'>MY OFFERS<h1></td>
+	</tr>
+	<tr ng-repeat="off in myOffers">
+			<td width='30%'><img class ='itemImage' src="{{off.slika}}" alt=""></td>
+			<td width='70%'>
+				<div>
+					<table class='itemTable' width='100%'>
+							<tr>
+								<td colspan='2' class='itemTitle'>{{off.naziv}}</td>
+							</tr>
+							<tr>
+								<td colspan='2'>{{off.opis}}</td>
+							</tr>
+							<tr>
+								<td width='50%'><h4>Active until<br/>[yyyy-MM-dd]:</h4></td>
+							 	<td width='50%'>{{off.kraj}}</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td>My offer:</td>
+								<td>{{off.suma}} RSD</td>
+							</tr>								
+							<tr>
+								<td></td>
+								<td> </td>
+							</tr>
+							<tr>
+								<td>Make new offer:</td>
+								<td><input type='text' ng-model="off.novaPonuda" size='5'/> RSD <br/><br/><button ng-click="mopc.makeNewOffer(off)">make new offer</button></td>
+							</tr>	
+							<tr ng-show="off.showDone" class='secretMessage'>
+								<td></td>
+								<td><h4>Your offer is accepted!</h4></td>
+							</tr>			
+							<tr ng-show="off.showSthWentWrong" class='secretMessage'>
+								<td></td>
+								<td><h4>Something went wrong</h4></td>
+							</tr>				
+					</table>
+				</div>
+			</td>
+		</tr>		
+</table>

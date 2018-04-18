@@ -4,9 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.isa.ISA.dbModel.korisnici.Korisnik;
 
 /**
  * Ponuda u licitaciji
@@ -27,7 +27,10 @@ public class Ponuda {
     @ManyToOne
     private PolovanRekvizit rekvizit;
 
-    private Boolean prihvaceno;
+    private boolean prihvaceno;
+    
+    @OneToOne
+    private Obavestenje obavestenje;
 
     public Ponuda(){}
 
@@ -63,11 +66,11 @@ public class Ponuda {
         this.rekvizit = rekvizit;
     }
 
-    public Boolean isPrihvaceno() {
+    public boolean isPrihvaceno() {
         return prihvaceno;
     }
 
-    public void setPrihvaceno(Boolean prihvaceno) {
+    public void setPrihvaceno(boolean prihvaceno) {
         this.prihvaceno = prihvaceno;
     }
 }

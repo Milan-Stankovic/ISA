@@ -1,4 +1,4 @@
-package com.isa.ISA;
+package com.isa.ISA.repository;
 
 import java.util.List;
 

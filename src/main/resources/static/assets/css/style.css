@@ -1763,6 +1763,7 @@ p a:hover {
 	width:200px;
 	color: white !important;
 	font-size: 12px !important;
+	font-family:oswaldregular;
 	
 }
 .itemImage{
@@ -1803,4 +1804,13 @@ p a:hover {
 	border: 1px solid #4f4f4f;
 	width: 200px !important;
 	height: 250px !important;
+}
+.mopMenu{
+	color: white;
+	font-size: 32px;
+	font-family:oswaldregular;
+}
+.mopMenu:hover{
+	background-color: red;
+	cursor: pointer;
 }

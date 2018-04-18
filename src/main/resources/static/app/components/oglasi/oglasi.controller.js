@@ -57,6 +57,7 @@
                     			$scope.items[i].showDone=false;
                     			$scope.items[i].showSthWentWrong=false;
                     			$scope.items[i].ponuda = 0;
+                    			$scope.items[i].hasOffered = oc.showBTN($scope.items[i]);
                     		}
                     });
               });
@@ -66,8 +67,10 @@
         
       oc.showBTN = function(item){
     	  for(var i=0; i<item.licitacija.length; i++){
-    		  if(item.licitacija[i].ponudio==$scope.regUser)
+    		  if(item.licitacija[i].ponudio==$scope.regUser){
+    			  item.suma = item.licitacija[i].suma;
     			  return true;
+    		  }
     	  }
     	  return false;
       }
@@ -166,6 +169,29 @@
             	  }
               });	 
         }
+        oc.makeNewOffer = function(item){
+        	if(!parseFloat(item.novaPonuda)){
+        		return;
+        	}
+        	var data = {"idRekvizita": item.id,
+        				"username": $cookies.get('user'),
+        				"cena": parseFloat(item.novaPonuda)
+        		};
+        	$http({
+        		method: 'PUT',
+        		url: 'http://localhost:8096/rekviziti/polovni/ponuda',
+        		data: data
+              }).then(function successCallback(response) {
+            	  if(response.data==""){
+            		  oc.showDone(item.id);
+            		  item.suma=item.novaPonuda;
+            		  item.novaPonuda="";
+            	  }
+            	  else{
+            		  oc.showSthWentWrong(item.id);
+            	  }
+              });	 
+        }
         oc.ashowSthWentWrong = function() {
 		      $scope.ashowSthWentWrong = true;
 		      $timeout(function() {
@@ -192,6 +218,7 @@
       		  if($scope.items[i].id==id){
       			  regI = i;
       		      $scope.items[regI].showDone = true;
+      		      $scope.items[regI].hasOffered = true;
       		      $timeout(function() {
       		    	  $scope.items[regI].showDone = false;
       		      }, 3000);        			  

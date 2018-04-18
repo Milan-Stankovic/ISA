@@ -50,12 +50,12 @@
 </div>
 <div id="body" class="rentals">
 	<h2>ITEMS FOR SALE</h2>
-	<table class="fanZona">
+	<table class="fanZona" width='100%'>
 		<tr ng-repeat="item in items">
 			<td width='30%'><img class ='itemImage' src="{{item.slika}}" alt=""></td>
 			<td width='70%'>
 				<div>
-					<table class='itemTable'>
+					<table class='itemTable' width='100%'>
 							<tr>
 								<td colspan='2' class='itemTitle'>{{item.naziv}}</td>
 							</tr>
@@ -70,14 +70,22 @@
 								<td></td>
 								<td> </td>
 							</tr>
-								<tr ng-hide="oc.showBTN(item)"	>
-									<td>My offer:</td>
-									<td><input type='text' ng-model="item.cena" size='5'/></td>
-								</tr>	
-								<tr ng-hide="oc.showBTN(item)"	>
-									<td></td>
-									<td><button ng-click="oc.makeOffer(item)">make an offer</button></td>
-								</tr>	
+							<tr ng-hide="item.hasOffered"	>
+								<td>My offer:</td>
+								<td><input type='text' ng-model="item.cena" size='5'/> RSD <button ng-click="oc.makeOffer(item)">make an offer</button></td>
+							</tr>	
+							<tr ng-show="item.hasOffered"	>
+								<td>My offer:</td>
+								<td>{{item.suma}} RSD</td>
+							</tr>								
+							<tr>
+								<td></td>
+								<td> </td>
+							</tr>
+							<tr ng-show="item.hasOffered"	>
+								<td>Make new offer:</td>
+								<td><input type='text' ng-model="item.novaPonuda" size='5'/> RSD <br/><br/><button ng-click="oc.makeNewOffer(item)">make new offer</button></td>
+							</tr>	
 							<tr ng-show="item.showDone" class='secretMessage'>
 								<td></td>
 								<td><h4>Your offer is accepted!</h4></td>

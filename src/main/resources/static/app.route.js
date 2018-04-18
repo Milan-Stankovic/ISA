@@ -115,6 +115,12 @@
 			templateUrl: 'app/components/oglasi/oglasi.html',
 			controller: 'oglasiController',
 			controllerAs: 'oc'
+		})
+		.state('core.mojiOglasiPonude', {
+			url: 'mojiOglasiPonude',
+			templateUrl: 'app/components/mojiOglasiPonude/mojiOglasiPonude.html',
+			controller: 'mojiOPController',
+			controllerAs: 'mopc'
 		});
      /* $locationProvider.html5Mode({
     	  enabled: true,

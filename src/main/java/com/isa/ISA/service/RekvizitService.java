@@ -13,7 +13,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.isa.ISA.PolovanRekvRepository;
 import com.isa.ISA.DTO.PolovanRekvDTO;
 import com.isa.ISA.DTO.PonudaDTO;
 import com.isa.ISA.DTO.RekvizitDTO;
@@ -24,6 +23,7 @@ import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.dbModel.enums.StatusLicitacije;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.AdminRepository;
+import com.isa.ISA.repository.PolovanRekvRepository;
 import com.isa.ISA.repository.PonudaRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.RekvizitRepository;
@@ -155,6 +155,12 @@ public class RekvizitService {
 		retVal.getLicitacija().add(p0);
 		ponudaRepo.save(p0);
 		return polovanRepo.save(retVal);
+	}
+
+	public void updatePonude(PonudaDTO p) {
+		Ponuda p0 = ponudaRepo.findByPonudio(p.getUsername());
+		p0.setSuma(p.getCena());
+		ponudaRepo.save(p0);
 	}
 
 }

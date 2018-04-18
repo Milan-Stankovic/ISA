@@ -66,4 +66,10 @@ public class RekvizitiController {
     public void ponudiPolovne(@RequestBody PonudaDTO p){
 		 rekvizit.ponudiPolovne(p);
     }
+	@RequestMapping(method = RequestMethod.PUT, value = "/polovni/ponuda")
+    public void updatePonude(@RequestBody PonudaDTO p){
+		 rekvizit.updatePonude(p);
+    }
+
+
 }
