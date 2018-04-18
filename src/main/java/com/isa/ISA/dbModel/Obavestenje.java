@@ -17,6 +17,8 @@ public class Obavestenje {
     @GeneratedValue
     private long id;
     
+    private String prima;
+    
     @ManyToOne
     @JsonBackReference
     private Ponuda ponuda;
@@ -24,6 +26,7 @@ public class Obavestenje {
     private boolean deleted;
     
     private String tekst;
+    
 
 	public long getId() {
 		return id;
@@ -58,6 +61,15 @@ public class Obavestenje {
 	}
 
 	public Obavestenje() {
+	}
+
+
+	public String getPrima() {
+		return prima;
+	}
+
+	public void setPrima(String prima) {
+		this.prima = prima;
 	}
     
     

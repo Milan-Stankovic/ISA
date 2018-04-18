@@ -9,4 +9,5 @@ import com.isa.ISA.dbModel.Ponuda;
 
 public interface PonudaRepository extends CrudRepository<Ponuda, Long>{
 	Ponuda findByPonudioAndRekvizitId(String ponudio, long id);
+	Ponuda findByRekvizitIdAndId(long rekvizitID, long id);
 }
