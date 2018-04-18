@@ -1,5 +1,7 @@
 package com.isa.ISA.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -7,14 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.isa.ISA.DTO.PrimljenIzvestajDTO;
+import com.isa.ISA.DTO.ReportDto;
+import com.isa.ISA.dbModel.*;
+import com.isa.ISA.dbModel.korisnici.Admin;
+import com.isa.ISA.dodatno.ExcelUtil;
+import com.isa.ISA.repository.*;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.XYChart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.isa.ISA.dbModel.Karta;
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.repository.DogadjajRepository;
-import com.isa.ISA.repository.KartaRepository;
-import com.isa.ISA.repository.PozoristeBioskopRepository;
 
 @Service
 public class IzvestajSevice {
@@ -27,6 +31,134 @@ public class IzvestajSevice {
 
     @Autowired
     private KartaRepository kartaRepository;
+
+    @Autowired
+    private AdminRepository adminRepo;
+
+    @Autowired
+    private RekvizitRepository rekvizitRepo;
+
+    public PrimljenIzvestajDTO makeReport(ReportDto dto){
+
+        PrimljenIzvestajDTO returnDTO = new PrimljenIzvestajDTO();
+        List<String> oceneDogadjaja = new ArrayList<>();
+
+        Admin admin = adminRepo.findOne(dto.getAdminId());
+        PozoristeBioskop pb = pbRepository.findOne(dto.getPbId());
+        List<Dogadjaj> dogadjaji = dogadjajRepository.findByMestoOdrzavanja(pb);
+
+        boolean moze = false;
+
+        for (PozoristeBioskop pozBi: admin.getMesta()) {
+            if(pb.getId()==pozBi.getId())
+                moze=true;
+        }
+    //    StringBuilder builder = new StringBuilder();
+        if(moze){
+
+            returnDTO.setOcenaPb("Average ambient rating for " + pb.getNaziv() + " is : " +pb.getProsecnaOcena());
+
+         //   builder.append("Average ambient rating for " + pb.getNaziv() + " is : " + pb.getProsecnaOcena() + "<br/>");
+
+            //float prosecnaOcenaAmbijenta = pb.getProsecnaOcena();
+            for (Dogadjaj tempDog:dogadjaji) {
+               oceneDogadjaja.add("Average rating for "+tempDog.getNaziv()+ " is : " +tempDog.getProsecnaOcena());
+             //    builder.append("Average rating for "+tempDog.getNaziv()+ " is : " +tempDog.getProsecnaOcena() +"<br/>");
+            }
+
+            returnDTO.setOcenaDogadjaja(oceneDogadjaja);
+
+            DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            try{
+                Date p = dateFormat.parse(dto.getFrom());
+                Date k = dateFormat.parse(dto.getTo());
+                int zaradaOdKarata = kartaRepository.findByPozoristeBioskopAndVremeOdrzavanjaBetween(pb, p, k).stream().mapToInt(karta -> karta.getPunaCena()).sum(); // Mnogo kul ako radi :D
+
+                returnDTO.setZaradaOdKarata("Income from ticket sales is : " + zaradaOdKarata);
+
+
+               // builder.append("Income from ticket sales is : " + zaradaOdKarata+"<br/>");
+
+                List<ZvanicanRekvizit> rekviziti = rekvizitRepo.findByPreuzeti(pb);
+
+                int zaradaOdRekvizita =0;
+
+                for (ZvanicanRekvizit tempRekvizit:rekviziti) {
+                    for(RezervacijaRekvizita tempRezervacija:tempRekvizit.getRezervacije()){
+                        if(tempRezervacija.isReseno() && tempRezervacija.getDatum().after(p) && tempRezervacija.getDatum().before(k)){
+                            zaradaOdRekvizita+=tempRekvizit.getCena();
+                        }
+                    }
+
+                }
+                returnDTO.setZaradaOdRekvizita("Income from props is : " + zaradaOdRekvizita);
+                //builder.append("Income from props is : " + zaradaOdRekvizita+"<br/>");
+
+                int ukupno = zaradaOdKarata+zaradaOdRekvizita;
+
+                returnDTO.setUkupnaZarada("Full income for the given period is : " +ukupno);
+
+             //   builder.append("Full income for the given period is : " +zaradaOdKarata+zaradaOdRekvizita+"<br/>");
+
+               // returnDTO.setTekst(builder.toString());
+
+                Map<Date,Integer> grafikPosetaDnevno = getPoseteOdDo(pb.getId(), p, k);
+                Map<Integer, Integer> grafikPosetaNedeljno = new HashMap<>();
+                Map<Integer, Integer> grafikPosetaMesecno = new HashMap<>();
+
+                 Calendar c = Calendar.getInstance();
+
+                for (Map.Entry<Date, Integer> entry : grafikPosetaDnevno.entrySet())
+                {
+                    c.setTime(entry.getKey());
+                    int mesec = c.get(Calendar.MONTH);
+                    int nedelja = c.get(c.WEEK_OF_YEAR);
+
+                    Integer i = grafikPosetaNedeljno.get(nedelja);
+                    if (i == null) {
+                        grafikPosetaNedeljno.put(nedelja, entry.getValue());
+
+                    }else{
+                        grafikPosetaNedeljno.put(nedelja, i+entry.getValue());
+                    }
+
+                    Integer j = grafikPosetaMesecno.get(mesec);
+                    if(i==null){
+                        grafikPosetaMesecno.put(mesec, entry.getValue());
+                    }else{
+                        grafikPosetaMesecno.put(mesec, entry.getValue()+j);
+                    }
+                }
+
+                returnDTO.setGrafikPosetaDnevo(grafikPosetaDnevno);
+                returnDTO.setGrafikPosetaNedeljno(grafikPosetaNedeljno);
+                returnDTO.setGrafikPosetaMesecno(grafikPosetaMesecno);
+                return returnDTO;
+
+
+
+
+
+
+
+
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return null;
+
+
+
+
+
+
+
+        }
+        return null;
+
+
+    }
 
     public float getOcenaAmbijenta(Long pb){
         return dogadjajRepository.findOne(pb).getProsecnaOcena();
@@ -91,6 +223,9 @@ public class IzvestajSevice {
         return grafik;
 
     }
+
+
+
 
     private Date setToZero(Date d){
         Calendar cal = Calendar.getInstance();

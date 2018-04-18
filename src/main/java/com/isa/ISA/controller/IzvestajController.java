@@ -3,11 +3,10 @@ package com.isa.ISA.controller;
 import java.util.Date;
 import java.util.Map;
 
+import com.isa.ISA.DTO.PrimljenIzvestajDTO;
+import com.isa.ISA.DTO.ReportDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.isa.ISA.service.IzvestajSevice;
 
@@ -55,6 +54,11 @@ public class IzvestajController {
     @RequestMapping("/izvestaj/pb/{id}/posecenostIzmedju")
     private Map<Date, Integer> getPosecenostIzmedju(@PathVariable Long id,@RequestBody  Date od,@RequestBody  Date d2){
         return izvestajSevice.getPoseteOdDo(id,od, d2);
+    }
+
+    @RequestMapping(method =RequestMethod.POST ,value ="/fullIzvestaj")
+    private PrimljenIzvestajDTO getfullIzvestaj(@RequestBody ReportDto r){
+        return izvestajSevice.makeReport(r);
     }
 
 

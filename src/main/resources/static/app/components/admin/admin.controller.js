@@ -49,11 +49,19 @@
     }
 
 
-    adminController.$inject = ['$location', '$scope', '$rootScope', '$http', '$window', '$cookies', '$document'];
+    adminController.$inject = ['$location', '$scope', '$rootScope', '$http', '$window', '$cookies', '$document','$state'];
 
 
 
-    function adminController($location, $scope, $rootScope, $http, $window, $cookies, $document) {
+    function adminController($location, $scope, $rootScope, $http, $window, $cookies, $document,$state) {
+
+
+        $scope.go = function(state) {
+
+            var id ={};
+            id.admin= 6;
+            $state.go(state, {"id" : 6} );
+        }
 
         $scope.sala = false;
         $scope.pozoriste = false;
@@ -322,7 +330,7 @@
         $scope.pickIzvestaj = function(){
             $scope.sala = false;
             $scope.pozoriste = false;
-            $scope.bioskop = true;
+            $scope.bioskop = false;
             $scope.sedista = false;
             $scope.dogadjaj = false;
             $scope.projekcija = false;

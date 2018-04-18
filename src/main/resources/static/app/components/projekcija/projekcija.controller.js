@@ -16,7 +16,6 @@
             var new_str = part.split("/projekcije")[0];
             id1 = /[^/]*$/.exec(new_str)[0];
             id2 = /[^/]*$/.exec(window.location.href)[0];
-
         };
         init();
 

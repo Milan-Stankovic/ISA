@@ -1639,6 +1639,22 @@ p a:hover {
 	color: white !important;
 }
 
+
+.inputReport{
+	padding: 0 !important;
+	text-decoration: none !important;
+	width: 400px !important;
+	height: 16px !important;
+	color: white !important;
+}
+
+.inputReportGraph{
+	padding: 0 !important;
+	text-decoration: none !important;
+	width: 400px !important;
+	height: 400px !important;
+}
+
 .inputDebeli{
     padding: 0 !important;
     text-decoration: none !important;
