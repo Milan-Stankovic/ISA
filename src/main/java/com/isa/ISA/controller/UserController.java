@@ -214,15 +214,7 @@ public class UserController {
 		return kRezUstanova;
 	}
 
-	@RequestMapping(method = RequestMethod.GET,value = "api/user/invitation/{username}/event/{rezID}")
-	public void setRez(HttpServletResponse response, @PathVariable String username, @PathVariable String rezID){
-		try {
-			response.sendRedirect("http://localhost:8096/#!/invitation/"+username+"/event/"+rezID);
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
 
 
 

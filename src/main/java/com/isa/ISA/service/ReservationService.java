@@ -111,9 +111,7 @@ public class ReservationService {
         }
 
         for (RegistrovaniKorisnik reg : pozvani) {
-            if(reg.getRezervacije()==null)
-                reg.setRezervacije(new ArrayList<>());
-            reg.getRezervacije().add(rez);
+
             userService.addUser(reg);
             Poziv p = new Poziv();
             p.setOsoba(reg);
@@ -141,8 +139,8 @@ public class ReservationService {
 
         for(Poziv po : pozivi){
             if(po.isPozvan()){
-                String s = "Please click here to accept or decline your invitation: http://localhost:8096/api/user/invitation/"+po.getOsoba().getUserName()+"/event/" + rez.getId();
-                em = new EmailService(po.getOsoba().getEmail(),"Event Invitation", s, rez.getId());
+                String s = "Please click here to accept or decline your invitation: http://localhost:8096/#!/invitation/"+po.getOsoba().getUserName()+"/event/" + rez.getId();
+                em = new EmailService(po.getOsoba().getEmail(),"Event Invitation from " + rezervisao.getIme() + " " + rezervisao.getPrezime(), s, rez.getId());
             }else{
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy, HH:mm");
                 String date = DATE_FORMAT.format(projekcija.getVreme());
@@ -155,12 +153,12 @@ public class ReservationService {
                 for(Poziv pozz : pozivi){
                     listString2 += pozz.getOsoba().getIme() + " " + pozz.getOsoba().getPrezime() + ",";
                 }
-                listString = listString.substring(0, listString.length()-1);
+                listString2 = listString2.substring(0, listString2.length()-1);
 
 
-                String s = "Event name:" + projekcija.getDogadjaj().getNaziv() + ", Place: " + projekcija.getSala().getUstanova().getNaziv()
+                String s = "Event name: " + projekcija.getDogadjaj().getNaziv() + ", Place: " + projekcija.getSala().getUstanova().getNaziv()
                         + ", Auditorium: " + projekcija.getSala().getIme() + ", Date: " + date + ", Seats:" + listString + ", Persons:"
-                         + listString2;
+                         + listString2 + ", Total price: " + pozivi.get(0).getKarta().getPunaCena() + ",00 RSD";
 
 
                 em = new EmailService(po.getOsoba().getEmail(),"Reservation Detalis", s, rez.getId());
