@@ -21,7 +21,7 @@ h2,p ,a  {color: white;}
     <p> Naziv: {{proj.dogadjaj.naziv  | uppercase }}</p>
     <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
     <p>Place: {{salaUstanova.naziv}}, Auditorium: {{sala.ime}}</p>
-    <p>Price: {{ proj.cena*(pozvanih.length+1) - ( popust/100*(proj.cena*(pozvanih.length+1)) )}},00 RSD</p>
+    <p>Price: {{ proj.cena*(rezervisano.length) - ( popust/100*(proj.cena*(rezervisano.length)) )}},00 RSD</p>
     <p>Discount: {{popust}}%</p>
     <br>
     <button ng-click="openList()">Invite Friends</button>
@@ -46,6 +46,7 @@ h2,p ,a  {color: white;}
                         <img class="box {{s.id}}"   ng-switch-when="VIP" height="40px" width="40px" src='assets/images/vip.png' ng-click="dodajSediste(s.id)">
                         <img  class="box {{s.id}}"  ng-switch-when="BALCONY" height="40px" width="40px" src='assets/images/balkon.png' ng-click="dodajSediste(s.id)">
                     </span>
+
                     </td>
 
                 </tr>
@@ -83,5 +84,5 @@ h2,p ,a  {color: white;}
        <div> <p></p><button ng-click="finish()">Finish Reservation</button></div>
 
     <br>
-
+    {{updateView()}}
 

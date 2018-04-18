@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('reservationController', reservationController);
 
-    reservationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce'];
-    function reservationController($location, $scope, $rootScope, $http, $cookies, $sce) {
+    reservationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$window'];
+    function reservationController($location, $scope, $rootScope, $http, $cookies, $window) {
         var resc = this;
         resc.home = "Home";
         var id1, id2;
@@ -38,9 +38,6 @@
         };
         init();
 
-        $scope.trustSrc = function(src) {
-            return $sce.trustAsResourceUrl(src);
-        }
 
         console.log(window.location.href);
         console.log("id1=" + id1 + "id2=" +id2);
@@ -52,6 +49,8 @@
             }).then(function successCallback(response) {
                 $scope.proj = response.data;
                  console.log("projekcija: " + $scope.proj.dogadjaj.naziv)
+                 $scope.zauzetaSedista = $scope.proj.zauzetaSedista;
+                 console.log("ZAUZETIH: " + $scope.zauzetaSedista.length)
                  $scope.sala = $scope.proj.sala;
                  $scope.sedista = $scope.sala.sedista;
                  $scope.redova = $scope.sala.brRed;
@@ -105,6 +104,7 @@
                 alert("Greska kod get projekcije")
 
             });
+
 
 
         }
@@ -193,17 +193,26 @@
             $scope.clicked = !$scope.clicked;
         }
 
+      $scope.updateView = function(){
+        if($scope.zauzetaSedista!=undefined)
+            for(var i = 0; i < $scope.zauzetaSedista.length; i++){
+                document.getElementsByClassName($scope.zauzetaSedista[i].id)[0].setAttribute("src", 'assets/images/zauzeto.png');
+            }
+        }
+
 
         $scope.dodajSediste = function(sID){
             console.log("SID: " + sID)
             var sediste;
+            sediste = getSediste(sID);
+
             var x = document.getElementsByClassName(sID)[0].getAttribute("src");
             console.log(x)
             if(x==='assets/images/zauzeto.png'){
                 return;
             }
             if(x==='assets/images/kliknuto.png'){
-                sediste = getSediste(sID);
+
                 if(sediste.tipSedista=="REGULAR")
                     document.getElementsByClassName(sID)[0].setAttribute("src", 'assets/images/slobodno.png');
                 else if(sediste.tipSedista=="LOVEBOX")
@@ -233,10 +242,9 @@
 
         $scope.inviteFriends = function(friend){
             $scope.pozvanih.push(friend.id);
-            console.log("button" + friend.id)
             document.getElementById("button" + friend.id).innerHTML = "Sent";
             document.getElementById("button" + friend.id).disabled=true;
-            console.log($scope.pozvanih.length)
+
             //OVIMA TREBA POSLATI INVITE AKO REZERVACIJA PRODJE USPESNO
 
         }
@@ -268,6 +276,7 @@
                 data: rez
                 }).then(function successCallback(response) {
                     alert("Uspesna rezervacija!")
+                    $window.location.reload();
                   //alert(user.userName)
                 }, function errorCallback(response) {
                     console.log("Greska kod rezervacije");

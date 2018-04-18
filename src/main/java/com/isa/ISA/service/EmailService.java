@@ -54,14 +54,14 @@ public class EmailService {
 
 	}
 
-	public EmailService(String to, String message, Long rezID) {
+	public EmailService(String to, String sub, String mess, Long rezID) {
 		try {
 			String host = "smtp.gmail.com";
 			String user = "piginco@gmail.com";
 			String pass = "pigincoNTM10";
 			String from = "piginco@gmail.com";
-			String subject = "Event Invitations";
-			String messageText = "Please click here to accept or decline your invitation: http://localhost:8096/api/user/invitation/"+to+"/event/" + rezID;
+			String subject = sub;
+			String messageText = mess;
 			boolean sessionDebug = false;
 
 			Properties props = System.getProperties();

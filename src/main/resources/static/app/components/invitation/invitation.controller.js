@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('invitationController', invitationController);
 
-    invitationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce'];
-    function invitationController($location, $scope, $rootScope, $http, $cookies, $sce) {
+    invitationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$timeout'];
+    function invitationController($location, $scope, $rootScope, $http, $cookies, $timeout) {
         var ic = this;
         ic.home = "Home";
 
@@ -15,6 +15,7 @@
         var userID;
         var rezID;
         var init = function (){
+            $scope.message=""
             var part = window.location.href.substring(0, window.location.href.indexOf("/event"));
             var new_str = part.split("/event")[0];
             userID = /[^/]*$/.exec(new_str)[0];
@@ -49,15 +50,59 @@
             console.log($scope.proj)
             getUstanova();
 
+
+
           }, function errorCallback(response) {
               console.log("Greska kod GET rez");
           });
 
         }
         getRez();
+
+
         $scope.accept = function() {
 
+            $http({
+              method: 'GET',
+              url: 'http://localhost:8096/api/rezervacija/accept/'+ userID +'/event/' +rezID
+
+            }).then(function successCallback(response) {
+
+                 $scope.message = "Invitation accepted!";
+                 $timeout(function() {
+                   $location.path("home");
+                  }, 4000);
+
+
+              }, function errorCallback(response) {
+                  console.log("Greska kod GET rez");
+                  $scope.message = "Invitation not accepted!";
+              });
+
+
         }
+
+        $scope.decline = function() {
+
+            $http({
+              method: 'GET',
+              url: 'http://localhost:8096/api/rezervacija/decline/'+ userID +'/event/' +rezID
+
+            }).then(function successCallback(response) {
+
+                 $scope.message = "Invitation declined!";
+                 $timeout(function() {
+                   $location.path("home");
+                  }, 4000);
+
+
+              }, function errorCallback(response) {
+                  console.log("Greska kod GET rez");
+                  $scope.message = "Invitation not accepted!";
+              });
+
+
+                }
 
         var getUstanova = function(){
         $http({
