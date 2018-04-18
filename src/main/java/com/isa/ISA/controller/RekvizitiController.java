@@ -70,6 +70,13 @@ public class RekvizitiController {
     public void updatePonude(@RequestBody PonudaDTO p){
 		 rekvizit.updatePonude(p);
     }
+	@RequestMapping(method = RequestMethod.GET, value = "/mojiOglasi/{userID}")
+    public List<PolovanRekvizit> getMojiOglasi(@PathVariable long userID){
+		return rekvizit.getMojiOglasi(userID);
+    }
 
-
+	@RequestMapping(method = RequestMethod.GET, value = "/mojePonude/{username}")
+    public List<PolovanRekvizit> getMojePonude(@PathVariable String username){
+		return rekvizit.getMojePonude(username);
+    }
 }

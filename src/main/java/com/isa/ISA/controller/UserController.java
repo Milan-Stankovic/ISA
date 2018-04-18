@@ -9,6 +9,10 @@ import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.Sala;
+import com.isa.ISA.dbModel.enums.Status;
+import com.isa.ISA.dbModel.korisnici.Poziv;
+import com.isa.ISA.service.ReservationService;
+import com.isa.ISA.service.RezervacijaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +36,10 @@ public class UserController {
     
     @Autowired
     private PrijateljService prijateljService;
+
+	@Autowired
+	private ReservationService resService;
+
 
     @RequestMapping(method = RequestMethod.GET,value = "/api/users")
     public List<RegistrovaniKorisnik> getAllUsers(){
@@ -206,15 +214,9 @@ public class UserController {
 		return kRezUstanova;
 	}
 
-	@RequestMapping(method = RequestMethod.GET,value = "api/user/invitation/{username}/event/{rezID}")
-	public void setRez(HttpServletResponse response, @PathVariable String username, @PathVariable String rezID){
-		try {
-			response.sendRedirect("http://localhost:8096/#!/invitation/"+username+"/event/"+rezID);
-		}catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+
+
+
 
 
 

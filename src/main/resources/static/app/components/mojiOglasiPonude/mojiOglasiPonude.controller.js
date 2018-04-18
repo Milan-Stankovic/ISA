@@ -38,31 +38,52 @@
 
               	  $http({
                       method: 'GET',
-                      url: 'http://localhost:8096/rekviziti/oglasi/'+$scope.regUserID,
+                      url: 'http://localhost:8096/rekviziti/mojiOglasi/'+$scope.regUserID,
                     }).then(function successCallback(response) {
                     		var all = response.data;
                     		$scope.mySales = response.data;
                     		for(var i=0; i<all.length; i++){
                     			$scope.mySales[i].showEdit=false;
-                    			$scope.items[i].ShowOffers=false;
+                    			$scope.mySales[i].showOffers=false;
+                    			$scope.mySales[i].kraj = mopc.parseDate(all[i].kraj);
+                    			$scope.mySales[i].krajDate = new Date(all[i].kraj);
                     		}
                     });
 	              	$http({
 	                    method: 'GET',
-	                    url: 'http://localhost:8096/rekviziti/ponude/'+$scope.regUserID,
+	                    url: 'http://localhost:8096/rekviziti/mojePonude/'+$scope.regUser,
 	                  }).then(function successCallback(response) {
 	                  		var all = response.data;
 	                  		$scope.myOffers = response.data;
 	                  		for(var i=0; i<all.length; i++){
 	                  			$scope.myOffers[i].showDone=false;
 	                  			$scope.myOffers[i].showSthWentWrong=false;
+	                  			$scope.myOffers[i].suma = mopc.findSuma(all[i]);
+	                  			$scope.myOffers[i].kraj = mopc.parseDate(all[i].kraj);
+	                  			
 	                  		}
 	                  });
               });
         };
         init();
-
-
+        
+        mopc.findSuma  = function(item){
+    	  for(var i=0; i<item.licitacija.length; i++){
+    		  if(item.licitacija[i].ponudio==$scope.regUser){
+    			  return item.licitacija[i].suma;
+    		  }
+    	  }
+    	  return '?';
+      }
+        mopc.parseDate = function(d){
+        	var date = new Date(d);
+			var day = date.getDate();
+			day = day = (day < 10) ? ("0" + day) : day;
+			var month = date.getMonth() + 1;
+			month = (month < 10) ? ("0" + month) : month;
+			return (day + "-" + month + "-" + date.getFullYear());
+        }
+        
         mopc.makeNewOffer = function(item){
         	if(!parseFloat(item.novaPonuda)){
         		return;
@@ -77,7 +98,7 @@
         		data: data
               }).then(function successCallback(response) {
             	  if(response.data==""){
-            		  mopc.showDone(item.id);
+            		  mopc.showDone(item.id, parseFloat(item.novaPonuda));
             		  item.suma=item.novaPonuda;
             		  item.novaPonuda="";
             	  }
@@ -90,7 +111,12 @@
         	
         }
         mopc.editItem = function(item){
-        	//treba samo da odradi toggle da se vidi edit tabela
+        	item.showEdit=true;
+        }
+
+        mopc.goBack = function(item){
+        	item.showEdit=false;
+        	
         }
         mopc.checkOffers = function(item){
         	//treba samo da odradi toggle da se vide ponude
@@ -125,27 +151,28 @@
 					 $scope.aemptyField = "";
 		      }, 3000);    
 		 }
-        mopc.showDone = function(id) {
+        mopc.showDone = function(id, suma) {
       	  var regI; 
-      	  for(var i=0; i<$scope.items.length; i++){
-      		  if($scope.items[i].id==id){
+      	  for(var i=0; i<$scope.myOffers.length; i++){
+      		  if($scope.myOffers[i].id==id){
       			  regI = i;
-      		      $scope.items[regI].showDone = true;
-      		      $scope.items[regI].hasOffered = true;
+      		      $scope.myOffers[regI].showDone = true;
+      		      $scope.myOffers[regI].hasOffered = true;
+      		      $scope.myOffers[regI].suma = suma;
       		      $timeout(function() {
-      		    	  $scope.items[regI].showDone = false;
+      		    	  $scope.myOffers[regI].showDone = false;
       		      }, 3000);        			  
       		  }
       	  }
 		 }
 		 mopc.showSthWentWrong = function(id) {
      	  var regI; 
-     	  for(var i=0; i<$scope.items.length; i++){
-     		  if($scope.items[i].id==id){
+     	  for(var i=0; i<$scope.myOffers.length; i++){
+     		  if($scope.myOffers[i].id==id){
      			  regI = i;
-     		      $scope.items[regI].showSthWentWrong = true;
+     		      $scope.myOffers[regI].showSthWentWrong = true;
      		      $timeout(function() {
-     		    	  $scope.items[regI].showSthWentWrong = false;
+     		    	  $scope.myOffers[regI].showSthWentWrong = false;
      		      }, 3000);        			  
      		  }
      	  }

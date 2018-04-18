@@ -9,4 +9,8 @@ import com.isa.ISA.dbModel.enums.StatusLicitacije;
 
 public interface PolovanRekvRepository extends CrudRepository<PolovanRekvizit, Long> {
 	List<PolovanRekvizit> findByStatus(StatusLicitacije status);
+	List<PolovanRekvizit> findByPostavioId(long id);
+	List<PolovanRekvizit> findByLicitacijaPonudio(String ponudio);
+	
+	
 }

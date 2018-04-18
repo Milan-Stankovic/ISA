@@ -19,13 +19,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 @Service
 public class ReservationService {
 
     @Autowired
-    private RezervacijaRepository rezRepo;
+    private RezervacijaService rezService;
 
     @Autowired
     private SalaService salaService;
@@ -44,26 +45,15 @@ public class ReservationService {
 
 
     public void addRez(Rezervacija r){
-        rezRepo.save(r);
+        rezService.addRez(r);
     }
 
     public Rezervacija getRez(Long id){
-        return rezRepo.findOne(id);
+        return rezService.getRez(id);
     }
-    @Transactional( readOnly = false,
-            propagation = Propagation.REQUIRED,
-            isolation = Isolation.SERIALIZABLE)
+    @Transactional( readOnly = false,  propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
     public void reserve(@RequestBody RezervacijaDTO k) {
-
         RegistrovaniKorisnik rezervisao = userService.getUserID(k.getRezervisao());
-        ArrayList<RegistrovaniKorisnik> pozvani = new ArrayList<>();
-        if (k.getPozvani() != null) {
-            for (Long kor : k.getPozvani()) {
-                pozvani.add(userService.getUserID(kor));
-            }
-        }
-
-        System.out.println(k.getProjekcija());
         Projekcija projekcija = projekcijaService.getProjekcijaID((long) k.getProjekcija());
         Sala sala = projekcija.getSala();
         //temp sediste u koje stavljam ova trenutno zauzeta da bih lakse isla redom i dodeljivala svima u rezervaciji
@@ -71,20 +61,19 @@ public class ReservationService {
         for (Long sID : k.getSedista()) {
             for (Sediste s : sala.getSedista()) {
                 if (s.getId() == sID) {
-                    s.setTipSedista(TipSedista.TAKEN);
+                    if(projekcija.getZauzetaSedista()==null)
+                        projekcija.setZauzetaSedista(new ArrayList<Sediste>());
                     projekcija.getZauzetaSedista().add(s);
                     temp.add(s);
                 }
             }
         }
+        projekcijaService.addProjekcija(projekcija);
         Rezervacija rez = new Rezervacija();
         rez.setProjekcija(projekcija);
         rez.setPopust(k.getPopust());
         rez.setRezervisao(rezervisao);
-        rezRepo.save(rez);
-        //da bi rezervacija bila kompletna mora se ubaciti lista poziva, makar jedan za onog sto rezervise
-        //kada imamo sve pozive, setujemo ih u rezervaciju i onda je ponovo cuvamo.
-        //inicijalni poziv za onog koji rezervise:
+
         Poziv poz = new Poziv();
         poz.setRezervacija(rez);
         poz.setStatus(Status.PRIHVACENO);
@@ -98,14 +87,32 @@ public class ReservationService {
         brojac++;
         ka.setVremeOdrzavanja(projekcija.getVreme());
         ka.setPozoristeBioskop(sala.getUstanova());
-        int ukupno = (int) (((pozvani.size() + 1) * projekcija.getCena()) - (k.getPopust() / 100 * ((pozvani.size() + 1) * projekcija.getCena())));
+        int ukupno = (int) ((k.getSedista().size() * projekcija.getCena()) - (k.getPopust() / 100 * (k.getSedista().size() * projekcija.getCena())));
         ka.setPunaCena(ukupno);
         kartaRepo.save(ka);
         poz.setKarta(ka);
         pozRepo.save(poz);
+
         ArrayList<Poziv> pozivi = new ArrayList<>();
         pozivi.add(poz);
+        rezService.addRez(rez);
+
+        rez.setUrezervaciji(pozivi);
+        rezService.addRez(rez);
+        rezervisao.getRezervacije().add(rez);
+        userService.addUser(rezervisao);
+
+
+        ArrayList<RegistrovaniKorisnik> pozvani = new ArrayList<>();
+        if (k.getPozvani() != null) {
+            for (Long kor : k.getPozvani()) {
+                pozvani.add(userService.getUserID(kor));
+            }
+        }
+
         for (RegistrovaniKorisnik reg : pozvani) {
+
+            userService.addUser(reg);
             Poziv p = new Poziv();
             p.setOsoba(reg);
             p.setPozvan(true);
@@ -120,22 +127,44 @@ public class ReservationService {
             karta.setPunaCena(ukupno);
             kartaRepo.save(karta);
             p.setKarta(karta);
+            pozRepo.save(p);
             pozivi.add(p);
-            pozRepo.save(poz);
+
         }
         rez.setUrezervaciji(pozivi);
-        rezRepo.save(rez);
-        rezervisao.getRezervacije().add(rez);
-        userService.addUser(rezervisao);
-        for (RegistrovaniKorisnik kor : pozvani) {
-            kor.getRezervacije().add(rez);
-            userService.addUser(kor);
-        }
-        for (Sediste s : temp)
-            for (Sediste ss : sala.getSedista()) {
-                if (ss.getId() == s.getId())
-                    ss.setTipSedista(TipSedista.TAKEN);
+        rezService.addRez(rez);
+
+
+        EmailService em;
+
+        for(Poziv po : pozivi){
+            if(po.isPozvan()){
+                String s = "Please click here to accept or decline your invitation: http://localhost:8096/#!/invitation/"+po.getOsoba().getUserName()+"/event/" + rez.getId();
+                em = new EmailService(po.getOsoba().getEmail(),"Event Invitation from " + rezervisao.getIme() + " " + rezervisao.getPrezime(), s, rez.getId());
+            }else{
+                SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy, HH:mm");
+                String date = DATE_FORMAT.format(projekcija.getVreme());
+
+                String listString = k.getSedista().toString();
+                listString = listString.substring(1, listString.length()-1);
+
+                String listString2 ="";
+
+                for(Poziv pozz : pozivi){
+                    listString2 += pozz.getOsoba().getIme() + " " + pozz.getOsoba().getPrezime() + ",";
+                }
+                listString2 = listString2.substring(0, listString2.length()-1);
+
+
+                String s = "Event name: " + projekcija.getDogadjaj().getNaziv() + ", Place: " + projekcija.getSala().getUstanova().getNaziv()
+                        + ", Auditorium: " + projekcija.getSala().getIme() + ", Date: " + date + ", Seats:" + listString + ", Persons:"
+                         + listString2 + ", Total price: " + pozivi.get(0).getKarta().getPunaCena() + ",00 RSD";
+
+
+                em = new EmailService(po.getOsoba().getEmail(),"Reservation Detalis", s, rez.getId());
             }
-        salaService.saveSala(sala);
+
+        }
+
     }
 }

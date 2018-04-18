@@ -78,11 +78,11 @@ public class StartData {
         RegistrovaniKorisnik rk2 = new RegistrovaniKorisnik();
         rk2.setUserName("mirko");
         rk2.setPassword("mirko");
-        rk2.setEmail("mirko@gmail.com");
+        rk2.setEmail("indjic.tanja@gmail.com");
         rk2.setStatus(StatusNaloga.AKTIVAN);
         rk2.setBrojTelefona("4444");
         rk2.setGrad("a");
-        rk2.setIme("Mirko");
+        rk2.setIme("Tanja");
         rk2.setPrezime("Mirkovic");
         System.out.println("Kreiran korisnik: " + rk2.getUserName());
         userService.addUser(rk2);
@@ -90,7 +90,7 @@ public class StartData {
         RegistrovaniKorisnik rk3 = new RegistrovaniKorisnik();
         rk3.setUserName("f");
         rk3.setPassword("f");
-        rk3.setEmail("f@gmail.com");
+        rk3.setEmail("mali.patuljko@gmail.com");
         rk3.setStatus(StatusNaloga.AKTIVAN);
         rk3.setBrojTelefona("4444");
         rk3.setGrad("f");
@@ -232,7 +232,7 @@ public class StartData {
         addBioskop(a2, 1);
         addBioskop(a2, 2);
 
-        Rezervacija r = new Rezervacija();
+       /* Rezervacija r = new Rezervacija();
         r.setRezervisao(rk3);
         r.setPopust(0);
         r.setProjekcija(p);
@@ -240,7 +240,7 @@ public class StartData {
         p.getRezervacije().add(r);
         rk3.setRezervacije(new ArrayList<Rezervacija>());
         rk3.getRezervacije().add(r);
-        userService.addUser(rk3);
+        userService.addUser(rk3);*/
 
         Admin a3 = new Admin();
         a3.setUserName("fanadmin");
