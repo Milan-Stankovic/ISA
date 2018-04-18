@@ -18,6 +18,7 @@
             	  if(response.data!=""){
             		  if(response.data==""){
             			  $location.path('/home');
+            			  return;
             		  }
             		  $scope.userID=response.data.id;
             	  }

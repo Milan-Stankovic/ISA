@@ -12,6 +12,8 @@
 
 
         var init = function (){ 	
+			$scope.adm = [];
+			$scope.isAdmin=false;
         	console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
         	$http({
   			  method: 'GET',
@@ -19,6 +21,8 @@
   				 
   			}).then(function successCallback(response) {
   				user = response.data;
+  				$scope.adm = response.data;
+  				$scope.isAdmin=true;
   				 if(user!=undefined && user.hasOwnProperty('tip')){
 
   				}
@@ -29,7 +33,7 @@
 
         };
         init();
-        
+        sc.saveAdmin = function(){}
         if(user===undefined || user===null){
       		console.log("user undefined trazim usra, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
 ;
@@ -143,6 +147,30 @@
         	}
         }
 
+        sc.saveAdmin = function(){
+        	var data = {
+        			"userName": $scope.adm.ime,
+        			"prezime": $scope.adm.prezime,
+        			"userName": $scope.adm.userName,
+        			"password": $scope.adm.pass,
+        			"grad": $scope.adm.grad,
+        			"brojTelefona": $scope.adm.brojTelefona        			
+        	};
+        	if($scope.adm.pass!=$scope.admpass2){
+        		alert("Password is not matching");
+        		return;
+        	}
+        	if($scope.adm.pass=="" || $scope.adm.pass==undefined){
+        		data.pass = "";
+        	}
+        	$http({
+    			  method: 'PUT',
+    			  url: 'http://localhost:8096/admininfo/' + $scope.adm.id,
+    			  data: data    				 
+    			}).then(function successCallback(response) {
+    				$scope.adm = response.data;
+    			});
+        }
     }
 
 

@@ -133,8 +133,7 @@ public class RekvizitService {
 		retVal.setNaziv(rekDTO.getNaziv());
 		retVal.setOpis(rekDTO.getOpis());
 		retVal.setPostavio(userRepo.findByUserName(rekDTO.getUsername()));
-		retVal.setStatus(StatusLicitacije.UTOKU);
-		//retVal.setStatus(StatusLicitacije.POSTAVLJENO);
+		retVal.setStatus(StatusLicitacije.POSTAVLJENO);
 		retVal.setSlika(rekDTO.getSlika());
 		return polovanRepo.save(retVal);
 	}

@@ -34,8 +34,10 @@
                 method: 'GET',
                 url: 'http://localhost:8096/api/user/'+$scope.regUser,
               }).then(function successCallback(response) {
-              		/*if(response.data=="")
-              			$location.path('/home');*/
+              		if(response.data==""){
+              			$location.path('/home');
+              			return;
+              		}
             	  $scope.regUserID = response.data.id;
 
               	  $http({
@@ -55,7 +57,8 @@
                     			$scope.mySales[i].ashowSthWentWrong= false;
                     			$scope.mySales[i].ablankField= false;
                     			$scope.mySales[i].aemptyField= "";
-                    			$scope.mySales[i].showAccept= mopc.checkIfDone(all[i].licitacija);                 			
+                    			$scope.mySales[i].showAccept= mopc.checkIfDone(all[i].licitacija);       
+                    			$scope.mySales[i].showStatus = mopc.setStatus(all[i].status);
                     		}        	              	
                     });
 	              	$http({
@@ -90,6 +93,16 @@
         };
         init();
         
+        mopc.setStatus = function(status){
+        	if(status=='UTOKU')
+        		return "active";
+        	if(status=='POSTAVLJENO')
+        		return "waiting for approval";
+        	if(status=='ZAVRSENA')
+        		return "done";
+        	return "denied";
+        	
+        }
         mopc.checkIfDone = function(licitacija){
         	for(var i=0; i<licitacija.length; i++){
         		if(licitacija[i].prihvaceno)

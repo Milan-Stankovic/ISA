@@ -22,7 +22,7 @@
 					</tr>
 					<tr>
 						<th>Price:</th>
-						<td><input type='text' ng-model="item.cena"/> RSD</td>
+						<td><input type='text' ng-model="item.cena" size='6'/> RSD</td>
 					</tr>
 					<tr>
 						<th>Photo:</th>
@@ -67,7 +67,7 @@
 					</tr>
 					<tr>
 						<th>Price:</th>
-						<td><input type='text' ng-model="eitem.cena"/> RSD</td>
+						<td><input type='text' ng-model="eitem.cena"  size='6'/> RSD</td>
 					</tr>
 					<tr>
 						<th>New Photo:</th>
@@ -96,4 +96,37 @@
 		</td>
 	</tr>
 </table>
+<div><table width='100%' class='itemTable'>
+	<tr width='100%'>
+		<td colspan='2'><h1>START APPROVING SALES<h1></td>
+	</tr>
+	<tr width='100%'>
+		<td></td>
+		<td><button ng-click="aeic.showSale()">SHOW SALE</button></td>		
+	</tr>
+	<tr ng-show='approving'>
+			<td width='30%'><img class ='itemImage' src="{{sale.slika}}" alt=""></td>
+			<td width='70%'>
+				<div>
+					<table class='itemTable' width='100%'>
+							<tr>
+								<td><button ng-click="aeic.rejectSale()">Reject</button></td>
+								<td><button ng-click="aeic.approveSale()">Approve</button></td>
+							</tr>
+							<tr>
+								<td colspan='2' class='itemTitle'>Title: {{sale.naziv}}</td>
+							</tr>
+							<tr>
+								<td colspan='2'>Description: {{sale.opis}}</td>
+							</tr>
+							<tr>
+								<td width='50%'><h4>Active until:</h4></td>
+							 	<td width='50%'>{{sale.kraj}}</td>
+							</tr>										
+					</table>
+				</div>
+			</td>
+		</tr>		
+</table></div>
+
 	
