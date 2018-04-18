@@ -6,6 +6,7 @@ import java.util.List;
 import com.isa.ISA.DTO.DogadjajDTO;
 import com.isa.ISA.DTO.FileDTO;
 import com.isa.ISA.DTO.ProjekcijaDTO;
+import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.service.UploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -49,6 +50,13 @@ public class DogadjajController {
     @RequestMapping(method = RequestMethod.POST,value = "/d")
     public void setDogadjaj(@RequestBody DogadjajDTO d){
         dogService.addDogadjaj(d);
+    }
+
+    @RequestMapping("/d/projekcije/{id}")
+    public List<Projekcija> getProjekcije(@PathVariable Long id){
+        System.out.println("U dogadjaj kontroleru za projekcije sam");
+        System.out.println(dogService.getDogadjaj(id).getPrikazujeSe().size());
+        return dogService.getDogadjaj(id).getPrikazujeSe();
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/d/projekcija")
@@ -97,5 +105,10 @@ public class DogadjajController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/d/delete/{id}")
     public void deleteDogadjaj(@PathVariable Long id){
         dogService.deleteDogadjaj(id);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/dogadjaj/{id1}/projekcija/delete/{id2}")
+    public void deleteProjekcija(@PathVariable Long id1, @PathVariable Long id2){
+        dogService.deleteProjekcija(id1,id2);
     }
 }

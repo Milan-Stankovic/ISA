@@ -71,6 +71,8 @@
         //#$cookies.get("id");
 
         $scope.pickSala = function (edit) {
+            $scope.izvestaj = false;
+            $scope.allProjekcije = false;
             $scope.sala = true;
             $scope.pozoriste = false;
             $scope.bioskop = false;
@@ -104,6 +106,7 @@
 
 
         $scope.pickPozoriste = function () {
+            $scope.izvestaj = false;
             $scope.sala = false;
             $scope.pozoriste = true;
             $scope.bioskop = false;
@@ -113,6 +116,7 @@
             $scope.karte = false;
             $scope.bpOne = false;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
 
 
         }
@@ -309,7 +313,24 @@
             $scope.karte = false;
             $scope.bpOne = false;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = false;
 
+
+        }
+
+        $scope.pickIzvestaj = function(){
+            $scope.sala = false;
+            $scope.pozoriste = false;
+            $scope.bioskop = true;
+            $scope.sedista = false;
+            $scope.dogadjaj = false;
+            $scope.projekcija = false;
+            $scope.karte = false;
+            $scope.bpOne = false;
+            $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = true;
 
         }
 
@@ -324,12 +345,15 @@
             $scope.karte = false;
             $scope.bpOne = false;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = false;
 
 
         }
 
         $scope.pickDogadjaj = function (edit) {
 
+                $scope.izvestaj = false;
                 $scope.sala = false;
                 $scope.pozoriste = false;
                 $scope.bioskop = false;
@@ -339,6 +363,7 @@
                 $scope.karte = false;
                 $scope.bpOne = false;
                 $scope.allDogadjaji = false;
+                $scope.allProjekcije = false;
 
             if(!edit){
                 $scope.dogadjajEdit = false;
@@ -365,6 +390,15 @@
             $scope.karte = false;
             $scope.bpOne = false;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = false;
+            if(!edit){
+                $scope.newProjekcijaCena = "";
+                $scope.newProjekcijaDate = "";
+                $scope.newProjekcijaAktivan = false;
+                $scope.newProjekcijaSala = null;
+
+            }
 
 
         }
@@ -381,6 +415,8 @@
             $scope.karte = true;
             $scope.bpOne = false;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = false;
 
 
         }
@@ -396,7 +432,7 @@
                 $scope.bp = response.data;
 
             }, function errorCallback(response) {
-                alert("Greska kod admin get one BP")
+                alert("Error")
 
             });
 
@@ -410,7 +446,7 @@
 
 
             }, function errorCallback(response) {
-                alert("Greska kod admin get one BP")
+                alert("Error")
 
             });
 
@@ -425,8 +461,28 @@
             $scope.karte = false;
             $scope.bpOne = true;
             $scope.allDogadjaji = false;
+            $scope.allProjekcije = false;
+            $scope.izvestaj = false;
 
 
+        }
+
+        $scope.getProjections= function(koji){
+            switch (koji) {
+                case 0:
+                    $scope.eventProjekcije = $scope.activeProjekcijeFiltered;
+                    break;
+                case 1:
+                    $scope.eventProjekcije = $scope.inactiveProjekcijeFiltered;
+                    break;
+
+                case 2:
+                    $scope.eventProjekcije = $scope.allProjekcijeFiltered;
+                    break;
+
+                default :
+                    $scope.eventProjekcije = $scope.allProjekcijeFiltered;
+            }
         }
 
         $scope.getEvents = function(koji){
@@ -449,6 +505,12 @@
                     $scope.bpDogadjaj = $scope.currentDogadjajiFilter;
             }
         }
+
+
+        $scope.changeCheckbox= function(){
+            $scope.newProjekcijaAktivan = !$scope.newProjekcijaAktivan;
+        }
+
 
         $scope.allDogadjajiFilter=[];
         $scope.currentDogadjajiFilter=[];
@@ -477,6 +539,91 @@
             }
         }
 
+        $scope.allProjekcije = false;
+        $scope.inactiveProjekcijeFiltered=[];
+        $scope.activeProjekcijeFiltered=[];
+        $scope.allProjekcijeFiltered=[];
+        $scope.eventProjekcije = [];
+
+        var filterActive = function(projekcije){
+            $scope.activeProjekcijeFiltered=[];
+            for(var i in projekcije){
+
+                projekcije[i].vreme=formatDate(projekcije[i].vreme);
+
+                if(projekcije[i].aktivna) {
+                    $scope.activeProjekcijeFiltered.push(projekcije[i]);
+                }
+            }
+        }
+
+        var filterInactive = function(projekcije){
+            $scope.inactiveProjekcijeFiltered=[];
+            for(var i in projekcije){
+                if(!projekcije[i].aktivna)
+                    $scope.inactiveProjekcijeFiltered.push(projekcije[i]);
+            }
+        }
+
+
+        var formatDate = function(dateTemp){
+
+            var date = new Date(dateTemp);
+            var day = date.getDate();
+            var month = date.getMonth();
+            var year = date.getFullYear();
+            var hour = date.getHours();
+            var min = date.getMinutes();
+            var sec = date.getSeconds();
+            if(hour<10)
+                hour='0'+hour;
+            if(min<10)
+                min='0'+min;
+            if(day<10)
+                day='0'+day;
+            if(month<10)
+                month='0'+month;
+            if(sec<10)
+                sec = '0'+sec;
+
+            return day+'-'+month+'-'+year+' '+hour+':'+min+':'+sec;
+
+        }
+
+
+        $scope.showProjections = function(bpId,dogadjajId,newDogadjaName){
+
+            $scope.pickDogadjaj(true);
+            $scope.dogadjaj = false;
+
+            $scope.dogadjajId = dogadjajId;
+            $scope.newDogadjaName = newDogadjaName;
+            $scope.bpId=bpId;
+
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/d/projekcije/'+dogadjajId,
+            }).then(function successCallback(response) {
+                $scope.allProjekcijeFiltered= response.data;
+                $scope.eventProjekcije = response.data;
+                filterActive($scope.eventProjekcije);
+                filterInactive($scope.eventProjekcije);
+                $scope.allProjekcije = true;
+
+            }, function errorCallback(response) {
+                alert("Error while getting Projections");
+
+
+            });
+
+
+
+
+
+
+        }
+
         $scope.pickAllDogadjaji = function(id, naziv){
 
             $scope.sala = false;
@@ -486,6 +633,7 @@
             $scope.dogadjaj = false;
             $scope.projekcija = false;
             $scope.karte = false;
+            $scope.izvestaj = false;
 
             $scope.bpId=id;
             $scope.bpName=naziv;
@@ -505,7 +653,7 @@
 
 
             }, function errorCallback(response) {
-                alert("Greska kod admin get one BP");
+                alert("Error getting Events");
                 $scope.pickBpOne(id);
 
 
@@ -517,10 +665,44 @@
 
 
         $scope.dogadjajEdit = false;
+        $scope.projekcijaId=[];
+
+
+
+
+        $scope.editProjection = function(projekcijaId, dogadjajId, dogadjajName, bpId, bpName){
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/projekcija/'+projekcijaId,
+            }).then(function successCallback(response) {
+                var projekcija = response.data;
+                $scope.projekcijaId = projekcija.id;
+                $scope.editProjekcija=true;
+                $scope.dogadjajId = dogadjajId;
+                $scope.bpName=bpName;
+                $scope.bpId = bpId;
+                $scope.dogadjajNaziv= dogadjajName;
+                console.log(projekcija);
+                $scope.newProjekcijaCena =projekcija.cena;
+                $scope.newProjekcijaSala =projekcija.sala;
+                $scope.newProjekcijaDate= formatDate(projekcija.vreme);
+                $scope.newProjekcijaAktivan = projekcija.aktivna;
+                getSale(bpId);
+                $scope.pickProjekcija(true);
+
+            }, function errorCallback(response) {
+                alert("Error getting Event");
+
+
+            });
+
+        }
+        $scope.newProjekcijaAktivan = false;
 
         $scope.editDogadjaj = function(dogadjajId, bpNaziv, bpId){
 
-
+            $scope.newProjekcijaAktivan = false;
 
             $http({
                 method: 'GET',
@@ -566,7 +748,7 @@
                 $scope.pozoristaAdmin = response.data;
 
             }, function errorCallback(response) {
-                alert("Greska kod admin pozorista")
+                alert("Error getting cinemas")
 
             });
         }
@@ -713,7 +895,29 @@
 
         $scope.dogadjajNaziv="";
 
+
+
+
+        var getSale = function(id){
+
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/pb/sale/'+id,
+            }).then(function successCallback(response) {
+                $scope.saleProjekcija = response.data;
+
+            }, function errorCallback(response) {
+                alert("Error getting Auditoriums for a Projection")
+
+            });
+
+        }
+
+
         $scope.addProjection = function(bpId, id, name){
+
+
+            $scope.editProjekcija=false;
 
 
             $http({
@@ -724,6 +928,7 @@
                 $scope.dogadjajId=id;
                 $scope.bpId = bpId;
                 $scope.dogadjajNaziv = name;
+
                 $scope.pickProjekcija(false);
 
             }, function errorCallback(response) {
@@ -739,6 +944,7 @@
         $scope.addDogadjaj = function(id, name){
             $scope.bpName=name;
             $scope.bpId = id;
+            $scope.newProjekcijaAktivan = false;
             $scope.pickDogadjaj(false);
 
         }
@@ -867,12 +1073,14 @@
 
 
             }, function errorCallback(response) {
-                alert("Greska kod dobijanja sale za edit")
+                alert("Error getting Auditorium")
 
             });
 
 
         }
+
+
 
         $scope.editProjekcija = false;
 
@@ -887,19 +1095,22 @@
                                 if(newProjekcijaCena>0)
                                     moze=true;
             if(moze){
-                if(!menjaj){
-                    var newProjekcijaDTO = {};
-                    newProjekcijaDTO = {
-                        "cena": newProjekcijaCena,
-                        "sala": newProjekcijaSala.id,
-                        "date": newProjekcijaDate,
-                        "ustanova": bpId,
-                        "dogadjaj": dogadjajId,
-                        "aktivna" : newProjekcijaAktivan
-                    }
 
-                    console.log(newProjekcijaDate);
-                  //  console.log(newProjekcijaDTO);
+                console.log("Aktivan ?");
+                console.log($scope.newProjekcijaAktivan);
+                console.log(newProjekcijaAktivan);
+
+                var newProjekcijaDTO = {};
+                newProjekcijaDTO = {
+                    "cena": newProjekcijaCena,
+                    "sala": newProjekcijaSala.id,
+                    "date": newProjekcijaDate,
+                    "ustanova": bpId,
+                    "dogadjaj": dogadjajId,
+                    "aktivna" : newProjekcijaAktivan
+                }
+
+                if(!menjaj){
 
                     $http({
                         method: 'POST',
@@ -907,16 +1118,32 @@
                         data: newProjekcijaDTO
                     }).then(function successCallback(response) {
                         //  location.reload(); Moze ovako clear
-                        alert("Auditorium added sucessfully");
+                        alert("Projection added sucessfully");
                         $scope.editDogadjaj(dogadjajId,bpNaziv, bpId);
-
 
                     }, function errorCallback(response) {
                         alert("Error occured while adding projection");
                     });
 
 
+                }else{
+
+                    $http({
+                        method: 'PUT',
+                        url: 'http://localhost:8096/projekcija/'+$scope.projekcijaId,
+                        data: newProjekcijaDTO
+                    }).then(function successCallback(response) {
+                        //  location.reload(); Moze ovako clear
+                        alert("Projection edited sucessfully");
+                        $scope.editDogadjaj(dogadjajId,bpNaziv, bpId);
+
+                    }, function errorCallback(response) {
+                        alert("Error occured while editing projection");
+                    });
+
+
                 }
+
             }
 
 
@@ -1005,6 +1232,28 @@
 
         }
 
+        $scope.deleteProjekcija= function(projekcijaId, bpId, dogadjajId, dogadjajName){
+            if(projekcijaId)
+                if(bpId)
+                    if(dogadjajId){
+                        $http({
+                            method: 'DELETE',
+                            url: 'http://localhost:8096/dogadjaj/' +dogadjajId+
+                            '/projekcija/delete/'+projekcijaId
+                        }).then(function successCallback(response) {
+                            //  location.reload(); Moze ovako clear
+                            alert("Projection deleted sucessfully");
+                            $scope.showProjections(bpId, dogadjajId, dogadjajName);
+
+
+
+                        }, function errorCallback(response) {
+                            alert("Error occured while deleting projection");
+                        });
+
+                    }
+        }
+
         $scope.deleteSala = function(id, pbId){
 
             if(id)
@@ -1025,6 +1274,8 @@
                     });
                 }
         }
+
+
 
         $scope.deleteDogadjaj= function(id, pbId){
             if(id)

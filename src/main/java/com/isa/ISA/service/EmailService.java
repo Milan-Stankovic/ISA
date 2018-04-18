@@ -61,7 +61,7 @@ public class EmailService {
 			String pass = "pigincoNTM10";
 			String from = "piginco@gmail.com";
 			String subject = "Event Invitations";
-			String messageText = "Please login to your account to accept or decline your invitation: http://localhost:8096/api/login/";
+			String messageText = "Please click here to accept or decline your invitation: http://localhost:8096/api/user/invitation/"+to+"/event/" + rezID;
 			boolean sessionDebug = false;
 
 			Properties props = System.getProperties();

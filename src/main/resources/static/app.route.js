@@ -68,6 +68,12 @@
           controller: 'allReservationsController',
           controllerAs: 'arc'
       })
+        .state('core.invitation', {
+          url: 'invitation/{id1}/event/{id2}',
+          templateUrl: 'app/components/invitation/invitation.html',
+          controller: 'invitationController',
+          controllerAs: 'ic'
+        })
         .state('core.projekcija', {
             url: 'pozoristeBioskop/{id1}/projekcije/{id2}',
             templateUrl: 'app/components/projekcija/projekcija.html',
