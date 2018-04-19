@@ -58,16 +58,15 @@
 
         $scope.go = function(state) {
 
-            var id ={};
-            id.admin= 6;
-            $state.go(state, {"id" : 6} );
+
+            $state.go(state, {"id" : $scope.adminId} );
         }
 
 
         $scope.goOne = function(state, param1, param2,param3, param4, param5, param6) {
 
             $state.go(state, {
-                "id" : 6,
+                "id" : $scope.adminId,
                 "dName" :param1,
                 "pTime" :param2,
                 "dId" :param3,
@@ -766,7 +765,7 @@
         var getPozorista = function () {
             $http({
                 method: 'GET',
-                url: 'http://localhost:8096/admin/p/6', // FALI MI DEO ZA ID
+                url: 'http://localhost:8096/admin/p/'+$scope.adminId, // FALI MI DEO ZA ID
             }).then(function successCallback(response) {
                 $scope.pozoristaAdmin = response.data;
 
@@ -781,7 +780,7 @@
         var getBioskopi = function () {
             $http({
                 method: 'GET',
-                url: 'http://localhost:8096/admin/b/6', // FALI MI DEO ZA ID
+                url: 'http://localhost:8096/admin/b/'+$scope.adminId, // FALI MI DEO ZA ID
             }).then(function successCallback(response) {
                 $scope.bioskopiAdmin = response.data;
 
@@ -871,6 +870,24 @@
         var ac = this;
 
         var init = function () {
+
+
+
+            var regUser={};
+            regUser = $cookies.get('user');
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+regUser,
+            }).then(function successCallback(response) {
+                if(response.data.tip!="POZBI")
+                    $location.path('/home');
+                else
+                    $scope.adminId = response.data.id;
+            }, function errorCallback(response) {
+                alert("Error occured check connection");
+                $location.path('/home');
+            });
+
 
             $scope.zanr = [
                 "HOROR",
@@ -1003,9 +1020,9 @@
 
             function compare(a,b) {
                 if (a.id > b.id)
-                    return -1;
-                if (a.id < b.id)
                     return 1;
+                if (a.id < b.id)
+                    return -1;
                 return 0;
             }
 

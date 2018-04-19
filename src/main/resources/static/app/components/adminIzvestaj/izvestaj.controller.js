@@ -316,6 +316,21 @@
 
         var init = function (){
             $scope.adminId = $stateParams.id;
+
+            var regUser={};
+            regUser = $cookies.get('user');
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+regUser,
+            }).then(function successCallback(response) {
+                if(response.data.tip!="POZBI")
+                    $location.path('/home');
+                else
+                    $scope.adminId = response.data.id;
+            }, function errorCallback(response) {
+                alert("Error occured check connection");
+                $location.path('/home');
+            });
         };
         init();
 

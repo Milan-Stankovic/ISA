@@ -16,7 +16,7 @@
         $scope.saveOneClick = function(oneClickCena){
 
             if(oneClickCena)
-                if(oneClickCena>0 && oneClickCena<100) {
+                if(oneClickCena>0 && oneClickCena<$scope.projekcijaCena) {
 
                     var OneClickDTO = {};
                     OneClickDTO = {
@@ -32,6 +32,8 @@
                         url: 'http://localhost:8096/projekcija/zauzmi/' + $scope.projekcijaId,
                         data: OneClickDTO
                     }).then(function successCallback(response) {
+                        alert("Quick reservation tickets sucessfully added");
+                        $scope.go('core.admin');
 
 
                     }, function errorCallback(response) {
@@ -39,9 +41,12 @@
 
 
                     });
+                }else{
+                    alert("Bad admin... Be ashamed");
+
                 }
 
-           // $scope.go('core.admin');
+           //
 
 
         }
@@ -96,7 +101,9 @@
             for(var z =0; z<sedista.length; z++){
                 trenutniRed=Math.floor(z/brSed);
                 var sediste =  sedista[z];
+               // console.log(sediste);
                 var id =brSed*trenutniRed+sediste.broj;
+                //console.log(id);
                 var type = sediste.tipSedista;
 
                 $scope.items.push({
@@ -111,13 +118,15 @@
 
             function compare(a,b) {
                 if (a.id > b.id)
-                    return -1;
-                if (a.id < b.id)
                     return 1;
+                if (a.id < b.id)
+                    return -1;
                 return 0;
             }
 
             $scope.items.sort(compare);
+
+          //  console.log($scope.items);
 
 
             for(var s=0; s<zauzetaMesta.length; s++){
@@ -134,10 +143,13 @@
                 $scope.split_items.push(temp);
                 temp=[];
             }
-            $scope.showGrid = true;
+
             for(var d=0; d<j; d++){
                 $scope.duzina.push(d);
             }
+
+
+
             $scope.duzina.push(j+1);
 
 
@@ -150,6 +162,7 @@
                         changeClass(sediste.id, sediste.type);
                 }
             });
+            $scope.showGrid = true;
 
 
         }
@@ -245,6 +258,23 @@
             $scope.projekcijaId = $stateParams.pId;
             $scope.bpId = $stateParams.bpId;
             $scope.projekcijaCena = $stateParams.pPrice;
+
+            var regUser={};
+            regUser = $cookies.get('user');
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+regUser,
+            }).then(function successCallback(response) {
+                if(response.data.tip!="POZBI")
+                    $location.path('/home');
+                else
+                    $scope.adminId = response.data.id;
+            }, function errorCallback(response) {
+                alert("Error occured check connection");
+                $location.path('/home');
+            });
+
+
             $scope.setup();
         };
 
