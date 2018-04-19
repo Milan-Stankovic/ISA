@@ -221,6 +221,8 @@ public class UserController {
 	public List<Rezervacija> getInvitations(@PathVariable String username) {
 		ArrayList<Rezervacija> ret = new ArrayList<>();
 		RegistrovaniKorisnik reg = userService.getUser(username);
+		if(reg==null)
+			return new ArrayList<>();
 		for(Rezervacija r : reg.getRezervacije()){
 			for(Poziv p : r.getUrezervaciji()){
 				if(p.getOsoba().getUserName().equals(username) && p.isPozvan() && p.getStatus().toString().equals("CEKA"))

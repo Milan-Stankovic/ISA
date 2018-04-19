@@ -27,7 +27,9 @@
         $scope.pozvanih=[];
         $scope.message="";
         var init = function (){
-        	//$location.path("/login");
+
+            if(!$cookies.get('user'))
+                $location.path("login");
             var part = window.location.href.substring(0, window.location.href.indexOf("/projekcije"));
             var new_str = part.split("/projekcije")[0];
             id1 = /[^/]*$/.exec(new_str)[0];

@@ -11,7 +11,8 @@
         var user;
         $scope.message="Login failed. Password must be changed before first login.";
         var init = function (){
-        	
+        	if($cookies.get('user'))
+        	    $location.path("home")
         };
         init();
         

@@ -11,7 +11,8 @@
         var user;
         $scope.message="";
         var init = function (){
-
+            if($cookies.get('user'))
+                $location.path("home")
         };
         init();
         

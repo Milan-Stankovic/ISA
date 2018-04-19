@@ -11,7 +11,9 @@
         $scope.user = undefined;
         $scope.message="";
 
-        var init = function (){ 	
+        var init = function (){
+            if(!$cookies.get('user'))
+                $location.path("login")
 			$scope.adm = [];
 			$scope.isAdmin=false;
         	console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));

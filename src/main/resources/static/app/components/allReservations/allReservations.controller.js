@@ -12,9 +12,11 @@
         arc.home = "Home";
         $scope.rezervacije = [];
         var init = function (){
-
+            if(!$cookies.get('user'))
+                $location.path("/login")
 
         }
+        init();
 
         var getRez = function () {
             $http({
@@ -25,7 +27,7 @@
                 console.log("sve rezervacije: " + $scope.rezervacije.length)
 
             }, function errorCallback(response) {
-                alert("Greska kod bioskopa")
+                console.log("Greska kod bioskopa")
 
             });
                 }

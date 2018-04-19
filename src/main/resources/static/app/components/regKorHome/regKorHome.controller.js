@@ -12,6 +12,8 @@
         rhc.home = "Home";
 
         var init = function (){
+            if(!$cookies.get('user'))
+                $location.path("login")
             console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
             $http({
               method: 'GET',

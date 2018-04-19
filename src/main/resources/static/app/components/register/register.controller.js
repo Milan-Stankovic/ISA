@@ -9,8 +9,12 @@
     function registerController($location, $scope, $rootScope, $http, $window, $cookies, $timeout) {
         var rc = this;
         var user;
-        var init = function (){
         $scope.message="";
+        var init = function (){
+
+        if($cookies.get('user'))
+            $location.path("home")
+
         };
         init();
         

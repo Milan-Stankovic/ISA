@@ -15,7 +15,7 @@
         var userID;
         var rezID;
         var init = function (){
-
+            $location.path("login")
             $scope.message=""
             var part = window.location.href.substring(0, window.location.href.indexOf("/event"));
             var new_str = part.split("/event")[0];
