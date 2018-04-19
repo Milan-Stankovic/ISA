@@ -429,10 +429,12 @@ public class StartData {
         poy.setOsoba(rk3);
         poy.setPozvan(false);
         poy.setRezervacija(r);
+        ArrayList<Sediste> zauzeta = new ArrayList<>();
         Karta ka = new Karta();
         ka.setPunaCena((int) p.getCena());
         ka.setPozoristeBioskop(p.getSala().getUstanova());
         ka.setSediste(p.getSala().getSedista().get(0));
+        zauzeta.add(p.getSala().getSedista().get(0));
         ka.setVremeOdrzavanja(p.getVreme());
         kartaRepo.save(ka);
         poy.setKarta(ka);
@@ -447,6 +449,7 @@ public class StartData {
         kaa.setPunaCena((int) p.getCena());
         kaa.setPozoristeBioskop(p.getSala().getUstanova());
         kaa.setSediste(p.getSala().getSedista().get(1));
+        zauzeta.add(p.getSala().getSedista().get(1));
         kaa.setVremeOdrzavanja(p.getVreme());
         kartaRepo.save(kaa);
         poyy.setKarta(kaa);
@@ -455,6 +458,7 @@ public class StartData {
         r.setUrezervaciji(pozivi);
         rezRepository.save(r);
         p.getRezervacije().add(r);
+        p.setZauzetaSedista(zauzeta);
         rk3.setRezervacije(new ArrayList<Rezervacija>());
         rk3.getRezervacije().add(r);
         rk2.setRezervacije(new ArrayList<Rezervacija>());
@@ -462,6 +466,7 @@ public class StartData {
         rk3.setBodovi(1);
         userService.addUser(rk3);
         userService.addUser(rk2);
+        projekcijaService.addProjekcija(p);
 
         Rezervacija r2 = new Rezervacija();
         r2.setRezervisao(rk2);
@@ -477,7 +482,8 @@ public class StartData {
         ka = new Karta();
         ka.setPunaCena((int) p.getCena());
         ka.setPozoristeBioskop(p.getSala().getUstanova());
-        ka.setSediste(p.getSala().getSedista().get(0));
+        ka.setSediste(p.getSala().getSedista().get(3));
+        zauzeta.add(p.getSala().getSedista().get(3));
         ka.setVremeOdrzavanja(p.getVreme());
         kartaRepo.save(ka);
         poy.setKarta(ka);
@@ -485,10 +491,12 @@ public class StartData {
         pozivi.add(poy);
         r2.setUrezervaciji(pozivi);
         rezRepository.save(r2);
+        p.setZauzetaSedista(zauzeta);
         p.getRezervacije().add(r2);
         rk2.getRezervacije().add(r2);
         rk2.setBodovi(2);
         userService.addUser(rk2);
+        projekcijaService.addProjekcija(p);
 
         Admin a3 = new Admin();
         a3.setUserName("fanadmin");

@@ -35,6 +35,8 @@ public class RegisterController {
 	    private UserService userService;
 	 @Autowired
 	    private AdminService adminService;
+	 @Autowired
+	 	private EmailService em;
 
 	@Autowired
 	private EncryptionService encService;
@@ -104,7 +106,7 @@ public class RegisterController {
 	        rk.setPrezime(kor.getPrezime());
 	        System.out.println("Kreiran korisnik: " + rk.getUserName());
 	        userService.addUser(rk);
-	        EmailService es = new EmailService(rk.getEmail());
+	        em.regEmail(rk.getEmail());
 	        System.out.println(userService.getUser(rk.getUserName()).getUserName());
 
 	        System.out.println("Account with username " + rk.getUserName() + "has been created");

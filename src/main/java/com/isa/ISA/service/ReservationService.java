@@ -43,6 +43,8 @@ public class ReservationService {
     @Autowired
     private KartaRepository kartaRepo;
 
+    @Autowired
+    private EmailService em;
 
     public void addRez(Rezervacija r){
         rezService.addRez(r);
@@ -139,12 +141,12 @@ public class ReservationService {
         rez.setUrezervaciji(pozivi);
         rezService.addRez(rez);
 
-        EmailService em;
+
 
         for(Poziv po : pozivi){
             if(po.isPozvan()){
                 String s = "Please click here to accept or decline your invitation: http://localhost:8096/#!/allReservations/";
-                em = new EmailService(po.getOsoba().getEmail(),"Event Invitation from " + rezervisao.getIme() + " " + rezervisao.getPrezime(), s, rez.getId());
+                em.inviteEmail(po.getOsoba().getEmail(),"Event Invitation from " + rezervisao.getIme() + " " + rezervisao.getPrezime(), s, rez.getId());
             }else{
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy, HH:mm");
                 String date = DATE_FORMAT.format(projekcija.getVreme());
@@ -165,7 +167,7 @@ public class ReservationService {
                          + listString2 + ", Total price: " + pozivi.get(0).getKarta().getPunaCena() + ",00 RSD";
 
 
-                em = new EmailService(po.getOsoba().getEmail(),"Reservation Detalis", s, rez.getId());
+                em.inviteEmail(po.getOsoba().getEmail(),"Reservation Detalis", s, rez.getId());
             }
 
         }

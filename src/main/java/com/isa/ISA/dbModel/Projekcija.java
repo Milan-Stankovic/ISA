@@ -37,7 +37,7 @@ public class Projekcija {
     @ManyToMany
     private List<Sediste> zauzetaSedista;
 
-    @OneToMany
+    @ManyToMany
     @JsonBackReference
     private List<Rezervacija> rezervacije;
 

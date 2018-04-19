@@ -1,4 +1,7 @@
 package com.isa.ISA.service;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
 import java.util.Date;
 import java.util.Properties;
 
@@ -8,13 +11,15 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+@Service
 public class EmailService {
 	
 	private String to;
 	private final String from="piginco@gmail.com";
 	private final String host = "localhost";
-	
-	public EmailService(String to){
+
+	@Async
+	public void regEmail(String to){
 		try{
 			String host ="smtp.gmail.com" ;
 	        String user = "piginco@gmail.com";
@@ -53,8 +58,8 @@ public class EmailService {
 	    }
 
 	}
-
-	public EmailService(String to, String sub, String mess, Long rezID) {
+	@Async
+	public void inviteEmail(String to, String sub, String mess, Long rezID) {
 		try {
 			String host = "smtp.gmail.com";
 			String user = "piginco@gmail.com";
