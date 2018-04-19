@@ -4,12 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
-import com.isa.ISA.DTO.RegKorDTO;
+import com.isa.ISA.DTO.RegKorDTO;/*
 import com.isa.ISA.dbModel.Encryption;
-import com.isa.ISA.service.EncryptionService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.isa.ISA.service.EncryptionService;*/
+import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.crypto.encrypt.TextEncryptor;*/
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,9 +30,9 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
 
-    @Autowired
+    /*@Autowired
     private EncryptionService encService;
-
+*/
     public LoginController() {
     }
 
@@ -55,6 +55,7 @@ public class LoginController {
         else{
             k = (reg != null) ? reg: adm;
         }
+/*
 
         Encryption e = encService.getEncrUser(k.getId());
 
@@ -62,8 +63,9 @@ public class LoginController {
         String decryptedText = decryptor.decrypt(e.getEncryptedPass());
         System.out.println("Decrypted text: \"" + decryptedText + "\"");
         System.out.println("Pass text: \"" + credentials.getPassword() + "\"");
+*/
 
-        if(credentials.getPassword().equals(decryptedText)) {
+        if(credentials.getPassword().equals(k.getPassword())) {
             System.out.println("Success: decrypted text matches");
             if(k instanceof Admin && k.getPassword().equals("default") )
                 k.setStatus(StatusNaloga.NERESEN);

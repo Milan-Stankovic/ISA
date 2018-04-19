@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.isa.ISA.DTO.RegKorDTO;
-import com.isa.ISA.dbModel.Encryption;
-import com.isa.ISA.service.EncryptionService;
-import org.springframework.beans.factory.annotation.Autowired;
+/*import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;*/
+import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
-import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.crypto.encrypt.TextEncryptor;*/
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,8 +27,8 @@ public class SettingsController {
 	    private UserService userService;
 	 @Autowired
 	    private AdminService adminService;
-	 @Autowired
-	 	private EncryptionService encService;
+	 /*@Autowired
+	 	private EncryptionService encService;*/
 	 
 	public SettingsController(){
 		
@@ -52,7 +52,7 @@ public class SettingsController {
 	       
 	            return "Email is already taken.";
 	        }
-		 System.out.println("Doso dovde");
+		 /*System.out.println("Doso dovde");
 			 Encryption e = encService.getEncrUser(k.getId());
 			 if(k.getPassword().equals(e.getEncryptedPass())) {
 				 System.out.println("Success: decrypted text matches");
@@ -63,7 +63,9 @@ public class SettingsController {
 				 e.setEncryptedPass(encryptedText);
 				 encService.addEncr(e);
 				 k.setPassword(encryptedText);
-			 }
+			 }*/
+
+
 	        userService.addUser((RegistrovaniKorisnik) k);
 	        return "";
 	 }
