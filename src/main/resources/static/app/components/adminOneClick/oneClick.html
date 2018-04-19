@@ -1,4 +1,113 @@
 <div>
 
 
+    <ul>
+
+
+    <li>
+        <ul class="adminControll">
+
+            <li class="goreDole">
+
+                <a  ng-click="go('core.admin')">Home</a>
+
+            </li>
+            <li class="goreDole">
+                <br/>
+            </li>
+            <li class="goreDole">
+                <br/>
+            </li>
+            <li class="goreDole">
+                <br/>
+            </li>
+
+        </ul>
+    </li>
+
+
+    <span >
+            <li>
+                <ul class="forma">
+                    <li class="desno">
+                        <a>  Adding for : </a>
+                    </li>
+                    <li class="desno">
+                        <a>  Adding at : </a>
+                    </li>
+                     <li class="desno">
+                        <a>  Full price : </a>
+                    </li>
+
+                    <li class="desno">
+                        <a>  Discount price : </a>
+                    </li>
+                    <li class="last">
+                     <button   class="button" type="submit"  ng-click="saveOneClick(oneClickCena)"> Add </button>
+                </li>
+
+                </ul>
+
+            </li>
+
+            <li>
+                <ul class="formaUnos">
+                    <li class="unos">
+                        <a class="input"> {{dogadjajName}} </a>
+                    </li>
+                    <li class="unos">
+                        <a class="input"> {{projekcijaTime}} </a>
+                    </li>
+                     <li class="unos">
+                        <a class="input"> {{projekcijaCena}} </a>
+                    </li>
+
+                     <li class="unos">
+                         <input class="input"  type="text" ng-model="oneClickCena" class="form-control" id="oneClickCena">
+                    </li>
+
+                    <div class="scrollmenu">
+                            <table >
+                                <tbody  >
+                                 <tr >
+
+                                    <td ng-repeat="items3 in duzina track by $index">
+                                        <a ng-if="$index==0">
+                                            Seat :
+                                        </a>
+                                        <a ng-if="$index!=0">
+                                            {{$index-1}}
+                                        </a>
+
+                                    </td>
+                                 </tr>
+                                     <tr  ng-repeat="items2 in split_items track by $index">
+                                        <li  class="unos"  >
+                                         <td>Row {{$index}} : </td>
+                                        <td ng-repeat="i in items2 track by $index" ng-mousedown="mouseSelect(i, $event, true)" ng-mouseup="mouseSelect(i, $event, false)">
+                                            <div class="clear" id="{{i.id}}">
+                                                <input  type="checkbox" id="cb-{{::$id}}-{{i.id}}" class="k-checkbox" ng-model="i.checked" ng-click="select(i, $event)" />
+                                            </div>
+                                        </td>
+                                    </li>
+                                     </tr>
+                                </tbody>
+
+                            </table>
+                        </div>
+
+
+                        <li class="unos">
+                             <a class="hint">Use SHIFT click to select multiple seats at once</a>
+                        </li>
+
+            </ul>
+
+        </li>
+
+        </span>
+
+
+
+    </ul>
 </div>

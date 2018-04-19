@@ -13,6 +13,7 @@
     	var userId;
         $rootScope.showBioskopi=true;
     	$rootScope.showPozorista=true;
+        $scope.isAdmin=false;
     	var init = function(){
         	userCookie = $cookies.get('user');
             userId = $cookies.get('id');
@@ -20,6 +21,13 @@
         	    $rootScope.showBioskopi=false;
                 $rootScope.showPozorista=false;
                 $scope.logged=true;
+                $http({
+                    method: 'GET',
+                    url: 'http://localhost:8096/admin/'+userCookie
+                  }).then(function successCallback(response){
+                	  if(response.data!="")
+                		  $scope.isAdmin = true;
+                  });
         	}
 
         	else $scope.logged=false;
@@ -44,7 +52,7 @@
             else $location.path("home")
 
         }
-
+        
         $scope.showOnlyPozorista=function(){
             $rootScope.showBioskopi=false;
             $rootScope.showPozorista=true;
@@ -69,6 +77,13 @@
             }
 
         }
+         cc.loggedNotAdmin = function(){
+        	 if($scope.isAdmin)
+        		 return false;
+        	 if($scope.logged)
+        		 return true;
+        	 return false;
+         }
     }
 
 })();

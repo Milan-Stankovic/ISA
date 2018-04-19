@@ -3,36 +3,29 @@
 	<div>
 		<a ng-href="#!/home" id="logo"><img src="assets/images/logo.png" alt=""></a>
 		<ul>
+			<li class="selected" ng-hide='cc.loggedNotAdmin()'>
+				<a ></a>
+			</li>
+			<li class="selected" ng-hide='cc.loggedNotAdmin()'>
+				<a ></a>
+			</li>
+			<li class="selected" ng-hide='cc.loggedNotAdmin()'>
+				<a ></a>
+			</li>
 			<li class="selected">
 				<a ng-href="#!/home" ng-click="showAll()">Home</a>
 			</li>
 			<li>
-				<a>Cinema</a>
-				<ul>
-					<li>
-						<a href="" ng-click="showOnlyBioskopi()">All cinemas</a>
-					</li>
-					<li>
-						<a href="#">Sale Tickets</a>
-					</li>
-				</ul>
+				<a href="" ng-click="showOnlyBioskopi()">Cinema</a>
 			</li>
 			
 			<li>
-				<a>Theatre</a>
-				<ul>
-					<li>
-						<a href="" ng-click="showOnlyPozorista()">All Theatres</a>
-					</li>
-					<li>
-						<a href="#">Sale Tickets</a>
-					</li>
-				</ul>
+				<a  href="" ng-click="showOnlyPozorista()">Theatre</a>
 			</li>
-			<li>
+			<li ng-show='cc.loggedNotAdmin()'>
 				<a ui-sref="core.userOneClick">Quick Reservation</a>
 			</li>
-			<li>
+			<li ng-show='cc.loggedNotAdmin()'>
 				<a href="#!/fanZone">Fan Zone</a>
 				<ul>
 					<li>
@@ -55,10 +48,10 @@
 					<li ng-show="logged" style="width:100px">
 						<a href="#!/settings">Settings</a>
 					</li>
-					<li style="width:100px" ng-show="logged">
+					<li style="width:100px" ng-show="cc.loggedNotAdmin()">
 						<a href="#!/friends">Friends</a>
 					</li>
-					<li style="width:100px" ng-show="logged">
+					<li style="width:100px" ng-show="cc.loggedNotAdmin()">
 						<a href="#!/allReservations">Reservations</a>
 					</li>
 					<li style="width:100px" ng-show="logged">
@@ -66,8 +59,8 @@
 					</li>
 
 				</ul>
+				
 			</li>
-			
 		</ul>
 	</div>
 </div>
@@ -84,7 +77,7 @@
 	
 </div>
 <div id="footer">
-	<div>
+	<div ng-show='isAdmin'>
 		<div>
 			<span>Just for system admins.</span>
 			<span><p> <a href="#!/adminMode">Go to Admin Mode</a></p></span>
