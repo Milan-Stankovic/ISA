@@ -247,7 +247,7 @@ public class StartData {
         a.setUserName("admin");
         a.setPassword("admin");
         a.setTip(TipAdmina.SYS);
-        a.setEmail("admin");
+        a.setEmail("admin@admin.com");
         a.setIme("a");
         a.setPrezime("a");
         a.setGrad("a");

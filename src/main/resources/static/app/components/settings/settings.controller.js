@@ -44,7 +44,6 @@
       			}).then(function successCallback(response) {
       				user = response.data;
                     $scope.user = user;
-                    $scope.isAdmin=false;
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
       			  });
@@ -135,7 +134,7 @@
 
 
                     }, function errorCallback(response) {
-                     console.log("nije prihvatio izmene admira")
+                     $scope.message="Error saving changes."
 
                     });
         	}

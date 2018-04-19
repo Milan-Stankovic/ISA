@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.isa.ISA.DTO.AdminDTO;
 import com.isa.ISA.DTO.RegKorDTO;
 /*import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;*/
@@ -100,7 +101,8 @@ public class SettingsController {
 	 }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/settings/admin") 
-	    public String save(@RequestBody Admin kor){
+	    public String save2(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException {
+			System.out.println("usao u admira");
 		 	Korisnik k;
 	        Admin adm = adminService.getAdmin(kor.getUserName());
 	        if(adm==null)
@@ -116,8 +118,31 @@ public class SettingsController {
 	       
 	            return "Email is already taken.";
 	        }
-	        
-	        adminService.addAdmin((Admin) k);
+		 k.setEmail(kor.getEmail());
+		 k.setIme(kor.getIme());
+		 k.setPrezime(kor.getPrezime());
+		 k.setBrojTelefona(kor.getBrojTelefona());
+		 k.setGrad(kor.getGrad());
+
+		 Encryption e = encService.getEncrUser(k.getId());
+		 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
+		 System.out.println("got pass: " + kor.getPassword());
+
+		 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
+			 System.out.println("NIJe menjao pass");
+		 }else{
+			 System.out.println("JEST menjao pass");
+			 byte[] salt = encService.getNextSalt();
+			 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
+			 String pass = Arrays.toString(newPass);
+			 System.out.println(pass);
+			 e.setSalt(salt);
+			 e.setEncryptedPass(newPass);
+			 encService.addEncr(e);
+			 k.setPassword(pass);
+		 }
+
+		 adminService.addAdmin((Admin) k);
 	        return "";
 	 }
 	 
