@@ -7,19 +7,21 @@
 
     <table>
         <tr>
-            <td style="width:800px"><h3>All Reservations:</h3></td>
+            <td style="width:900px"><h3>All Reservations:</h3></td>
         </tr>
         <tr>
-            <td style="width:800px; height:400px;">
+            <td style="width:900px; height:600px;">
 
-                <div style="overflow-y: scroll; height:400px; width:100%; background-color:gray">
+                <div style="overflow-y: scroll; height:800px; width:100%; background-color:gray">
 
                     <ol style="list-style-type: none; width:100%">
                         <li ng-repeat="rez in rezervacije" style="width:100%">"{{rez.projekcija.dogadjaj.naziv}}",
                             Date: {{rez.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{rez.projekcija.vreme  | date:'HH:mm'}}
-                            <span>          </span>
-                            <button ng-click="details(rez)" class="{{rez.id}}">Details</button>
-                            <span>          </span>
+                            <span>      </span>
+                            <button ng-click="details(rez)">Details</button>
+                            <span>      </span>
+                            <button ng-click="answer(rez, true)" class="{{rez.id}}" style="display:none;">Accept</button>
+                            <span>      </span>
                             <button ng-click="cancel(rez)">Cancel</button>
                             <br>
                             <span id="{{rez.id}} details" style="display:none">

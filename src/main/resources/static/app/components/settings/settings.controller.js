@@ -48,15 +48,20 @@
       				  console.log("Greska kod GET user");
       			  });
       	}
-      
+
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
         $scope.indexFunc = function(){
         	$location.path("home");
         }
 
         
         $scope.saveFunc = function(fname, lname, email, city, phone, pass, pass2){
-        	
-        	if(!(pass===pass2) && pass!='' && pass2!=''){
+
+        	if(!(pass===pass2) && pass!='' && pass2!='' && pass!=undefined && pass2!=undefined){
         		$scope.message = "Passwords don't match."
         		return;
         	}
@@ -66,18 +71,24 @@
             		return;
             	}
         	}
-     
-        	if(pass!=user.password && pass!=undefined)
+
+        	if(pass!=user.password && pass!=undefined && pass!="" )
         		user.password = pass;
 
-        	if(fname!=user.ime && fname!=undefined)
+        	if(fname!=user.ime && fname!=undefined && fname!="")
         		user.ime = fname;
         	
-        	if(lname!=user.prezime && lname!=undefined)
+        	if(lname!=user.prezime && lname!=undefined && lname!="")
         		user.prezime = lname;
         	
-        	if(email!=user.email && email!=undefined)
-        		user.email = email;
+        	if(email!=user.email && email!=undefined && email!="")
+        	    if(validateEmail(email)){
+        	            user.email = email;
+        	        }else{
+        	           $scope.message="Enter valid email address." ;
+        	           return;
+        	        }
+
         	
         	if(city!=user.grad && city!=undefined)
         		user.grad = city;

@@ -64,51 +64,34 @@
             getAccRez();
 
 
-        var accept = function(rez){
-            var dat = {
-                "userID" : $cookies.get('user'),
-                "rezID" : rez.id
+        $scope.answer = function(rez, isAccepted){
+            console.log("usao u answer")
+            var data={
+                "rezID" : rez.id,
+                "isAccepted" : isAccepted
             }
-            $http({
-                  method: 'POST',
-                  url: 'http://localhost:8096/#!/poyyyyyy/accept',
-                  data: dat,
+             $http({
 
-              }).then(function successCallback(response) {
-                  $scope.rezultat = response.data;
-                  console.log("rez: " + $scope.rezultat)
+                 method: 'POST',
+                 url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
+                 data: data
 
-              }, function errorCallback(response) {
-                  alert("Greska kod accept")
+             }).then(function successCallback(response) {
+                   $scope.rezervacije = response.data;
+                     console.log("aj sad accept: " + $scope.rezervacije)
+                     getAccRez();
 
-              });
+             }, function errorCallback(response) {
+                 alert("Greska kod answer")
 
+             });
         }
 
-        var decline = function(rez){
 
-                    $http({
-                          method: 'DELETE',
-                          url: 'http://localhost:8096/#!/poyyyyyyyy/' + $cookies.get('user'),
-                          data: rez,
-                          headers: {
-                                          "Content-Type": "application/json"
-                                      }
-                      }).then(function successCallback(response) {
-                          $scope.rezultat = response.data;
-                          console.log("rez: " + $scope.rezultat)
-
-                      }, function errorCallback(response) {
-                          alert("Greska kod del")
-
-                      });
-
-                }
         $scope.updateView = function(){
          if($scope.inv!=undefined){
             for(var i = 0; i < $scope.inv.length; i++){
-                document.getElementsByClassName($scope.inv[0].id)[0].innerText ="Accept"
-                document.getElementsByClassName($scope.inv[0].id)[0].value ="Accept"
+                document.getElementsByClassName($scope.inv[0].id)[0].style.display = "inline";
             }
         }
          if($scope.invAcc!=undefined){
@@ -121,19 +104,14 @@
         }
         $scope.details = function(rez){
 
-            if(document.getElementsByClassName(rez.id)[0].value=="Accept"){
-
-                accept(rez);
-            }
-            else{
-
                 if(document.getElementById(rez.id + " details").style.display=="none")
                     document.getElementById(rez.id + " details").style.display = "block";
                 else
                     document.getElementById(rez.id + " details").style.display="none";
-            }
+
 
         }
+
 
         $scope.cancel = function(rez){
             var currentTime = new Date();
@@ -151,13 +129,13 @@
             var bmonth = a.getMonth()+1;
             var bdate = a.getDate();
             var bhour = a.getHours();
-            var bmin = a.getMinutes()+30;
+            var bmin = a.getMinutes()+30;//ovo+30 obrisati!
             if(byear-ayear>=0)
                 if(bmonth-amonth>=0)
                     if(bdate-adate>=0)
                         if(bhour-ahour>=0)
                             if(bmin-amin>=30){
-                                decline(rez);
+                                $scope.answer(rez, false);
                                 return;
                             }
 

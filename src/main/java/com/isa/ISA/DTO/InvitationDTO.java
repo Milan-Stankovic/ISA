@@ -1,18 +1,20 @@
 package com.isa.ISA.DTO;
 
 public class InvitationDTO {
-    private String userID;
+
     private Long rezID;
 
+    public boolean isAccepted() {
+        return isAccepted;
+    }
+
+    public void setAccepted(boolean accepted) {
+        isAccepted = accepted;
+    }
+
+    private boolean isAccepted;
+
     public InvitationDTO() {
-    }
-
-    public String getUserID() {
-        return userID;
-    }
-
-    public void setUserID(String userID) {
-        this.userID = userID;
     }
 
     public Long getRezID() {

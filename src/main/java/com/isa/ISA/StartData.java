@@ -9,10 +9,10 @@ import javax.annotation.PostConstruct;
 import com.isa.ISA.dbModel.*;
 import com.isa.ISA.dbModel.enums.*;
 import com.isa.ISA.service.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.keygen.KeyGenerators;*/
 import org.springframework.stereotype.Component;
 
 import com.isa.ISA.DTO.PolovanRekvDTO;
@@ -52,8 +52,8 @@ public class StartData {
     @Autowired
     private ProjekcijaService projekcijaService;
 
-    @Autowired
-    private EncryptionService encService;
+/*    @Autowired
+    private EncryptionService encService;*/
 
     @Autowired
     private RekvizitService rekvizitService;
@@ -68,7 +68,7 @@ public class StartData {
         rk.setEmail("pero@zahoo.com");
         rk.setStatus(StatusNaloga.AKTIVAN);
         userService.addUser(rk);
-        String salt = KeyGenerators.string().generateKey();
+        /*String salt = KeyGenerators.string().generateKey();
 
         TextEncryptor encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -81,7 +81,7 @@ public class StartData {
 
         Encryption e = new Encryption(encryptedText, salt, rk.getId());
         encService.addEncr(e);
-        rk.setPassword(encryptedText);
+        rk.setPassword(encryptedText);*/
         System.out.println("Kreiran korisnik: " + rk.getUserName());
         userService.addUser(rk);
 
@@ -95,7 +95,7 @@ public class StartData {
         rk2.setIme("Tanja");
         rk2.setPrezime("Mirkovic");
         userService.addUser(rk2);
-        salt = KeyGenerators.string().generateKey();
+       /* salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -108,7 +108,7 @@ public class StartData {
 
         Encryption e2 = new Encryption(encryptedText, salt, rk2.getId());
         encService.addEncr(e2);
-        rk2.setPassword(encryptedText);
+        rk2.setPassword(encryptedText);*/
         System.out.println("Kreiran korisnik: " + rk2.getUserName());
         userService.addUser(rk2);
 
@@ -122,7 +122,7 @@ public class StartData {
         rk3.setIme("f");
         rk3.setPrezime("f");
         userService.addUser(rk3);
-        salt = KeyGenerators.string().generateKey();
+        /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -135,7 +135,7 @@ public class StartData {
 
         Encryption e3 = new Encryption(encryptedText, salt, rk3.getId());
         encService.addEncr(e3);
-        rk3.setPassword(encryptedText);
+        rk3.setPassword(encryptedText);*/
         System.out.println("Kreiran korisnik: " + rk3.getUserName());
         userService.addUser(rk3);
 
@@ -150,7 +150,7 @@ public class StartData {
         rk4.setIme("Zika");
         rk4.setPrezime("Zikic");
         userService.addUser(rk4);
-        salt = KeyGenerators.string().generateKey();
+        /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -163,7 +163,7 @@ public class StartData {
 
         Encryption e4 = new Encryption(encryptedText, salt, rk4.getId());
         encService.addEncr(e4);
-        rk4.setPassword(encryptedText);
+        rk4.setPassword(encryptedText);*/
 
 
 
@@ -198,7 +198,7 @@ public class StartData {
         a.setGrad("a");
         a.setStatus(StatusNaloga.AKTIVAN);
         adminService.addAdmin(a);
-        salt = KeyGenerators.string().generateKey();
+        /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -211,7 +211,7 @@ public class StartData {
 
         Encryption ea = new Encryption(encryptedText, salt, a.getId());
         encService.addEncr(ea);
-        a.setPassword(encryptedText);
+        a.setPassword(encryptedText);*/
         System.out.println("Kreiran korisnik: " + a.getIme());
         adminService.addAdmin(a);
 
@@ -222,7 +222,7 @@ public class StartData {
         a2.setEmail("admin2");
         a2.setStatus(StatusNaloga.AKTIVAN);
         adminService.addAdmin(a2);
-        salt = KeyGenerators.string().generateKey();
+        /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
         System.out.println("Salt: \"" + salt + "\"");
@@ -235,7 +235,7 @@ public class StartData {
 
         Encryption ea2 = new Encryption(encryptedText, salt, a2.getId());
         encService.addEncr(ea2);
-        a2.setPassword(encryptedText);
+        a2.setPassword(encryptedText);*/
         System.out.println("Kreiran korisnik: " + a2.getUserName());
         adminService.addAdmin(a2);
 

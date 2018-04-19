@@ -1,12 +1,12 @@
 package com.isa.ISA.controller;
 
 import java.io.IOException;
-
+/*
 import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.security.crypto.keygen.KeyGenerators;
+import org.springframework.security.crypto.keygen.KeyGenerators;*/
 import javax.servlet.http.HttpServletResponse;
 
 import com.isa.ISA.DTO.RegKorDTO;
@@ -32,9 +32,9 @@ public class RegisterController {
 	 @Autowired
 	    private AdminService adminService;
 
-	@Autowired
+	/*@Autowired
 	private EncryptionService encService;
-	 
+	 */
 	 public RegisterController() {
 	    }
 	 
@@ -90,7 +90,7 @@ public class RegisterController {
 	        Korisnik k = (reg != null) ? reg: adm;
 	 		if(k!=null){
 	 			k.setStatus(StatusNaloga.AKTIVAN);
-				final String salt = KeyGenerators.string().generateKey();
+				/*final String salt = KeyGenerators.string().generateKey();
 
 				TextEncryptor encryptor = Encryptors.text("admin", salt);
 				System.out.println("Salt: \"" + salt + "\"");
@@ -103,7 +103,7 @@ public class RegisterController {
 
 				Encryption e = new Encryption(encryptedText, salt, k.getId());
 				encService.addEncr(e);
-				k.setPassword(encryptedText);
+				k.setPassword(encryptedText);*/
 /*
 				// Could reuse encryptor but wanted to show reconstructing TextEncryptor
 				TextEncryptor decryptor = Encryptors.text(password, salt);
