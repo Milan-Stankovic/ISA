@@ -89,7 +89,7 @@ public class SettingsController {
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/settings/admin") 
 	    public String save2(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException {
-			System.out.println("usao u admira");
+
 		 	Korisnik k;
 	        Admin adm = adminService.getAdmin(kor.getUserName());
 	        if(adm==null)
@@ -101,7 +101,7 @@ public class SettingsController {
 	        
 	        RegistrovaniKorisnik korEmail = userService.findByEmail(kor.getEmail());
 	        Admin adminEmail = adminService.getAdminByEmail(kor.getEmail());
-	        if(korEmail!=null || adminEmail!=null){
+	        if( (adminEmail!=null && adminEmail.getUserName()!=k.getUserName() )|| korEmail!=null){
 	       
 	            return "Email is already taken.";
 	        }
