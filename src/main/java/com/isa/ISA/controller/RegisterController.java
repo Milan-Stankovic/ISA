@@ -1,6 +1,8 @@
 package com.isa.ISA.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 /*
 import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;
@@ -10,6 +12,8 @@ import org.springframework.security.crypto.keygen.KeyGenerators;*/
 import javax.servlet.http.HttpServletResponse;
 
 import com.isa.ISA.DTO.RegKorDTO;
+import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,24 +36,40 @@ public class RegisterController {
 	 @Autowired
 	    private AdminService adminService;
 
-	/*@Autowired
+	@Autowired
 	private EncryptionService encService;
-	 */
+
 	 public RegisterController() {
 	    }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register/admin") 
-	    public void registerA(@RequestBody RegKorDTO admin){
+	    public String registerA(@RequestBody RegKorDTO admin) throws NoSuchAlgorithmException {
 		 Admin a = adminService.getAdmin(admin.getUserName());
-		 System.out.println("Status pre "+a.getStatus());
-		 a.setPassword(admin.getPassword());
+		if(a==null)
+			return "No user with that data.";
+		if(!a.getStatus().toString().equals("NERESEN"))
+			return "This account is already active.";
+		 byte[] salt = encService.getNextSalt();
+		 byte[] newPass = encService.makeDigest(admin.getPassword(), salt);
+		 String pass = Arrays.toString(newPass);
+		 Encryption e = encService.getEncrUser(a.getId());
+		 e.setSalt(salt);
+		 e.setEncryptedPass(newPass);
+		 encService.addEncr(e);
+		 a.setPassword(pass);
+		 a.setStatus(StatusNaloga.AKTIVAN);
+		 if(admin.getIme()!=null && !admin.getIme().equals("")) a.setIme(admin.getIme());
+		 if(admin.getPrezime()!=null && !admin.getPrezime().equals("")) a.setPrezime(admin.getPrezime());
+		 if(admin.getGrad()!=null && !admin.getGrad().equals("")) a.setGrad(admin.getGrad());
+		 if(admin.getEmail()!=null && !admin.getEmail().equals("")) a.setEmail(admin.getEmail());
+		 if(admin.getBrojTelefona()!=null && !admin.getBrojTelefona().equals("")) a.setBrojTelefona(admin.getBrojTelefona());
 		 adminService.addAdmin(a);
 		 a = adminService.getAdmin(a.getUserName());
-		 System.out.println("Status posle "+a.getStatus());
+		 return "";
 	 }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register") 
-	    public String registerR(@RequestBody RegKorDTO kor){
+	    public String registerR(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException {
 
 	        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 	        Admin adm = adminService.getAdmin(kor.getUserName());
@@ -65,7 +85,17 @@ public class RegisterController {
 	        }
 	        RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
 	        rk.setUserName(kor.getUserName());
-	        rk.setPassword(kor.getPassword());
+
+			 byte[] salt = encService.getNextSalt();
+			 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
+			 String pass = Arrays.toString(newPass);
+			 Encryption e = new Encryption();
+			 e.setSalt(salt);
+			 e.setEncryptedPass(newPass);
+			 e.setKorisnikID(rk.getId());
+			 encService.addEncr(e);
+			 rk.setPassword(pass);
+
 	        rk.setEmail(kor.getEmail());
 	        rk.setStatus(StatusNaloga.NERESEN);
 	        rk.setBrojTelefona(kor.getBrojTelefona());

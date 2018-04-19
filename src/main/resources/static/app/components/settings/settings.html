@@ -1,6 +1,42 @@
+<style>
+    td {
+        color:white;
+    }
+</style>
 <div>
     <p style="color:red">{{message}}</p>
-	  <br>
+    <br>
+    <h3 style="color:white">Current Information:</h3><br>
+    <form>
+        <table>
+            <tr>
+                <td style="color:white; width:150px">First Name:</td>
+                <td>{{user.ime}}</td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Last Name:</td>
+                <td>{{user.prezime}}</td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Email:</td>
+                <td>{{user.email}}</td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">City:</td>
+                <td>{{user.grad}}</td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Phone Number:</td>
+                <td>{{user.brojTelefona}}</td>
+            </tr>
+
+        </table>
+        <br>
+        <br>
     <h3 style="color:white">User Information:</h3><br>
     <form>
         <table>

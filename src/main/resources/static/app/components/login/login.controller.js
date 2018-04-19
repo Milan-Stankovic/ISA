@@ -9,8 +9,9 @@
     function loginController($location, $scope, $rootScope, $http, $window, $cookies) {
         var lc = this;
         var user;
+        $scope.message="";
         var init = function (){
-        	
+
         };
         init();
         
@@ -20,7 +21,7 @@
         
         $scope.prijavaFunc = function(username, pass){
         	if(username===undefined || pass===undefined || username==="" || pass===""){
-        		alert("Enter both username and password.")
+        		$scope.message="Enter both username and password.";
         		return;
         	}
         	var data = {
@@ -35,7 +36,7 @@
                 var user = response.data;
                
                 if(user===null || user===undefined || user===""){
-                	alert("Login error. Please check your credentials.")
+                $scope.message="Login error. Please check your credentials.";
                 	return;
                 }
                 
@@ -43,7 +44,7 @@
                 else{
      				
      				if(user.status=="NERESEN" && user.hasOwnProperty('tip')){
-                		alert("Login failed. Password must be changed before first login.")
+
                 		
                 		$cookies.remove('user');
                 		$cookies.remove('id');
@@ -51,7 +52,7 @@
                 		return;
                 		
                 	}else if(user.status=="NERESEN" && !user.hasOwnProperty('tip')){
-                		alert("Before login you must confirm your registration via email.")
+                		$scope.message="Before login you must confirm your registration via email.";
                 		
                 		$cookies.remove('user');
                         $cookies.remove('id');
@@ -70,7 +71,7 @@
                 }
                 
                 }, function errorCallback(response) {
-                 alert("greska u prijavaFunc")
+                 $scope.message="Error.";
 
                 });
 

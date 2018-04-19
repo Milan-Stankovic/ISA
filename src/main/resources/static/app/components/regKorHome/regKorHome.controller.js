@@ -87,7 +87,7 @@
                 console.log("sve rezervacije: " + $scope.rezervacije.length)
 
             }, function errorCallback(response) {
-                alert("Greska kod bioskopa")
+                console.log("Greska kod rezervacija, mozda je admin pa ih nema")
 
             });
         }

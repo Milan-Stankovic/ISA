@@ -12,16 +12,16 @@ public class Encryption {
     private long id;
 
     @Column(nullable = false)
-    private String encryptedPass;
+    private byte[] encryptedPass;
     @Column(nullable = false)
-    private String salt;
+    private byte[] salt;
     @Column( unique = true, nullable = false)
     private Long korisnikID;
 
     public Encryption() {
     }
 
-    public Encryption(String encryptedPass, String salt, Long korisnikID) {
+    public Encryption(byte[] encryptedPass, byte[] salt, Long korisnikID) {
         this.encryptedPass = encryptedPass;
         this.salt = salt;
         this.korisnikID = korisnikID;
@@ -35,19 +35,19 @@ public class Encryption {
         this.id = id;
     }
 
-    public String getEncryptedPass() {
+    public byte[] getEncryptedPass() {
         return encryptedPass;
     }
 
-    public void setEncryptedPass(String encryptedPass) {
+    public void setEncryptedPass(byte[] encryptedPass) {
         this.encryptedPass = encryptedPass;
     }
 
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public void setSalt(byte[] salt) {
         this.salt = salt;
     }
 

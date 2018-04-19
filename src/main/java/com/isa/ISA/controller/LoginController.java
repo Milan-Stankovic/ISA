@@ -1,12 +1,16 @@
 package com.isa.ISA.controller;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpServletResponse;
 
 import com.isa.ISA.DTO.RegKorDTO;/*
 import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;*/
+import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;*/
@@ -30,9 +34,9 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
 
-    /*@Autowired
+    @Autowired
     private EncryptionService encService;
-*/
+
     public LoginController() {
     }
 
@@ -42,7 +46,7 @@ public class LoginController {
     }
     // Mozes li ubaciti dodatnu proveru ako je admin da li je promenio password ?
     @RequestMapping(method = RequestMethod.POST, value = "/api/login") 
-    public Korisnik login(@RequestBody RegKorDTO credentials){
+    public Korisnik login(@RequestBody RegKorDTO credentials) throws NoSuchAlgorithmException {
     	/*String username = credentials.split("\\.")[0];
 		String password = credentials.split("\\.")[1];
 		 */
@@ -64,10 +68,16 @@ public class LoginController {
         System.out.println("Decrypted text: \"" + decryptedText + "\"");
         System.out.println("Pass text: \"" + credentials.getPassword() + "\"");
 */
+        Encryption e = encService.getEncrUser(k.getId());
+        if(e==null)
+            return k;
+        String test = Arrays.toString(encService.makeDigest(credentials.getPassword(),e.getSalt()));
 
-        if(credentials.getPassword().equals(k.getPassword())) {
+
+        if(test.equals(k.getPassword())) {
             System.out.println("Success: decrypted text matches");
-            if(k instanceof Admin && k.getPassword().equals("default") )
+            String def = Arrays.toString(encService.makeDigest("default",e.getSalt()));
+            if(k instanceof Admin && k.getPassword().equals(def) )
                 k.setStatus(StatusNaloga.NERESEN);
             return k;
         } else {

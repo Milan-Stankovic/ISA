@@ -9,6 +9,7 @@
     function adminLoginController($location, $scope, $rootScope, $http, $window, $cookies) {
         var alc = this;
         var user;
+        $scope.message="Login failed. Password must be changed before first login.";
         var init = function (){
         	
         };
@@ -20,11 +21,11 @@
         
         $scope.prijavaFunc = function(username, pass, pass2){
         	if(pass!=pass2){
-        		alert("Passwords don't match.")
+        		$scope.message="Passwords don't match.";
         		return
         	}
         	if(pass=="default"){
-        		alert("You must change initial password to continue.")
+        		$scope.message="You must change initial password to continue.";
         		return;
         	}
         	var data = {
@@ -36,12 +37,10 @@
               url: 'http://localhost:8096/api/register/admin',
               data: data
             }).then(function successCallback(response) {
-            		alert("New password updated. Please login with new credentials.")
-            		$window.location.href = 'http://localhost:8096/#!/login';
-                
-
+            	$window.location.href = 'http://localhost:8096/#!/login';
                 }, function errorCallback(response) {
-                 alert("greska u adminLoginFunc")
+                 $scope.message = "Wrong credentials.";
+
 
                 });
 

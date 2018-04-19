@@ -1,6 +1,8 @@
 package com.isa.ISA;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -52,13 +54,13 @@ public class StartData {
     @Autowired
     private ProjekcijaService projekcijaService;
 
-/*    @Autowired
-    private EncryptionService encService;*/
+    @Autowired
+    private EncryptionService encService;
 
     @Autowired
     private RekvizitService rekvizitService;
     @PostConstruct
-    public void initIt(){
+    public void initIt() throws NoSuchAlgorithmException {
 
         RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
         rk.setUserName("pero");
@@ -68,6 +70,17 @@ public class StartData {
         rk.setEmail("pero@zahoo.com");
         rk.setStatus(StatusNaloga.AKTIVAN);
         userService.addUser(rk);
+
+        byte[] salt = encService.getNextSalt();
+        byte[] newPass = encService.makeDigest(rk.getPassword(), salt);
+        String pass = Arrays.toString(newPass);
+        Encryption e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(rk.getId());
+        encService.addEncr(e);
+        rk.setPassword(pass);
+
         /*String salt = KeyGenerators.string().generateKey();
 
         TextEncryptor encryptor = Encryptors.text("admin", salt);
@@ -95,6 +108,17 @@ public class StartData {
         rk2.setIme("Tanja");
         rk2.setPrezime("Mirkovic");
         userService.addUser(rk2);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(rk2.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(rk2.getId());
+        encService.addEncr(e);
+        rk2.setPassword(pass);
        /* salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
@@ -122,6 +146,17 @@ public class StartData {
         rk3.setIme("f");
         rk3.setPrezime("f");
         userService.addUser(rk3);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(rk3.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(rk3.getId());
+        encService.addEncr(e);
+        rk3.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
@@ -150,6 +185,17 @@ public class StartData {
         rk4.setIme("Zika");
         rk4.setPrezime("Zikic");
         userService.addUser(rk4);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(rk4.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(rk4.getId());
+        encService.addEncr(e);
+        rk4.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
@@ -198,6 +244,18 @@ public class StartData {
         a.setGrad("a");
         a.setStatus(StatusNaloga.AKTIVAN);
         adminService.addAdmin(a);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(a.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(a.getId());
+        encService.addEncr(e);
+        a.setPassword(pass);
+
         /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
@@ -217,11 +275,22 @@ public class StartData {
 
         Admin a2 = new Admin();
         a2.setUserName("admin2");
-        a2.setPassword("default");
+        a2.setPassword("admin2");
         a2.setTip(TipAdmina.POZBI);
         a2.setEmail("admin2");
         a2.setStatus(StatusNaloga.AKTIVAN);
         adminService.addAdmin(a2);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(a2.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(a2.getId());
+        encService.addEncr(e);
+        a2.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
 
         encryptor = Encryptors.text("admin", salt);
@@ -239,6 +308,27 @@ public class StartData {
         System.out.println("Kreiran korisnik: " + a2.getUserName());
         adminService.addAdmin(a2);
 
+        Admin aa = new Admin();
+        aa.setUserName("admin3");
+        aa.setPassword("default");
+        aa.setTip(TipAdmina.SYS);
+        aa.setEmail("admin3");
+        aa.setStatus(StatusNaloga.NERESEN);
+        adminService.addAdmin(aa);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(aa.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(aa.getId());
+        encService.addEncr(e);
+        aa.setPassword(pass);
+
+        System.out.println("Kreiran korisnik: " + aa.getUserName());
+        adminService.addAdmin(aa);
 
         PozoristeBioskop p1 = new PozoristeBioskop();
         p1.setBrojOcena(0);

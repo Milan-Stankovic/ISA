@@ -1,11 +1,15 @@
 package com.isa.ISA.controller;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.isa.ISA.DTO.RegKorDTO;
 /*import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;*/
+import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;*/
@@ -27,15 +31,15 @@ public class SettingsController {
 	    private UserService userService;
 	 @Autowired
 	    private AdminService adminService;
-	 /*@Autowired
-	 	private EncryptionService encService;*/
+	 @Autowired
+	 	private EncryptionService encService;
 	 
 	public SettingsController(){
 		
 	}
 	
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/settings/reg") 
-	    public String save(@RequestBody RegKorDTO kor){
+	    public String save(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException {
 		 	Korisnik k;
 	        RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 	        
@@ -52,6 +56,31 @@ public class SettingsController {
 	       
 	            return "Email is already taken.";
 	        }
+
+	        k.setEmail(kor.getEmail());
+	        k.setIme(kor.getIme());
+	        k.setPrezime(kor.getPrezime());
+	        k.setBrojTelefona(kor.getBrojTelefona());
+	        k.setGrad(kor.getGrad());
+
+		 Encryption e = encService.getEncrUser(k.getId());
+		 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
+		 System.out.println("got pass: " + kor.getPassword());
+
+		 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
+		 	System.out.println("NIJe menjao pass");
+		 }else{
+			 System.out.println("JEST menjao pass");
+			 byte[] salt = encService.getNextSalt();
+			 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
+			 String pass = Arrays.toString(newPass);
+			 System.out.println(pass);
+			 e.setSalt(salt);
+			 e.setEncryptedPass(newPass);
+			 encService.addEncr(e);
+			 k.setPassword(pass);
+		 }
+
 		 /*System.out.println("Doso dovde");
 			 Encryption e = encService.getEncrUser(k.getId());
 			 if(k.getPassword().equals(e.getEncryptedPass())) {
