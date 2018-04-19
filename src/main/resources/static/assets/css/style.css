@@ -1790,10 +1790,21 @@ p a:hover {
 	height:20px !important;
 	width:20px !important;
     margin-right: 10px !important;
-    background: transparent;
+    background: transparent !important;
     border: none !important;
     font-size:0 !important;
 }
+
+.quick{
+	margin-right: 30px !important;
+	float: right !important;
+	height:20px !important;
+	width:20px !important;
+	background: transparent !important;
+	border: none !important;
+	font-size:0 !important;
+}
+
 .clearDelete{
     height:20px !important;
     width:20px !important;
