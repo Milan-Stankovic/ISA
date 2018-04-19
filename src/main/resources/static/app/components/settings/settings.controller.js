@@ -78,7 +78,7 @@
                    return;
                 }
 
-
+            $scope.user.password = pass;
         	console.log("userName " +  $scope.user.userName +
         			" password "+ $scope.user.password +
         			" ime "+ $scope.user.ime +
