@@ -500,6 +500,19 @@ public class StartData {
         a3.setMesta(pppppp);
         //   System.out.println("Kreiran korisnik: " + a3.getUserName());
         adminService.addAdmin(a3);
+
+        salt = encService.getNextSalt();
+        newPass = encService.makeDigest(a3.getPassword(), salt);
+        pass = Arrays.toString(newPass);
+        System.out.println(pass);
+        e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(a3.getId());
+        encService.addEncr(e);
+        a3.setPassword(pass);
+        adminService.addAdmin(a3);
+
         
         PolovanRekvDTO pr0 = new PolovanRekvDTO();
         pr0.setCena(124.42);
