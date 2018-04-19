@@ -41,15 +41,4 @@ public class RezervacijaController {
     }
 
 
-   /* @RequestMapping(method = RequestMethod.GET,value = "api/invite/{username}/event/{rezID}")
-    public void setRez(HttpServletResponse response, @PathVariable String username, @PathVariable String rezID){
-        try {
-            response.sendRedirect("http://localhost:8096/#!/invitation/"+username+"/event/"+rezID);
-        }catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }*/
-
-
 }

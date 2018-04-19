@@ -65,38 +65,37 @@
 
 
         $scope.accept = function(rez){
-            var dat = {
-                "userID" : $cookies.get('user'),
-                "rezID" : rez.id
-            }
-            $http({
-                  method: 'POST',
-                  url: 'http://localhost:8096/#!/poyyyyyy/accept',
-                  data: dat,
+             $http({
 
-              }).then(function successCallback(response) {
-                  $scope.rezultat = response.data;
-                  console.log("rez: " + $scope.rezultat)
+                 method: 'POST',
+                 url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
+                 responseType: 'json',
+                 data: rez.id
 
-              }, function errorCallback(response) {
-                  alert("Greska kod accept")
+             }).then(function successCallback(response) {
+                   $scope.rezervacije = response.data;
+                     console.log("aj sad accept: " + $scope.rezervacije)
+                     getAccRez();
 
-              });
+             }, function errorCallback(response) {
+                 alert("Greska kod del")
 
+             });
         }
 
         var decline = function(rez){
 
                     $http({
+
                           method: 'DELETE',
-                          url: 'http://localhost:8096/#!/poyyyyyyyy/' + $cookies.get('user'),
-                          data: rez,
-                          headers: {
-                                          "Content-Type": "application/json"
-                                      }
+                          url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
+                          responseType: 'json',
+                          data: rez.id
+
                       }).then(function successCallback(response) {
-                          $scope.rezultat = response.data;
-                          console.log("rez: " + $scope.rezultat)
+                            $scope.rezervacije = response.data;
+                              console.log("aj sad decline: " + $scope.rezervacije)
+                              getAccRez();
 
                       }, function errorCallback(response) {
                           alert("Greska kod del")

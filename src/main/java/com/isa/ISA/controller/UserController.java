@@ -39,7 +39,7 @@ public class UserController {
 	private ReservationService resService;
 
 	@Autowired
-	private ReservationService rezService;
+	private RezervacijaService rezService;
 
 	@Autowired
 	private ProjekcijaService projekcijaService;
@@ -242,6 +242,60 @@ public class UserController {
 			}
 		}
 		return ret;
+	}
+
+
+
+	@RequestMapping(method = RequestMethod.DELETE,value = "/api/user/invAccepted/{username}")
+	public List<Rezervacija> getPozivDeclined(@PathVariable String username, @RequestBody Long s) {
+
+		RegistrovaniKorisnik reg = userService.getUser(username);
+		for(Rezervacija r : reg.getRezervacije())
+			if(r.getId()==s)
+				for(Poziv p : r.getUrezervaciji())
+					if(p.getOsoba().getUserName().equals(username)){
+						p.setStatus(Status.ODBIJENO);
+						rezService.addRez(r);
+						break;
+					}
+
+		ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
+		for(Rezervacija r : reg.getRezervacije())
+			if(r.getId()==s)
+				for(Poziv p : r.getUrezervaciji())
+					if(p.getOsoba().getUserName().equals(username))
+						if(!p.getStatus().toString().equals("ODBIJENO"))
+							samoPrihvacene.add(r);
+
+		reg.setRezervacije(samoPrihvacene);
+		userService.addUser(reg);
+		return reg.getRezervacije();
+	}
+
+	@RequestMapping(method = RequestMethod.POST,value = "/api/user/invAccepted/{username}")
+	public List<Rezervacija> getPozivAccepted(@PathVariable String username, @RequestBody Long s) {
+
+		RegistrovaniKorisnik reg = userService.getUser(username);
+		for(Rezervacija r : reg.getRezervacije())
+			if(r.getId()==s)
+				for(Poziv p : r.getUrezervaciji())
+					if(p.getOsoba().getUserName().equals(username)){
+						p.setStatus(Status.PRIHVACENO);
+						rezService.addRez(r);
+						break;
+					}
+
+		ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
+		for(Rezervacija r : reg.getRezervacije())
+			if(r.getId()==s)
+				for(Poziv p : r.getUrezervaciji())
+					if(p.getOsoba().getUserName().equals(username))
+						if(!p.getStatus().toString().equals("ODBIJENO"))
+							samoPrihvacene.add(r);
+
+		reg.setRezervacije(samoPrihvacene);
+		userService.addUser(reg);
+		return reg.getRezervacije();
 	}
 
 
