@@ -8,7 +8,7 @@
     settingsController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies', '$timeout'];
     function settingsController($location, $scope, $rootScope, $http, $window, $cookies, $timeout) {
         var sc = this;
-        var user = undefined;
+        $scope.user = undefined;
         $scope.message="";
 
         var init = function (){ 	
@@ -20,11 +20,11 @@
   			  url: 'http://localhost:8096/admin/' + $cookies.get('user')
   				 
   			}).then(function successCallback(response) {
-  				user = response.data;
+  				$scope.user = response.data;
   				$scope.adm = response.data;
-  				$scope.isAdmin=true;
-  				 if(user!=undefined && user.hasOwnProperty('tip')){
 
+  				 if($scope.user!=undefined && $scope.user.hasOwnProperty('tip')){
+                    $scope.isAdmin=true;
   				}
   				
   			  }, function errorCallback(response) {
@@ -33,8 +33,8 @@
 
         };
         init();
-        sc.saveAdmin = function(){}
-        if(user===undefined || user===null){
+
+        if($scope.user==undefined){
       		console.log("user undefined trazim usra, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
 ;
       		$http({
@@ -42,8 +42,9 @@
       			  url: 'http://localhost:8096/api/user/' + $cookies.get('user')
       				 
       			}).then(function successCallback(response) {
-      				user = response.data;
-                    $scope.user = user;
+      				$scope.user = response.data;
+                    $scope.isAdmin=false;
+                    $scope.adm = undefined;
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
       			  });
@@ -72,54 +73,54 @@
             	}
         	}
 
-        	if(pass!=user.password && pass!=undefined && pass!="" )
-        		user.password = pass;
+        	if(pass!=$scope.user.password && pass!=undefined && pass!="" )
+        		$scope.user.password = pass;
 
-        	if(fname!=user.ime && fname!=undefined && fname!="")
-        		user.ime = fname;
+        	if(fname!=$scope.user.ime && fname!=undefined && fname!="")
+        		$scope.user.ime = fname;
         	
-        	if(lname!=user.prezime && lname!=undefined && lname!="")
-        		user.prezime = lname;
+        	if(lname!=$scope.user.prezime && lname!=undefined && lname!="")
+        		$scope.user.prezime = lname;
         	
-        	if(email!=user.email && email!=undefined && email!="")
+        	if(email!=$scope.user.email && email!=undefined && email!="")
         	    if(validateEmail(email)){
-        	            user.email = email;
+        	            $scope.user.email = email;
         	        }else{
         	           $scope.message="Enter valid email address." ;
         	           return;
         	        }
 
         	
-        	if(city!=user.grad && city!=undefined)
-        		user.grad = city;
+        	if(city!=$scope.user.grad && city!=undefined)
+        		$scope.user.grad = city;
         	
-        	if(phone!=user.brojTelefona && phone!=undefined)
-        		user.brojTelefona = phone;
+        	if(phone!=$scope.user.brojTelefona && phone!=undefined)
+        		$scope.user.brojTelefona = phone;
         	
         	
-        	console.log("userName " +  user.userName +
-        			" password "+ user.password +
-        			" ime "+ user.ime +
-        			" prezime "+ user.prezime +
-        			" email "+ user.email +
-        			" grad "+ user.grad +
-        			" brojTelefona "+ user.brojTelefona);
+        	console.log("userName " +  $scope.user.userName +
+        			" password "+ $scope.user.password +
+        			" ime "+ $scope.user.ime +
+        			" prezime "+ $scope.user.prezime +
+        			" email "+ $scope.user.email +
+        			" grad "+ $scope.user.grad +
+        			" brojTelefona "+ $scope.user.brojTelefona);
         			
-        	if(user.hasOwnProperty('tip')){
+        	if($scope.user.hasOwnProperty('tip')){
         	 $http({
                   method: 'POST',
                   url: 'http://localhost:8096/api/settings/admin',
-                  data: user
+                  data: $scope.user
                 }).then(function successCallback(response) {
                     if(response.data==""){
                         $scope.message = "Changes successfully saved.";
-                        console.log("userName " +  user.userName +
-                                " password "+ user.password +
-                                " ime "+ user.ime +
-                                " prezime "+ user.prezime +
-                                " email "+ user.email +
-                                " grad "+ user.grad +
-                                " brojTelefona "+ user.brojTelefona);
+                        console.log("userName " +  $scope.user.userName +
+                                " password "+ $scope.user.password +
+                                " ime "+ $scope.user.ime +
+                                " prezime "+ $scope.user.prezime +
+                                " email "+ $scope.user.email +
+                                " grad "+ $scope.user.grad +
+                                " brojTelefona "+ $scope.user.brojTelefona);
                                 $timeout(function() {
                                      $window.location.reload();
                                                   }, 3000)
@@ -143,17 +144,17 @@
         		 $http({
                      method: 'POST',
                      url: 'http://localhost:8096/api/settings/reg',
-                     data: user
+                     data: $scope.user
                    }).then(function successCallback(response) {
                    	if(response.data==""){
                    		$scope.message ="Changes successfully saved.";
-                   		console.log("userName " +  user.userName +
-                       			" password "+ user.password +
-                       			" ime "+ user.ime +
-                       			" prezime "+ user.prezime +
-                       			" email "+ user.email +
-                       			" grad "+ user.grad +
-                       			" brojTelefona "+ user.brojTelefona);
+                   		console.log("userName " +  $scope.user.userName +
+                       			" password "+ $scope.user.password +
+                       			" ime "+ $scope.user.ime +
+                       			" prezime "+ $scope.user.prezime +
+                       			" email "+ $scope.user.email +
+                       			" grad "+ $scope.user.grad +
+                       			" brojTelefona "+ $scope.user.brojTelefona);
 
                        			 $timeout(function() {
                                       $window.location.reload();
