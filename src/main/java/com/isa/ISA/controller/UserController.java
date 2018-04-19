@@ -249,6 +249,7 @@ public class UserController {
         RegistrovaniKorisnik reg = userService.getUser(username);
         if(invitationDTO.isAccepted()){
             System.out.println("Accepted!");
+            int bodovi = 0;
 
             for(Rezervacija r : reg.getRezervacije())
                 if(r.getId()==invitationDTO.getRezID())
@@ -256,9 +257,11 @@ public class UserController {
                         if(p.getOsoba().getUserName().equals(username)){
                             p.setStatus(Status.PRIHVACENO);
                             rezService.addRez(r);
+                            bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
                             break;
                         }
-
+			bodovi = bodovi + reg.getBodovi();
+            reg.setBodovi(bodovi);
             ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
             for(Rezervacija r : reg.getRezervacije())
                 if(r.getId()==invitationDTO.getRezID())
@@ -272,15 +275,18 @@ public class UserController {
             return reg.getRezervacije();
 
         }
+		int bodovi = 0;
 		for(Rezervacija r : reg.getRezervacije())
 			if(r.getId()==invitationDTO.getRezID())
 				for(Poziv p : r.getUrezervaciji())
 					if(p.getOsoba().getUserName().equals(username)){
 						p.setStatus(Status.ODBIJENO);
+						bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
 						rezService.addRez(r);
 						break;
 					}
-
+		bodovi = reg.getBodovi() - bodovi;
+		if(bodovi<0) bodovi = 0;
 		ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
 		for(Rezervacija r : reg.getRezervacije())
 			if(r.getId()==invitationDTO.getRezID())
@@ -288,7 +294,7 @@ public class UserController {
 					if(p.getOsoba().getUserName().equals(username))
 						if(!p.getStatus().toString().equals("ODBIJENO"))
 							samoPrihvacene.add(r);
-
+		reg.setBodovi(bodovi);
 		reg.setRezervacije(samoPrihvacene);
 		userService.addUser(reg);
 		return reg.getRezervacije();

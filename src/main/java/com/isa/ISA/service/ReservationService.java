@@ -100,6 +100,8 @@ public class ReservationService {
         rez.setUrezervaciji(pozivi);
         rezService.addRez(rez);
         rezervisao.getRezervacije().add(rez);
+        int bodova = rezervisao.getBodovi() + rez.getProjekcija().getDogadjaj().getDonosiBodova();
+        rezervisao.setBodovi(bodova);
         userService.addUser(rezervisao);
 
 
@@ -113,6 +115,8 @@ public class ReservationService {
         for (RegistrovaniKorisnik reg : pozvani) {
 
             reg.getRezervacije().add(rez);
+            bodova = reg.getBodovi() + rez.getProjekcija().getDogadjaj().getDonosiBodova();
+            reg.setBodovi(bodova);
             userService.addUser(reg);
             Poziv p = new Poziv();
             p.setOsoba(reg);
