@@ -99,8 +99,6 @@
               controller: 'adminIzvestajController',
               controllerAs: 'ic',
 			  params: {id :null}
-
-
           })
 		.state('core.fanZone', {
 			url: 'fanZone',
@@ -108,7 +106,21 @@
 			controller: 'fanZoneController',
 			controllerAs: 'fzc'
 		})
-		.state('core.addEditItem', {
+		  .state('core.adminOneClick', {
+              url: 'adminOneClick',
+              templateUrl: 'app/components/adminOneClick/oneClick.html',
+              controller: 'adminOneClickController',
+              controllerAs: 'aoc',
+              params: {id :null}
+          })
+          .state('core.userOneClick', {
+              url: 'userOneClick',
+              templateUrl: 'app/components/userOneClick/userOneClick.html',
+              controller: 'userOneClickController',
+              controllerAs: 'uoc',
+              params: {id :null}
+          })
+		  .state('core.addEditItem', {
 			url: 'addEditItem',
 			templateUrl: 'app/components/addEditItem/addEditItem.html',
 			controller: 'addEditItemController',
