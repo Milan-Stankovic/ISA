@@ -28,8 +28,8 @@
                 method: 'GET',
                 url: 'http://localhost:8096/admin/'+regUser,
               }).then(function successCallback(response) {
-              	//	if(response.data.tip!="PRED")
-              		//	$location.path('/home');
+              		if(response.data.tip!="PRED")
+              			$location.path('/home');
               });
 
         };

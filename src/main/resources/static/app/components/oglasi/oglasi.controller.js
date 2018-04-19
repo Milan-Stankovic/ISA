@@ -43,8 +43,10 @@
                 method: 'GET',
                 url: 'http://localhost:8096/api/user/'+regUser,
               }).then(function successCallback(response) {
-              		/*if(response.data=="")
-              			$location.path('/home');*/
+              		if(response.data==""){
+              			$location.path('/home');
+              			return;
+              		}
             	  $scope.regUserID = response.data.id;
 
               	  $http({

@@ -11,6 +11,7 @@ public interface PolovanRekvRepository extends CrudRepository<PolovanRekvizit, L
 	List<PolovanRekvizit> findByStatus(StatusLicitacije status);
 	List<PolovanRekvizit> findByPostavioId(long id);
 	List<PolovanRekvizit> findByLicitacijaPonudio(String ponudio);
+	PolovanRekvizit findFirstByStatusOrderByIdAsc(StatusLicitacije status);
 	
 	
 }

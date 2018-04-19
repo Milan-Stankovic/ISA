@@ -35,22 +35,6 @@
         </li>
 
 
-    <span ng-if="pozoriste">
-            <li>
-                 <ul class="forma" ng-repeat="pozoriste in pozoristaAdmin track by $index">
-                    <li class="desno">
-                        <a class="pointer" ng-click="pickBpOne(pozoriste.id, pozoriste.naziv)">{{pozoriste.naziv}} </a>
-                    </li>
-
-                     <li class="desno">
-                        <a>{{pozoriste.adresa}} </a>
-                    </li>
-
-                 </ul>
-
-            </li>
-
-    </span>
 
 
         <span ng-if="showReport">
@@ -119,10 +103,39 @@
                                 {{dobijenIzvestaj.ukupnaZarada}}
                             </a>
                         </li>
+
+                    <li class="inputReport">
+                            </br>
+                        </li>
+
                     <li class="inputReportGraph">
-                        <highchart class="inputReportGraph" id="chart1" config="chartConfig"></highchart>
+                        <highchart  id="chart1" config="chartConfig"></highchart>
 
                     </li>
+
+                    <li class="inputReport">
+                            </br>
+                        </li>
+
+                    <li class="inputReportGraph">
+                        <highchart  id="chart2" config="chartConfigNedeljni"></highchart>
+
+                    </li>
+
+
+                    <li class="inputReport">
+                            </br>
+                        </li>
+
+                    <li class="inputReportGraph">
+                        <highchart  id="chart3" config="chartConfigMesecni"></highchart>
+
+                    </li>
+
+
+
+
+
 
 
 
@@ -149,7 +162,7 @@
                     </li>
 
                     <li class="desno">
-                          <button  class="button" type="submit" ng-click="saveIzvestaj(newDateOd, newDateDo)"> Save</button>
+                          <button  class="button" type="submit" ng-click="saveIzvestaj(newDateOd, newDateDo)"> Generate</button>
                     </li>
                 </ul>
             </li>
@@ -177,7 +190,7 @@
             <li>
                  <ul class="forma" ng-repeat="bioskop in bioskopiAdmin track by $index">
                     <li class="desno">
-                        <a class="pointer" ng-click="izvestaj(bioskop.id, biosko.naziv)">{{bioskop.naziv}} </a>
+                        <a class="pointer" ng-click="izvestaj(bioskop.id, bioskop.naziv)">{{bioskop.naziv}} </a>
                     </li>
 
                      <li class="desno">
@@ -189,6 +202,26 @@
             </li>
 
         </span>
+
+
+        <span ng-if="pozoriste">
+            <li>
+                 <ul class="forma" ng-repeat="pozoriste in pozoristaAdmin track by $index">
+                    <li class="desno">
+                        <a class="pointer" ng-click="izvestaj(pozoriste.id, pozoriste.naziv)">{{pozoriste.naziv}} </a>
+                    </li>
+
+                     <li class="desno">
+                        <a>{{pozoriste.adresa}} </a>
+                    </li>
+
+                 </ul>
+
+            </li>
+
+    </span>
+
+
     </ul>
 
 </div>
