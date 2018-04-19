@@ -111,7 +111,14 @@
               templateUrl: 'app/components/adminOneClick/oneClick.html',
               controller: 'adminOneClickController',
               controllerAs: 'aoc',
-              params: {id :null}
+              params: {id :null,
+				  dName : null,
+				  pTime : null,
+				  pId : null,
+				  dId : null,
+				  bpId: null,
+				  pPrice: null
+			  }
           })
           .state('core.userOneClick', {
               url: 'userOneClick',

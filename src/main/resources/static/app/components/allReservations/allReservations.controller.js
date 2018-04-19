@@ -63,9 +63,48 @@
 
             getAccRez();
 
+        var getUstanova = function(rez){
+            $http({
+                  method: 'GET',
+                  url: 'http://localhost:8096/sala/ustanova/' + rez.projekcija.sala.id
+                 }).then(function successCallback(response) {
+                 $scope.salaUstanova = response.data;
+                 }, function errorCallback(response) {
+                               alert("Greska kod get ustanova")
 
+                           });
+
+        }
+
+        $scope.accept = function(rez){
+            $scope.answer(rez, true);
+        }
         $scope.answer = function(rez, isAccepted){
-            console.log("usao u answer")
+            if(isAccepted){
+                $http({
+                    method: 'POST',
+                    url: 'http://localhost:8096/api/rezervacija/acc/' + $cookies.get('user'),
+                    data: rez.id
+                  }).then(function successCallback(response) {
+                       $scope.rezervacije = response.data;
+                       console.log("aj sad accept: " + $scope.rezervacije)
+                       getAccRez();
+                       }
+                   );
+            }else{
+                 $http({
+                    method: 'POST',
+                    url: 'http://localhost:8096/api/rezervacija/decl/' + $cookies.get('user'),
+                    data: rez.id
+                  }).then(function successCallback(response) {
+                       $scope.rezervacije = response.data;
+                       console.log("aj sad accept: " + $scope.rezervacije)
+                       getAccRez();
+                       }
+                   );
+            }
+
+            /*console.log("usao u answer")
             var data={
                 "rezID" : rez.id,
                 "isAccepted" : isAccepted
@@ -73,7 +112,7 @@
              $http({
 
                  method: 'POST',
-                 url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
+                 url: 'http://localhost:8096/#!/api/rezervacija/inv/' + $cookies.get('user'),
                  data: data
 
              }).then(function successCallback(response) {
@@ -84,7 +123,7 @@
              }, function errorCallback(response) {
                  alert("Greska kod answer")
 
-             });
+             });*/
         }
 
 
@@ -104,8 +143,10 @@
         }
         $scope.details = function(rez){
 
-                if(document.getElementById(rez.id + " details").style.display=="none")
+                if(document.getElementById(rez.id + " details").style.display=="none"){
+                    getUstanova(rez);
                     document.getElementById(rez.id + " details").style.display = "block";
+                }
                 else
                     document.getElementById(rez.id + " details").style.display="none";
 

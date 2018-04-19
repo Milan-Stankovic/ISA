@@ -63,6 +63,21 @@
             $state.go(state, {"id" : 6} );
         }
 
+
+        $scope.goOne = function(state, param1, param2,param3, param4, param5, param6) {
+
+            $state.go(state, {
+                "id" : 6,
+                "dName" :param1,
+                "pTime" :param2,
+                "dId" :param3,
+                "pId": param4,
+                "bpId" : param5,
+                "pPrice" :param6
+            } );
+        }
+
+
         $scope.sala = false;
         $scope.pozoriste = false;
         $scope.bioskop = true;
