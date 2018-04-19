@@ -10,6 +10,9 @@ import javax.annotation.PostConstruct;
 
 import com.isa.ISA.dbModel.*;
 import com.isa.ISA.dbModel.enums.*;
+import com.isa.ISA.dbModel.korisnici.Poziv;
+import com.isa.ISA.repository.KartaRepository;
+import com.isa.ISA.repository.PozivRepository;
 import com.isa.ISA.service.*;
 import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
@@ -59,6 +62,12 @@ public class StartData {
 
     @Autowired
     private RekvizitService rekvizitService;
+
+    @Autowired
+    private PozivRepository pozivRepo;
+
+    @Autowired
+    private KartaRepository kartaRepo;
     @PostConstruct
     public void initIt() throws NoSuchAlgorithmException {
 
@@ -413,10 +422,72 @@ public class StartData {
         r.setPopust(0);
         r.setProjekcija(p);
         rezRepository.save(r);
+        ArrayList<Poziv> pozivi = new ArrayList<>();
+        Poziv poy = new Poziv();
+        poy.setStatus(Status.PRIHVACENO);
+        poy.setOsoba(rk3);
+        poy.setPozvan(false);
+        poy.setRezervacija(r);
+        Karta ka = new Karta();
+        ka.setPunaCena((int) p.getCena());
+        ka.setPozoristeBioskop(p.getSala().getUstanova());
+        ka.setSediste(p.getSala().getSedista().get(0));
+        ka.setVremeOdrzavanja(p.getVreme());
+        kartaRepo.save(ka);
+        poy.setKarta(ka);
+        pozivRepo.save(poy);
+        pozivi.add(poy);
+        Poziv poyy = new Poziv();
+        poyy.setStatus(Status.CEKA);
+        poyy.setOsoba(rk2);
+        poyy.setPozvan(true);
+        poyy.setRezervacija(r);
+        Karta kaa = new Karta();
+        kaa.setPunaCena((int) p.getCena());
+        kaa.setPozoristeBioskop(p.getSala().getUstanova());
+        kaa.setSediste(p.getSala().getSedista().get(1));
+        kaa.setVremeOdrzavanja(p.getVreme());
+        kartaRepo.save(kaa);
+        poyy.setKarta(kaa);
+        pozivRepo.save(poyy);
+        pozivi.add(poyy);
+        r.setUrezervaciji(pozivi);
+        rezRepository.save(r);
         p.getRezervacije().add(r);
         rk3.setRezervacije(new ArrayList<Rezervacija>());
         rk3.getRezervacije().add(r);
+        rk2.setRezervacije(new ArrayList<Rezervacija>());
+        rk2.getRezervacije().add(r);
+        rk3.setBodovi(1);
         userService.addUser(rk3);
+        userService.addUser(rk2);
+
+        Rezervacija r2 = new Rezervacija();
+        r2.setRezervisao(rk2);
+        r2.setPopust(0);
+        r2.setProjekcija(p);
+        rezRepository.save(r2);
+        pozivi = new ArrayList<>();
+        poy = new Poziv();
+        poy.setStatus(Status.PRIHVACENO);
+        poy.setOsoba(rk2);
+        poy.setPozvan(false);
+        poy.setRezervacija(r2);
+        ka = new Karta();
+        ka.setPunaCena((int) p.getCena());
+        ka.setPozoristeBioskop(p.getSala().getUstanova());
+        ka.setSediste(p.getSala().getSedista().get(0));
+        ka.setVremeOdrzavanja(p.getVreme());
+        kartaRepo.save(ka);
+        poy.setKarta(ka);
+        pozivRepo.save(poy);
+        pozivi.add(poy);
+        r2.setUrezervaciji(pozivi);
+        rezRepository.save(r2);
+        p.getRezervacije().add(r2);
+        rk2.getRezervacije().add(r2);
+        rk2.setBodovi(2);
+        userService.addUser(rk2);
 
         Admin a3 = new Admin();
         a3.setUserName("fanadmin");

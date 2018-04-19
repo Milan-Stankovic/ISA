@@ -242,9 +242,9 @@ public class UserController {
 	}
 
 
+/*
 
 	@RequestMapping(method = RequestMethod.POST,value = "/api/user/invAccepted/{username}")
-
     public List<Rezervacija> getInvAccepted(@PathVariable String username, @RequestBody InvitationDTO invitationDTO) {
         RegistrovaniKorisnik reg = userService.getUser(username);
         if(invitationDTO.isAccepted()){
@@ -300,6 +300,7 @@ public class UserController {
 		return reg.getRezervacije();
 	}
 
+*/
 
 
 }

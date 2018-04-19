@@ -44,6 +44,7 @@
       			}).then(function successCallback(response) {
       				user = response.data;
                     $scope.user = user;
+                    $scope.isAdmin=false;
       			  }, function errorCallback(response) {
       				  console.log("Greska kod GET user");
       			  });
