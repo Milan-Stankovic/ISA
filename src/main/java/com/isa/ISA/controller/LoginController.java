@@ -4,7 +4,12 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.isa.ISA.DTO.RegKorDTO;
+import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +30,9 @@ public class LoginController {
     @Autowired
     private AdminService adminService;
 
+    @Autowired
+    private EncryptionService encService;
+
     public LoginController() {
     }
 
@@ -34,27 +42,38 @@ public class LoginController {
     }
     // Mozes li ubaciti dodatnu proveru ako je admin da li je promenio password ?
     @RequestMapping(method = RequestMethod.POST, value = "/api/login") 
-    public Korisnik login(@RequestBody String credentials){
-    	String username = credentials.split("\\.")[0];
+    public Korisnik login(@RequestBody RegKorDTO credentials){
+    	/*String username = credentials.split("\\.")[0];
 		String password = credentials.split("\\.")[1];
-		 
+		 */
         Korisnik k;
-        RegistrovaniKorisnik reg = userService.getUser(username);
-        Admin adm = adminService.getAdmin(username);
+        RegistrovaniKorisnik reg = userService.getUser(credentials.getUserName());
+        Admin adm = adminService.getAdmin(credentials.getUserName());
         if(reg==null && adm==null)
             return null;
         
         else{
             k = (reg != null) ? reg: adm;
         }
-        if(k.getPassword().equals(password)){
-        	if(k instanceof Admin && k.getPassword().equals("default") )
-        		k.setStatus(StatusNaloga.NERESEN);
+
+        Encryption e = encService.getEncrUser(k.getId());
+
+        TextEncryptor decryptor = Encryptors.text("admin", e.getSalt());
+        String decryptedText = decryptor.decrypt(e.getEncryptedPass());
+        System.out.println("Decrypted text: \"" + decryptedText + "\"");
+        System.out.println("Pass text: \"" + credentials.getPassword() + "\"");
+
+        if(credentials.getPassword().equals(decryptedText)) {
+            System.out.println("Success: decrypted text matches");
+            if(k instanceof Admin && k.getPassword().equals("default") )
+                k.setStatus(StatusNaloga.NERESEN);
             return k;
-        }
-        	
-        else
+        } else {
+            System.out.println("Failed: decrypted text does not match");
             return null;
+        }
+
+
     }
     /*@RequestMapping(method = RequestMethod.POST, value = "/api/fblogin/username={username}&pass={password}&ime={ime}&prez={prez}")
     public Korisnik fblogin(@PathVariable String username, @PathVariable String password, @PathVariable String ime, @PathVariable String prez){

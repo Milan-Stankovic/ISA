@@ -5,11 +5,11 @@
 		.module('app')
 		.controller('settingsController', settingsController);
 
-    settingsController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies'];
-    function settingsController($location, $scope, $rootScope, $http, $window, $cookies) {
+    settingsController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies', '$timeout'];
+    function settingsController($location, $scope, $rootScope, $http, $window, $cookies, $timeout) {
         var sc = this;
         var user = undefined;
-
+        $scope.message="";
 
         var init = function (){ 	
         	console.log("trazim admira, path: " + 'http://localhost:8096/admin/' + $cookies.get('user'));
@@ -53,12 +53,12 @@
         $scope.saveFunc = function(fname, lname, email, city, phone, pass, pass2){
         	
         	if(!(pass===pass2) && pass!='' && pass2!=''){
-        		alert("Passwords don't match.")
+        		$scope.message = "Passwords don't match."
         		return;
         	}
         	if(document.getElementById('phone').value != ''){
         		if(isNaN(phone)){
-            		alert("Enter valid phone number.")
+            		$scope.message = "Enter valid phone number."
             		return;
             	}
         	}
@@ -97,7 +97,7 @@
                   data: user
                 }).then(function successCallback(response) {
                     if(response.data==""){
-                        alert("Changes successfully saved.")
+                        $scope.message = "Changes successfully saved.";
                         console.log("userName " +  user.userName +
                                 " password "+ user.password +
                                 " ime "+ user.ime +
@@ -105,13 +105,21 @@
                                 " email "+ user.email +
                                 " grad "+ user.grad +
                                 " brojTelefona "+ user.brojTelefona);
+                                $timeout(function() {
+                                     $window.location.reload();
+                                                  }, 3000)
                     }
 
-                    else
-                        alert(response.data)
+                    else{
+                     $scope.message = response.data;
+                    $timeout(function() {
+                           $window.location.reload();
+                                      }, 3000)
+                    }
+
 
                     }, function errorCallback(response) {
-                     alert("greska u saveFunc")
+                     console.log("nije prihvatio izmene admira")
 
                     });
         	}
@@ -123,7 +131,7 @@
                      data: user
                    }).then(function successCallback(response) {
                    	if(response.data==""){
-                   		alert("Changes successfully saved.")
+                   		$scope.message ="Changes successfully saved.";
                    		console.log("userName " +  user.userName +
                        			" password "+ user.password +
                        			" ime "+ user.ime +
@@ -131,13 +139,21 @@
                        			" email "+ user.email +
                        			" grad "+ user.grad +
                        			" brojTelefona "+ user.brojTelefona);
+
+                       			 $timeout(function() {
+                                      $window.location.reload();
+                                      }, 3000)
                    	}
                    		
-                   	else
-                   		alert(response.data)
+                   	else{
+                   	$scope.message = response.data;
+                   	 $timeout(function() {
+                           $window.location.reload();
+                          }, 3000)
+                   	}
 
                        }, function errorCallback(response) {
-                        alert("greska u saveFunc")
+                        console.log("greska kod reg settings")
 
                        });
         	}

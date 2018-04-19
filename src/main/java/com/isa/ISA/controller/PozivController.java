@@ -19,6 +19,6 @@ public class PozivController {
     public String post(@PathVariable String username, @RequestBody Rezervacija r){ return "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay";}
 
 
-    @RequestMapping(value = "/poziv/user/{username}", method = RequestMethod.GET)
-    public String get(@PathVariable String username) { return "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay";}
+    @RequestMapping(value = "/poziv/user/{username}", method = RequestMethod.DELETE)
+    public String get(@PathVariable String username, @RequestBody Rezervacija re) { return "yaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaay";}
 }

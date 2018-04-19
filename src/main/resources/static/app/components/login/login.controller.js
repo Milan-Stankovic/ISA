@@ -23,7 +23,10 @@
         		alert("Enter both username and password.")
         		return;
         	}
-        	var data = username + "." + pass;
+        	var data = {
+        	    "userName" : username,
+        	    "password" :pass
+        	}
             $http({
               method: 'POST',
               url: 'http://localhost:8096/api/login/',

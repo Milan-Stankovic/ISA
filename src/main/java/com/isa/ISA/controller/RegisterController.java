@@ -2,6 +2,11 @@ package com.isa.ISA.controller;
 
 import java.io.IOException;
 
+import com.isa.ISA.dbModel.Encryption;
+import com.isa.ISA.service.EncryptionService;
+import org.springframework.security.crypto.encrypt.Encryptors;
+import org.springframework.security.crypto.encrypt.TextEncryptor;
+import org.springframework.security.crypto.keygen.KeyGenerators;
 import javax.servlet.http.HttpServletResponse;
 
 import com.isa.ISA.DTO.RegKorDTO;
@@ -26,6 +31,9 @@ public class RegisterController {
 	    private UserService userService;
 	 @Autowired
 	    private AdminService adminService;
+
+	@Autowired
+	private EncryptionService encService;
 	 
 	 public RegisterController() {
 	    }
@@ -82,7 +90,32 @@ public class RegisterController {
 	        Korisnik k = (reg != null) ? reg: adm;
 	 		if(k!=null){
 	 			k.setStatus(StatusNaloga.AKTIVAN);
-	 			userService.addUser((RegistrovaniKorisnik)k);
+				final String salt = KeyGenerators.string().generateKey();
+
+				TextEncryptor encryptor = Encryptors.text("admin", salt);
+				System.out.println("Salt: \"" + salt + "\"");
+
+				String textToEncrypt = k.getPassword();
+				System.out.println("Original text: \"" + textToEncrypt + "\"");
+
+				String encryptedText = encryptor.encrypt(textToEncrypt);
+				System.out.println("Encrypted text: \"" + encryptedText + "\"");
+
+				Encryption e = new Encryption(encryptedText, salt, k.getId());
+				encService.addEncr(e);
+				k.setPassword(encryptedText);
+/*
+				// Could reuse encryptor but wanted to show reconstructing TextEncryptor
+				TextEncryptor decryptor = Encryptors.text(password, salt);
+				String decryptedText = decryptor.decrypt(encryptedText);
+				System.out.println("Decrypted text: \"" + decryptedText + "\"");
+
+				if(textToEncrypt.equals(decryptedText)) {
+					System.out.println("Success: decrypted text matches");
+				} else {
+					System.out.println("Failed: decrypted text does not match");
+				}*/
+				userService.addUser((RegistrovaniKorisnik)k);
 
 	 		}
 	 		try {

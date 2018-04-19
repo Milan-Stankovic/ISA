@@ -65,12 +65,15 @@
 
 
         var accept = function(rez){
-            console.log('http://localhost:8096/poziv/user/' + $cookies.get('user'))
-            console.log(rez)
+            var dat = {
+                "userID" : $cookies.get('user'),
+                "rezID" : rez.id
+            }
             $http({
                   method: 'POST',
-                  url: 'http://localhost:8096/#!/poziv/user/' + $cookies.get('user'),
-                   data: rez
+                  url: 'http://localhost:8096/#!/poyyyyyy/accept',
+                  data: dat,
+
               }).then(function successCallback(response) {
                   $scope.rezultat = response.data;
                   console.log("rez: " + $scope.rezultat)
@@ -81,6 +84,26 @@
               });
 
         }
+
+        var decline = function(rez){
+
+                    $http({
+                          method: 'DELETE',
+                          url: 'http://localhost:8096/#!/poyyyyyyyy/' + $cookies.get('user'),
+                          data: rez,
+                          headers: {
+                                          "Content-Type": "application/json"
+                                      }
+                      }).then(function successCallback(response) {
+                          $scope.rezultat = response.data;
+                          console.log("rez: " + $scope.rezultat)
+
+                      }, function errorCallback(response) {
+                          alert("Greska kod del")
+
+                      });
+
+                }
         $scope.updateView = function(){
          if($scope.inv!=undefined){
             for(var i = 0; i < $scope.inv.length; i++){
@@ -109,6 +132,37 @@
                 else
                     document.getElementById(rez.id + " details").style.display="none";
             }
+
+        }
+
+        $scope.cancel = function(rez){
+            var currentTime = new Date();
+            var sad = currentTime/1000;
+            var a = new Date(sad*1000);
+            var ayear = a.getFullYear();
+            var amonth = a.getMonth()+1;
+            var adate = a.getDate();
+            var ahour = a.getHours();
+            var amin = a.getMinutes();
+
+            var epoch_date = rez.projekcija.vreme/1000;
+            var b = new Date(epoch_date*1000);
+            var byear = a.getFullYear();
+            var bmonth = a.getMonth()+1;
+            var bdate = a.getDate();
+            var bhour = a.getHours();
+            var bmin = a.getMinutes()+30;
+            if(byear-ayear>=0)
+                if(bmonth-amonth>=0)
+                    if(bdate-adate>=0)
+                        if(bhour-ahour>=0)
+                            if(bmin-amin>=30){
+                                decline(rez);
+                                return;
+                            }
+
+            alert("Canceling is not available.")
+            return;
 
         }
     }
