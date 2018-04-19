@@ -41,6 +41,11 @@ public class RezervacijaController {
         return rezService.getRez(id);
     }
 
+    @RequestMapping("/api/rezervacije/")
+        public List<Rezervacija> getAll(){
+        return  rezService.getAll();
+    }
+
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/rezervacija/acc/{username}")
     public List<Rezervacija> getInvAccepted(@PathVariable String username, @RequestBody Long id) {

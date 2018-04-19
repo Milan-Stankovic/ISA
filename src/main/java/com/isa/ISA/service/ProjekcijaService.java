@@ -80,7 +80,7 @@ public class ProjekcijaService {
 
 
         for (SedisteDTO tempSediste:d.getSedista()) {
-            if(tempSediste.isChecked()){
+            if(tempSediste.isChecked() && !tempSediste.getType().equals("TAKEN")){
                 int tempRed = tempSediste.getId();
 
                 Sediste temp = new Sediste();
@@ -114,11 +114,14 @@ public class ProjekcijaService {
                         pozivi.add(poz);
                         rez.setUrezervaciji(pozivi);
                         rezRepo.save(rez);
+                        p.getZauzetaSedista().add(temp);
                     }
 
                 }
 
             }
+
+            pr.save(p);
 
         }
 
