@@ -8,16 +8,15 @@ import java.util.Date;
 import java.util.List;
 
 import com.isa.ISA.DTO.ProjekcijaDTO;
+import com.isa.ISA.DTO.OneClickDTO;
+import com.isa.ISA.DTO.SedisteDTO;
+import com.isa.ISA.dbModel.*;
+import com.isa.ISA.dbModel.enums.Status;
+import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dodatno.Konverter;
-import com.isa.ISA.repository.DogadjajRepository;
-import com.isa.ISA.repository.SalaRepository;
+import com.isa.ISA.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.Projekcija;
-import com.isa.ISA.dbModel.Sala;
-import com.isa.ISA.repository.ProjekcijaRepository;
 
 @Service
 public class ProjekcijaService {
@@ -31,6 +30,15 @@ public class ProjekcijaService {
     @Autowired
     private DogadjajRepository dr;
 
+    @Autowired
+    private KartaRepository kRepo;
+
+    @Autowired
+    private PozivRepository pozRepo;
+
+    @Autowired
+    private RezervacijaRepository rezRepo;
+
     public List<Projekcija> getAll(){
         List<Projekcija> allP = new ArrayList<>();
         pr.findAll().forEach(allP::add);
@@ -39,6 +47,85 @@ public class ProjekcijaService {
 
     public Projekcija getProjekcija(Long id){
         return pr.findOne(id);
+    }
+
+    public List<Sediste> getZauzeto(Long id){return pr.findOne(id).getZauzetaSedista();}
+
+
+    private Long findSediste(List<Sediste> sedista, int red, int sediste){
+        Long l=-1l;
+
+        for (Sediste temp : sedista) {
+            if(temp.getBroj() == sediste && temp.getRed()==red)
+                return temp.getId();
+        }
+
+        return l;
+    }
+
+    private boolean isTaken(List<Sediste> sedista, Long id){
+        for (Sediste temp:sedista) {
+            if(temp.getId()==id)
+                return true;
+        }
+        return false;
+    }
+
+    public void zauzmiMesto(Long id, OneClickDTO d){
+
+        Projekcija p = pr.findOne(id);
+        PozoristeBioskop pb = new PozoristeBioskop();
+        pb.setId(d.getBpId());
+        int brojSedista = d.getBrojSedista();
+
+
+        for (SedisteDTO tempSediste:d.getSedista()) {
+            if(tempSediste.isChecked()){
+                int tempRed = tempSediste.getId();
+
+                Sediste temp = new Sediste();
+                int red = tempSediste.getId()/brojSedista;
+                int sed = tempSediste.getId()%brojSedista;
+                Long sedId = findSediste(p.getSala().getSedista(), red, sed);
+                if(sedId != -1l) {
+                    if(!isTaken(p.getZauzetaSedista(), sedId)){
+                        temp.setId(sedId);
+                        Rezervacija rez = new Rezervacija();
+                        rez.setRezervisao(null);
+                        rez.setPopust(d.getCena());
+                        rez.setProjekcija(p);
+                        Poziv poz = new Poziv();
+                        poz.setStatus(Status.CEKA);
+                        poz.setPozvan(false);
+                        poz.setOsoba(null);
+                        Karta k = new Karta();
+                        k.setVremeOdrzavanja(p.getVreme());
+                        k.setPozoristeBioskop(pb);
+                        k.setPunaCena(d.getCena());
+                        k.setSediste(temp);
+                        k = kRepo.save(k);
+                        poz.setKarta(k);
+                        List<Poziv> pozivi = new ArrayList<>();
+                        rez.setUrezervaciji(pozivi);
+                        rez = rezRepo.save(rez);
+
+                        poz.setRezervacija(rez);
+                        poz = pozRepo.save(poz);
+                        pozivi.add(poz);
+                        rez.setUrezervaciji(pozivi);
+                        rezRepo.save(rez);
+                    }
+
+                }
+
+            }
+
+        }
+
+    }
+
+    public Sala getSala(Long id){
+        return pr.findOne(id).getSala();
     }
 
     public Projekcija getProjekcijaID(Long id){

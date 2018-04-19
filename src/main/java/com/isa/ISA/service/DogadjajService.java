@@ -37,6 +37,8 @@ public class DogadjajService {
 
 
 
+
+
     public void addDogadjaj(DogadjajDTO d){
         if(Konverter.proveraDogadjaja(d)){
             Dogadjaj dog = Konverter.converterDogadjaja(d);

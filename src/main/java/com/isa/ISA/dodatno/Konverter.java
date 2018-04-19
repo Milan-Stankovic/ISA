@@ -26,8 +26,8 @@ public class Konverter {
 
     public static Sala converterSale(SalaDTO s){
         Sala sal = new Sala();
-        System.out.println("IME JE : ");
-        System.out.println(s.getIme());
+        //System.out.println("IME JE : ");
+      //  System.out.println(s.getIme());
         sal.setIme(s.getIme());
         sal.setBrSedista(s.getBrSedista());
         sal.setBrRed(s.getBrRed());

@@ -16,12 +16,6 @@
 
                 <li class="goreDole">
 
-                    <a  ng-click="go('core.adminOneClick')">QUICK RESERVATION</a>
-
-                </li>
-
-                <li class="goreDole">
-
                     <a  ng-click="go('core.adminIzvestaj')">REPORTS</a>
 
                 </li>
@@ -97,7 +91,7 @@
 				        </button>
 
                         <a class="pointer" ng-click="editProjection(projekcija.id, dogadjajId, newDogadjaName, bpId, bpName)">{{projekcija.vreme}} </a>
-                         <button ng-if="!projekcija.aktivna" class="quick" type="submit" style="float: right" class="btn btn-primary"   ng-click="chooseQuickReservation(projekcija.id)"  >
+                         <button ng-if="!projekcija.aktivna" class="quick" type="submit" style="float: right" class="btn btn-primary"   ng-click="goOne('core.adminOneClick', newDogadjaName, projekcija.vreme, dogadjajId, projekcija.id,bpId, projekcija.cena )"  >
 					        <img class="clearDelete" src="../../../assets/images/quickReservation.png" width="20" height="20" title="Quick reservation" alt="submit" />
 				        </button>
 
@@ -493,6 +487,9 @@
 
 
 
+
+
+
         <span ng-if="sala">
         <li>
 
@@ -543,13 +540,8 @@
                 </li>
 
 
-
-
-
                 <div class="scrollmenu">
                     <table ng-if="showGrid"  >
-
-
                         <tbody  >
                          <tr >
 

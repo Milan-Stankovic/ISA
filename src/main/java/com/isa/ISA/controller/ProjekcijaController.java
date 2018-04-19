@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.isa.ISA.DTO.OneClickDTO;
 import com.isa.ISA.DTO.ProjekcijaDTO;
+import com.isa.ISA.dbModel.Sediste;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,6 +41,21 @@ public class ProjekcijaController {
     @RequestMapping("/projekcija/{id}")
     private Projekcija getProjekcijaEz(@PathVariable Long id){
         return ps.getProjekcija(id);
+    }
+
+    @RequestMapping("/projekcija/sala/{id}")
+    private Sala getSala(@PathVariable Long id){
+        return ps.getSala(id);
+    }
+
+    @RequestMapping("/projekcija/zauzeto/{id}")
+    private List<Sediste> getZauzeto(@PathVariable Long id){
+        return ps.getZauzeto(id);
+    }
+
+    @RequestMapping(value="/projekcija/zauzmi/{id}", method = RequestMethod.POST)
+    private void zauzmiOneClick(@PathVariable Long id, @RequestBody OneClickDTO o){
+        ps.zauzmiMesto(id, o);
     }
 
     @RequestMapping("/pb/{id}/projekcije/od")
@@ -86,7 +103,6 @@ public class ProjekcijaController {
         ps.getProjekcijeizSaleDogadjaja(s, d).forEach(projekcije::add);
         return projekcije;
     }
-
 
     @RequestMapping(method = RequestMethod.PUT, value = "/projekcija/{id}")
     public void updateProjekcijaLikeABoss(@RequestBody ProjekcijaDTO pr, @PathVariable Long id){
