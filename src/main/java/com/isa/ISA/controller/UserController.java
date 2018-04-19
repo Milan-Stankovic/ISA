@@ -190,6 +190,8 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.GET,value = "/api/user/reservations/{username}")
 	public List<Rezervacija> getRez(@PathVariable String username){
 		RegistrovaniKorisnik kor = userService.getUser(username);
+		if(kor==null)
+			return new ArrayList<Rezervacija>();
 		if(kor.getRezervacije()==null)
 			return new ArrayList<Rezervacija>();
 		return kor.getRezervacije();

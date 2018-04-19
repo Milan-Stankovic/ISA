@@ -1,8 +1,11 @@
 package com.isa.ISA.service;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import com.isa.ISA.dbModel.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -35,6 +38,8 @@ public class AdminService {
     private BodSkalaRepository bsRepo;
     @Autowired
     private PolovanRekvRepository polovanRepo;
+    @Autowired
+    private EncryptionService encService;
 
 
     public List<Admin> getAllAdmins(){
@@ -118,7 +123,7 @@ public class AdminService {
         return fanAdmin;
     }
 
-	public Admin addAdminBySis(AdminDTO admin) {
+	public Admin addAdminBySis(AdminDTO admin){
 		Admin retVal  = new Admin();
 		retVal.setUserName(admin.getUsername());
 		retVal.setTip(admin.getTipAdmina());
@@ -132,7 +137,25 @@ public class AdminService {
 		retVal.setMesta(pb);
 		retVal.setEmail(admin.getEmail());
 		retVal.setStatus(StatusNaloga.NERESEN);
-		return adminRepo.save(retVal);
+		adminRepo.save(retVal);
+
+        byte[] salt = encService.getNextSalt();
+        byte[] newPass = new byte[0];
+        try {
+            newPass = encService.makeDigest(retVal.getPassword(), salt);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        String pass = Arrays.toString(newPass);
+        Encryption e = new Encryption();
+        e.setSalt(salt);
+        e.setEncryptedPass(newPass);
+        e.setKorisnikID(retVal.getId());
+        encService.addEncr(e);
+        retVal.setPassword(pass);
+        adminRepo.save(retVal);
+        return retVal;
+
 			
 	}
 
@@ -174,14 +197,40 @@ public class AdminService {
 		return polovanRepo.save(pr);
 	}
 
-	public void updateInfoAdmin(RegKorDTO a, long id) {
+	public void updateInfoAdmin(RegKorDTO a, long id){
 		Admin adm = adminRepo.findById(id);
 		adm.setBrojTelefona(a.getBrojTelefona());
 		adm.setGrad(a.getGrad());
 		adm.setPrezime(a.getPrezime());
 		adm.setIme(a.getIme());
-		if(!(a.getPassword().isEmpty() || a.getPassword()==null))
-			adm.setPassword(a.getPassword());
+        if(!(a.getPassword().isEmpty() || a.getPassword()==null))
+            adm.setPassword(a.getPassword());
+        Encryption e = encService.getEncrUser(adm.getId());
+        System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
+        System.out.println("got pass: " + adm.getPassword());
+
+        if(Arrays.toString(e.getEncryptedPass()).equals(adm.getPassword())){
+            System.out.println("NIJe menjao pass");
+        }else{
+            System.out.println("JEST menjao pass");
+            byte[] salt = encService.getNextSalt();
+            byte[] newPass = new byte[0];
+            try {
+                newPass = encService.makeDigest(adm.getPassword(), salt);
+            } catch (NoSuchAlgorithmException e1) {
+                e1.printStackTrace();
+            }
+            String pass = Arrays.toString(newPass);
+            System.out.println(pass);
+            e.setSalt(salt);
+            e.setEncryptedPass(newPass);
+            encService.addEncr(e);
+            adm.setPassword(pass);
+
+        }
+
+
+
 		adminRepo.save(adm);
 		
 	}
