@@ -1,8 +1,7 @@
 package com.isa.ISA.DTO;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
+
 
 public class PrimljenIzvestajDTO {
 
@@ -16,13 +15,43 @@ public class PrimljenIzvestajDTO {
 
     private String ukupnaZarada;
 
-    private Map<Date, Integer> grafikPosetaDnevo;
+    private List<Integer> grafikPosetaDnevno;
 
-    private Map<Integer, Integer> grafikPosetaNedeljno;
+    private List<Integer> grafikPosetaNedeljno;
 
-    private Map<Integer, Integer> grafikPosetaMesecno;
+    private List<Integer> grafikPosetaMesecno;
+
+    private int prviDan;
+
+    private int mesec;
+
+    private int godina;
 
     public PrimljenIzvestajDTO() {
+    }
+
+    public int getPrviDan() {
+        return prviDan;
+    }
+
+    public void setPrviDan(int prviDan) {
+        this.prviDan = prviDan;
+    }
+
+    public int getMesec() {
+        return mesec;
+    }
+
+    public void setMesec(int mesec) {
+        this.mesec = mesec;
+    }
+
+    public int getGodina() {
+        return godina;
+    }
+
+    public void setGodina(int godina) {
+        this.godina = godina;
     }
 
     public String getOcenaPb() {
@@ -65,27 +94,27 @@ public class PrimljenIzvestajDTO {
         this.ukupnaZarada = ukupnaZarada;
     }
 
-    public Map<Date, Integer> getGrafikPosetaDnevo() {
-        return grafikPosetaDnevo;
+    public List<Integer> getGrafikPosetaDnevno() {
+        return grafikPosetaDnevno;
     }
 
-    public void setGrafikPosetaDnevo(Map<Date, Integer> grafikPosetaDnevo) {
-        this.grafikPosetaDnevo = grafikPosetaDnevo;
+    public void setGrafikPosetaDnevno(List<Integer> grafikPosetaDnevno) {
+        this.grafikPosetaDnevno = grafikPosetaDnevno;
     }
 
-    public Map<Integer, Integer> getGrafikPosetaNedeljno() {
+    public List<Integer> getGrafikPosetaNedeljno() {
         return grafikPosetaNedeljno;
     }
 
-    public void setGrafikPosetaNedeljno(Map<Integer, Integer> grafikPosetaNedeljno) {
+    public void setGrafikPosetaNedeljno(List<Integer> grafikPosetaNedeljno) {
         this.grafikPosetaNedeljno = grafikPosetaNedeljno;
     }
 
-    public Map<Integer, Integer> getGrafikPosetaMesecno() {
+    public List<Integer> getGrafikPosetaMesecno() {
         return grafikPosetaMesecno;
     }
 
-    public void setGrafikPosetaMesecno(Map<Integer, Integer> grafikPosetaMesecno) {
+    public void setGrafikPosetaMesecno(List<Integer> grafikPosetaMesecno) {
         this.grafikPosetaMesecno = grafikPosetaMesecno;
     }
 }

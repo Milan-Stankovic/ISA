@@ -6,17 +6,13 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import com.isa.ISA.dbModel.*;
 import com.isa.ISA.dbModel.enums.*;
+import com.isa.ISA.repository.KartaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.isa.ISA.DTO.PolovanRekvDTO;
-import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.Projekcija;
-import com.isa.ISA.dbModel.Rezervacija;
-import com.isa.ISA.dbModel.Sala;
-import com.isa.ISA.dbModel.Sediste;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
@@ -41,6 +37,9 @@ public class StartData {
     @Autowired
     private PrijateljService prijateljService;
 
+
+    @Autowired
+    private KartaRepository kartaRepository;
 
     @Autowired
     private SalaRepository salaRepository; //dito
@@ -231,6 +230,11 @@ public class StartData {
         salaRepository.save(s1);
         addBioskop(a2, 1);
         addBioskop(a2, 2);
+        Date temp = new Date();
+        addKarta(p1,s1.getSedista().get(0),temp);
+        addKarta(p1,s1.getSedista().get(2),temp);
+        addKarta(p1,s1.getSedista().get(3),temp);
+
 
        /* Rezervacija r = new Rezervacija();
         r.setRezervisao(rk3);
@@ -271,6 +275,15 @@ public class StartData {
         pr1.setSlika("assets/images/baby-with-dog.jpg");
         pr1.setUsername("zika");
         rekvizitService.addPolovan(pr1);
+    }
+
+    private void addKarta(PozoristeBioskop pb, Sediste s, Date d){
+        Karta k = new Karta();
+        k.setPozoristeBioskop(pb);
+        k.setPunaCena(500);
+        k.setSediste(s);
+        k.setVremeOdrzavanja(d);
+        kartaRepository.save(k);
     }
 
     private void addBioskop(Admin a, int koji){

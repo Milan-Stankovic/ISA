@@ -1,13 +1,10 @@
 package com.isa.ISA.service;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 import com.isa.ISA.DTO.PrimljenIzvestajDTO;
 import com.isa.ISA.DTO.ReportDto;
@@ -130,17 +127,24 @@ public class IzvestajSevice {
                     }
                 }
 
-                returnDTO.setGrafikPosetaDnevo(grafikPosetaDnevno);
-                returnDTO.setGrafikPosetaNedeljno(grafikPosetaNedeljno);
-                returnDTO.setGrafikPosetaMesecno(grafikPosetaMesecno);
+                c.setTime(p);
+                int year = c.get(Calendar.YEAR);
+                int month = c.get(Calendar.MONTH);
+                int day = c.get(Calendar.DAY_OF_MONTH);
+
+
+                returnDTO.setPrviDan(day);
+                returnDTO.setMesec(month);
+                returnDTO.setGodina(year);
+
+                returnDTO.setGrafikPosetaDnevno(mapToList(grafikPosetaDnevno,p,k));
+                returnDTO.setGrafikPosetaNedeljno(mapToListInt(grafikPosetaNedeljno,p,k));
+                returnDTO.setGrafikPosetaMesecno(mapToListInt(grafikPosetaMesecno,p,k));
+
+
+
+
                 return returnDTO;
-
-
-
-
-
-
-
 
 
             }catch (Exception e){
@@ -195,6 +199,67 @@ public class IzvestajSevice {
 
     }
 
+    private List<Integer> mapToList(Map<Date,Integer> grafik, Date prvi, Date poslednji){
+        List<Integer> lista = new ArrayList<>();
+        Map<Date, Integer> treeMap = new TreeMap<>(grafik);
+        for (Date dTemp : treeMap.keySet()) {
+          //  System.out.println(dTemp);
+            lista.add(grafik.get(dTemp));
+        }
+        return lista;
+
+    }
+
+
+    private List<Integer> mapToListInt(Map<Integer,Integer> grafik, Date prvi, Date poslednji){
+        List<Integer> lista = new ArrayList<>();
+        Map<Integer, Integer> treeMap = new TreeMap<>(grafik);
+        for (Integer dTemp : treeMap.keySet()) {
+          //  System.out.println(dTemp);
+            lista.add(grafik.get(dTemp));
+        }
+        return lista;
+
+    }
+
+
+    private Date addOneDay(Date d){
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.add(Calendar.DATE, 1);
+        return c.getTime();
+
+    }
+
+    private Map<Date, Integer> addMissingDays(Map<Date, Integer> grafik, Date od, Date d2){
+        Map<Date, Integer> sredjeno = new HashMap<>();
+        Date odDan = setToZero(od);
+        Date doDan = setToZero(d2);
+        long diff = doDan.getTime() - odDan.getTime();
+        long dani = TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+
+      //  System.out.println(dani);
+
+        Date trenutni = odDan;
+        for(int i=0; i<dani; i++){
+            trenutni = addOneDay(trenutni);
+            Integer j = grafik.get(trenutni);
+            if(j==null){
+                grafik.put(trenutni, 0);
+            }
+
+        }
+
+        Integer test = grafik.get(doDan);
+        if(test==null){
+            grafik.put(doDan, 0);
+        }
+
+
+
+        return sredjeno;
+    }
+
     private Map<Date,Integer> getPosete(Long id, Date od, Date d2, int flag){ // Ovo bih mogao opaliti asihrono ili da salje na mail, to je jos bolje :D Tako za sve ove izvestaj
         PozoristeBioskop pbi = new PozoristeBioskop();
         pbi.setId(id);
@@ -220,6 +285,9 @@ public class IzvestajSevice {
             }
 
         }
+
+        addMissingDays(grafik, od, d2);
+
         return grafik;
 
     }

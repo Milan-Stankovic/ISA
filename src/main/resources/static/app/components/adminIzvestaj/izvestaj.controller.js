@@ -5,16 +5,223 @@
         .module('app')
         .controller('adminIzvestajController', adminIzvestajController);
 
-    adminIzvestajController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies', '$stateParams', '$state'];//mozda tu jos onaj docs
-    function adminIzvestajController($location, $scope, $rootScope, $http, $window, $cookies, $stateParams, $state) {
+    adminIzvestajController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies', '$stateParams', '$state', '$timeout'];//mozda tu jos onaj docs
+    function adminIzvestajController($location, $scope, $rootScope, $http, $window, $cookies, $stateParams, $state, $timeout) {
+
+        $scope.chartData=[];
+        $scope.chartDataNedeljni=[];
+        $scope.chartDataMesecni=[];
 
 
-        $scope.chartConfig = {"chart":{"height":350,"width":350,"type":"line"},"plotOptions":{"series":{"stacking":""}},"series":[{"name":"My Super Column","data":[1,1,2,3,2],"type":"column","id":"s4"}],"title":{"text":"Test"}};
+
+        /* "chart": {
+             "height": 300,
+             "width": 300,
+             "type": "line"
+         },
+         "plotOptions": {
+             "series": {
+                 "stacking": ""
+             }
+         },
+         "series": [
+             {
+                 "name": "Days",
+                 "data": [
+                     3,
+                     1,
+                     null,
+                     5,
+                     2
+                 ],
+                 "connectNulls": true,
+                 "id": "s2",
+                 "type": "column",
+                 "dashStyle": "LongDashDotDot",
+                 "color": "#0000ff"
+             }
+         ],
+         "title": {
+             "text": "Visitors per day"
+         }
+
+         */
+
+
+
+
+
         var ic = this;
         $scope.pozoriste= false;
         $scope.bioskop= false;
         $scope.choseTime = false;
         $scope.showReport=false;
+
+        var createGraphWeek = function (graf, dan, mesec, godina) {
+
+            $scope.chartDataNedeljni=[];
+
+            $scope.chartConfigNedeljni =
+                {
+                    chart: {
+                        "height": 375,
+                        "width": 375
+                    },
+                    title: {
+                        text: 'Number of visitors per week'
+                    },
+
+                    xAxis: {
+                        type: 'datetime'
+                        // minRange: 14 * 24 * 3600000 // fourteen days
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            minPointLength: 3,
+                            connectNulls: true
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: 'Number of visitors',
+                        pointInterval: 7 * 24 * 3600 * 1000,
+                        pointStart: Date.UTC(2018,3,17),
+                        data: [
+                            [1],
+                            [2],
+                            [8],
+                            [9]]
+                    }],
+                    credits:{enabled:false}
+
+                };
+
+            for(var i =0; i<graf.length; i++)
+                $scope.chartDataNedeljni.push(graf[i]);
+
+
+            $timeout(function() {
+                $scope.chartConfigNedeljni.series[0].data = $scope.chartDataNedeljni;
+                $scope.chartConfigNedeljni.series[0].pointStart= Date.UTC(godina,mesec,dan);
+            });
+
+
+        }
+
+        var createGraphMont = function (graf, dan, mesec, godina) {
+
+            $scope.chartDataMesecni=[];
+
+            $scope.chartConfigMesecni =
+                {
+                    chart: {
+                        "height": 375,
+                        "width": 375
+                    },
+                    title: {
+                        text: 'Number of visitors per month'
+                    },
+
+                    xAxis: {
+                        type: 'datetime'
+                        // minRange: 14 * 24 * 3600000 // fourteen days
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            minPointLength: 3,
+                            connectNulls: true
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: 'Number of visitors',
+                        pointInterval: 30 * 24 * 3600 * 1000,
+                        pointStart: Date.UTC(2018,3,17),
+                        data: [
+                            [1],
+                            [2],
+                            [8],
+                            [9]]
+                    }]
+
+                };
+
+            for(var i =0; i<graf.length; i++)
+                $scope.chartDataMesecni.push(graf[i]);
+
+
+            $timeout(function() {
+                $scope.chartConfigMesecni.series[0].data = $scope.chartDataMesecni;
+                $scope.chartConfigMesecni.series[0].pointStart= Date.UTC(godina,mesec,dan);
+            });
+
+        }
+
+
+        var createGraph = function (graf, dan, mesec, godina) {
+
+
+            $scope.chartData=[];
+
+            $scope.chartConfig =
+                {
+                    chart: {
+                        "height": 375,
+                        "width": 375
+                    },
+                    title: {
+                        text: 'Number of visitors per day'
+                    },
+
+                    xAxis: {
+                        type: 'datetime'
+                        // minRange: 14 * 24 * 3600000 // fourteen days
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        series: {
+                            minPointLength: 3,
+                            connectNulls: true
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: 'Number of visitors',
+                        pointInterval: 24 * 3600 * 1000,
+                        pointStart: Date.UTC(2018,3,17),
+                        data: [
+                            [1],
+                            [2],
+                            [8],
+                            [9]]
+                    }]
+
+                };
+
+
+
+            for(var i =0; i<graf.length; i++)
+                $scope.chartData.push(graf[i]);
+
+
+            console.log($scope.chartData);
+
+
+            $timeout(function() {
+                $scope.chartConfig.series[0].data = $scope.chartData;
+                $scope.chartConfig.series[0].pointStart= Date.UTC(godina,mesec,dan);
+            });
+
+
+        }
 
 
         var getAdminId = function(){
@@ -84,6 +291,11 @@
                 }).then(function successCallback(response) {
                     console.log(response.data);
                     $scope.dobijenIzvestaj= response.data;
+
+                    createGraph($scope.dobijenIzvestaj.grafikPosetaDnevno, $scope.dobijenIzvestaj.prviDan, $scope.dobijenIzvestaj.mesec, $scope.dobijenIzvestaj.godina);
+                    createGraphWeek($scope.dobijenIzvestaj.grafikPosetaNedeljno, $scope.dobijenIzvestaj.prviDan, $scope.dobijenIzvestaj.mesec, $scope.dobijenIzvestaj.godina)
+                    createGraphMont($scope.dobijenIzvestaj.grafikPosetaMesecno, $scope.dobijenIzvestaj.prviDan, $scope.dobijenIzvestaj.mesec, $scope.dobijenIzvestaj.godina);
+
                     $scope.choseTime = false;
                     $scope.bioskop= false;
                     $scope.pozoriste= false;
