@@ -20,12 +20,13 @@
   			  url: 'http://localhost:8096/admin/' + $cookies.get('user')
   				 
   			}).then(function successCallback(response) {
-  				$scope.user = response.data;
-  				$scope.adm = response.data;
+  			    if(response.data!="" ){
+  			        $scope.user = response.data;
+                  	$scope.adm = response.data;
+                  	$scope.isAdmin=true;
+  			    }else
+  			        findUser();
 
-  				 if($scope.user!=undefined && $scope.user.hasOwnProperty('tip')){
-                    $scope.isAdmin=true;
-  				}
   				
   			  }, function errorCallback(response) {
   				  console.log("Greska kod GET user");
@@ -34,13 +35,13 @@
         };
         init();
 
-        if($scope.user==undefined){
+        function findUser(){
       		console.log("user undefined trazim usra, path: " + 'http://localhost:8096/api/user/' + $cookies.get('user'));
-;
+
       		$http({
       			  method: 'GET',
       			  url: 'http://localhost:8096/api/user/' + $cookies.get('user')
-      				 
+
       			}).then(function successCallback(response) {
       				$scope.user = response.data;
                     $scope.isAdmin=false;
