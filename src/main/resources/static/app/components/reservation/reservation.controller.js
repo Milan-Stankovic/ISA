@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('reservationController', reservationController);
 
-    reservationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$window'];
-    function reservationController($location, $scope, $rootScope, $http, $cookies, $window) {
+    reservationController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$window','$timeout'];
+    function reservationController($location, $scope, $rootScope, $http, $cookies, $window,$timeout) {
         var resc = this;
         resc.home = "Home";
         var id1, id2;
@@ -25,6 +25,7 @@
         $scope.popust = 0;
         $scope.rezervisano=[];
         $scope.pozvanih=[];
+        $scope.message="";
         var init = function (){
         	//$location.path("/login");
             var part = window.location.href.substring(0, window.location.href.indexOf("/projekcije"));
@@ -252,9 +253,9 @@
         $scope.finish = function(){
             if($scope.pozvanih.length+1>$scope.rezervisano.length){
                 if($scope.pozvanih.length>0)
-                    alert("You didn't reserve enough seats for all invited friends. Reserve at least " + ($scope.pozvanih.length+1-$scope.rezervisano.length) + " more.")
+                    $scope.message="You didn't reserve enough seats for all invited friends. Reserve at least " + ($scope.pozvanih.length+1-$scope.rezervisano.length) + " more.";
                 else
-                    alert("You have to reserve at least one seat.")
+                    $scope.message="You have to reserve at least one seat.";
                 return;
             }
             var sedistaID = [];
@@ -275,8 +276,11 @@
                 url: 'http://localhost:8096/api/reserve',
                 data: rez
                 }).then(function successCallback(response) {
-                    alert("Uspesna rezervacija!")
-                    $window.location.reload();
+                    $scope.message="Reservation is successful!";
+                    $timeout(function() {
+                               $window.location.reload();
+                                          }, 3000)
+
                   //alert(user.userName)
                 }, function errorCallback(response) {
                     console.log("Greska kod rezervacije");
