@@ -12,6 +12,8 @@
 
         <p>Rate: {{pb.prosecnaOcena}}</p>
 
+        <a class="pointerQuick" ng-click="go(pb.id)" >Quick reservations</a>
+
         <p> Address: {{pb.adresa}}</p>
 
         <iframe ng-src="{{trustSrc(pb.urlMape)}}"

@@ -1,4 +1,28 @@
 <div>
 
+    <div>
+        <div>
+            <h2><a>Available reservations : </a></h2>
+        </div>
+
+        <span ng-repeat="rezervacija in reservations track by $index">
+
+             <div>
+
+                 <h3> <a>{{rezervacija.projekcija.dogadjaj.naziv}}</a></h3>
+
+                 <img  ng-src="/download/{{rezervacija.projekcija.dogadjaj.slika}}" width="200" height="200">
+
+                 <p>Description: {{rezervacija.projekcija.dogadjaj.opis}}</p>
+
+                 <p>Date and time: {{rezervacija.projekcija.vreme | date:'dd/MM/yyyy at H:mm'}}</p>
+
+                 <p ng-click="reserve(rezervacija.id)" class="pointerQuick"> RESERVE</p>
+
+                 <p ng-if="isAdmin && rezervacija.projekcija.aktivna==false" ng-click="delete(rezervacija.id)" > DELETE</p>
+             </div>
+         </span>
+    </div>
+
 
 </div>

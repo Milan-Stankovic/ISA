@@ -56,10 +56,71 @@
     function adminController($location, $scope, $rootScope, $http, $window, $cookies, $document,$state) {
 
 
+
+        var ac = this;
+        $scope.adminId;
+
+        var init = function () {
+
+
+
+            var regUser={};
+            $scope.adminId= $cookies.get('id');
+            regUser=$cookies.get('user');
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/admin/'+regUser,
+            }).then(function successCallback(response) {
+                if(response.data.tip!="POZBI")
+                    $location.path('/home');;
+            }, function errorCallback(response) {
+                alert("Error occured check connection");
+                $location.path('/home');
+            });
+
+
+            $scope.zanr = [
+                "HOROR",
+                "COMEDY",
+                "THRILLER",
+                "ACTION",
+                "ADVENTURE",
+                "CRIME",
+                "DRAMA",
+                "FANTASY",
+                "FICTION",
+                "MISTERY",
+                "MUSICAL",
+                "SATIRE",
+                "DOCUMENTARY"
+
+            ];
+
+            $scope.tipSedista =[
+                "REGULAR",
+                "VIP",
+                "LOVEBOX",
+                "BALCONY",
+                "TAKEN"
+            ];
+
+            $scope.class = "clear";
+
+
+
+        };
+        init();
+
+
+
         $scope.go = function(state) {
 
 
             $state.go(state, {"id" : $scope.adminId} );
+        }
+
+        $scope.goOneClick = function(state) {
+            $state.go(state, {"admin" : true} );
         }
 
 
@@ -775,7 +836,7 @@
             });
         }
 
-        getPozorista();
+
 
         var getBioskopi = function () {
             $http({
@@ -789,7 +850,10 @@
 
             });
         }
+
+        getPozorista();
         getBioskopi();
+
 
 
         $scope.dogadjajStatusi = [
@@ -867,57 +931,7 @@
 
 
 
-        var ac = this;
 
-        var init = function () {
-
-
-
-            var regUser={};
-            regUser = $cookies.get('user');
-            $http({
-                method: 'GET',
-                url: 'http://localhost:8096/admin/'+regUser,
-            }).then(function successCallback(response) {
-                if(response.data.tip!="POZBI")
-                    $location.path('/home');
-                else
-                    $scope.adminId = response.data.id;
-            }, function errorCallback(response) {
-                alert("Error occured check connection");
-                $location.path('/home');
-            });
-
-
-            $scope.zanr = [
-                "HOROR",
-                "COMEDY",
-                "THRILLER",
-                "ACTION",
-                "ADVENTURE",
-                "CRIME",
-                "DRAMA",
-                "FANTASY",
-                "FICTION",
-                "MISTERY",
-                "MUSICAL",
-                "SATIRE",
-                "DOCUMENTARY"
-
-            ];
-
-            $scope.tipSedista =[
-                "REGULAR",
-                "VIP",
-                "LOVEBOX",
-                "BALCONY",
-                "TAKEN"
-            ];
-
-            $scope.class = "clear";
-
-        };
-        init();
 
         $scope.indexFunc = function () {
             $location.path("home");

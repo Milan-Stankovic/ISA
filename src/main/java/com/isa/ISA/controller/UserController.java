@@ -46,6 +46,11 @@ public class UserController {
     public List<RegistrovaniKorisnik> getAllUsers(){
         return userService.getAllUsers();
     }
+
+	@RequestMapping(method = RequestMethod.PUT,value = "/api/user/{id}/poziv/{pozivId}")
+	public void addPoziv(@PathVariable Long id, @PathVariable Long pozivId){
+		 userService.updateUser(id, pozivId);
+	}
     
     @RequestMapping(method = RequestMethod.GET,value = "/api/user/{username}")
     public RegistrovaniKorisnik getUser(@PathVariable String username){

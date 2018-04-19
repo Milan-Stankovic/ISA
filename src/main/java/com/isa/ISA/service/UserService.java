@@ -3,6 +3,7 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.dbModel.korisnici.Poziv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,6 +42,12 @@ public class UserService {
 		// TODO Auto-generated method stub
 		return usersRepo.findByEmail(email);
 	}
+
+	public void updateUser(Long id, Long pozivId){
+        Poziv p = new Poziv();
+        p.setId(pozivId);
+        usersRepo.findOne(id).getPozivi().add(p);
+    }
 	
 	public List<RegistrovaniKorisnik> searchImePrezime(String ime, String prezime){
 		return usersRepo.findByImeAndPrezimeIgnoreCase(ime, prezime);

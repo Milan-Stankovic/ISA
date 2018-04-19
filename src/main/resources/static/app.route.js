@@ -125,7 +125,7 @@
               templateUrl: 'app/components/userOneClick/userOneClick.html',
               controller: 'userOneClickController',
               controllerAs: 'uoc',
-              params: {id :null}
+			  params:{admin:false, pbId:null}
           })
 		  .state('core.addEditItem', {
 			url: 'addEditItem',

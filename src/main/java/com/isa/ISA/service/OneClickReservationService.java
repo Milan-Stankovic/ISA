@@ -1,6 +1,8 @@
 package com.isa.ISA.service;
 
 
+import com.isa.ISA.DTO.TransakcijaDTO;
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -23,24 +25,30 @@ public class OneClickReservationService {
     private PozivRepository pozRepo;
 
     @Transactional(
-            propagation = Propagation.REQUIRES_NEW,
+            propagation = Propagation.REQUIRED,
             readOnly = false)
-    public Rezervacija reserveSeat(Rezervacija r){ // Treba testirati
+    public TransakcijaDTO reserveSeat(Long id, Long userId){
 
-        Rezervacija r1 = repo.findOne(r.getId());
-        Poziv p = r1.getUrezervaciji().get(0);
-        if(r1.getRezervisao() == null) {
-            r1.setRezervisao(r.getRezervisao());
-
+        TransakcijaDTO rezultat = new TransakcijaDTO();
+        Rezervacija r = repo.findOne(id);
+        Poziv p = r.getUrezervaciji().get(0);
+        RegistrovaniKorisnik reg = new RegistrovaniKorisnik();
+        reg.setId(userId);
+        if(r.getRezervisao() == null) {
+            r.setRezervisao(reg);
             p.setStatus(Status.PRIHVACENO);
-            p.setOsoba(r.getRezervisao());
-            p.setPozvan(false);
-
-            pozRepo.save(p);
-            repo.save(r1);
+            p.setOsoba(reg);
+            p=pozRepo.save(p); //Iskreno izbegao bih ovo sa persistom iznad liste poziva u rezervaciji, ali nisam siguran kako su ostali koristili rezervacije
+            rezultat.setPozivId(p.getId()); // Ovaj deo takodje ne bih morao odraditi
+            repo.save(r); //Mogao bi puci program ako su oni rucno dodavali
+            rezultat.setMessage("SUCCESS");
+        }else{
+            rezultat.setMessage("ERROR");
         }
-        return r1;
+        return rezultat;
     }
+
+
 
     public void setOneClick(Rezervacija r){
         if(repo.findOne(r.getId()).getRezervisao() == null)

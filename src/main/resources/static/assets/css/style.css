@@ -1721,6 +1721,12 @@ p a:hover {
 	cursor: pointer;
 }
 
+.pointerQuick{
+
+	cursor: pointer !important;
+	color: white !important;
+}
+
 .hint{
 	padding: 0 !important;
 	text-decoration: none !important;

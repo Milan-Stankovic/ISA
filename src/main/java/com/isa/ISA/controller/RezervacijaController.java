@@ -5,13 +5,11 @@ import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.Sediste;
 import com.isa.ISA.dbModel.enums.Status;
+import com.isa.ISA.dbModel.enums.TipAdmina;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.RezervacijaRepository;
-import com.isa.ISA.service.ProjekcijaService;
-import com.isa.ISA.service.RezervacijaService;
-import com.isa.ISA.service.SalaService;
-import com.isa.ISA.service.UserService;
+import com.isa.ISA.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,12 +31,33 @@ public class RezervacijaController {
     private SalaService salaService;
 
     @Autowired
+    private AdminService adminService;
+
+    @Autowired
     private ProjekcijaService projekcijaService;
 
     @RequestMapping(method = RequestMethod.GET,value = "/api/rezervacija/{id}")
     public Rezervacija getRez(@PathVariable Long id){
 
         return rezService.getRez(id);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE,value = "/api/rezervacija/delete/{id}")
+    public void deleteRez(@PathVariable Long id){
+        rezService.delete(id);
+    }
+
+    @RequestMapping("/api/quickRezervacije/{pbId}")
+    public List<Rezervacija> getQuicRez(@PathVariable Long pbId){
+        return rezService.getQuckRez(pbId);
+    }
+
+    @RequestMapping("/api/quickRezervacije/{id}/admin/{pbId}")
+    public List<Rezervacija> getQuicRezAdmin(@PathVariable Long id, @PathVariable Long pbId){
+        if(adminService.getAdmin(id).getTip() !=TipAdmina.POZBI)
+            return null;
+
+        return rezService.getQuckRezAdmin(pbId);
     }
 
     @RequestMapping("/api/rezervacije/")

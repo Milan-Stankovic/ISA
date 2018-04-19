@@ -5,12 +5,17 @@
 		.module('app')
 		.controller('pozoristeBioskopController', pozoristeBioskopController);
 
-    pozoristeBioskopController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce'];
-    function pozoristeBioskopController($location, $scope, $rootScope, $http, $cookies, $sce) {
+    pozoristeBioskopController.$inject = ['$location', '$scope', '$rootScope','$http', '$cookies', '$sce','$state'];
+    function pozoristeBioskopController($location, $scope, $rootScope, $http, $cookies, $sce,$state) {
         var pbc = this;
         pbc.home = "Home";
         var id;
         $scope.date;
+
+
+        $scope.go = function(pbId){
+            $state.go('core.userOneClick',{"admin":false, "pbId" : pbId} );
+        }
 
         $scope.filteredProj=[];
         var init = function (){

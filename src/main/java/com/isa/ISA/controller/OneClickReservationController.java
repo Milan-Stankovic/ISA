@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import com.isa.ISA.DTO.TransakcijaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,9 +22,9 @@ public class OneClickReservationController {
         ocrSevice.setOneClick(r);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/oneClick/{id}")
-    public void updateClickReservation(@RequestBody Rezervacija r, @PathVariable Long id){
-        ocrSevice.updateOneClick(r);
+    @RequestMapping(method = RequestMethod.PUT, value = "/oneClick/{id}/user/{userId}")
+    public TransakcijaDTO updateClickReservation(@PathVariable Long id, @PathVariable Long userId){
+        return ocrSevice.reserveSeat(id, userId);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/oneClick/{id}")
@@ -31,8 +32,4 @@ public class OneClickReservationController {
         ocrSevice.deleteOneClick(id);
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/oneClickReserve/{id}")
-    public void reserve(@RequestBody Rezervacija r, @PathVariable Long id){
-        ocrSevice.reserveSeat(r);
-    }
 }
