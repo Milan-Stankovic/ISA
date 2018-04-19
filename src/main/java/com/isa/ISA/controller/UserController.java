@@ -14,17 +14,14 @@ import com.isa.ISA.dbModel.enums.Status;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.isa.ISA.dbModel.enums.StatusPrijateljstva;
 import com.isa.ISA.dbModel.korisnici.Prijatelj;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.ws.rs.Produces;
 
 @RestController
 public class UserController {
@@ -246,12 +243,37 @@ public class UserController {
 
 
 
-	@RequestMapping(method = RequestMethod.DELETE,value = "/api/user/invAccepted/{username}")
-	public List<Rezervacija> getPozivDeclined(@PathVariable String username, @RequestBody Long s) {
+	@RequestMapping(method = RequestMethod.POST,value = "/api/user/invAccepted/{username}")
 
-		RegistrovaniKorisnik reg = userService.getUser(username);
+    public List<Rezervacija> getInvAccepted(@PathVariable String username, @RequestBody InvitationDTO invitationDTO) {
+        RegistrovaniKorisnik reg = userService.getUser(username);
+        if(invitationDTO.isAccepted()){
+            System.out.println("Accepted!");
+
+            for(Rezervacija r : reg.getRezervacije())
+                if(r.getId()==invitationDTO.getRezID())
+                    for(Poziv p : r.getUrezervaciji())
+                        if(p.getOsoba().getUserName().equals(username)){
+                            p.setStatus(Status.PRIHVACENO);
+                            rezService.addRez(r);
+                            break;
+                        }
+
+            ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
+            for(Rezervacija r : reg.getRezervacije())
+                if(r.getId()==invitationDTO.getRezID())
+                    for(Poziv p : r.getUrezervaciji())
+                        if(p.getOsoba().getUserName().equals(username))
+                            if(!p.getStatus().toString().equals("ODBIJENO"))
+                                samoPrihvacene.add(r);
+
+            reg.setRezervacije(samoPrihvacene);
+            userService.addUser(reg);
+            return reg.getRezervacije();
+
+        }
 		for(Rezervacija r : reg.getRezervacije())
-			if(r.getId()==s)
+			if(r.getId()==invitationDTO.getRezID())
 				for(Poziv p : r.getUrezervaciji())
 					if(p.getOsoba().getUserName().equals(username)){
 						p.setStatus(Status.ODBIJENO);
@@ -261,7 +283,7 @@ public class UserController {
 
 		ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
 		for(Rezervacija r : reg.getRezervacije())
-			if(r.getId()==s)
+			if(r.getId()==invitationDTO.getRezID())
 				for(Poziv p : r.getUrezervaciji())
 					if(p.getOsoba().getUserName().equals(username))
 						if(!p.getStatus().toString().equals("ODBIJENO"))
@@ -272,31 +294,6 @@ public class UserController {
 		return reg.getRezervacije();
 	}
 
-	@RequestMapping(method = RequestMethod.POST,value = "/api/user/invAccepted/{username}")
-	public List<Rezervacija> getPozivAccepted(@PathVariable String username, @RequestBody Long s) {
-
-		RegistrovaniKorisnik reg = userService.getUser(username);
-		for(Rezervacija r : reg.getRezervacije())
-			if(r.getId()==s)
-				for(Poziv p : r.getUrezervaciji())
-					if(p.getOsoba().getUserName().equals(username)){
-						p.setStatus(Status.PRIHVACENO);
-						rezService.addRez(r);
-						break;
-					}
-
-		ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
-		for(Rezervacija r : reg.getRezervacije())
-			if(r.getId()==s)
-				for(Poziv p : r.getUrezervaciji())
-					if(p.getOsoba().getUserName().equals(username))
-						if(!p.getStatus().toString().equals("ODBIJENO"))
-							samoPrihvacene.add(r);
-
-		reg.setRezervacije(samoPrihvacene);
-		userService.addUser(reg);
-		return reg.getRezervacije();
-	}
 
 
 }

@@ -64,13 +64,17 @@
             getAccRez();
 
 
-        $scope.accept = function(rez){
+        $scope.answer = function(rez, isAccepted){
+            console.log("usao u answer")
+            var data={
+                "rezID" : rez.id,
+                "isAccepted" : isAccepted
+            }
              $http({
 
                  method: 'POST',
                  url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
-                 responseType: 'json',
-                 data: rez.id
+                 data: data
 
              }).then(function successCallback(response) {
                    $scope.rezervacije = response.data;
@@ -78,31 +82,12 @@
                      getAccRez();
 
              }, function errorCallback(response) {
-                 alert("Greska kod del")
+                 alert("Greska kod answer")
 
              });
         }
 
-        var decline = function(rez){
 
-                    $http({
-
-                          method: 'DELETE',
-                          url: 'http://localhost:8096/#!/api/user/invAccepted/' + $cookies.get('user'),
-                          responseType: 'json',
-                          data: rez.id
-
-                      }).then(function successCallback(response) {
-                            $scope.rezervacije = response.data;
-                              console.log("aj sad decline: " + $scope.rezervacije)
-                              getAccRez();
-
-                      }, function errorCallback(response) {
-                          alert("Greska kod del")
-
-                      });
-
-                }
         $scope.updateView = function(){
          if($scope.inv!=undefined){
             for(var i = 0; i < $scope.inv.length; i++){
@@ -150,7 +135,7 @@
                     if(bdate-adate>=0)
                         if(bhour-ahour>=0)
                             if(bmin-amin>=30){
-                                decline(rez);
+                                $scope.answer(rez, false);
                                 return;
                             }
 
