@@ -5,8 +5,8 @@
 		.module('app')
 		.controller('registerController', registerController);
 
-    registerController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies'];
-    function registerController($location, $scope, $rootScope, $http, $window, $cookies) {
+    registerController.$inject = ['$location', '$scope', '$rootScope','$http', '$window', '$cookies', '$timeout'];
+    function registerController($location, $scope, $rootScope, $http, $window, $cookies, $timeout) {
         var rc = this;
         var user;
         var init = function (){
@@ -62,10 +62,15 @@
               url: 'http://localhost:8096/api/register/',
               data: data
             }).then(function successCallback(response) {
-            	if(response.data=="")
-            		$scope.message="We sent you an email to confirm your registration.";
+            	if(response.data==""){
+            	    $scope.message="We sent you an email to confirm your registration.";
+                            $timeout(function() {
+                               $location.path("login");
+                                          }, 3000)
+            	}
+
             	else
-            		alert(response.data)
+            		$scope.message=response.data;
 
                 }, function errorCallback(response) {
                  $scope.message="Username or email is already taken.";
