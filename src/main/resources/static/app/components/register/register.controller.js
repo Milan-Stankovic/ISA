@@ -10,22 +10,36 @@
         var rc = this;
         var user;
         var init = function (){
-        	
+        $scope.message="";
         };
         init();
         
         $scope.indexFunc = function(){
         	$location.path("home");
         }
-        
+
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
         $scope.regFunc = function(username, pass, pass2, fname, lname, email, hometown, phone){
+            if(username==undefined || username=="" || pass==undefined || pass=="" || pass2==undefined || pass2==""
+            || fname==undefined || fname=="" || lname==undefined || lname=="" || email=="" || email==undefined){
+                $scope.message="Missing informations.";
+                return;
+            }
         	if(!(pass===pass2)){
-        		alert("Passwords don't match.")
+        		$scope.message="Passwords don't match.";
         		return;
         	}
         	if(isNaN(phone)){
-        		alert("Enter valid phone number.")
+        		$scope.message="Enter valid phone number.";
         		return;
+        	}
+        	if(!validateEmail(email)){
+        	    $scope.message="Enter valid email.";
+        	    return;
         	}
         	var data = {
         			"userName": username,
@@ -49,12 +63,12 @@
               data: data
             }).then(function successCallback(response) {
             	if(response.data=="")
-            		console.log("We sent you an email to confirm your registration.");
+            		$scope.message="We sent you an email to confirm your registration.";
             	else
             		alert(response.data)
 
                 }, function errorCallback(response) {
-                 alert("Username or email is already taken.")
+                 $scope.message="Username or email is already taken.";
 
                 });
 
