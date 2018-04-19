@@ -251,6 +251,7 @@ public class StartData {
         a.setIme("a");
         a.setPrezime("a");
         a.setGrad("a");
+        a.setBrojTelefona("333333333");
         a.setStatus(StatusNaloga.AKTIVAN);
         adminService.addAdmin(a);
 

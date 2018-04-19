@@ -61,44 +61,24 @@
         }
 
         
-        $scope.saveFunc = function(fname, lname, email, city, phone, pass, pass2){
+        $scope.saveFunc = function(pass, pass2){
 
         	if(!(pass===pass2) && pass!='' && pass2!='' && pass!=undefined && pass2!=undefined){
         		$scope.message = "Passwords don't match."
         		return;
         	}
-        	if(document.getElementById('phone').value != ''){
-        		if(isNaN(phone)){
-            		$scope.message = "Enter valid phone number."
-            		return;
-            	}
-        	}
 
-        	if(pass!=$scope.user.password && pass!=undefined && pass!="" )
-        		$scope.user.password = pass;
+            if(isNaN($scope.user.brojTelefona)){
+                $scope.message = "Enter valid phone number."
+                return;
+            }
 
-        	if(fname!=$scope.user.ime && fname!=undefined && fname!="")
-        		$scope.user.ime = fname;
-        	
-        	if(lname!=$scope.user.prezime && lname!=undefined && lname!="")
-        		$scope.user.prezime = lname;
-        	
-        	if(email!=$scope.user.email && email!=undefined && email!="")
-        	    if(validateEmail(email)){
-        	            $scope.user.email = email;
-        	        }else{
-        	           $scope.message="Enter valid email address." ;
-        	           return;
-        	        }
+            if(!validateEmail($scope.user.email)){
+                    $scope.message="Enter valid email address." ;
+                   return;
+                }
 
-        	
-        	if(city!=$scope.user.grad && city!=undefined)
-        		$scope.user.grad = city;
-        	
-        	if(phone!=$scope.user.brojTelefona && phone!=undefined)
-        		$scope.user.brojTelefona = phone;
-        	
-        	
+
         	console.log("userName " +  $scope.user.userName +
         			" password "+ $scope.user.password +
         			" ime "+ $scope.user.ime +

@@ -5,68 +5,33 @@
 </style>
 <div>
     <p style="color:red">{{message}}</p>
-    <br>
-    <h3 style="color:white">Current Information:</h3><br>
-    <form>
-        <table>
-            <tr>
-                <td style="color:white; width:150px">First Name:</td>
-                <td>{{user.ime}}</td>
-            </tr>
 
-            <tr>
-                <td style="color:white; width:150px">Last Name:</td>
-                <td>{{user.prezime}}</td>
-            </tr>
-
-            <tr>
-                <td style="color:white; width:150px">Email:</td>
-                <td>{{user.email}}</td>
-            </tr>
-
-            <tr>
-                <td style="color:white; width:150px">City:</td>
-                <td>{{user.grad}}</td>
-            </tr>
-
-            <tr>
-                <td style="color:white; width:150px">Phone Number:</td>
-                <td>{{user.brojTelefona}}</td>
-            </tr>
-            <tr ng-hide="isAdmin">
-                <td style="color:white; width:150px">Points:</td>
-                <td>{{user.bodovi}}</td>
-            </tr>
-
-        </table>
-        <br>
-        <br>
     <h3 style="color:white">User Information:</h3><br>
     <form>
         <table>
             <tr>
                 <td style="color:white; width:150px">First Name:</td>
-                <td><input type="text" id="fname" name="fname" ng-model="fname"></td>
+                <td><input type="text" id="fname" name="fname" ng-model="user.ime"></td>
             </tr>
 
             <tr>
                 <td style="color:white; width:150px">Last Name:</td>
-                <td><input type="text" id="lname" name="lname" ng-model="lname"></td>
+                <td><input type="text" id="lname" name="lname" ng-model="user.prezime"></td>
             </tr>
 
             <tr>
                 <td style="color:white; width:150px">Email:</td>
-                <td><input type="text" id="email" name="email" ng-model="email"></td>
+                <td><input type="text" id="email" name="email" ng-model="user.email"></td>
             </tr>
 
 			<tr>
                 <td style="color:white; width:150px">City:</td>
-                <td><input type="text" id="city" name="city" ng-model="city"></td>
+                <td><input type="text" id="city" name="city" ng-model="user.grad"></td>
             </tr>
 
             <tr>
                 <td style="color:white; width:150px">Phone Number:</td>
-                <td><input type="text" id="phone" name="phone" ng-model="phone"></td>
+                <td><input type="text" id="phone" name="phone" ng-model="user.brojTelefona"></td>
             </tr>
             <br>
             <tr>
@@ -82,7 +47,7 @@
             <tr>
             	<td></td>
                 <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
-               <button ng-click="saveFunc(fname, lname, email, city, phone, pass, pass2)">Save</button></td>
+               <button ng-click="saveFunc(pass, pass2)">Save</button></td>
             </tr>
 
 

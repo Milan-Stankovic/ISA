@@ -58,43 +58,30 @@ public class SettingsController {
 	            return "Email is already taken.";
 	        }
 
-	        k.setEmail(kor.getEmail());
-	        k.setIme(kor.getIme());
-	        k.setPrezime(kor.getPrezime());
-	        k.setBrojTelefona(kor.getBrojTelefona());
-	        k.setGrad(kor.getGrad());
-
-		 Encryption e = encService.getEncrUser(k.getId());
-		 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
-		 System.out.println("got pass: " + kor.getPassword());
-
-		 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
-		 	System.out.println("NIJe menjao pass");
-		 }else{
-			 System.out.println("JEST menjao pass");
-			 byte[] salt = encService.getNextSalt();
-			 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
-			 String pass = Arrays.toString(newPass);
-			 System.out.println(pass);
-			 e.setSalt(salt);
-			 e.setEncryptedPass(newPass);
-			 encService.addEncr(e);
-			 k.setPassword(pass);
-		 }
-
-		 /*System.out.println("Doso dovde");
+	        if(kor.getEmail()!=null && !kor.getEmail().equals("")) k.setEmail(kor.getEmail());
+		 	if(kor.getIme()!=null && !kor.getIme().equals("")) k.setIme(kor.getIme());
+			if(kor.getPrezime()!=null && !kor.getPrezime().equals("")) k.setPrezime(kor.getPrezime());
+			if(kor.getBrojTelefona()!=null && !kor.getBrojTelefona().equals("")) k.setBrojTelefona(kor.getBrojTelefona());
+			if(kor.getGrad()!=null && !kor.getGrad().equals(""))  k.setGrad(kor.getGrad());
+		 	if(kor.getPassword()!=null && !kor.getPassword().equals("")){
 			 Encryption e = encService.getEncrUser(k.getId());
-			 if(k.getPassword().equals(e.getEncryptedPass())) {
-				 System.out.println("Success: decrypted text matches");
-			 } else {
-				 System.out.println("Failed: decrypted text does not match");
-				 TextEncryptor encryptor = Encryptors.text("admin", e.getSalt());
-				 String encryptedText = encryptor.encrypt(k.getPassword());
-				 e.setEncryptedPass(encryptedText);
-				 encService.addEncr(e);
-				 k.setPassword(encryptedText);
-			 }*/
+			 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
+			 System.out.println("got pass: " + kor.getPassword());
 
+			 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
+				 System.out.println("NIJe menjao pass");
+			 }else{
+				 System.out.println("JEST menjao pass");
+				 byte[] salt = encService.getNextSalt();
+				 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
+				 String pass = Arrays.toString(newPass);
+				 System.out.println(pass);
+				 e.setSalt(salt);
+				 e.setEncryptedPass(newPass);
+				 encService.addEncr(e);
+				 k.setPassword(pass);
+			 }
+		 }
 
 	        userService.addUser((RegistrovaniKorisnik) k);
 	        return "";
@@ -118,29 +105,31 @@ public class SettingsController {
 	       
 	            return "Email is already taken.";
 	        }
-		 k.setEmail(kor.getEmail());
-		 k.setIme(kor.getIme());
-		 k.setPrezime(kor.getPrezime());
-		 k.setBrojTelefona(kor.getBrojTelefona());
-		 k.setGrad(kor.getGrad());
+		 if(kor.getEmail()!=null && !kor.getEmail().equals("")) k.setEmail(kor.getEmail());
+		 if(kor.getIme()!=null && !kor.getIme().equals("")) k.setIme(kor.getIme());
+		 if(kor.getPrezime()!=null && !kor.getPrezime().equals("")) k.setPrezime(kor.getPrezime());
+		 if(kor.getBrojTelefona()!=null && !kor.getBrojTelefona().equals("")) k.setBrojTelefona(kor.getBrojTelefona());
+		 if(kor.getGrad()!=null && !kor.getGrad().equals(""))  k.setGrad(kor.getGrad());
+		 if(kor.getPassword()!=null && !kor.getPassword().equals("")){
+			 Encryption e = encService.getEncrUser(k.getId());
+			 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
+			 System.out.println("got pass: " + kor.getPassword());
 
-		 Encryption e = encService.getEncrUser(k.getId());
-		 System.out.println("enc pass: " + Arrays.toString(e.getEncryptedPass()));
-		 System.out.println("got pass: " + kor.getPassword());
-
-		 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
-			 System.out.println("NIJe menjao pass");
-		 }else{
-			 System.out.println("JEST menjao pass");
-			 byte[] salt = encService.getNextSalt();
-			 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
-			 String pass = Arrays.toString(newPass);
-			 System.out.println(pass);
-			 e.setSalt(salt);
-			 e.setEncryptedPass(newPass);
-			 encService.addEncr(e);
-			 k.setPassword(pass);
+			 if(Arrays.toString(e.getEncryptedPass()).equals(kor.getPassword())){
+				 System.out.println("NIJe menjao pass");
+			 }else{
+				 System.out.println("JEST menjao pass");
+				 byte[] salt = encService.getNextSalt();
+				 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
+				 String pass = Arrays.toString(newPass);
+				 System.out.println(pass);
+				 e.setSalt(salt);
+				 e.setEncryptedPass(newPass);
+				 encService.addEncr(e);
+				 k.setPassword(pass);
+			 }
 		 }
+
 
 		 adminService.addAdmin((Admin) k);
 	        return "";
