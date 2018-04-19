@@ -1,4 +1,4 @@
-<div>
+<div ng-hide='isAdmin'>
 	  <br>
     <h3 style="color:white">User Information:</h3><br>
     <form>
@@ -42,6 +42,66 @@
             	<td></td>
                 <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
                <button ng-click="saveFunc(fname, lname, email, city, phone, pass, pass2)">Save</button></td>
+            </tr>
+
+
+        </table>
+
+    </form>
+    <br>
+
+
+
+    <div>
+        <br><br>
+    </div>
+
+
+</div>
+<div ng-show='isAdmin'>
+	  <br>
+    <h3 style="color:white">Admin Information:</h3><br>
+    <form>
+        <table>
+            <tr>
+                <td style="color:white; width:150px">First Name:</td>
+                <td><input type="text" id="admname" name="admname" ng-model="adm.ime"></td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Last Name:</td>
+                <td><input type="text" id="admlname" name="admlname" ng-model="adm.prezime"></td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Email:</td>
+                <td><input type="text" id="admemail" name="admemail" ng-model="adm.email" disabled></td>
+            </tr>
+
+			<tr>
+                <td style="color:white; width:150px">City:</td>
+                <td><input type="text" id="admcity" name="admcity" ng-model="adm.grad"></td>
+            </tr>
+
+            <tr>
+                <td style="color:white; width:150px">Phone Number:</td>
+                <td><input type="text" id="admphone" name="admphone" ng-model="adm.brojTelefona"></td>
+            </tr>
+            <br>
+            <tr>
+                <td style="color:white; width:150px">Change Password:</td>
+                <td><input type="password" id="admpass" name="admpass" ng-model="adm.pass"></td>
+            </tr>
+
+			<tr>
+                <td style="color:white; width:150px">Confirm Password:</td>
+                <td><input type="password" id="admpass2" name="admpass2" ng-model="admpass2"></td>
+            </tr>
+
+            <tr>
+            	<td></td>
+                <td style="width:150px; text-align:center"><button ng-click="indexFunc()">Back</button>
+               <button ng-click="sc.saveAdmin()">Save</button></td>
             </tr>
 
 

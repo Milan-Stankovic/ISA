@@ -236,7 +236,7 @@ public class StartData {
         addKarta(p1,s1.getSedista().get(3),temp);
 
 
-       /* Rezervacija r = new Rezervacija();
+        Rezervacija r = new Rezervacija();
         r.setRezervisao(rk3);
         r.setPopust(0);
         r.setProjekcija(p);
@@ -244,7 +244,7 @@ public class StartData {
         p.getRezervacije().add(r);
         rk3.setRezervacije(new ArrayList<Rezervacija>());
         rk3.getRezervacije().add(r);
-        userService.addUser(rk3);*/
+        userService.addUser(rk3);
 
         Admin a3 = new Admin();
         a3.setUserName("fanadmin");

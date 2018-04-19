@@ -19,7 +19,7 @@
         	$scope.eblankField=false;
         	$scope.eemptyField="";
         	$scope.seller_options = [];
-        	
+        	$scope.approving = false;
         	
         	//proveri da li je admin koji ima pristup ovome
         	var regUser={};
@@ -32,9 +32,9 @@
               			$location.path('/home');
               			return;
               		}else{
-              		/*	if(response.data.tip!="FAN"){
+              			if(response.data.tip!="FAN"){
                   			$location.path('/home');              				
-              			}*/
+              			}
               				$scope.regUser=response.data;
               				$http({
               	                method: 'GET',
@@ -274,7 +274,37 @@
 	            	});    
 	        	}
         }
-        
+        aeic.showSale = function(){
+        	$http({
+                method: 'GET',
+                url: 'http://localhost:8096/fanAdmin/odobrenje'
+              }).then(function successCallback(response) {
+                   var items = response.data;
+                   if (items!=null && items!=undefined){
+                	   $scope.sale = response.data;      
+                	   $scope.sale.kraj = aeic.parseDate(response.data.kraj);
+                   }
+                });
+        	$scope.approving = true;
+        }
+        aeic.approveSale = function(){
+        	$http({
+                method: 'PUT',
+                url: 'http://localhost:8096/fanAdmin/odobreno/'+$scope.sale.id
+              }).then(function successCallback(response) {
+                   $scope.sale={};
+                   $scope.approving = false;
+                });
+        }
+        aeic.rejectSale = function(){
+        	$http({
+                method: 'PUT',
+                url: 'http://localhost:8096/fanAdmin/odbijeno/'+$scope.sale.id
+              }).then(function successCallback(response) {
+                   $scope.sale={};
+                   $scope.approving = false;
+                });
+        }
         aeic.setEditFields = function(){
         	if($scope.itemToEdit==undefined)
         		return;
@@ -307,7 +337,14 @@
 	           	   };
               });
         }
-        
+        aeic.parseDate = function(d){
+        	var date = new Date(d);
+			var day = date.getDate();
+			day = day = (day < 10) ? ("0" + day) : day;
+			var month = date.getMonth() + 1;
+			month = (month < 10) ? ("0" + month) : month;
+			return (day + "-" + month + "-" + date.getFullYear());
+        }
         aeic.eshowSthWentWrong = function() {
  		      $scope.eshowSthWentWrong = true;
  		      $timeout(function() {

@@ -12,13 +12,15 @@
         var init = function (){
         	var regUser={};
         	regUser = $cookies.get('user');
-        /*	$http({
+        	$http({
                 method: 'GET',
                 url: 'http://localhost:8096/admin/'+regUser,
               }).then(function successCallback(response) {
-              		if(response.data.tip!="SYS")
+              		if(response.data.tip=="FAN"){
               			$location.path('/home');
-              });*/
+              			return;
+              		}
+              });
 //ADD theatre/cinema
         	$scope.tcshowDone=false;
             $scope.tcshowSthWentWrong=false;

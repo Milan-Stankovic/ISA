@@ -16,13 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 import com.isa.ISA.DTO.PolovanRekvDTO;
 import com.isa.ISA.DTO.PonudaDTO;
 import com.isa.ISA.DTO.RekvizitDTO;
+import com.isa.ISA.dbModel.Obavestenje;
 import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.Ponuda;
 import com.isa.ISA.dbModel.RezervacijaRekvizita;
 import com.isa.ISA.dbModel.ZvanicanRekvizit;
 import com.isa.ISA.dbModel.enums.StatusLicitacije;
-import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.AdminRepository;
+import com.isa.ISA.repository.ObavestenjeRepository;
 import com.isa.ISA.repository.PolovanRekvRepository;
 import com.isa.ISA.repository.PonudaRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
@@ -47,6 +48,9 @@ public class RekvizitService {
 
 	@Autowired
     private PonudaRepository ponudaRepo;
+	
+	@Autowired
+    private ObavestenjeRepository obavRepo;
 	
 	
 	public List<ZvanicanRekvizit> getTematske() {
@@ -129,8 +133,7 @@ public class RekvizitService {
 		retVal.setNaziv(rekDTO.getNaziv());
 		retVal.setOpis(rekDTO.getOpis());
 		retVal.setPostavio(userRepo.findByUserName(rekDTO.getUsername()));
-		retVal.setStatus(StatusLicitacije.UTOKU);
-		//retVal.setStatus(StatusLicitacije.POSTAVLJENO);
+		retVal.setStatus(StatusLicitacije.POSTAVLJENO);
 		retVal.setSlika(rekDTO.getSlika());
 		return polovanRepo.save(retVal);
 	}
@@ -169,6 +172,42 @@ public class RekvizitService {
 
 	public List<PolovanRekvizit> getMojePonude(String username) {
 		return polovanRepo.findByLicitacijaPonudio(username);
+	}
+
+	public PolovanRekvizit updatePolovan(PolovanRekvDTO rekDTO, long id) {
+		PolovanRekvizit retVal = polovanRepo.findOne(id);
+		retVal.setKraj(rekDTO.getDatum());
+		retVal.setNaziv(rekDTO.getNaziv());
+		retVal.setOpis(rekDTO.getOpis());
+		if(!rekDTO.getSlika().equals(""))
+			retVal.setSlika(rekDTO.getSlika());
+		return polovanRepo.save(retVal);
+	}
+
+	public PolovanRekvizit prihvatiPonudu(long itemID, long id) {
+		PolovanRekvizit retVal = polovanRepo.findOne(itemID);
+		retVal.setStatus(StatusLicitacije.ZAVRSENA);
+		Ponuda p = ponudaRepo.findByRekvizitIdAndId(itemID, id);
+		p.setPrihvaceno(true);
+		ponudaRepo.save(p);
+		for(int i=0; i<retVal.getLicitacija().size(); i++){
+			Ponuda p0 = retVal.getLicitacija().get(i);
+			Obavestenje o = new Obavestenje();
+			String tekst = "Your offer ["+p0.getSuma()+" RSD] for item on sale - "+retVal.getNaziv()+" has been DENIED. "
+					+ "You can check out new user sales and win next time! Good luck, your Cinema&Theatre Team";
+			if(p0.getId()==id){
+				tekst="Congratulations! Your offer ["+p0.getSuma()+" RSD] for item on sale - "+retVal.getNaziv()+
+						" has WON. Here are sellers contact info:"+
+						retVal.getPostavio().getIme()+" "+retVal.getPostavio().getPrezime()+", phone: "+
+						retVal.getPostavio().getBrojTelefona()+", email:"+retVal.getPostavio().getEmail();			
+			}
+			o.setDeleted(false);
+			o.setPonuda(p0);
+			o.setPrima(p0.getPonudio());
+			o.setTekst(tekst);
+			obavRepo.save(o);
+		}
+		return polovanRepo.save(retVal);
 	}
 
 }

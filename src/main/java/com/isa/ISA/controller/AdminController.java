@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.isa.ISA.DTO.AdminDTO;
+import com.isa.ISA.DTO.RegKorDTO;
 import com.isa.ISA.dbModel.BodovnaSkala;
+import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.service.AdminService;
@@ -50,7 +52,10 @@ public class AdminController {
     public void updateAdmin(@RequestBody Admin a, @PathVariable Long id){
         adminService.updateAdmin(a);
     }
-
+    @RequestMapping(method = RequestMethod.PUT,value="/admininfo/{id}")
+    public void updateInfoAdmin(@RequestBody RegKorDTO a, @PathVariable Long id){
+        adminService.updateInfoAdmin(a, id);
+    }
     @RequestMapping(method = RequestMethod.PUT,value="/admin/{id}/pass")
     public void updateAdminPassword(@RequestBody Admin a, @PathVariable Long id){
         adminService.updatePassword(a);
@@ -66,7 +71,18 @@ public class AdminController {
     public List<PozoristeBioskop> getFanPozBio(@PathVariable Long id){
         return adminService.getFanPozBio(id);
     }
-    
+    @RequestMapping(method = RequestMethod.GET,value = "/fanAdmin/odobrenje")
+    public PolovanRekvizit getPolovanZaOdobrenje(){
+        return adminService.getPolovanZaOdobrenje();
+    }
+    @RequestMapping(method = RequestMethod.PUT,value = "/fanAdmin/odobreno/{id}")
+    public PolovanRekvizit setPolovanOdobren(@PathVariable Long id){
+        return adminService.setPolovanOdobren(id);
+    }
+    @RequestMapping(method = RequestMethod.PUT,value = "/fanAdmin/odbijeno/{id}")
+    public PolovanRekvizit setPolovanOdbijen(@PathVariable Long id){
+        return adminService.setPolovanOdbijen(id);
+    }
     
     @RequestMapping(method = RequestMethod.GET,value = "/bodSkala")
     public BodovnaSkala getBodSkala(){

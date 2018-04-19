@@ -5,16 +5,23 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.isa.ISA.DTO.AdminDTO;
+import com.isa.ISA.DTO.RegKorDTO;
 import com.isa.ISA.dbModel.BodovnaSkala;
+import com.isa.ISA.dbModel.PolovanRekvizit;
 import com.isa.ISA.dbModel.PozoristeBioskop;
+import com.isa.ISA.dbModel.enums.StatusLicitacije;
 import com.isa.ISA.dbModel.enums.StatusNaloga;
 import com.isa.ISA.dbModel.enums.TipAdmina;
 import com.isa.ISA.dbModel.enums.TipUstanove;
 import com.isa.ISA.dbModel.korisnici.Admin;
 import com.isa.ISA.repository.AdminRepository;
 import com.isa.ISA.repository.BodSkalaRepository;
+import com.isa.ISA.repository.PolovanRekvRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 
 @Service
@@ -26,6 +33,8 @@ public class AdminService {
     private PozoristeBioskopRepository pbRepo;
     @Autowired
     private BodSkalaRepository bsRepo;
+    @Autowired
+    private PolovanRekvRepository polovanRepo;
 
 
     public List<Admin> getAllAdmins(){
@@ -146,6 +155,35 @@ public class AdminService {
 
 	public List<PozoristeBioskop> getFanPozBio(long id) {
 		return adminRepo.findOne(id).getMesta();
+	}
+
+    @Transactional( readOnly = false,  propagation = Propagation.REQUIRED, isolation = Isolation.READ_UNCOMMITTED)
+	public PolovanRekvizit getPolovanZaOdobrenje() {
+		return polovanRepo.findFirstByStatusOrderByIdAsc(StatusLicitacije.POSTAVLJENO);
+	}
+
+	public PolovanRekvizit setPolovanOdobren(Long id) {
+		PolovanRekvizit pr = polovanRepo.findOne(id);
+		pr.setStatus(StatusLicitacije.UTOKU);
+		return polovanRepo.save(pr);
+	}
+
+	public PolovanRekvizit setPolovanOdbijen(Long id) {
+		PolovanRekvizit pr = polovanRepo.findOne(id);
+		pr.setStatus(StatusLicitacije.ODBIJENO);
+		return polovanRepo.save(pr);
+	}
+
+	public void updateInfoAdmin(RegKorDTO a, long id) {
+		Admin adm = adminRepo.findById(id);
+		adm.setBrojTelefona(a.getBrojTelefona());
+		adm.setGrad(a.getGrad());
+		adm.setPrezime(a.getPrezime());
+		adm.setIme(a.getIme());
+		if(!(a.getPassword().isEmpty() || a.getPassword()==null))
+			adm.setPassword(a.getPassword());
+		adminRepo.save(adm);
+		
 	}
 
 

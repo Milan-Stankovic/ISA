@@ -2,17 +2,22 @@
 h2,p   {color: white;}
 </style>
 <div>
-    <h2>Hello {{user.ime}}! You have been invited to: {{proj.dogadjaj.naziv | uppercase}} </h2>
-    <p>Details:</p>
-    <img ng-src="/download/{{proj.dogadjaj.slika}}" style="width:100%; max-width:300px;">
-    <p>Description: {{proj.dogadjaj.opis}}</p>
-    <p>Director: {{proj.dogadjaj.reziser}}, Genre: {{proj.dogadjaj.zanr | lowercase}}, Length: {{proj.dogadjaj.trajanje}} min</p>
-    <p>Starring: {{proj.dogadjaj.glumciStr}}</p>
-    <p>Rate: {{proj.dogadjaj.prosecnaOcena}}</p>
-    <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
-    <p>Place: {{salaUstanova.naziv}}, Auditorium: {{proj.sala.ime}}</p>
-    <p>Price: {{proj.cena}},00 RSD</p>
-    <br>
-    <span>       <button ng-click="accept()">Accept</button>      <button ng-click="decline()">Decline</button></span>
-    <h3 style="color:red">{{message}}</h3>
+    <div ng-show="logged">
+        <h2>Hello {{user.ime}}! You have been invited to: {{proj.dogadjaj.naziv | uppercase}} </h2>
+        <p>Details:</p>
+        <img ng-src="/download/{{proj.dogadjaj.slika}}" style="width:100%; max-width:300px;">
+        <p>Description: {{proj.dogadjaj.opis}}</p>
+        <p>Director: {{proj.dogadjaj.reziser}}, Genre: {{proj.dogadjaj.zanr | lowercase}}, Length: {{proj.dogadjaj.trajanje}} min</p>
+        <p>Starring: {{proj.dogadjaj.glumciStr}}</p>
+        <p>Rate: {{proj.dogadjaj.prosecnaOcena}}</p>
+        <p>Date: {{proj.vreme  | date:'dd.MM.yyyy'}}, Time: {{proj.vreme  | date:'HH:mm'}}</p>
+        <p>Place: {{salaUstanova.naziv}}, Auditorium: {{proj.sala.ime}}</p>
+        <p>Price: {{proj.cena}},00 RSD</p>
+        <br>
+        <span>       <button ng-click="accept()">Accept</button>      <button ng-click="decline()">Decline</button></span>
+        <h3 style="color:red">{{message}}</h3>
+    </div>
+    <div ng-hide="logged">
+        <p style="color:red">You must be logged in to access this page. Please log in and then come back to view invitation.</p>
+    </div>
 </div>

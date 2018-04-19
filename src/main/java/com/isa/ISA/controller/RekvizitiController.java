@@ -62,6 +62,10 @@ public class RekvizitiController {
     public PolovanRekvizit addPolovan(@RequestBody PolovanRekvDTO rekDTO){
 		return rekvizit.addPolovan(rekDTO);
     }
+	@RequestMapping(method = RequestMethod.PUT, value = "/polovni/{id}")
+    public PolovanRekvizit updatePolovan(@RequestBody PolovanRekvDTO rekDTO, @PathVariable long id){
+		return rekvizit.updatePolovan(rekDTO, id);
+    }
 	@RequestMapping(method = RequestMethod.POST, value = "/polovni/ponuda")
     public void ponudiPolovne(@RequestBody PonudaDTO p){
 		 rekvizit.ponudiPolovne(p);
@@ -78,5 +82,10 @@ public class RekvizitiController {
 	@RequestMapping(method = RequestMethod.GET, value = "/mojePonude/{username}")
     public List<PolovanRekvizit> getMojePonude(@PathVariable String username){
 		return rekvizit.getMojePonude(username);
+    }
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/gotovo/{itemID}/{id}")
+    public PolovanRekvizit prihvatiPonudu(@PathVariable long itemID, @PathVariable long id){
+		return rekvizit.prihvatiPonudu(itemID, id);
     }
 }

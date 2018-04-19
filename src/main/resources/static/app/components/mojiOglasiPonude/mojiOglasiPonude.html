@@ -1,7 +1,8 @@
 <table width='100%'>
 	<tr width='100%'>
-		<td width='50%'><a class='mopMenu' ng-click='mopc.toggleSales()'>My Items on Sale</a></td>
-		<td width='50%'><a class='mopMenu' ng-click='mopc.toggleOffers()'>My Offers</a></td>
+		<td width='35%'><a class='mopMenu' ng-click='mopc.toggleSales()'>My Items on Sale</a></td>
+		<td width='30%'><a class='mopMenu' ng-click='mopc.toggleOffers()'>My Offers</a></td>
+		<td width='35%'><a class='mopMenu' ng-click='mopc.toggleNotif()'>My Notifications</a></td>
 	</tr>
 </table>
 <table width='100%' ng-show='showSales' class='itemTable'>
@@ -24,12 +25,18 @@
 							 	<td width='50%'>{{item.kraj}}</td>
 							</tr>
 							<tr>
+								<td width='50%'><h4>Status:</h4></td>
+							 	<td width='50%'>{{item.showStatus}}</td>
+							</tr>
+							<tr>
 								<td><button ng-click="mopc.editItem(item)">change it</button></td>
-								<td> <button ng-click="mopc.checkOffers(item)">show offers</button></td>
+								<td> <button ng-click="mopc.checkOffers(item)">show/hide offers ({{item.licitacija.length}})</button></td>
 							</tr>
 							<tr ng-repeat="offer in item.licitacija"  ng-show='item.showOffers'>
 								<td>By: {{offer.ponudio}}</td>
-							 	<td>price: {{offer.suma}} RSD<button ng-click="mopc.acceptOffer(item, offer)">Accept offer</button></td>
+							 	<td>price: {{offer.suma}} RSD<button ng-click="mopc.acceptOffer(item, offer)" ng-show='item.showAccept'>Accept offer</button>
+							 		<span ng-show='offer.prihvaceno'>ACCEPTED!</span>
+							 	</td>
 							</tr>											
 					</table>
 					<table class="fanZona" width='100%' ng-show="item.showEdit">
@@ -42,9 +49,9 @@
 								<span/><br/>
 								<button ng-click="mopc.saveChanges(item)">   Save changes   </button><br/>
 								<button ng-click="mopc.goBack(item)">   go back   </button>
-								<div class="secretMessage"  ng-show="ashowDone">Item changed succesfully</div>
-								<div class="secretMessage" ng-show="ashowSthWentWrong">Something went wrong! Item is not changed</div>
-								<div class="secretMessage" ng-show="ablankField">{{aemptyField}} is neccesery to be added!</div>
+								<div class="secretMessage"  ng-show="item.ashowDone">Item changed succesfully</div>
+								<div class="secretMessage" ng-show="item.ashowSthWentWrong">Something went wrong! Item is not changed</div>
+								<div class="secretMessage" ng-show="item.ablankField">{{item.aemptyField}} is neccesery to be added!</div>
 							</th>
 						</tr>
 					</table>
@@ -52,7 +59,7 @@
 			</td>
 		</tr>		
 </table>
-<table width='100%' ng-hide='showSales' class='itemTable'>
+<table width='100%' ng-show='showOffers' class='itemTable'>
 	<tr width='100%'>
 		<td colspan='2'><h1 color='red'>MY OFFERS<h1></td>
 	</tr>
@@ -77,13 +84,13 @@
 							</tr>
 							<tr>
 								<td>My offer:</td>
-								<td>{{off.suma}} RSD</td>
+								<td>{{off.suma}} RSD <span ng-show='off.prihvaceno'> - ACCEPTED!</span> <span ng-show='off.odbijeno'> - DENIED!</span></td>
 							</tr>								
 							<tr>
 								<td></td>
 								<td> </td>
 							</tr>
-							<tr>
+							<tr ng-show='off.active'>
 								<td>Make new offer:</td>
 								<td><input type='text' ng-model="off.novaPonuda" size='5'/> RSD <br/><br/><button ng-click="mopc.makeNewOffer(off)">make new offer</button></td>
 							</tr>	
@@ -100,3 +107,14 @@
 			</td>
 		</tr>		
 </table>
+<div>
+<table width='100%' ng-show='showNotifications' class='itemTable'>
+	<tr width='100%'>
+		<td colspan='2'><h1 color='red'>NOTIFICATIONS<h1></td>
+	</tr>
+	<tr ng-repeat="notif in myNotifications">
+		<td width='70%'>{{notif.tekst}}</td>
+		<td width='30%'><button ng-click="mopc.deleteNotif(notif)">delete it</button></td>
+	</tr>
+</table>
+</div>
