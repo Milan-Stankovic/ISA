@@ -32,9 +32,25 @@
                                 <p>Rate: {{poz.rezervacija.projekcija.dogadjaj.prosecnaOcena}}</p>
                                 <p>Date: {{poz.rezervacija.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{poz.rezervacija.projekcija.vreme  | date:'HH:mm'}}</p>
                                 <p>Place: {{salaUstanova.naziv}}, Auditorium: {{poz.rezervacija.projekcija.sala.ime}}</p>
-                                <p>Seat: Row {{poz.karta.sediste.red}} Number {{poz.karta.sediste.broj}} </p>
                                 <p>Price: {{poz.rezervacija.projekcija.cena}},00 RSD</p>
 
+                                 <p>Your Seat location: Row {{poz.karta.sediste.red +1}} Number {{poz.karta.sediste.broj+1}} </p>
+                                <span style="width:300px; overflow-y: scroll; overflow-x: scroll; background:gray" >
+
+                                        <table style="background:gray">
+                                            <tr ng-repeat="group in groups">
+                                                <td ng-repeat="s in group">
+                                                     <span >
+                                                    <img height="20px" width="20px" ng-src="{{poz.karta.sediste.id==s.id && 'assets/images/kliknuto.png' || 'assets/images/slobodno.png'}}">
+
+                                                </span>
+
+                                                </td>
+
+                                            </tr>
+                                        </table>
+                                </span>
+                                <br>
                                 <p ng-if="!rez.edit" >Your ambient rating : {{rez.ocenaA}}</p>
                                 <p ng-if="!rez.edit">Your event rating : {{rez.ocenaF}}</p>
                                  <jk-rating-stars ng-if="rez.edit" rating="rez.ambRating" ></jk-rating-stars>
@@ -51,7 +67,7 @@
 
                             </span>
                         </li>
-
+                        <br>
                     </ol>
                 </div>
             </td>

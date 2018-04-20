@@ -87,6 +87,16 @@
 */
 
         var getUstanova = function(rez){
+            $scope.sedista = rez.projekcija.sala.sedista;
+            $scope.redova = rez.projekcija.sala.brRed;
+            $scope.kolona = rez.projekcija.sala.brSedista;
+            if($scope.sedista[0].red==$scope.redova-1)
+                                $scope.sedista.reverse();
+
+            $scope.groups = $scope.sedista.map( function(e,i){
+                                 return i%$scope.kolona===0 ? $scope.sedista.slice(i,i+$scope.kolona) : null;
+                             })
+                             .filter(function(e){ return e; });
             $http({
                   method: 'GET',
                   url: 'http://localhost:8096/sala/ustanova/' + rez.projekcija.sala.id
@@ -135,16 +145,15 @@
 
 
         $scope.updateView = function(){
-         if($scope.pozivi!=undefined){
-            for(var i = 0; i < $scope.pozivi.length; i++){
-                if($scope.pozivi[i].status=="CEKA")
-                    document.getElementsByClassName($scope.pozivi[i].rezervacija.id)[0].style.display = "inline";
-            }
-            }
+             if($scope.pozivi!=undefined){
+                for(var i = 0; i < $scope.pozivi.length; i++){
+                    if($scope.pozivi[i].status=="CEKA")
+                        document.getElementsByClassName($scope.pozivi[i].rezervacija.id)[0].style.display = "inline";
+                }
+             }
 
         }
         $scope.details = function(rez){
-
                 if(document.getElementById(rez.id + " details").style.display=="none"){
                     getUstanova(rez);
                     document.getElementById(rez.id + " details").style.display = "block";
