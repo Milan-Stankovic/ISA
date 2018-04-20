@@ -32,6 +32,7 @@
                                 <p>Rate: {{poz.rezervacija.projekcija.dogadjaj.prosecnaOcena}}</p>
                                 <p>Date: {{poz.rezervacija.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{poz.rezervacija.projekcija.vreme  | date:'HH:mm'}}</p>
                                 <p>Place: {{salaUstanova.naziv}}, Auditorium: {{poz.rezervacija.projekcija.sala.ime}}</p>
+                                <p>Seat: Row {{poz.karta.sediste.red}} Number {{poz.karta.sediste.broj}} </p>
                                 <p>Price: {{poz.rezervacija.projekcija.cena}},00 RSD</p>
 
                                 <p ng-if="!rez.edit" >Your ambient rating : {{rez.ocenaA}}</p>

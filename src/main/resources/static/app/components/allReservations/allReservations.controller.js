@@ -13,7 +13,7 @@
         $scope.pozivi = [];
         var init = function (){
             if(!$cookies.get('user'))
-                $location.path("/login")
+                $location.path("login")
 
         }
         init();

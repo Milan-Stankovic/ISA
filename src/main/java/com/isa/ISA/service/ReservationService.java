@@ -145,7 +145,7 @@ public class ReservationService {
 
         for(Poziv po : pozivi){
             if(po.isPozvan()){
-                String s = "Please click here to accept or decline your invitation: http://localhost:8096/#!/allReservations/";
+                String s = "Please click here to accept or decline your invitation: http://localhost:8096/#!/allReservations";
                 em.inviteEmail(po.getOsoba().getEmail(),"Event Invitation from " + rezervisao.getIme() + " " + rezervisao.getPrezime(), s, rez.getId());
             }else{
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy, HH:mm");
