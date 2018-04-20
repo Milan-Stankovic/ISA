@@ -93,7 +93,7 @@ public class RegisterService {
 
     }
 
-    public void finishReg(HttpServletResponse response, String email){
+    public boolean finishReg(HttpServletResponse response, String email){
         String mail = email + ".com";
         RegistrovaniKorisnik reg = userService.findByEmail(mail);
         Admin adm = adminService.getAdminByEmail(mail);
@@ -114,5 +114,6 @@ public class RegisterService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        return true;
     }
 }

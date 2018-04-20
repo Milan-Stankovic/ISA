@@ -85,6 +85,14 @@ public class RegisterTests {
 
     @Test
     public void register() throws Exception{
+        Mockito.when(registerService.finishReg(Mockito.any(HttpServletResponse.class), Mockito.anyString())).thenReturn(true);
+        MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/register/test")
+        ).andReturn();
+        String arr =mvcResult.getResponse().getContentAsString();
+
+        System.out.println(arr);
+       // Assert.assertEquals("true", arr);
 
     }
 }
