@@ -214,7 +214,7 @@
                        }
                        else{
                     	   aeic.eshowDone();
-                    	   $scope.item_options=""
+                    	   $scope.itemToEdit = {};
                     	   $scope.eitem = {
                        			"naziv": "",
                        			"opis": "",
@@ -260,7 +260,7 @@
 	                       }
 	                       else{
 	                    	   aeic.eshowDone();
-	                    	   $scope.item_options="";
+	                    	   $scope.itemToEdit = {};
 	                    	   $scope.eitem = {
 	                       			"naziv":"",
 	                    			"opis":"",
@@ -309,6 +309,7 @@
         	if($scope.itemToEdit==undefined)
         		return;
         	$scope.eitem = $scope.itemToEdit;
+        	$scope.eitem.slika="";
         	for(var i=0; i<$scope.seller_options.length; i++){
         		if($scope.seller_options[i].id==$scope.itemToEdit.id){
         			$scope.eitem.preuzeti = $scope.seller_options[i];
