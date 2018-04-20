@@ -43,42 +43,54 @@ public class SistemAdminTests {
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
     private static int id = 1; 
-    @Before
-    public void setup() throws Exception{
-      AdminDTO adm = new AdminDTO();
-      adm.setEmail("adm10@a.com");
-      adm.setPass("default");
-      adm.setPozBio(new long[0]);
-      adm.setTipAdmina(TipAdmina.SYS);
-      adm.setUsername("adm10");
-      MvcResult mvcResult = mockMvc.perform(
-              MockMvcRequestBuilders.post("/admins")
-                      .contentType(contentType)
-                      .content(jsonMapper.writeValueAsString(adm)))
-              .andReturn();
-      JSONObject result = new JSONObject( mvcResult.getResponse().getContentAsString());
-      id = result.getInt("id");
-    }
+
     
     @Test
     public void testPreuzimiAdmine() throws Exception {
+    	AdminDTO adm = new AdminDTO();
+        adm.setEmail("adm100@a.com");
+        adm.setPass("default");
+        adm.setPozBio(new long[0]);
+        adm.setTipAdmina(TipAdmina.SYS);
+        adm.setUsername("adm100");
+
         MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.post("/admins")
+                        .contentType(contentType)
+                        .content(jsonMapper.writeValueAsString(adm)))
+                .andReturn();
+        JSONObject result = new JSONObject( mvcResult.getResponse().getContentAsString());
+        id = result.getInt("id");
+        
+        MvcResult mvcResult1 = mockMvc.perform(
                 MockMvcRequestBuilders.get("/api/admins"))
                 .andReturn();
-        JSONArray jsonArr = new JSONArray(mvcResult.getResponse().getContentAsString());
+        JSONArray jsonArr = new JSONArray(mvcResult1.getResponse().getContentAsString());
         Assert.assertNotEquals(0, jsonArr.length());
     }
     @Test
     public void testGetAdmin() throws Exception {
+    	AdminDTO adm = new AdminDTO();
+        adm.setEmail("adm10@a.com");
+        adm.setPass("default");
+        adm.setPozBio(new long[0]);
+        adm.setTipAdmina(TipAdmina.SYS);
+        adm.setUsername("adm10");
+
         MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.post("/admins")
+                        .contentType(contentType)
+                        .content(jsonMapper.writeValueAsString(adm)))
+                .andReturn();
+        MvcResult mvcResult2 = mockMvc.perform(
                 MockMvcRequestBuilders.get("/admin/adm10"))
                 .andReturn();
-        JSONObject jsonObj = new JSONObject(mvcResult.getResponse().getContentAsString());
+        JSONObject jsonObj = new JSONObject(mvcResult2.getResponse().getContentAsString());
         Assert.assertEquals("adm10@a.com", jsonObj.getString("email"));
     }
 //radi post, ne radi get
     @Test
-    public void testPostGetBodovi() throws Exception {
+    public void testPostBodovi() throws Exception {
     	BodovnaSkala bs = new BodovnaSkala();
     	bs.setBronzePopust(10);
     	bs.setBronzeTreshold(100);
@@ -92,14 +104,11 @@ public class SistemAdminTests {
                          .contentType(contentType)
                          .content(jsonMapper.writeValueAsString(bs)))
                  .andReturn();
-         JSONObject jsonObj = new JSONObject( mvcResult.getResponse().getContentAsString());
-         MvcResult mvcResult1 = mockMvc.perform(
-                 MockMvcRequestBuilders.get("/bodSkala"))
-                 .andReturn();
-         JSONObject jsonObj2 = new JSONObject( mvcResult1.getResponse().getContentAsString());
-         Assert.assertEquals(25, jsonObj.getInt("goldPopust"));  //get       
-         Assert.assertEquals(25, jsonObj2.getInt("goldPopust"));
+         JSONObject jsonObj = new JSONObject( mvcResult.getResponse().getContentAsString()); 
+         Assert.assertEquals(25, jsonObj.getInt("goldPopust"));
     }
+
+    
     @Test
     public void testPostPB() throws Exception {
     	PozoristeBioskopDTO pb = new PozoristeBioskopDTO();

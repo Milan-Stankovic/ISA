@@ -133,7 +133,12 @@ public class FanZonaTests {
         mvcResult = mockMvc.perform(
                 MockMvcRequestBuilders.get("/rekviziti/zvanicni")).andReturn();
         JSONArray jsonArr0 = new JSONArray(mvcResult.getResponse().getContentAsString());
-        Assert.assertEquals(0, jsonArr0.length()); 
+        for(int i=0; i<jsonArr0.length(); i++){
+        	JSONObject test0 = jsonArr.getJSONObject(i);
+        	if(test0.getInt("id")==rez0){
+                Assert.assertEquals(true, test0.getBoolean("aktivan"));         		
+        	}
+        }
     }
     @Test
     public void testRezervacijaRekvizita() throws Exception {

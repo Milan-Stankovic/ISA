@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.nio.charset.Charset;
+import java.sql.Date;
 import java.util.Arrays;
 
 import org.json.JSONArray;
@@ -35,6 +36,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.ISA.IsaApplication;
 import com.isa.ISA.DTO.AdminDTO;
+import com.isa.ISA.DTO.PolovanRekvDTO;
 import com.isa.ISA.DTO.RegKorDTO;
 import com.isa.ISA.DTO.RezervacijaDTO;
 import com.isa.ISA.controller.AdminController;
@@ -59,25 +61,22 @@ public class AdminFanZonaTests {
             MediaType.APPLICATION_JSON.getSubtype(),
             Charset.forName("utf8"));
     private static int id = 1; 
-    @Before
-    public void setup() throws Exception{
-      AdminDTO adm = new AdminDTO();
-      adm.setEmail("adm10@a.com");
-      adm.setPass("default");
-      adm.setPozBio(new long[0]);
-      adm.setTipAdmina(TipAdmina.FAN);
-      adm.setUsername("fan10");
-      MvcResult mvcResult = mockMvc.perform(
-              MockMvcRequestBuilders.post("/admins")
-                      .contentType(contentType)
-                      .content(jsonMapper.writeValueAsString(adm)))
-              .andReturn();
-      JSONObject result = new JSONObject( mvcResult.getResponse().getContentAsString());
-      id = result.getInt("id");
-    }
     @Test
     public void testPreuzimiPB() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
+    	  AdminDTO adm = new AdminDTO();
+          adm.setEmail("adm11@a.com");
+          adm.setPass("default");
+          adm.setPozBio(new long[0]);
+          adm.setTipAdmina(TipAdmina.FAN);
+          adm.setUsername("fan10");
+          MvcResult mvcResult = mockMvc.perform(
+                  MockMvcRequestBuilders.post("/admins")
+                          .contentType(contentType)
+                          .content(jsonMapper.writeValueAsString(adm)))
+                  .andReturn();
+          JSONObject result = new JSONObject( mvcResult.getResponse().getContentAsString());
+          id = result.getInt("id");
+         mvcResult = mockMvc.perform(
                 MockMvcRequestBuilders.get("/fanAdmin/"+id+"/pb"))
                 .andReturn();
         JSONArray jsonArr0 = new JSONArray(mvcResult.getResponse().getContentAsString());
@@ -86,10 +85,24 @@ public class AdminFanZonaTests {
 //radi ako ostane isti StartData
     @Test
     public void testPreuzimiZaOdobrenje() throws Exception {
-        MvcResult mvcResult = mockMvc.perform(
+    	
+    	PolovanRekvDTO polDTO = new PolovanRekvDTO();
+    	polDTO.setCena(200.0);
+    	polDTO.setDatum(new Date(System.currentTimeMillis()));
+    	polDTO.setNaziv("test");
+    	polDTO.setOpis("test-opis");
+    	polDTO.setSlika("");
+    	polDTO.setUsername("pero");
+    	MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.post("/rekviziti/polovni")
+                        .contentType(contentType)
+                        .content(jsonMapper.writeValueAsString(polDTO)))
+                .andReturn();
+    	
+        MvcResult mvcResult2 = mockMvc.perform(
                 MockMvcRequestBuilders.get("/fanAdmin/odobrenje"))
                 .andReturn();
-        JSONObject result = new JSONObject( mvcResult.getResponse().getContentAsString());
-        Assert.assertNotEquals("", result);
+        JSONObject result = new JSONObject( mvcResult2.getResponse().getContentAsString());
+        Assert.assertNotEquals("", result.getString("naziv"));
     }
 }
