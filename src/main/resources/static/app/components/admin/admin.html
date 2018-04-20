@@ -20,9 +20,14 @@
 
                 </li>
 
-                <li class="goreDole">
-                    <a  ng-click="goOneClick('core.userOneClick')">USER QUICK</a>
+                <li ng-if="bpOne" class="goreDole">
+                    <a  ng-click="goOneClick('core.userOneClick', bp.id)">USER QUICK</a>
                 </li>
+
+                <li ng-if="sala" class="goreDole">
+                    <a  ng-click="goCenovnik('core.cenovnik')">SEAT PRICING</a>
+                </li>
+
                 <li class="goreDole">
                     <br/>
                 </li>

@@ -18,12 +18,61 @@
         }
         init();
 
+        $scope.rate = function (rez, ambRating, eveRating, pozivId) {
+            console.log(rez);
+            console.log(ambRating);
+            console.log(eveRating);
+            console.log(pozivId);
+        }
+
+
+        var getInvRez = function () {
+            $http({
+                method: 'GET',
+                url: 'http://localhost:8096/api/user/invitations/' + $cookies.get('user'),
+            }).then(function successCallback(response) {
+                $scope.inv = response.data;
+                console.log("sve inv: " + $scope.inv.length)
+
+            }, function errorCallback(response) {
+                alert("Greska kod bioskopa")
+
+            });
+        }
+
+        getInvRez();
+
+
         var getRez = function () {
             $http({
                 method: 'GET',
                 url: 'http://localhost:8096/api/user/reservations/' + $cookies.get('user'),
             }).then(function successCallback(response) {
                 $scope.rezervacije = response.data;
+
+           /*     var korId = $cookies.get('id');
+                for(var i=0; i<$scope.rezervacije.length; i++){
+                    for(var j=0; j<$scope.inv.length; j++){
+                        if($scope.rezervacije[i].id==$scope.inv[j].rezervacija.id){ // Skrnavo ali nema druge...
+                            if($scope.inv[j].rezervacija.osoba.id == korId) {
+                                $scope.rezervacije[i].pozivId = $scope.inv[j].id;
+                                $scope.rezervacije[i].ocenaA = $scope.inv[j].ocenaAmbijenta;
+                                $scope.rezervacije[i].ocenaF = $scope.inv[j].ocenaFilma;
+                                $scope.rezervacije[i].edit = true;
+                                if($scope.rezervacije[i].ocenaA)
+                                    if($scope.rezervacije[i].ocenaF)
+                                        $scope.rezervacije[i].edit = false;
+
+                                break;
+                            }
+                        }
+                    }NE RADI NI OVO
+                }
+                */
+
+
+
+
                 console.log("sve rezervacije: " + $scope.rezervacije.length)
 
             }, function errorCallback(response) {
@@ -34,21 +83,7 @@
 
                 getRez();
 
-        var getInvRez = function () {
-                    $http({
-                        method: 'GET',
-                        url: 'http://localhost:8096/api/user/invitations/' + $cookies.get('user'),
-                    }).then(function successCallback(response) {
-                        $scope.inv = response.data;
-                        console.log("sve inv: " + $scope.inv.length)
 
-                    }, function errorCallback(response) {
-                        alert("Greska kod bioskopa")
-
-                    });
-                        }
-
-                        getInvRez();
         var getAccRez = function () {
         $http({
             method: 'GET',
@@ -89,6 +124,8 @@
                     data: rez.id
                   }).then(function successCallback(response) {
                        $scope.rezervacije = response.data;
+
+
                        console.log("aj sad accept: " + $scope.rezervacije)
                        getAccRez();
                        }
@@ -100,6 +137,7 @@
                     data: rez.id
                   }).then(function successCallback(response) {
                        $scope.rezervacije = response.data;
+
                        console.log("aj sad accept: " + $scope.rezervacije)
                        getAccRez();
                        }

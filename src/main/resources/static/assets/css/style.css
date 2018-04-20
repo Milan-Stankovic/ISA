@@ -1847,3 +1847,7 @@ p a:hover {
 	background-color: red;
 	cursor: pointer;
 }
+
+.my-custom-stars .star-button.star-off .material-icons {
+	color: white !important;
+}

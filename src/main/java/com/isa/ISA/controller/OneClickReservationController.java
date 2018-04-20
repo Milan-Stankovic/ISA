@@ -3,15 +3,12 @@ package com.isa.ISA.controller;
 import com.isa.ISA.DTO.TransakcijaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.service.OneClickReservationService;
 
-@Controller
+@RestController
 public class OneClickReservationController {
 
     @Autowired
@@ -22,7 +19,7 @@ public class OneClickReservationController {
         ocrSevice.setOneClick(r);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/oneClick/{id}/user/{userId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/oneClick/{id}/user/{userId}")
     public TransakcijaDTO updateClickReservation(@PathVariable Long id, @PathVariable Long userId){
         return ocrSevice.reserveSeat(id, userId);
     }

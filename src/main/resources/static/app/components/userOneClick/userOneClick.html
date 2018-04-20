@@ -17,9 +17,9 @@
 
                  <p>Date and time: {{rezervacija.projekcija.vreme | date:'dd/MM/yyyy at H:mm'}}</p>
 
-                 <p ng-click="reserve(rezervacija.id)" class="pointerQuick"> RESERVE</p>
+                 <button style="text-align:center; color: black" ng-click="reserve(rezervacija.id)" > RESERVE</button>
 
-                 <p ng-if="isAdmin && rezervacija.projekcija.aktivna==false" ng-click="delete(rezervacija.id)" > DELETE</p>
+                 <button style="text-align:center; color: black" ng-if="isAdmin && rezervacija.projekcija.aktivna==false" ng-click="delete(rezervacija.id)" > DELETE</button>
              </div>
          </span>
     </div>

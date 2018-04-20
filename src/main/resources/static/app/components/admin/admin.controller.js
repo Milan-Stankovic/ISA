@@ -119,8 +119,9 @@
             $state.go(state, {"id" : $scope.adminId} );
         }
 
-        $scope.goOneClick = function(state) {
-            $state.go(state, {"admin" : true} );
+        $scope.goOneClick = function(state, param1) {
+            $state.go(state, {"admin" : true, "pbId" : param1} );
+
         }
 
 

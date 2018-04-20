@@ -398,10 +398,16 @@ public class StartData {
         dogadjajService.addDogadjaj2(d);
 
         p.setDogadjaj(d);
+        p.setAktivna(true);
         projekcijaService.addProjekcija(p);
+
+
 
         projekcije.add(p);
         p1.setProjekcije(projekcije);
+
+        d.setPrikazujeSe(projekcije);
+        dogadjajService.addDogadjaj2(d);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
         d.setMestoOdrzavanja(p1);
@@ -621,7 +627,7 @@ public class StartData {
 
 
         Projekcija pp = new Projekcija();
-        pp.setAktivna(true);
+        pp.setAktivna(false);
         pp.setCena(300);
         pp.setSala(s1);
         pp.setVreme(new Date(System.currentTimeMillis()+24*60*60*1000));
@@ -639,6 +645,8 @@ public class StartData {
         dd.setZanr(Zanr.HOROR);
         dd.setTrajanje(90);
 
+        pp.setAktivna(false);
+
         dogadjajService.addDogadjaj2(dd);
 
         pp.setDogadjaj(dd);
@@ -646,6 +654,9 @@ public class StartData {
 
         projekcije.add(pp);
         p1.setProjekcije(projekcije);
+
+        dd.setPrikazujeSe(projekcije);
+        dogadjajService.addDogadjaj2(dd);
 
         pozoristeBioskopService.addPozoristeBioskop(p1);
         dd.setMestoOdrzavanja(p1);

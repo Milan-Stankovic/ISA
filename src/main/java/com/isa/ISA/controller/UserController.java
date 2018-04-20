@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.isa.ISA.DTO.InvitationDTO;
+import com.isa.ISA.DTO.OneClickAfterDTO;
 import com.isa.ISA.dbModel.PozoristeBioskop;
 import com.isa.ISA.dbModel.Projekcija;
 import com.isa.ISA.dbModel.Rezervacija;
@@ -47,9 +48,9 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-	@RequestMapping(method = RequestMethod.PUT,value = "/api/user/{id}/poziv/{pozivId}")
-	public void addPoziv(@PathVariable Long id, @PathVariable Long pozivId){
-		 userService.updateUser(id, pozivId);
+	@RequestMapping(method = RequestMethod.PUT,value = "/api/user")
+	public void addPoziv(@RequestBody OneClickAfterDTO ocad){
+		 userService.updateUser(ocad);
 	}
     
     @RequestMapping(method = RequestMethod.GET,value = "/api/user/{username}")

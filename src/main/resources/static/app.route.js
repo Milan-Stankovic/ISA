@@ -127,6 +127,14 @@
               controllerAs: 'uoc',
 			  params:{admin:false, pbId:null}
           })
+
+          .state('core.seatPrice', {
+              url: 'seatPrice',
+              templateUrl: 'app/components/seatPrice/seatPrice.html',
+              controller: 'seatPriceController',
+              controllerAs: 'spc',
+              params:{salaId:null, pbId:null}
+          })
 		  .state('core.addEditItem', {
 			url: 'addEditItem',
 			templateUrl: 'app/components/addEditItem/addEditItem.html',

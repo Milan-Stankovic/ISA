@@ -1,6 +1,8 @@
 package com.isa.ISA.service;
 
 import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.korisnici.Poziv;
+import com.isa.ISA.repository.PozivRepository;
 import com.isa.ISA.repository.RezervacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,16 @@ public class RezervacijaService {
     @Autowired
     private RezervacijaRepository rezRepo;
 
+    @Autowired
+    private PozivRepository pozRepo;
+
 
     public void delete(Long id){
+        Rezervacija r = rezRepo.findOne(id);
+
+        Poziv p = r.getUrezervaciji().get(0);
+        r.getUrezervaciji().remove(0);
+        pozRepo.delete( p.getId());
         rezRepo.delete(id);
     }
 

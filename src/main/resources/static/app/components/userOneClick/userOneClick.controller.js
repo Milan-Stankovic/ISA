@@ -88,12 +88,30 @@
         };
         init();
 
-        var setUserReservation = function(pozivId){
+        var setUserReservation = function(pozivId, rezervacijaID){
+
+
+            var afterDTO={
+                "userId" : $cookies.get('id'),
+                "pozivId" : pozivId,
+                "rezervacijaID" : rezervacijaID
+            };
+
+
 
             $http({
                 method: 'PUT',
-                url: 'http://localhost:8096/api/user/' +$cookies.get('id') + '/poziv/' +pozivId
+                url: 'http://localhost:8096/api/user',
+                data:afterDTO
             }).then(function successCallback(response) {
+
+                for(var i =0; i< $scope.reservations.length; i++){
+                    if($scope.reservations[i].id == rezervacijaID){
+                        $scope.reservations.splice(i, 1);
+                        break;
+                    }
+
+                }
 
             }, function errorCallback(response) {
                 alert("Error making reservation")
@@ -105,7 +123,7 @@
         $scope.reserve=function(reserveId){
 
             $http({
-                method: 'PUT',
+                method: 'GET',
                 url: 'http://localhost:8096/oneClick/' +reserveId+'/user/'+$cookies.get('id')
             }).then(function successCallback(response) {
                 var rezultat = response.data;
@@ -114,19 +132,44 @@
                     alert("The reservation was already taken, better luck next time !");
                 }else {
                     alert("You got the reservation !");
-                    setUserReservation(rezultat.pozivId);
+                    setUserReservation(rezultat.pozivId, reserveId);
                 }
 
 
 
             }, function errorCallback(response) {
-                alert("Error making reservation")
+                alert("Error making reservation");
 
             });
 
         }
 
         $scope.delete = function (rezervacijaId) {
+
+
+            $http({
+                method: 'DELETE',
+                url: 'http://localhost:8096/api/rezervacija/delete/'+rezervacijaId
+            }).then(function successCallback(response) {
+                alert("Reservation deleted");
+
+                for(var i =0; i< $scope.reservations.length; i++){
+                    if($scope.reservations[i].id == rezervacijaId){
+                        $scope.reservations.splice(i, 1);
+                        break;
+                    }
+
+                }
+
+
+
+
+
+            }, function errorCallback(response) {
+                alert("Error deleting reservation");
+
+            });
+
 
 
         }

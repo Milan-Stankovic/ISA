@@ -3,6 +3,8 @@ package com.isa.ISA.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.isa.ISA.DTO.OneClickAfterDTO;
+import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,10 +45,15 @@ public class UserService {
 		return usersRepo.findByEmail(email);
 	}
 
-	public void updateUser(Long id, Long pozivId){
+	public void updateUser(OneClickAfterDTO ocad){
         Poziv p = new Poziv();
-        p.setId(pozivId);
-        usersRepo.findOne(id).getPozivi().add(p);
+        p.setId(ocad.getPozivId());
+        Rezervacija r = new Rezervacija();
+        r.setId(ocad.getRezervacijaID());
+        RegistrovaniKorisnik reg = usersRepo.findOne(ocad.getUserId());
+        reg.getPozivi().add(p);
+        reg.getRezervacije().add(r);
+        usersRepo.save(reg);
     }
 	
 	public List<RegistrovaniKorisnik> searchImePrezime(String ime, String prezime){
