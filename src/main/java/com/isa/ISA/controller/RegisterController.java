@@ -129,9 +129,7 @@ public class RegisterController {
 		 }
 		 try {
 			 RegistrovaniKorisnik re = userService.findByEmail(mail);
-			 System.out.println(mail);
-			 System.out.println(re);
-			 System.out.println("STATUS " + re.getStatus());
+
 			 response.sendRedirect("http://localhost:8096/#!/login");
 
 		 } catch (IOException e) {

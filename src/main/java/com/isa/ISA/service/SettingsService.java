@@ -135,7 +135,6 @@ public class SettingsService {
         else if(prezime.equals(""))
             return userService.searchIme(ime);
         else
-
             return userService.searchImePrezime(ime,prezime);
 
     }

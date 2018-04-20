@@ -54,7 +54,7 @@ public class ReservationService {
         return rezService.getRez(id);
     }
     @Transactional( readOnly = false,  propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public void reserve(@RequestBody RezervacijaDTO k) throws InterruptedException {
+    public boolean reserve(@RequestBody RezervacijaDTO k) throws InterruptedException {
         RegistrovaniKorisnik rezervisao = userService.getUserID(k.getRezervisao());
         Projekcija projekcija = projekcijaService.getProjekcijaID((long) k.getProjekcija());
         Sala sala = projekcija.getSala();
@@ -151,8 +151,17 @@ public class ReservationService {
                 SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yy, HH:mm");
                 String date = DATE_FORMAT.format(projekcija.getVreme());
 
-                String listString = k.getSedista().toString();
-                listString = listString.substring(1, listString.length()-1);
+                String s = "";
+                int indx = 1;
+                for(Long sedID : k.getSedista())
+                    for(Sediste sed : sala.getSedista())
+                        if(sed.getId()==sedID){
+                            s+="Seat " + String.valueOf(indx) + " (row " + String.valueOf(sed.getRed()+1) + " number " + String.valueOf(sed.getBroj()+1) + "), ";
+                            indx++;
+                        }
+
+
+                String listString = s.substring(1, s.length()-1);
 
                 String listString2 ="";
 
@@ -162,15 +171,15 @@ public class ReservationService {
                 listString2 = listString2.substring(0, listString2.length()-1);
 
 
-                String s = "Event name: " + projekcija.getDogadjaj().getNaziv() + ", Place: " + projekcija.getSala().getUstanova().getNaziv()
-                        + ", Auditorium: " + projekcija.getSala().getIme() + ", Date: " + date + ", Seats:" + listString + ", Persons:"
+                String ss = "Event name: " + projekcija.getDogadjaj().getNaziv() + ", Place: " + projekcija.getSala().getUstanova().getNaziv()
+                        + ", Auditorium: " + projekcija.getSala().getIme() + ", Date: " + date + ", Seats:" + s + ", Persons:"
                          + listString2 + ", Total price: " + pozivi.get(0).getKarta().getPunaCena() + ",00 RSD";
 
 
-                em.inviteEmail(po.getOsoba().getEmail(),"Reservation Detalis", s, rez.getId());
+                em.inviteEmail(po.getOsoba().getEmail(),"Reservation Detalis", ss, rez.getId());
             }
 
         }
-
+        return true;
     }
 }

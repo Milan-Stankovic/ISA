@@ -1,10 +1,8 @@
 package com.isa.ISA;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
 
 import javax.annotation.PostConstruct;
 
@@ -379,7 +377,10 @@ public class StartData {
         p.setAktivna(true);
         p.setCena(300);
         p.setSala(s1);
-        p.setVreme(new Date());
+        Calendar c = Calendar.getInstance(); // starts with today's date and time
+        c.add(Calendar.DAY_OF_YEAR, 2);  // advances day by 2
+        Date date = c.getTime();
+        p.setVreme(date);
         p.setZauzetaSedista(new ArrayList<Sediste>());
         p.setRezervacije(new ArrayList<Rezervacija>());
         Dogadjaj d = new Dogadjaj();
@@ -590,7 +591,10 @@ public class StartData {
         p.setAktivna(true);
         p.setCena(300);
         p.setSala(s1);
-        p.setVreme(new Date());
+        Calendar c = Calendar.getInstance(); // starts with today's date and time
+        c.add(Calendar.DAY_OF_YEAR, 1);  // advances day by 2
+        Date date = c.getTime();
+        p.setVreme(date);
         p.setZauzetaSedista(new ArrayList<Sediste>());
         p.setRezervacije(new ArrayList<Rezervacija>());
         Dogadjaj d = new Dogadjaj();

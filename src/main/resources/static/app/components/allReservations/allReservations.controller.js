@@ -219,7 +219,7 @@
             var bmonth = a.getMonth()+1;
             var bdate = a.getDate();
             var bhour = a.getHours();
-            var bmin = a.getMinutes()+30;//ovo+30 obrisati!
+            var bmin = a.getMinutes();
             if(byear-ayear>=0)
                 if(bmonth-amonth>=0)
                     if(bdate-adate>=0)

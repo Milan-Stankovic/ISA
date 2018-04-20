@@ -21,7 +21,7 @@ public class EmailService {
 	@Async
 	public void regEmail(String to) throws InterruptedException {
 		System.out.println("Sleeping now...");
-		Thread.sleep(10000);
+		Thread.sleep(100);
 
 		System.out.println("Sending email...");
 		try{
@@ -65,7 +65,7 @@ public class EmailService {
 	@Async
 	public void inviteEmail(String to, String sub, String mess, Long rezID) throws InterruptedException {
 		System.out.println("Sleeping now...");
-		Thread.sleep(10000);
+		Thread.sleep(100);
 
 		System.out.println("Sending email...");
 		try {

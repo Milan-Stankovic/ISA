@@ -73,12 +73,7 @@
         }
 
         
-        $scope.saveFunc = function(pass, pass2){
-
-        	if(!(pass===pass2) && pass!='' && pass2!='' && pass!=undefined && pass2!=undefined){
-        		$scope.message = "Passwords don't match."
-        		return;
-        	}
+        $scope.saveFunc = function(pass){
 
             if(isNaN($scope.user.brojTelefona)){
                 $scope.message = "Enter valid phone number."
