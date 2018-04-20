@@ -29,6 +29,7 @@ import com.isa.ISA.repository.PonudaRepository;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
 import com.isa.ISA.repository.RekvizitRepository;
 import com.isa.ISA.repository.UserRepository;
+import com.isa.ISA.repository.ZvanRezervacijaRepository;
 
 @Service
 public class RekvizitService {
@@ -39,6 +40,10 @@ public class RekvizitService {
 
 	@Autowired
     private AdminRepository adminRepo;
+	
+
+	@Autowired
+    private ZvanRezervacijaRepository zvanRezRepo;
 	
 	@Autowired
     private UserRepository userRepo;
@@ -120,10 +125,11 @@ public class RekvizitService {
 		RezervacijaRekvizita rez = new RezervacijaRekvizita();
 		rez.setIzvrsio(userRepo.findOne(userID));
 		rez.setDatum(new Time(System.currentTimeMillis()));
-		rez.setReseno(false);
-		
+		rez.setReseno(false);		
 		retVal.getRezervacije().add(rez);
-		return rekvizitRepo.save(retVal);
+		rekvizitRepo.save(retVal);
+		zvanRezRepo.save(rez);
+		return retVal;
 	}
 
 	public PolovanRekvizit addPolovan(PolovanRekvDTO rekDTO) {

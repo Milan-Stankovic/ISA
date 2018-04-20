@@ -1,6 +1,7 @@
 package com.isa.ISA.DTO;
 
 public class RekvizitDTO {
+
 	private String naziv;
 	private String opis;
 	private String slika;
@@ -55,7 +56,8 @@ public class RekvizitDTO {
 		this.pozBioID = pozBioID;
 	}
 
-	public void setAdminID(String admin) {
+
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
 	
