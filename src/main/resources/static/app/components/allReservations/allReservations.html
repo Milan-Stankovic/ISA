@@ -15,24 +15,24 @@
                 <div style="overflow-y: scroll; height:800px; width:100%; background-color:gray">
 
                     <ol style="list-style-type: none; width:100%">
-                        <li ng-repeat="rez in rezervacije" style="width:100%">"{{rez.projekcija.dogadjaj.naziv}}",
-                            Date: {{rez.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{rez.projekcija.vreme  | date:'HH:mm'}}
+                        <li ng-repeat="poz in pozivi" style="width:100%">"{{poz.rezervacija.projekcija.dogadjaj.naziv}}",
+                            Date: {{poz.rezervacija.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{poz.rezervacija.projekcija.vreme  | date:'HH:mm'}}
                             <span>      </span>
-                            <button ng-click="details(rez)">Details</button>
+                            <button ng-click="details(poz.rezervacija)">Details</button>
                             <span>      </span>
-                            <button ng-click="accept(rez)" class="{{rez.id}}" style="display:none;">Accept</button>
+                            <button ng-click="accept(poz.rezervacija)" class="{{poz.rezervacija.id}}" style="display:none;">Accept</button>
                             <span>      </span>
-                            <button ng-click="cancel(rez)">Cancel</button>
+                            <button ng-click="cancel(poz.rezervacija)">Cancel</button>
                             <br>
-                            <span id="{{rez.id}} details" style="display:none">
+                            <span id="{{poz.rezervacija.id}} details" style="display:none">
 
-                                <img ng-src="/download/{{rez.projekcija.dogadjaj.slika}}" style="width:100%; max-width:100px;">
-                                <p>Description: {{rez.projekcija.dogadjaj.opis}}</p>
-                                <p>Director: {{rez.projekcija.dogadjaj.reziser}}, Genre: {{rez.projekcija.dogadjaj.zanr | lowercase}}, Length: {{rez.projekcija.dogadjaj.trajanje}} min</p>
-                                <p>Rate: {{rez.projekcija.dogadjaj.prosecnaOcena}}</p>
-                                <p>Date: {{rez.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{rez.projekcija.vreme  | date:'HH:mm'}}</p>
-                                <p>Place: {{salaUstanova.naziv}}, Auditorium: {{rez.projekcija.sala.ime}}</p>
-                                <p>Price: {{rez.projekcija.cena}},00 RSD</p>
+                                <img ng-src="/download/{{poz.rezervacija.projekcija.dogadjaj.slika}}" style="width:100%; max-width:100px;">
+                                <p>Description: {{poz.rezervacija.projekcija.dogadjaj.opis}}</p>
+                                <p>Director: {{poz.rezervacija.projekcija.dogadjaj.reziser}}, Genre: {{poz.rezervacija.projekcija.dogadjaj.zanr | lowercase}}, Length: {{poz.rezervacija.projekcija.dogadjaj.trajanje}} min</p>
+                                <p>Rate: {{poz.rezervacija.projekcija.dogadjaj.prosecnaOcena}}</p>
+                                <p>Date: {{poz.rezervacija.projekcija.vreme  | date:'dd.MM.yyyy'}}, Time: {{poz.rezervacija.projekcija.vreme  | date:'HH:mm'}}</p>
+                                <p>Place: {{salaUstanova.naziv}}, Auditorium: {{poz.rezervacija.projekcija.sala.ime}}</p>
+                                <p>Price: {{poz.rezervacija.projekcija.cena}},00 RSD</p>
 
                                 <p ng-if="!rez.edit" >Your ambient rating : {{rez.ocenaA}}</p>
                                 <p ng-if="!rez.edit">Your event rating : {{rez.ocenaF}}</p>

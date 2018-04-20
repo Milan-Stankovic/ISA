@@ -8,6 +8,7 @@ import com.isa.ISA.dbModel.enums.Status;
 import com.isa.ISA.dbModel.enums.TipAdmina;
 import com.isa.ISA.dbModel.korisnici.Poziv;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
+import com.isa.ISA.repository.PozivRepository;
 import com.isa.ISA.repository.RezervacijaRepository;
 import com.isa.ISA.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class RezervacijaController {
 
     @Autowired
     private ProjekcijaService projekcijaService;
+
+    @Autowired
+    private PozivRepository pozivRepo;
 
     @RequestMapping(method = RequestMethod.GET,value = "/api/rezervacija/{id}")
     public Rezervacija getRez(@PathVariable Long id){
@@ -67,7 +71,7 @@ public class RezervacijaController {
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/rezervacija/acc/{username}")
-    public List<Rezervacija> getInvAccepted(@PathVariable String username, @RequestBody Long id) {
+    public List<Poziv> getInvAccepted(@PathVariable String username, @RequestBody Long id) {
         RegistrovaniKorisnik reg = userService.getUser(username);
             System.out.println("ACCEPTED");
             int bodovi = 0;
@@ -83,47 +87,65 @@ public class RezervacijaController {
                         }
             bodovi = bodovi + reg.getBodovi();
             reg.setBodovi(bodovi);
-            ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
+            ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
             for(Rezervacija r : reg.getRezervacije())
                 for(Poziv p : r.getUrezervaciji())
                     if(p.getOsoba().getUserName().equals(username))
                         if(!p.getStatus().toString().equals("ODBIJENO"))
-                            samoPrihvacene.add(r);
+                            samoPrihvacene.add(p);
 
-            reg.setRezervacije(samoPrihvacene);
-            userService.addUser(reg);
-            return reg.getRezervacije();
+        userService.addUser(reg);
+        return samoPrihvacene;
 
 
     }
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/rezervacija/decl/{username}")
-    public List<Rezervacija> getInvDecl(@PathVariable String username, @RequestBody Long id) {
+    public List<Poziv> getInvDecl(@PathVariable String username, @RequestBody Long id) {
         RegistrovaniKorisnik reg = userService.getUser(username);
+
         System.out.println("DECLINED");
         int bodovi = 0;
+        Sediste zaVracanje = null;
         for(Rezervacija r : reg.getRezervacije())
             if(r.getId()==id)
                 for(Poziv p : r.getUrezervaciji())
                     if(p.getOsoba().getUserName().equals(username)){
                          p.setStatus(Status.ODBIJENO);
+                         pozivRepo.save(p);
+                         zaVracanje = p.getKarta().getSediste();
                          bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
                          rezService.addRez(r);
                          break;
                     }
             bodovi = reg.getBodovi() - bodovi;
             if(bodovi<0) bodovi = 0;
-            ArrayList<Rezervacija> samoPrihvacene = new ArrayList<>();
+            ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
             for(Rezervacija r : reg.getRezervacije())
                 for(Poziv p : r.getUrezervaciji())
                     if(p.getOsoba().getUserName().equals(username))
                         if(!p.getStatus().toString().equals("ODBIJENO"))
-                            samoPrihvacene.add(r);
+                            samoPrihvacene.add(p);
             reg.setBodovi(bodovi);
-            reg.setRezervacije(samoPrihvacene);
             userService.addUser(reg);
-            return reg.getRezervacije();
+
+            if(zaVracanje!=null){
+                Rezervacija rez = rezService.getRez(id);
+                int idx = -1;
+                for(int i = 0; i < rez.getProjekcija().getZauzetaSedista().size(); i++)
+                    if(rez.getProjekcija().getZauzetaSedista().get(i).getId()==zaVracanje.getId()) {
+                        idx = i;
+                        break;
+                    }
+
+            if(idx!=-1)
+                rez.getProjekcija().getZauzetaSedista().remove(idx);
+
+            projekcijaService.addProjekcija(rez.getProjekcija());
+            rezService.addRez(rez);
+            }
+            return samoPrihvacene;
         }
 
 

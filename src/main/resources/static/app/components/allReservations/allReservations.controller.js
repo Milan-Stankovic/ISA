@@ -10,7 +10,7 @@
         var arc = this;
         var user;
         arc.home = "Home";
-        $scope.rezervacije = [];
+        $scope.pozivi = [];
         var init = function (){
             if(!$cookies.get('user'))
                 $location.path("/login")
@@ -25,30 +25,14 @@
             console.log(pozivId);
         }
 
-
-        var getInvRez = function () {
-            $http({
-                method: 'GET',
-                url: 'http://localhost:8096/api/user/invitations/' + $cookies.get('user'),
-            }).then(function successCallback(response) {
-                $scope.inv = response.data;
-                console.log("sve inv: " + $scope.inv.length)
-
-            }, function errorCallback(response) {
-                alert("Greska kod bioskopa")
-
-            });
-        }
-
-        getInvRez();
-
-
+        //OVDE DOBIJA SVE POZIVE I PRIHVACENE I KOJE TREBA DA PRIHVATI BEZ ODBIJENIH
         var getRez = function () {
             $http({
                 method: 'GET',
-                url: 'http://localhost:8096/api/user/reservations/' + $cookies.get('user'),
+                url: 'http://localhost:8096/api/user/resPozivi/' + $cookies.get('user'),
             }).then(function successCallback(response) {
-                $scope.rezervacije = response.data;
+            //OVO SU SVI POZIVI KOJE JE NAPRAVIO SAM ILI VEC PRIHVATIO
+                $scope.pozivi = response.data;
 
            /*     var korId = $cookies.get('id');
                 for(var i=0; i<$scope.rezervacije.length; i++){
@@ -73,7 +57,7 @@
 
 
 
-                console.log("sve rezervacije: " + $scope.rezervacije.length)
+                console.log("sve pozivi: " + $scope.pozivi.length)
 
             }, function errorCallback(response) {
                 console.log("Greska kod bioskopa")
@@ -83,6 +67,7 @@
 
                 getRez();
 
+/*
 
         var getAccRez = function () {
         $http({
@@ -99,6 +84,7 @@
             }
 
             getAccRez();
+*/
 
         var getUstanova = function(rez){
             $http({
@@ -114,6 +100,7 @@
         }
 
         $scope.accept = function(rez){
+            document.getElementsByClassName(rez.id)[0].style.display = "none";
             $scope.answer(rez, true);
         }
         $scope.answer = function(rez, isAccepted){
@@ -123,11 +110,10 @@
                     url: 'http://localhost:8096/api/rezervacija/acc/' + $cookies.get('user'),
                     data: rez.id
                   }).then(function successCallback(response) {
-                       $scope.rezervacije = response.data;
+                       $scope.pozivi = response.data;
 
+                       console.log("aj sad accept: " + $scope.pozivi)
 
-                       console.log("aj sad accept: " + $scope.rezervacije)
-                       getAccRez();
                        }
                    );
             }else{
@@ -136,50 +122,26 @@
                     url: 'http://localhost:8096/api/rezervacija/decl/' + $cookies.get('user'),
                     data: rez.id
                   }).then(function successCallback(response) {
-                       $scope.rezervacije = response.data;
+                       $scope.pozivi = response.data;
 
-                       console.log("aj sad accept: " + $scope.rezervacije)
-                       getAccRez();
+                       console.log("aj sad accept: " + $scope.pozivi)
+
                        }
                    );
             }
 
-            /*console.log("usao u answer")
-            var data={
-                "rezID" : rez.id,
-                "isAccepted" : isAccepted
-            }
-             $http({
 
-                 method: 'POST',
-                 url: 'http://localhost:8096/#!/api/rezervacija/inv/' + $cookies.get('user'),
-                 data: data
-
-             }).then(function successCallback(response) {
-                   $scope.rezervacije = response.data;
-                     console.log("aj sad accept: " + $scope.rezervacije)
-                     getAccRez();
-
-             }, function errorCallback(response) {
-                 alert("Greska kod answer")
-
-             });*/
         }
 
 
         $scope.updateView = function(){
-         if($scope.inv!=undefined){
-            for(var i = 0; i < $scope.inv.length; i++){
-                document.getElementsByClassName($scope.inv[0].id)[0].style.display = "inline";
+         if($scope.pozivi!=undefined){
+            for(var i = 0; i < $scope.pozivi.length; i++){
+                if($scope.pozivi[i].status=="CEKA")
+                    document.getElementsByClassName($scope.pozivi[i].rezervacija.id)[0].style.display = "inline";
             }
-        }
-         if($scope.invAcc!=undefined){
-            for(var i = 0; i < $scope.invAcc.length; i++){
-                document.getElementsByClassName($scope.invAcc[0].id)[0].innerText ="Accepted";
-                document.getElementsByClassName($scope.invAcc[0].id)[0].value ="Accepted";
-                document.getElementsByClassName($scope.invAcc[0].id)[0].disabled = true;
             }
-                }
+
         }
         $scope.details = function(rez){
 

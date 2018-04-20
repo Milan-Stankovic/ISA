@@ -204,43 +204,56 @@ public class UserController {
 
     }
 
+	@RequestMapping(method = RequestMethod.GET,value = "/api/user/resPozivi/{username}")
+	public List<Poziv> getRezPoz(@PathVariable String username){
+		RegistrovaniKorisnik kor = userService.getUser(username);
+		ArrayList<Poziv> ret = new ArrayList<>();
+		if(kor==null)
+			return new ArrayList<Poziv>();
+		if(kor.getRezervacije()==null)
+			return new ArrayList<Poziv>();
+		for(Rezervacija r : kor.getRezervacije())
+			for(Poziv p: r.getUrezervaciji())
+				if(p.getOsoba().getUserName().equals(username) && !p.getStatus().toString().equals("ODBIJENO"))
+					ret.add(p);
+		return ret;
+
+	}
+
 	@RequestMapping(method = RequestMethod.GET,value = "/api/user/visited/{username}")
 	public List<PozoristeBioskop> getVisitedP(@PathVariable String username){
 		RegistrovaniKorisnik k = userService.getUser(username);
+		List<PozoristeBioskop> kRezUstanova  = new ArrayList<>();
 		if(k==null){
 			return new ArrayList<PozoristeBioskop>();
 		}
-		List<Rezervacija> kRez = k.getRezervacije();
-		List<Projekcija> kRezProjekcije  = new ArrayList<>();
-		for(Rezervacija r : kRez)
-			kRezProjekcije.add(r.getProjekcija());
-		List<Sala> kRezSala  = new ArrayList<>();
-		for(Projekcija p : kRezProjekcije)
-			kRezSala.add(p.getSala());
-		List<PozoristeBioskop> kRezUstanova  = new ArrayList<>();
-		for(Sala s : kRezSala)
-			kRezUstanova.add(s.getUstanova());
+		for(Rezervacija r : k.getRezervacije()){
+			for(Poziv p : r.getUrezervaciji())
+				if(p.getOsoba().getUserName().equals(username))
+					if(!p.getStatus().toString().equals("ODBIJENO"))
+						kRezUstanova.add(p.getRezervacija().getProjekcija().getSala().getUstanova());
+		}
 		return kRezUstanova;
 	}
 
 	@RequestMapping(method = RequestMethod.GET,value = "/api/user/invitations/{username}")
-	public List<Rezervacija> getInvitations(@PathVariable String username) {
-		ArrayList<Rezervacija> ret = new ArrayList<>();
+	public List<Poziv> getInvitations(@PathVariable String username) {
+		ArrayList<Poziv> ret = new ArrayList<>();
 		RegistrovaniKorisnik reg = userService.getUser(username);
 		if(reg==null)
 			return new ArrayList<>();
 		for(Rezervacija r : reg.getRezervacije()){
 			for(Poziv p : r.getUrezervaciji()){
 				if(p.getOsoba().getUserName().equals(username) && p.isPozvan() && p.getStatus().toString().equals("CEKA"))
-					ret.add(r);
+					ret.add(p);
 			}
 		}
 		return ret;
 	}
 
 	@RequestMapping(method = RequestMethod.GET,value = "/api/user/invAccepted/{username}")
-	public List<Rezervacija> getInvAccepted(@PathVariable String username) {
-		ArrayList<Rezervacija> ret = new ArrayList<>();
+	public List<Poziv> getInvAccepted(@PathVariable String username) {
+		ArrayList<Poziv> ret = new ArrayList<>();
 		RegistrovaniKorisnik reg = userService.getUser(username);
 		if(reg==null)
 		    return new ArrayList<>();
@@ -248,8 +261,8 @@ public class UserController {
             reg.setRezervacije(new ArrayList<>());
 		for(Rezervacija r : reg.getRezervacije()){
 			for(Poziv p : r.getUrezervaciji()){
-				if(p.getOsoba().getUserName().equals(username) && p.isPozvan() && p.getStatus().toString().equals("PRIHVACENO"))
-					ret.add(r);
+				if(p.getOsoba().getUserName().equals(username) && p.getStatus().toString().equals("PRIHVACENO"))
+					ret.add(p);
 			}
 		}
 		return ret;
