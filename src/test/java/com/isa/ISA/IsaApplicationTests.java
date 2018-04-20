@@ -1,6 +1,7 @@
 package com.isa.ISA;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.ISA.DTO.RegKorDTO;
@@ -38,11 +39,22 @@ public class IsaApplicationTests {
 	MockMvc mockMvc;
 
 	private RegKorDTO loginUser;
+	private RegKorDTO registerUser;
 	@Before
 	public void setup(){
+		registerUser = new RegKorDTO();
+		registerUser.setUserName("test");
+		registerUser.setPassword("test");
+		registerUser.setIme("test");
+		registerUser.setPrezime("test");
+		registerUser.setGrad("test");
+		registerUser.setBrojTelefona("test");
+		registerUser.setEmail("tanja_indjic@yahoo.com");
+
 		loginUser = new RegKorDTO();
-		loginUser.setPassword("f");
-		loginUser.setUserName("f");
+		loginUser.setPassword(registerUser.getPassword());
+		loginUser.setUserName(registerUser.getUserName());
+
 	}
 	private ObjectMapper jsonMapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 	private static final MediaType contentType = new MediaType(MediaType.APPLICATION_JSON.getType(),
@@ -50,7 +62,18 @@ public class IsaApplicationTests {
 			Charset.forName("utf8"));
 
 	@Test
-	public void contextLoads() throws Exception {
+	public void register() throws Exception {
+		MvcResult mvcResult = mockMvc.perform(
+				MockMvcRequestBuilders.post("/api/register")
+						.contentType(contentType)
+						.content(jsonMapper.writeValueAsString(registerUser)))
+				.andReturn();
+		String l = mvcResult.getResponse().getContentAsString();
+		Assert.assertEquals("", l);
+	}
+
+	@Test
+	public void login() throws Exception {
 		MvcResult mvcResult = mockMvc.perform(
 				MockMvcRequestBuilders.post("/api/login")
 						.contentType(contentType)
@@ -58,12 +81,14 @@ public class IsaApplicationTests {
 				.andReturn();
 		String l = mvcResult.getResponse().getContentAsString();
 		System.out.println(l);
-		ObjectMapper mapper = new ObjectMapper();
-/*
+/*		ObjectMapper mapper = new ObjectMapper();
+
 		List<Poziv> actual = mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<Poziv>>() {});*/
 		System.out.println(l);
-		Assert.assertTrue(l.contains("\"userName\":\"f\""));
+		Assert.assertTrue(l.contains("\"userName\":\"test\""));
 
 	}
+
+
 
 }

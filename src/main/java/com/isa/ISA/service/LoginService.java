@@ -44,6 +44,8 @@ public class LoginService {
             String def = Arrays.toString(encService.makeDigest("default",e.getSalt()));
             if(k instanceof Admin && k.getPassword().equals(def) )
                 k.setStatus(StatusNaloga.NERESEN);
+            if(k.getStatus().toString().equals("NERESEN"))
+                return null;
             return k;
         } else {
             System.out.println("Failed: decrypted text does not match");
