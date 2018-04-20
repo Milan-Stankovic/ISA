@@ -22,6 +22,28 @@
         	$location.path("home");
         }
 
+         function validateString(val)
+            {
+                 if (!val.match(/^[a-zA-Z\s]*$/))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+            /^[A-z]+$/
+            function validateUsername(val)
+            {
+                 if (!val.match(/^[A-z]+$/))
+                {
+                    return false;
+                }
+
+                return true;
+            }
+
+
+
         function validateEmail(email) {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(String(email).toLowerCase());
@@ -45,6 +67,26 @@
         	    $scope.message="Enter valid email.";
         	    return;
         	}
+        	if(!validateString(fname)){
+                $scope.message="Enter valid First Name.";
+                return;
+            }
+
+            if(!validateString(lname)){
+                $scope.message="Enter valid Last Name.";
+                return;
+            }
+
+            if(!validateString(hometown)){
+                $scope.message="Enter valid name for Hometown.";
+                return;
+            }
+
+            if(!validateUsername(username)){
+                $scope.message="Enter valid Username. Only alphabet characters allowed.";
+                return;
+            }
+
         	var data = {
         			"userName": username,
         			"password": pass,
@@ -54,13 +96,13 @@
         			"grad": hometown,
         			"brojTelefona": phone
         	}
-        	/*alert("userName" +  username +
+        	console.log("userName" +  username +
         			"password"+ pass +
         			"ime"+ fname +
         			"prezime"+ lname +
         			"email"+ email +
         			"grad"+ hometown +
-        			"brojTelefona"+ phone)*/
+        			"brojTelefona"+ phone)
             $http({
               method: 'POST',
               url: 'http://localhost:8096/api/register/',
@@ -70,11 +112,11 @@
             	    $scope.message="We sent you an email to confirm your registration.";
                             $timeout(function() {
                                $location.path("login");
-                                          }, 3000)
+                                          }, 2000)
             	}
 
             	else
-            		$scope.message=response.data;
+            		$scope.message="Username or email is already taken.";
 
                 }, function errorCallback(response) {
                  $scope.message="Username or email is already taken.";

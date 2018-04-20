@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 
 public interface UserRepository extends CrudRepository<RegistrovaniKorisnik, Long> {
-    RegistrovaniKorisnik findByUserName(String username);
+    RegistrovaniKorisnik findByUserNameIgnoreCase(String username);
     RegistrovaniKorisnik findById(Long id);
     RegistrovaniKorisnik findByEmail(String email);
     List<RegistrovaniKorisnik> findByImeIgnoreCase(String ime);

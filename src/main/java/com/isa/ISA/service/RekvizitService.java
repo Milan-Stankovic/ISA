@@ -132,7 +132,7 @@ public class RekvizitService {
 		retVal.setLicitacija(new ArrayList<Ponuda>());
 		retVal.setNaziv(rekDTO.getNaziv());
 		retVal.setOpis(rekDTO.getOpis());
-		retVal.setPostavio(userRepo.findByUserName(rekDTO.getUsername()));
+		retVal.setPostavio(userRepo.findByUserNameIgnoreCase(rekDTO.getUsername()));
 		retVal.setStatus(StatusLicitacije.POSTAVLJENO);
 		retVal.setSlika(rekDTO.getSlika());
 		return polovanRepo.save(retVal);

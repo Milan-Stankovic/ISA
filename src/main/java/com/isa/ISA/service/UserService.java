@@ -43,7 +43,7 @@ public class UserService {
     }
 
     public RegistrovaniKorisnik getUser(String username){
-        return usersRepo.findByUserName(username);
+        return usersRepo.findByUserNameIgnoreCase(username);
     }
 
     public RegistrovaniKorisnik getUserID(Long id){

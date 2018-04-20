@@ -16,8 +16,10 @@ import com.isa.ISA.repository.UserRepository;
 public class PrijateljService {
 	@Autowired
     private PrijateljRepository prijateljRepo;
-	@Autowired
-    private UserRepository userRepo;
+
+    @Autowired
+    private UserService userService;
+
 
     public List<Prijatelj> getAllFriends(){
         List<Prijatelj> allFriends = new ArrayList<>();
@@ -30,18 +32,18 @@ public class PrijateljService {
 
     public void addFriendship(Prijatelj k){
         prijateljRepo.save(k);
-        RegistrovaniKorisnik posiljalac = userRepo.findByUserName(k.getPosiljalac().getUserName());
-        RegistrovaniKorisnik primalac = userRepo.findByUserName(k.getPrimalac().getUserName());
+        RegistrovaniKorisnik posiljalac = userService.getUser(k.getPosiljalac().getUserName());
+        RegistrovaniKorisnik primalac = userService.getUser(k.getPrimalac().getUserName());
         System.out.println("status: " + k.getStatus());
         if(k.getStatus().toString().equals("PRIHVACENO")){
 
         	 posiljalac.getPrijatelji().add(k);
         	 primalac.getPrijatelji().add(k);
-             userRepo.save(posiljalac);
-             userRepo.save(primalac);
-             posiljalac = userRepo.findByUserName(k.getPosiljalac().getUserName());
+             userService.addUser(posiljalac);
+            userService.addUser(primalac);
+             posiljalac = userService.getUser(k.getPosiljalac().getUserName());
              System.out.println("posiljalac sada ima prijatelja: " + posiljalac.getPrijatelji().size());
-             primalac = userRepo.findByUserName(k.getPrimalac().getUserName());
+             primalac = userService.getUser(k.getPrimalac().getUserName());
              System.out.println("primalac sada ima prijatelja: " + primalac.getPrijatelji().size());
         }else if(k.getStatus().toString().equals("POSLATO")){
             System.out.println("nikom nista ovaj treba da prihvati");
@@ -52,8 +54,8 @@ public class PrijateljService {
             prijateljRepo.save(k);
             posiljalac.getPrijatelji().add(k);
             primalac.getPrijatelji().add(k);
-            userRepo.save(posiljalac);
-            userRepo.save(primalac);
+            userService.addUser(posiljalac);
+            userService.addUser(primalac);
 
         }
        
