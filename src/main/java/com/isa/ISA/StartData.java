@@ -86,7 +86,7 @@ public class StartData {
         Encryption e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(rk.getId());
+        e.setKorisnikID( (userService.getUser(rk.getUserName()).getId() ));
         encService.addEncr(e);
         rk.setPassword(pass);
 
@@ -125,7 +125,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(rk2.getId());
+        e.setKorisnikID( (userService.getUser(rk2.getUserName()).getId() ));
         encService.addEncr(e);
         rk2.setPassword(pass);
        /* salt = KeyGenerators.string().generateKey();
@@ -163,7 +163,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(rk3.getId());
+        e.setKorisnikID( (userService.getUser(rk3.getUserName()).getId() ));
         encService.addEncr(e);
         rk3.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
@@ -202,7 +202,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(rk4.getId());
+        e.setKorisnikID (userService.getUser(rk4.getUserName()).getId() );
         encService.addEncr(e);
         rk4.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
@@ -262,7 +262,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(a.getId());
+        e.setKorisnikID( (adminService.getAdmin(a.getUserName()).getId() ));
         encService.addEncr(e);
         a.setPassword(pass);
 
@@ -298,7 +298,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(a2.getId());
+        e.setKorisnikID( (adminService.getAdmin(a2.getUserName()).getId() ));
         encService.addEncr(e);
         a2.setPassword(pass);
         /*salt = KeyGenerators.string().generateKey();
@@ -333,7 +333,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(aa.getId());
+        e.setKorisnikID( (adminService.getAdmin(aa.getUserName()).getId() ));
         encService.addEncr(e);
         aa.setPassword(pass);
 
@@ -523,7 +523,7 @@ public class StartData {
         e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(a3.getId());
+        e.setKorisnikID( (adminService.getAdmin(a3.getUserName()).getId() ));
         encService.addEncr(e);
         a3.setPassword(pass);
         adminService.addAdmin(a3);

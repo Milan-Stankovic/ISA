@@ -19,7 +19,11 @@ public class EmailService {
 	private final String host = "localhost";
 
 	@Async
-	public void regEmail(String to){
+	public void regEmail(String to) throws InterruptedException {
+		System.out.println("Sleeping now...");
+		Thread.sleep(10000);
+
+		System.out.println("Sending email...");
 		try{
 			String host ="smtp.gmail.com" ;
 	        String user = "piginco@gmail.com";
@@ -59,7 +63,11 @@ public class EmailService {
 
 	}
 	@Async
-	public void inviteEmail(String to, String sub, String mess, Long rezID) {
+	public void inviteEmail(String to, String sub, String mess, Long rezID) throws InterruptedException {
+		System.out.println("Sleeping now...");
+		Thread.sleep(10000);
+
+		System.out.println("Sending email...");
 		try {
 			String host = "smtp.gmail.com";
 			String user = "piginco@gmail.com";

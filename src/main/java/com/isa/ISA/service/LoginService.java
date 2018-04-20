@@ -35,7 +35,7 @@ public class LoginService {
 
         Encryption e = encService.getEncrUser(k.getId());
         if(e==null)
-            return k;
+            return null;
         String test = Arrays.toString(encService.makeDigest(credentials.getPassword(),e.getSalt()));
 
 
@@ -46,7 +46,7 @@ public class LoginService {
                 k.setStatus(StatusNaloga.NERESEN);
             if(k.getStatus().toString().equals("NERESEN"))
                 return null;
-            return k;
+            else return k;
         } else {
             System.out.println("Failed: decrypted text does not match");
             return null;

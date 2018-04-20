@@ -51,7 +51,7 @@ public class RegisterService {
         return "";
     }
 
-    public String registerRegKor(RegKorDTO kor) throws NoSuchAlgorithmException {
+    public String registerRegKor(RegKorDTO kor) throws NoSuchAlgorithmException, InterruptedException {
         RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
         Admin adm = adminService.getAdmin(kor.getUserName());
         if(reg!=null || adm!=null){

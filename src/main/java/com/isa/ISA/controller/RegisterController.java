@@ -47,6 +47,16 @@ public class RegisterController {
 			 return "No user with that data.";
 		 if(!a.getStatus().toString().equals("NERESEN"))
 			 return "This account is already active.";
+
+		 a.setStatus(StatusNaloga.AKTIVAN);
+		 if(admin.getIme()!=null && !admin.getIme().equals("")) a.setIme(admin.getIme());
+		 if(admin.getPrezime()!=null && !admin.getPrezime().equals("")) a.setPrezime(admin.getPrezime());
+		 if(admin.getGrad()!=null && !admin.getGrad().equals("")) a.setGrad(admin.getGrad());
+		 if(admin.getEmail()!=null && !admin.getEmail().equals("")) a.setEmail(admin.getEmail());
+		 if(admin.getBrojTelefona()!=null && !admin.getBrojTelefona().equals("")) a.setBrojTelefona(admin.getBrojTelefona());
+		 if(admin.getPassword()!=null && !admin.getPassword().equals("")) a.setPassword(admin.getPassword());
+		 adminService.addAdmin(a);
+
 		 byte[] salt = encService.getNextSalt();
 		 byte[] newPass = encService.makeDigest(admin.getPassword(), salt);
 		 String pass = Arrays.toString(newPass);
@@ -55,19 +65,14 @@ public class RegisterController {
 		 e.setEncryptedPass(newPass);
 		 encService.addEncr(e);
 		 a.setPassword(pass);
-		 a.setStatus(StatusNaloga.AKTIVAN);
-		 if(admin.getIme()!=null && !admin.getIme().equals("")) a.setIme(admin.getIme());
-		 if(admin.getPrezime()!=null && !admin.getPrezime().equals("")) a.setPrezime(admin.getPrezime());
-		 if(admin.getGrad()!=null && !admin.getGrad().equals("")) a.setGrad(admin.getGrad());
-		 if(admin.getEmail()!=null && !admin.getEmail().equals("")) a.setEmail(admin.getEmail());
-		 if(admin.getBrojTelefona()!=null && !admin.getBrojTelefona().equals("")) a.setBrojTelefona(admin.getBrojTelefona());
 		 adminService.addAdmin(a);
+
 		 a = adminService.getAdmin(a.getUserName());
 		 return "";
 	 }
 	 
 	 @RequestMapping(method = RequestMethod.POST, value = "/api/register")
-	    public String registerR(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException {
+	    public String registerR(@RequestBody RegKorDTO kor) throws NoSuchAlgorithmException, InterruptedException {
 		 RegistrovaniKorisnik reg = userService.getUser(kor.getUserName());
 		 Admin adm = adminService.getAdmin(kor.getUserName());
 		 if(reg!=null || adm!=null){
@@ -82,6 +87,15 @@ public class RegisterController {
 		 }
 		 RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
 		 rk.setUserName(kor.getUserName());
+		 rk.setEmail(kor.getEmail());
+		 rk.setStatus(StatusNaloga.NERESEN);
+		 rk.setBrojTelefona(kor.getBrojTelefona());
+		 rk.setGrad(kor.getGrad());
+		 rk.setIme(kor.getIme());
+		 rk.setPrezime(kor.getPrezime());
+		 rk.setPassword(kor.getPassword());
+		 userService.addUser(rk);
+
 
 		 byte[] salt = encService.getNextSalt();
 		 byte[] newPass = encService.makeDigest(kor.getPassword(), salt);
@@ -89,18 +103,12 @@ public class RegisterController {
 		 Encryption e = new Encryption();
 		 e.setSalt(salt);
 		 e.setEncryptedPass(newPass);
-		 e.setKorisnikID(rk.getId());
+		 e.setKorisnikID(  (userService.getUser(rk.getUserName()).getId() ));
 		 encService.addEncr(e);
 		 rk.setPassword(pass);
-
-		 rk.setEmail(kor.getEmail());
-		 rk.setStatus(StatusNaloga.NERESEN);
-		 rk.setBrojTelefona(kor.getBrojTelefona());
-		 rk.setGrad(kor.getGrad());
-		 rk.setIme(kor.getIme());
-		 rk.setPrezime(kor.getPrezime());
-		 System.out.println("Kreiran korisnik: " + rk.getUserName());
 		 userService.addUser(rk);
+
+
 		 em.regEmail(rk.getEmail());
 		 System.out.println(userService.getUser(rk.getUserName()).getUserName());
 

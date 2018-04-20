@@ -150,7 +150,7 @@ public class AdminService {
         Encryption e = new Encryption();
         e.setSalt(salt);
         e.setEncryptedPass(newPass);
-        e.setKorisnikID(retVal.getId());
+        e.setKorisnikID( (adminRepo.findByUserName(retVal.getUserName()).getId() ));
         encService.addEncr(e);
         retVal.setPassword(pass);
         adminRepo.save(retVal);

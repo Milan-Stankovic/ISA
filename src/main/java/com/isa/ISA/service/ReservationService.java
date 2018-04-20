@@ -54,7 +54,7 @@ public class ReservationService {
         return rezService.getRez(id);
     }
     @Transactional( readOnly = false,  propagation = Propagation.REQUIRED, isolation = Isolation.SERIALIZABLE)
-    public void reserve(@RequestBody RezervacijaDTO k) {
+    public void reserve(@RequestBody RezervacijaDTO k) throws InterruptedException {
         RegistrovaniKorisnik rezervisao = userService.getUserID(k.getRezervisao());
         Projekcija projekcija = projekcijaService.getProjekcijaID((long) k.getProjekcija());
         Sala sala = projekcija.getSala();

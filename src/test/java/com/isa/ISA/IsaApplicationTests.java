@@ -62,32 +62,41 @@ public class IsaApplicationTests {
 			Charset.forName("utf8"));
 
 	@Test
-	public void register() throws Exception {
+	public void login1() throws Exception {
 		MvcResult mvcResult = mockMvc.perform(
 				MockMvcRequestBuilders.post("/api/register")
 						.contentType(contentType)
 						.content(jsonMapper.writeValueAsString(registerUser)))
 				.andReturn();
 		String l = mvcResult.getResponse().getContentAsString();
+		System.out.println("REGISTER:");
+		System.out.println(l);
 		Assert.assertEquals("", l);
 	}
 
 	@Test
-	public void login() throws Exception {
+	public void login2() throws Exception {
+		//ODGOVOR NA MAIL
+		mockMvc.perform(
+				MockMvcRequestBuilders.get("/api/register/" + registerUser.getEmail())).andReturn();
+
 		MvcResult mvcResult = mockMvc.perform(
 				MockMvcRequestBuilders.post("/api/login")
 						.contentType(contentType)
 				.content(jsonMapper.writeValueAsString(loginUser)))
 				.andReturn();
 		String l = mvcResult.getResponse().getContentAsString();
+		System.out.println("LOGIN1:");
 		System.out.println(l);
 /*		ObjectMapper mapper = new ObjectMapper();
-
 		List<Poziv> actual = mapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<Poziv>>() {});*/
-		System.out.println(l);
+
+		//TREBA DA VRATI KORISNIKA SAD
 		Assert.assertTrue(l.contains("\"userName\":\"test\""));
 
 	}
+
+
 
 
 
