@@ -83,13 +83,8 @@ public class RegisterTests {
 
     }
 
+    @Test
     public void register() throws Exception{
-        RegisterController accountMng = mock(RegisterController.class);
-
-        doThrow(new Exception()).when(registerService).finishReg(Mockito.any(HttpServletResponse.class), Mockito.anyString());
-        MvcResult mvcResult = mockMvc.perform(
-                MockMvcRequestBuilders.get("/api/register/test"))
-                .andReturn();
 
     }
 }
