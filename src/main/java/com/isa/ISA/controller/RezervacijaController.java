@@ -23,22 +23,11 @@ import java.util.List;
 public class RezervacijaController {
 
     @Autowired
-    private UserService userService;
-
-    @Autowired
     private RezervacijaService rezService;
 
-    @Autowired
-    private SalaService salaService;
 
     @Autowired
     private AdminService adminService;
-
-    @Autowired
-    private ProjekcijaService projekcijaService;
-
-    @Autowired
-    private PozivRepository pozivRepo;
 
     @RequestMapping(method = RequestMethod.GET,value = "/api/rezervacija/{id}")
     public Rezervacija getRez(@PathVariable Long id){
@@ -72,80 +61,13 @@ public class RezervacijaController {
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/rezervacija/acc/{username}")
     public List<Poziv> getInvAccepted(@PathVariable String username, @RequestBody Long id) {
-        RegistrovaniKorisnik reg = userService.getUser(username);
-            System.out.println("ACCEPTED");
-            int bodovi = 0;
-
-            for(Rezervacija r : reg.getRezervacije())
-                if(r.getId()==id)
-                    for(Poziv p : r.getUrezervaciji())
-                        if(p.getOsoba().getUserName().equals(username)){
-                            p.setStatus(Status.PRIHVACENO);
-                            rezService.addRez(r);
-                            bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
-                            break;
-                        }
-            bodovi = bodovi + reg.getBodovi();
-            reg.setBodovi(bodovi);
-            ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
-            for(Rezervacija r : reg.getRezervacije())
-                for(Poziv p : r.getUrezervaciji())
-                    if(p.getOsoba().getUserName().equals(username))
-                        if(!p.getStatus().toString().equals("ODBIJENO"))
-                            samoPrihvacene.add(p);
-
-        userService.addUser(reg);
-        return samoPrihvacene;
-
-
+        return rezService.acceptInvitation(username, id);
     }
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/rezervacija/decl/{username}")
     public List<Poziv> getInvDecl(@PathVariable String username, @RequestBody Long id) {
-        RegistrovaniKorisnik reg = userService.getUser(username);
-
-        System.out.println("DECLINED");
-        int bodovi = 0;
-        Sediste zaVracanje = null;
-        for(Rezervacija r : reg.getRezervacije())
-            if(r.getId()==id)
-                for(Poziv p : r.getUrezervaciji())
-                    if(p.getOsoba().getUserName().equals(username)){
-                         p.setStatus(Status.ODBIJENO);
-                         pozivRepo.save(p);
-                         zaVracanje = p.getKarta().getSediste();
-                         bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
-                         rezService.addRez(r);
-                         break;
-                    }
-            bodovi = reg.getBodovi() - bodovi;
-            if(bodovi<0) bodovi = 0;
-            ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
-            for(Rezervacija r : reg.getRezervacije())
-                for(Poziv p : r.getUrezervaciji())
-                    if(p.getOsoba().getUserName().equals(username))
-                        if(!p.getStatus().toString().equals("ODBIJENO"))
-                            samoPrihvacene.add(p);
-            reg.setBodovi(bodovi);
-            userService.addUser(reg);
-
-            if(zaVracanje!=null){
-                Rezervacija rez = rezService.getRez(id);
-                int idx = -1;
-                for(int i = 0; i < rez.getProjekcija().getZauzetaSedista().size(); i++)
-                    if(rez.getProjekcija().getZauzetaSedista().get(i).getId()==zaVracanje.getId()) {
-                        idx = i;
-                        break;
-                    }
-
-            if(idx!=-1)
-                rez.getProjekcija().getZauzetaSedista().remove(idx);
-
-            projekcijaService.addProjekcija(rez.getProjekcija());
-            rezService.addRez(rez);
-            }
-            return samoPrihvacene;
+        return rezService.declineInvitation(username, id);
         }
 
 

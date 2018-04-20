@@ -11,6 +11,7 @@ import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;*/
 import com.isa.ISA.dbModel.Encryption;
 import com.isa.ISA.service.EncryptionService;
+import com.isa.ISA.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;/*
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.security.crypto.encrypt.TextEncryptor;*/
@@ -29,16 +30,9 @@ import com.isa.ISA.service.UserService;
 
 @RestController
 public class LoginController {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private AdminService adminService;
 
     @Autowired
-    private EncryptionService encService;
-
-    public LoginController() {
-    }
+    private LoginService loginService;
 
     @RequestMapping(method = RequestMethod.GET, value = "/api/login")
     public void redirect(HttpServletResponse response) throws IOException{
@@ -47,66 +41,8 @@ public class LoginController {
     // Mozes li ubaciti dodatnu proveru ako je admin da li je promenio password ?
     @RequestMapping(method = RequestMethod.POST, value = "/api/login") 
     public Korisnik login(@RequestBody RegKorDTO credentials) throws NoSuchAlgorithmException {
-    	/*String username = credentials.split("\\.")[0];
-		String password = credentials.split("\\.")[1];
-		 */
-        Korisnik k;
-        RegistrovaniKorisnik reg = userService.getUser(credentials.getUserName());
-        Admin adm = adminService.getAdmin(credentials.getUserName());
-        if(reg==null && adm==null)
-            return null;
-        
-        else{
-            k = (reg != null) ? reg: adm;
-        }
-/*
-
-        Encryption e = encService.getEncrUser(k.getId());
-
-        TextEncryptor decryptor = Encryptors.text("admin", e.getSalt());
-        String decryptedText = decryptor.decrypt(e.getEncryptedPass());
-        System.out.println("Decrypted text: \"" + decryptedText + "\"");
-        System.out.println("Pass text: \"" + credentials.getPassword() + "\"");
-*/
-        Encryption e = encService.getEncrUser(k.getId());
-        if(e==null)
-            return k;
-        String test = Arrays.toString(encService.makeDigest(credentials.getPassword(),e.getSalt()));
-
-
-        if(test.equals(k.getPassword())) {
-            System.out.println("Success: decrypted text matches");
-            String def = Arrays.toString(encService.makeDigest("default",e.getSalt()));
-            if(k instanceof Admin && k.getPassword().equals(def) )
-                k.setStatus(StatusNaloga.NERESEN);
-            return k;
-        } else {
-            System.out.println("Failed: decrypted text does not match");
-            return null;
-        }
-
+    	return loginService.login(credentials);
 
     }
-    /*@RequestMapping(method = RequestMethod.POST, value = "/api/fblogin/username={username}&pass={password}&ime={ime}&prez={prez}")
-    public Korisnik fblogin(@PathVariable String username, @PathVariable String password, @PathVariable String ime, @PathVariable String prez){
-        Korisnik k;
-        RegistrovaniKorisnik reg = userService.getUser(username);
-        Admin adm = adminService.getAdmin(username);
 
-        if(reg==null && adm==null){
-            RegistrovaniKorisnik rk = new RegistrovaniKorisnik();
-            rk.setUserName(username);
-            rk.setPassword(password);
-            rk.setEmail(username);
-            rk.setIme(ime);
-            rk.setPassword(prez);
-            rk.setStatus(StatusNaloga.AKTIVAN);
-            System.out.println("opa" + rk.getUserName());
-            userService.addUser(rk);
-            return rk;
-        }
-        else k = (reg != null) ? reg: adm;
-        return k;
-
-    }*/
 }

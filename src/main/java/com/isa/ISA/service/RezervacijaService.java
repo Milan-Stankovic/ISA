@@ -1,7 +1,10 @@
 package com.isa.ISA.service;
 
 import com.isa.ISA.dbModel.Rezervacija;
+import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.dbModel.enums.Status;
 import com.isa.ISA.dbModel.korisnici.Poziv;
+import com.isa.ISA.dbModel.korisnici.RegistrovaniKorisnik;
 import com.isa.ISA.repository.PozivRepository;
 import com.isa.ISA.repository.RezervacijaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,19 @@ public class RezervacijaService {
 
     @Autowired
     private PozivRepository pozRepo;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SalaService salaService;
+
+    @Autowired
+    private AdminService adminService;
+
+    @Autowired
+    private ProjekcijaService projekcijaService;
+
 
 
     public void delete(Long id){
@@ -79,5 +95,78 @@ public class RezervacijaService {
 
     public void addRez(Rezervacija r){
         rezRepo.save(r);
+    }
+
+    public ArrayList<Poziv> acceptInvitation(String username, Long id){
+        RegistrovaniKorisnik reg = userService.getUser(username);
+        System.out.println("ACCEPTED");
+        int bodovi = 0;
+
+        for(Rezervacija r : reg.getRezervacije())
+            if(r.getId()==id)
+                for(Poziv p : r.getUrezervaciji())
+                    if(p.getOsoba().getUserName().equals(username)){
+                        p.setStatus(Status.PRIHVACENO);
+                        addRez(r);
+                        bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
+                        break;
+                    }
+        bodovi = bodovi + reg.getBodovi();
+        reg.setBodovi(bodovi);
+        ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
+        for(Rezervacija r : reg.getRezervacije())
+            for(Poziv p : r.getUrezervaciji())
+                if(p.getOsoba().getUserName().equals(username))
+                    if(!p.getStatus().toString().equals("ODBIJENO"))
+                        samoPrihvacene.add(p);
+
+        userService.addUser(reg);
+        return samoPrihvacene;
+    }
+
+    public ArrayList<Poziv> declineInvitation(String username, Long id){
+        RegistrovaniKorisnik reg = userService.getUser(username);
+
+        System.out.println("DECLINED");
+        int bodovi = 0;
+        Sediste zaVracanje = null;
+        for(Rezervacija r : reg.getRezervacije())
+            if(r.getId()==id)
+                for(Poziv p : r.getUrezervaciji())
+                    if(p.getOsoba().getUserName().equals(username)){
+                        p.setStatus(Status.ODBIJENO);
+                        pozRepo.save(p);
+                        zaVracanje = p.getKarta().getSediste();
+                        bodovi = r.getProjekcija().getDogadjaj().getDonosiBodova();
+                        addRez(r);
+                        break;
+                    }
+        bodovi = reg.getBodovi() - bodovi;
+        if(bodovi<0) bodovi = 0;
+        ArrayList<Poziv> samoPrihvacene = new ArrayList<>();
+        for(Rezervacija r : reg.getRezervacije())
+            for(Poziv p : r.getUrezervaciji())
+                if(p.getOsoba().getUserName().equals(username))
+                    if(!p.getStatus().toString().equals("ODBIJENO"))
+                        samoPrihvacene.add(p);
+        reg.setBodovi(bodovi);
+        userService.addUser(reg);
+
+        if(zaVracanje!=null){
+            Rezervacija rez = getRez(id);
+            int idx = -1;
+            for(int i = 0; i < rez.getProjekcija().getZauzetaSedista().size(); i++)
+                if(rez.getProjekcija().getZauzetaSedista().get(i).getId()==zaVracanje.getId()) {
+                    idx = i;
+                    break;
+                }
+
+            if(idx!=-1)
+                rez.getProjekcija().getZauzetaSedista().remove(idx);
+
+            projekcijaService.addProjekcija(rez.getProjekcija());
+            addRez(rez);
+        }
+        return samoPrihvacene;
     }
 }

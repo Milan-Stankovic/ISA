@@ -58,6 +58,16 @@
             return re.test(String(email).toLowerCase());
         }
 
+        function validateString(val)
+        {
+             if (!val.match(/^[a-zA-Z\s]*$/))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         $scope.indexFunc = function(){
         	$location.path("home");
         }
@@ -79,6 +89,21 @@
                     $scope.message="Enter valid email address." ;
                    return;
                 }
+
+            if(!validateString($scope.user.ime)){
+                $scope.message='Only alphabets are allowed for First Name.';
+                return;
+            }
+
+            if(!validateString($scope.user.prezime)){
+                $scope.message='Only alphabets are allowed for Last Name.';
+                return;
+            }
+
+            if(!validateString($scope.user.grad)){
+                $scope.message='Only alphabets are allowed for City.';
+                return;
+            }
 
             $scope.user.password = pass;
         	console.log("userName " +  $scope.user.userName +
@@ -105,15 +130,13 @@
                                 " grad "+ $scope.user.grad +
                                 " brojTelefona "+ $scope.user.brojTelefona);
                                 $timeout(function() {
-                                     $window.location.reload();
-                                                  }, 3000)
+                                       $window.location.reload();
+                                                  }, 2500)
                     }
 
                     else{
                      $scope.message = response.data;
-                    $timeout(function() {
-                           $window.location.reload();
-                                      }, 3000)
+
                     }
 
 
@@ -138,17 +161,15 @@
                        			" email "+ $scope.user.email +
                        			" grad "+ $scope.user.grad +
                        			" brojTelefona "+ $scope.user.brojTelefona);
+                                $timeout(function() {
+                                       $window.location.reload();
+                                                  }, 2500)
 
-                       			 $timeout(function() {
-                                      $window.location.reload();
-                                      }, 3000)
                    	}
                    		
                    	else{
                    	$scope.message = response.data;
-                   	 $timeout(function() {
-                           $window.location.reload();
-                          }, 3000)
+
                    	}
 
                        }, function errorCallback(response) {
