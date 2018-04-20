@@ -46,22 +46,19 @@ public class RegUserTests {
     private UserService userService;
 
 
+
     @Autowired
     private WebApplicationContext webApplicationContext;
+    private ArrayList<RegistrovaniKorisnik> prijatelji;
+
 
     @PostConstruct
     public void set() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
-    public static String json(Object object)
-            throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
-        return mapper.writeValueAsString(object);
-    }
-
+    private ArrayList<RegistrovaniKorisnik> searchRes;
     private RegistrovaniKorisnik rk4;
     @Before
     public void setup(){
@@ -97,7 +94,13 @@ public class RegUserTests {
         p.setStatus(StatusPrijateljstva.PRIHVACENO);
         p.setPrimalac(rk4);
         p.setPosiljalac(rk3);
+        prijatelji = new ArrayList<>();
+        prijatelji.add(rk3);
         rk4.setPrijatelji(Arrays.asList(p));
+
+        searchRes = new ArrayList<>();
+        searchRes.add(rk4);
+
     }
 
     @Test
@@ -122,6 +125,18 @@ public class RegUserTests {
         Assert.assertTrue(arr.contains(",\"popust\":50"));
 
     }
+
+    @Test
+    public void search() throws Exception {
+        Mockito.when(userService.getUserFriends(Mockito.anyString())).thenReturn(prijatelji);
+        MvcResult mvcResult = mockMvc.perform(
+                MockMvcRequestBuilders.get("/api/user/friends/test")).andReturn();
+        String arr =mvcResult.getResponse().getContentAsString();
+
+        Assert.assertTrue(arr.contains("\"email\":\"mali.patuljko@gmail.com\""));
+    }
+
+
 
 
 

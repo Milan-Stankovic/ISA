@@ -25,8 +25,8 @@ public class ReservationController {
 
 
     @RequestMapping(method = RequestMethod.POST,value = "/api/reserve")
-    public void reserve(@RequestBody  RezervacijaDTO r) throws InterruptedException {
-        rezService.reserve(r);
+    public boolean reserve(@RequestBody  RezervacijaDTO r) throws InterruptedException {
+        return rezService.reserve(r);
     }
 
 
