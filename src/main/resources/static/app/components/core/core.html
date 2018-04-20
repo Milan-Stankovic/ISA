@@ -12,14 +12,19 @@
 			<li class="selected" ng-hide='cc.loggedNotAdmin()'>
 				<a ></a>
 			</li>
+			<li class="selected" ng-show='isAdmin'>
+				<a ></a>
+			</li>
+			<li class="selected" ng-show='isAdmin'>
+				<a ></a>
+			</li>
 			<li class="selected">
 				<a ng-href="#!/home" ng-click="showAll()">Home</a>
 			</li>
-			<li>
+			<li ng-hide='isAdmin' >
 				<a href="" ng-click="showOnlyBioskopi()">Cinema</a>
-			</li>
-			
-			<li>
+			</li>			
+			<li ng-hide='isAdmin' >
 				<a  href="" ng-click="showOnlyPozorista()">Theatre</a>
 			</li>
 			<li ng-show='cc.loggedNotAdmin()'>

@@ -16,7 +16,7 @@
                 method: 'GET',
                 url: 'http://localhost:8096/admin/'+regUser,
               }).then(function successCallback(response) {
-              		if(response.data.tip=="FAN"){
+              		if(response.data.tip=="FAN" || response.data.tip=="POZBI"){
               			$location.path('/home');
               			return;
               		}

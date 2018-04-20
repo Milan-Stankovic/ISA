@@ -22,9 +22,14 @@
             }).then(function successCallback(response) {
                 user = response.data;
                  if(user!=undefined && user.hasOwnProperty('tip')){
-
-                       console.log("admir")
-                       $location.path("/admin");
+                	 
+                       console.log("admin");
+                       if(user.tip=='FAN')
+                           $location.path("/addEditItem");
+                       else if(user.tip=='POZBI')
+                           $location.path("/admin");
+                       else
+                    	   $location.path("/adminMode");
 
                  }else {
                     console.log("not admir")
