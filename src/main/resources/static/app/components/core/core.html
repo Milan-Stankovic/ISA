@@ -27,9 +27,7 @@
 			<li ng-hide='isAdmin' >
 				<a  href="" ng-click="showOnlyPozorista()">Theatre</a>
 			</li>
-			<li ng-show='cc.loggedNotAdmin()'>
-				<a ui-sref="core.userOneClick({admin : 'false'})">Quick Reservation</a>
-			</li>
+
 			<li ng-show='cc.loggedNotAdmin()'>
 				<a href="#!/fanZone">Fan Zone</a>
 				<ul>

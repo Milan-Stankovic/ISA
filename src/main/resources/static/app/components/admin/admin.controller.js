@@ -123,6 +123,10 @@
             $state.go(state, {"admin" : true, "pbId" : param1} );
 
         }
+        $scope.goCenovnik = function(state, param1,param2) {
+            $state.go(state, {"salaId":param1, "salaName":param2} );
+
+        }
 
 
         $scope.goOne = function(state, param1, param2,param3, param4, param5, param6) {
@@ -1107,6 +1111,8 @@
         }
 
 
+        $scope.salaId=-1;
+
         $scope.editSala = function(id, name, idBp){
             $http({
                 method: 'GET',
@@ -1118,6 +1124,7 @@
                 $scope.newSalaBS = $scope.oneSala.brSedista;
                 $scope.bpName = name;
                 $scope.bpId=idBp;
+                $scope.salaId = id;
 
                 drawEditGrid($scope.oneSala.sedista,  $scope.newSalaBR,  $scope.newSalaBS);
 

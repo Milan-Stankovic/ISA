@@ -133,7 +133,7 @@
               templateUrl: 'app/components/seatPrice/seatPrice.html',
               controller: 'seatPriceController',
               controllerAs: 'spc',
-              params:{salaId:null, pbId:null}
+              params:{salaId:null, salaName:null}
           })
 		  .state('core.addEditItem', {
 			url: 'addEditItem',

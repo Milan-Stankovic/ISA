@@ -1,0 +1,83 @@
+<div>
+    <ul>
+        <li>
+            <ul class="adminControll">
+
+                <li class="goreDole">
+
+                    <a  ng-click="go('core.admin')">Home</a>
+
+                </li>
+
+                <li class="goreDole">
+                    <br/>
+                </li>
+                <li class="goreDole">
+                    <br/>
+                </li>
+                <li class="goreDole">
+                    <br/>
+                </li>
+
+            </ul>
+
+
+        <li>
+            <ul class="forma">
+                <li class="desno">
+                    <a>  Price list for : </a>
+                </li>
+
+                <li class="desno">
+                    <a>  Price for regular seats: </a>
+                </li>
+
+                <li class="desno">
+                    <a>  Price for vip seats : </a>
+                </li>
+
+                <li class="desno">
+                    <a>  Price for lovebox seats : </a>
+                </li>
+
+                <li class="desno">
+                    <a>  Price for balcony seats : </a>
+                </li>
+
+
+
+                <li class="desno">
+                    <button  class="button" type="submit" ng-click="updatePrice(regular, vip,love,balkon)"> Save</button> <!--// For additional options we have a Pay to Play model...-->
+                </li>
+            </ul>
+        </li>
+
+
+        <li>
+            <ul class="formaUnos">
+                <li>
+                    <a class="input"> {{salaName}} </a>
+                </li>
+
+                <li class="unos">
+                    <input class="input" ng-model="regular"  />
+                </li>
+
+                <li class="unos">
+                    <input class="input" ng-model="vip"  />
+                </li>
+                <li class="unos">
+                    <input class="input" ng-model="love"  />
+                </li>
+                <li class="unos">
+                    <input class="input" ng-model="balkon"  />
+                </li>
+            </ul>
+        </li>
+
+
+        </li>
+
+
+    </ul>
+</div>

@@ -1,13 +1,7 @@
 package com.isa.ISA.dodatno;
 
-import com.isa.ISA.DTO.DogadjajDTO;
-import com.isa.ISA.DTO.ProjekcijaDTO;
-import com.isa.ISA.DTO.SalaDTO;
-import com.isa.ISA.DTO.SedisteDTO;
-import com.isa.ISA.dbModel.Dogadjaj;
-import com.isa.ISA.dbModel.PozoristeBioskop;
-import com.isa.ISA.dbModel.Sala;
-import com.isa.ISA.dbModel.Sediste;
+import com.isa.ISA.DTO.*;
+import com.isa.ISA.dbModel.*;
 import com.isa.ISA.dbModel.enums.DogadjajStatus;
 import com.isa.ISA.dbModel.enums.TipSedista;
 import com.isa.ISA.repository.PozoristeBioskopRepository;
@@ -18,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Konverter {
 
@@ -54,6 +49,45 @@ public class Konverter {
 
 
     }
+
+
+    public static CenovnikDTO convertCenovnici(List<CenovnikSedista> cenovnici){
+
+        CenovnikDTO povratna = new CenovnikDTO();
+        povratna.setDoplataRegular(0);
+        povratna.setDoplataBalcony(0);
+        povratna.setDoplataVIP(0);
+        povratna.setDoplataLoveBox(0);
+     //   System.out.println("DUZINA JE "+cenovnici.size());
+
+        for (CenovnikSedista tem: cenovnici) {
+            switch (tem.getTip()) {
+                case REGULAR:
+              //      System.out.println("NASAO REGULAR");
+                    povratna.setDoplataRegular(tem.getDoplata());
+                    break;
+                case VIP:
+              //      System.out.println("NASAO VIP");
+                    povratna.setDoplataVIP(tem.getDoplata());
+                    break;
+                case LOVEBOX:
+               //     System.out.println("NASAO LOVEBOX");
+                    povratna.setDoplataLoveBox(tem.getDoplata());
+                    break;
+                case BALCONY:
+                //    System.out.println("NASAO BALCONY");
+                    povratna.setDoplataBalcony(tem.getDoplata());
+                    break;
+                case TAKEN:
+                    break;
+            }
+
+        }
+
+        return  povratna;
+
+    }
+
     public static boolean proveraSale(SalaDTO s){
         boolean b = false;
         if(s.getBrRed()>0 && s.getBrRed()<76)

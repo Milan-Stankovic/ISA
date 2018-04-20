@@ -1,5 +1,6 @@
 package com.isa.ISA.controller;
 
+import com.isa.ISA.DTO.OcenaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,9 +18,9 @@ public class OceneController {
     private OcenaService ocenaService;
 
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/profile/{id}/pozivi/{id2}/oceniA")
-    public void oceniA(@PathVariable Long id, @PathVariable Long id2, @RequestBody int ocenaAmbijenta){
-        ocenaService.oceniA(id, ocenaAmbijenta);
+    @RequestMapping(method = RequestMethod.PUT, value = "/pozivi/oceni/{id}")
+    public void oceniSve(@PathVariable Long id, @RequestBody OcenaDTO o){
+        ocenaService.oceniSve(id, o);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/profile/{id}/pozivi/{id}/oceniD")

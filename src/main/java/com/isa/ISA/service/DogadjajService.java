@@ -149,7 +149,7 @@ public class DogadjajService {
         return dogRepo.findByNaziv(s);
     }
 
-    public void oceniDogadjaj(int ambijentOcena, int projekcijaOcena, Long pozoristeBioskopId, Long dogadjajID ){
+    public void oceniDogadjaj(int projekcijaOcena, Long dogadjajID ){
         Dogadjaj d = dogRepo.findOne(dogadjajID);
         int broj = d.getBrojOcena();
         float prosecna = d.getProsecnaOcena();
@@ -162,7 +162,7 @@ public class DogadjajService {
             d.setProsecnaOcena(nova);
         }
         dogRepo.save(d);
-        pozBiService.updateOcena(pozoristeBioskopId, ambijentOcena);
+
     }
 
 

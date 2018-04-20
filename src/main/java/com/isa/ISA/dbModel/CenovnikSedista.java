@@ -19,8 +19,6 @@ public class CenovnikSedista {
     @Enumerated(EnumType.STRING)
     private TipSedista tip;
 
-    @ManyToOne
-    private PozoristeBioskop ustanova;
 
     @ManyToOne
     private Sala sala;
@@ -43,14 +41,6 @@ public class CenovnikSedista {
 
     public void setTip(TipSedista tip) {
         this.tip = tip;
-    }
-
-    public PozoristeBioskop getUstanova() {
-        return ustanova;
-    }
-
-    public void setUstanova(PozoristeBioskop ustanova) {
-        this.ustanova = ustanova;
     }
 
     public Sala getSala() {

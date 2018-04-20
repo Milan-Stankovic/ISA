@@ -18,11 +18,49 @@
         }
         init();
 
-        $scope.rate = function (rez, ambRating, eveRating, pozivId) {
-            console.log(rez);
+        $scope.rate = function (pozId, ambRating, eveRating) {
+            console.log(pozId);
             console.log(ambRating);
             console.log(eveRating);
-            console.log(pozivId);
+
+            var b= false;
+
+            if(pozId)
+                if(pozId>0)
+                    if(ambRating)
+                        if(ambRating>0)
+                            if(eveRating)
+                                if(eveRating>0)
+                                    b=true;
+
+
+
+
+
+
+            if(b) {
+
+
+                var ocenaDTO={
+                    "ocenaAmbijenta" : ambRating,
+                    "ocenaDogadjaja" : eveRating
+                };
+
+                $http({
+                    method: 'PUT',
+                    url: 'http://localhost:8096/pozivi/oceni/' + pozId,
+                    data : ocenaDTO
+                }).then(function successCallback(response) {
+                    alert("Rated ! ");
+
+                }, function errorCallback(response) {
+                    alert("Error trying to rate, try again");
+
+                });
+            }
+
+
+
         }
 
         //OVDE DOBIJA SVE POZIVE I PRIHVACENE I KOJE TREBA DA PRIHVATI BEZ ODBIJENIH

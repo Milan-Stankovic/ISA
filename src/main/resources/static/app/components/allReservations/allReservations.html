@@ -51,17 +51,17 @@
                                         </table>
                                 </span>
                                 <br>
-                                <p ng-if="!rez.edit" >Your ambient rating : {{rez.ocenaA}}</p>
-                                <p ng-if="!rez.edit">Your event rating : {{rez.ocenaF}}</p>
-                                 <jk-rating-stars ng-if="rez.edit" rating="rez.ambRating" ></jk-rating-stars>
-                                  <p ng-if="rez.edit">Rate ambient</p>
+                                <p ng-if="poz.ocenjeno">Your ambient rating : {{poz.ocenaAmbijenta}}</p>
+                                <p ng-if="poz.ocenjeno" >Your event rating : {{poz.ocenaFilma}}</p>
+                                 <jk-rating-stars ng-if="!poz.ocenjeno" rating="poz.ocenaAmbijenta" ></jk-rating-stars>
+                                  <p ng-if="!poz.ocenjeno">Rate ambient</p>
 
 
-                                <jk-rating-stars ng-if="rez.edit" rating="rez.eveRating" ></jk-rating-stars>
-                                <p ng-if="rez.edit"> Rate event</p>
+                                <jk-rating-stars ng-if="!poz.ocenjeno"  rating="poz.ocenaFilma" ></jk-rating-stars>
+                                <p ng-if="!poz.ocenjeno" > Rate event</p>
 
 
-                                <button ng-if="!rez.edit" ng-click="rate(rez, rez.ambRating, rez.eveRating, rez.pozivId)"> Save ratings </button>
+                                <button ng-if="!poz.ocenjeno" ng-click="rate(poz.id, poz.ocenaAmbijenta, poz.ocenaFilma)"> Save ratings </button>
 
 
 

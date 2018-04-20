@@ -32,6 +32,8 @@ public class Poziv {
 
     private boolean pozvan;
 
+    private boolean ocenjeno =false;
+
     @ManyToOne
     private Rezervacija rezervacija;
 
@@ -104,5 +106,13 @@ public class Poziv {
 
     public void setPozvan(boolean pozvan) {
         this.pozvan = pozvan;
+    }
+
+    public boolean isOcenjeno() {
+        return ocenjeno;
+    }
+
+    public void setOcenjeno(boolean ocenjeno) {
+        this.ocenjeno = ocenjeno;
     }
 }

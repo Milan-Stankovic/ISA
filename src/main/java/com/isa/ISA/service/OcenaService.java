@@ -1,5 +1,6 @@
 package com.isa.ISA.service;
 
+import com.isa.ISA.DTO.OcenaDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,21 @@ public class OcenaService {
     @Autowired
     private PozoristeBioskopService pbService;
 
+    @Autowired
+    private DogadjajService dogServ;
+
+
+    public void oceniSve(Long id, OcenaDTO o){
+        Poziv p = pozvRepository.findOne(id);
+        Karta k = kartaRepository.findOne(p.getKarta().getId());
+        pbService.updateOcena( k.getPozoristeBioskop().getId(), o.getOcenaAmbijenta());
+        p.setOcenaAmbijenta(o.getOcenaAmbijenta());
+        p.setOcenaFilma(o.getOcenaDogadjaja());
+        p.setOcenjeno(true);
+        pozvRepository.save(p);
+        dogServ.oceniDogadjaj(o.getOcenaDogadjaja(), p.getRezervacija().getProjekcija().getDogadjaj().getId());
+
+    }
 
     public void oceniA(Long pozivID, int ocenaAmbijenta){
         Poziv p = pozvRepository.findOne(pozivID);
