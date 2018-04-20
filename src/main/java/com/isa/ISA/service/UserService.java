@@ -72,7 +72,14 @@ public class UserService {
     }
 	
 	public List<RegistrovaniKorisnik> searchImePrezime(String ime, String prezime){
-		return usersRepo.findByImeAndPrezimeIgnoreCase(ime, prezime);
+        List<RegistrovaniKorisnik> imena = searchIme(ime);
+        List<RegistrovaniKorisnik> prez = searchPrezime(prezime);
+        List<RegistrovaniKorisnik> ret = new ArrayList<>();
+        for(RegistrovaniKorisnik i : imena)
+            for(RegistrovaniKorisnik p :prez)
+                if(i.getId()==p.getId())
+                    ret.add(p);
+		return ret;
 	}
 	public List<RegistrovaniKorisnik> searchIme(String ime){
 		return usersRepo.findByImeIgnoreCase(ime);

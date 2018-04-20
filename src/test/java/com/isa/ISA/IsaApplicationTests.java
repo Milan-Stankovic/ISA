@@ -31,12 +31,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(
-		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-		classes = IsaApplication.class
-)
-@AutoConfigureMockMvc
-@TestPropertySource(locations = "classpath:application.properties")
+@SpringBootTest
 public class IsaApplicationTests {
 
 		@Test

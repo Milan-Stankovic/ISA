@@ -1,9 +1,10 @@
-package com.isa.ISA;
+package com.isa.ISA.regUserITTests;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.isa.ISA.DTO.RegKorDTO;
 import com.isa.ISA.DTO.RezervacijaDTO;
+import com.isa.ISA.IsaApplication;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
