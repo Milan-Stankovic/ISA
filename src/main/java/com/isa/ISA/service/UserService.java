@@ -63,10 +63,14 @@ public class UserService {
 	public void updateUser(OneClickAfterDTO ocad){
         Poziv p = new Poziv();
         p.setId(ocad.getPozivId());
+     //   System.out.println(p.getId());
         Rezervacija r = new Rezervacija();
         r.setId(ocad.getRezervacijaID());
-        RegistrovaniKorisnik reg = usersRepo.findOne(ocad.getUserId());
+        RegistrovaniKorisnik reg = (RegistrovaniKorisnik) usersRepo.findOne(ocad.getUserId());
+      //  System.out.println(reg.getId());
+       // System.out.println(reg.getPozivi().size());
         reg.getPozivi().add(p);
+      //  System.out.println(reg.getPozivi().size());
         reg.getRezervacije().add(r);
         usersRepo.save(reg);
     }

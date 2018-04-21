@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.isa.ISA.dbModel.Karta;
 import com.isa.ISA.dbModel.Rezervacija;
 import com.isa.ISA.dbModel.enums.Status;
@@ -24,6 +25,7 @@ public class Poziv {
     private Status status; // U slucaju da odbije poziv, iz tabele karti se karta
 
     @ManyToOne
+    @JsonBackReference
     private RegistrovaniKorisnik osoba;
 
     private int ocenaFilma;
