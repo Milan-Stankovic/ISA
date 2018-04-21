@@ -212,25 +212,56 @@
             var adate = a.getDate();
             var ahour = a.getHours();
             var amin = a.getMinutes();
+             console.log("start date: " + adate + "."+amonth+"."+ayear+ " time:" +ahour+":"+amin)
 
             var epoch_date = rez.projekcija.vreme/1000;
             var b = new Date(epoch_date*1000);
-            var byear = a.getFullYear();
-            var bmonth = a.getMonth()+1;
-            var bdate = a.getDate();
-            var bhour = a.getHours();
-            var bmin = a.getMinutes();
-            if(byear-ayear>=0)
-                if(bmonth-amonth>=0)
-                    if(bdate-adate>=0)
-                        if(bhour-ahour>=0)
-                            if(bmin-amin>=30){
-                                $scope.answer(rez, false);
-                                return;
-                            }
+            var byear = b.getFullYear();
+            var bmonth = b.getMonth()+1;
+            var bdate = b.getDate();
+            var bhour = b.getHours();
+            var bmin = b.getMinutes();
+             console.log("start date: " + bdate + "."+bmonth+"."+byear+ " time:" +bhour+":"+bmin)
+            if(bmin-amin>30 && byear-ayear>=0 && bmonth-amonth>=0 && bdate-adate>=0){
+                  $scope.answer(rez, false);
+                       return;
+             }
+            else if(byear-ayear>0 || bmonth-amonth>0 ||bdate-adate>0){
+                   $scope.answer(rez, false);
+                        return;
+              }
+             /*if(byear-ayear<0 || bmonth-amonth<0 || bdate-adate<0){
+                    alert("Canceling is not available.")
+                         return;
+                         }
 
-            alert("Canceling is not available.")
-            return;
+
+            if(byear-ayear>0)
+                if(bmonth-amonth>0)
+                    if(bdate-adate>0){
+                         $scope.answer(rez, false);
+                              return;
+                    }
+
+             if(bhour-ahour>0){
+                  $scope.answer(rez, false);
+                          return;
+              }  else
+              if(bmin-amin>30) {
+                  $scope.answer(rez, false);
+                         return;
+*/
+              else{
+                alert("Canceling is not available.")
+                            return;
+              }
+
+
+
+
+
+
+
 
         }
     }

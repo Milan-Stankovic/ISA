@@ -11,6 +11,7 @@
         $scope.user = undefined;
         $scope.message="";
 
+        $scope.pass=""
         var init = function (){
             if(!$cookies.get('user'))
                 $location.path("login")
@@ -72,7 +73,6 @@
         	$location.path("home");
         }
 
-        
         $scope.saveFunc = function(pass){
 
             if(isNaN($scope.user.brojTelefona)){
@@ -100,7 +100,8 @@
                 return;
             }
 
-            $scope.user.password = pass;
+            $scope.user.password = $scope.pass;
+
         	console.log("userName " +  $scope.user.userName +
         			" password "+ $scope.user.password +
         			" ime "+ $scope.user.ime +
