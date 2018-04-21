@@ -54,8 +54,8 @@ public class DogadjajController {
 
     @RequestMapping("/d/projekcije/{id}")
     public List<Projekcija> getProjekcije(@PathVariable Long id){
-        System.out.println("U dogadjaj kontroleru za projekcije sam");
-        System.out.println(dogService.getDogadjaj(id).getPrikazujeSe().size());
+       // System.out.println("U dogadjaj kontroleru za projekcije sam");
+       // System.out.println(dogService.getDogadjaj(id).getPrikazujeSe().size());
         return dogService.getDogadjaj(id).getPrikazujeSe();
     }
 

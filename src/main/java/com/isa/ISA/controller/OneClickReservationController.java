@@ -19,7 +19,7 @@ public class OneClickReservationController {
         ocrSevice.setOneClick(r);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/oneClick/{id}/user/{userId}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/oneClick/{id}/user/{userId}")
     public TransakcijaDTO updateClickReservation(@PathVariable Long id, @PathVariable Long userId){
         return ocrSevice.reserveSeat(id, userId);
     }

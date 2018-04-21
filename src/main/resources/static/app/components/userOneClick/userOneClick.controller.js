@@ -123,7 +123,7 @@
         $scope.reserve=function(reserveId){
 
             $http({
-                method: 'GET',
+                method: 'PUT',
                 url: 'http://localhost:8096/oneClick/' +reserveId+'/user/'+$cookies.get('id')
             }).then(function successCallback(response) {
                 var rezultat = response.data;

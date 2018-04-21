@@ -76,6 +76,10 @@ public class StartData {
         rk.setPrezime("Peric");
         rk.setEmail("pero@zahoo.com");
         rk.setStatus(StatusNaloga.AKTIVAN);
+        List<Rezervacija> rrrr = new ArrayList<>();
+        rk.setRezervacije(rrrr);
+        List<Poziv> pppp = new ArrayList<>();
+        rk.setPozivi(pppp);
         userService.addUser(rk);
 
         byte[] salt = encService.getNextSalt();
@@ -339,8 +343,8 @@ public class StartData {
         adminService.addAdmin(aa);
 
         PozoristeBioskop p1 = new PozoristeBioskop();
-        p1.setBrojOcena(0);
-        p1.setProsecnaOcena(0);
+        p1.setBrojOcena(1);
+        p1.setProsecnaOcena(3);
         p1.setAdresa("Centar centra 1");
         List<Admin> adminList = new ArrayList<>();
         adminList.add(a2);
